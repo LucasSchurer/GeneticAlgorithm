@@ -28,6 +28,9 @@ public class PopulationHandler : MonoBehaviour
     [SerializeField]
     private float _populationFitness = 0;
 
+    [SerializeField]
+    private Creature fittestCreature;
+
     private void Awake()
     {
         _population = new Creature[_populationSize];
@@ -110,20 +113,35 @@ public class PopulationHandler : MonoBehaviour
     {
         _newGenerationPopulation = new Creature[_populationSize];
 
-        for (int i = 0; i < _populationSize; i++)
+        Creature fittestChildA = Instantiate(fittestCreature, _newGenerationCreaturesHolder.transform);
+        Creature fittestChildB = Instantiate(fittestCreature, _newGenerationCreaturesHolder.transform);
+
+        fittestChildA.Chromosome = System.ObjectExtensions.Copy(fittestCreature.Chromosome);
+        fittestChildB.Chromosome = System.ObjectExtensions.Copy(fittestCreature.Chromosome);
+
+        _newGenerationPopulation[0] = fittestChildA;
+        _newGenerationPopulation[1] = fittestChildB;
+
+        for (int i = 2; i < _populationSize; i++)
         {
+            // Selection
             Creature parentA = GetParent();
             Creature parentB = GetParent();
 
+            // Crossover
             System.Tuple<Chromosome, Chromosome> offspring = Chromosome.Crossover(parentA.Chromosome, parentB.Chromosome);
 
             Creature childA = Instantiate(parentA, _newGenerationCreaturesHolder.transform);
             Creature childB = Instantiate(parentB, _newGenerationCreaturesHolder.transform);
             childA.Chromosome = offspring.Item1;
             childB.Chromosome = offspring.Item2;
+
+            // Mutation
+            childA.Chromosome.Mutate();
+            childB.Chromosome.Mutate();
+
             childA.ClearFitnessValue();
             childB.ClearFitnessValue();
-
             _newGenerationPopulation[i] = childA;
             _newGenerationPopulation[i + 1] = childB;
             i++;
@@ -138,6 +156,8 @@ public class PopulationHandler : MonoBehaviour
         }
 
         _newGenerationPopulation = null;
+
+        fittestCreature = null;
     }
 
     private Creature GetParent()
@@ -159,7 +179,6 @@ public class PopulationHandler : MonoBehaviour
         return null;
     }
 
-    
     private void Crossover()
     {
 
@@ -177,6 +196,16 @@ public class PopulationHandler : MonoBehaviour
         foreach (Creature creature in _population)
         {
             _populationFitness += creature.UpdateFitness();
+
+            if (fittestCreature == null)
+            {
+                fittestCreature = creature;
+            }
+
+            if (fittestCreature.Fitness < creature.Fitness)
+            {
+                fittestCreature = creature;
+            }
         }
 
         UIManager.Instance.SetPopulationFitness(_populationFitness);

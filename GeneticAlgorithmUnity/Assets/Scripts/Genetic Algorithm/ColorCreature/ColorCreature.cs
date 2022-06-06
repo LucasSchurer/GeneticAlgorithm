@@ -49,7 +49,7 @@ public class ColorCreature : Creature
     {
         if (_chromosome == null)
         {
-            _chromosome = new ColorChromosome();
+            _chromosome = new ColorChromosome(_mutationRate, true);
         }
             
         _colorChromosome = (ColorChromosome)_chromosome;

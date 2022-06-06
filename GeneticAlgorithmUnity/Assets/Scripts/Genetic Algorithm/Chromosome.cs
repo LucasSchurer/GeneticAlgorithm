@@ -4,13 +4,21 @@ using UnityEngine;
 
 public abstract class Chromosome
 {
+    /// <summary>
+    /// Property that controls if the mutatation rate will be used only one time to each gene
+    /// or will be calculated for each gene to apply mutation.
+    /// </summary>
+    private bool _shouldMutateIndividually = false;
+    private float _mutationRate;
     protected Gene[] _genes;
 
     public Gene GetGene(int i) => _genes.Length > i ? _genes[i] : null;
 
-    public Chromosome()
+    public Chromosome(float mutationRate, bool shouldMutateIndividually = false)
     {
         SetGenes();
+        _shouldMutateIndividually = shouldMutateIndividually;
+        _mutationRate = mutationRate;
     }
 
     protected abstract void SetGenes();
@@ -25,7 +33,39 @@ public abstract class Chromosome
 
     public void Mutate()
     {
+        if (_shouldMutateIndividually)
+        {
+            MutateIndividually();
+        } else
+        {
+            MutateAll();
+        }
+    }
 
+    private void MutateIndividually()
+    {
+        foreach (Gene gene in _genes)
+        {
+            float random = Random.Range(0f, 1f);
+
+            if (random <= _mutationRate)
+            {
+                gene.Mutate();
+            }
+        }
+    }
+
+    private void MutateAll()
+    {
+        float random = Random.Range(0, 1);
+
+        if (random <= _mutationRate)
+        {
+            foreach (Gene gene in _genes)
+            {
+                gene.Mutate();
+            }
+        }
     }
 
     public static System.Tuple<Chromosome, Chromosome> Crossover(Chromosome a, Chromosome b)

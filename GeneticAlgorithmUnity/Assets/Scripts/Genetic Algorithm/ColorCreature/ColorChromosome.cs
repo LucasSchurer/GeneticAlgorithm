@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ColorChromosome : Chromosome
 {
+    public ColorChromosome(float mutationRate, bool shouldMutateIndividually = false) : base(mutationRate, shouldMutateIndividually)
+    {
+    }
+
     public enum GeneType
     {
         Color,
