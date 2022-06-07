@@ -23,7 +23,7 @@ public class ColorChromosome : Chromosome
         _genes[(int)GeneType.RedColor] = new RGBValueGene(1f);
         _genes[(int)GeneType.GreenColor] = new RGBValueGene(1f);
         _genes[(int)GeneType.BlueColor] = new RGBValueGene(1f);
-        _genes[(int)GeneType.Position] = new PositionGene(new Vector2(-3, 3), new Vector2(-20, -20), new Vector2(20, 20));
+        _genes[(int)GeneType.Position] = new PositionGene(new Vector3(3, 3, 3), new Vector3(-20, -20, -20), new Vector3(20, 20, 20));
     }
     public Color GetColor ()
     {
