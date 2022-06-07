@@ -13,6 +13,7 @@ public class ColorChromosome : Chromosome
         RedColor,
         GreenColor,
         BlueColor,
+        Position,
         Size
     }
 
@@ -22,6 +23,7 @@ public class ColorChromosome : Chromosome
         _genes[(int)GeneType.RedColor] = new RGBValueGene(1f);
         _genes[(int)GeneType.GreenColor] = new RGBValueGene(1f);
         _genes[(int)GeneType.BlueColor] = new RGBValueGene(1f);
+        _genes[(int)GeneType.Position] = new PositionGene(new Vector2(-3, 3), new Vector2(-20, -20), new Vector2(20, 20));
     }
     public Color GetColor ()
     {
@@ -32,5 +34,10 @@ public class ColorChromosome : Chromosome
             b = ((RGBValueGene)_genes[(int)GeneType.BlueColor]).value,
             a = 1f
     };
+    }
+
+    public Vector3 GetPosition()
+    {
+        return ((PositionGene)_genes[(int)GeneType.Position]).position;
     }
 }

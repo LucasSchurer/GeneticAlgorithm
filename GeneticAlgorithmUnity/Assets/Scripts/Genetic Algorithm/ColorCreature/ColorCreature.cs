@@ -8,6 +8,9 @@ public class ColorCreature : Creature
     [SerializeField]
     private Color _desiredColor;
 
+    [SerializeField]
+    private Transform _desiredPosition;
+
     private SpriteRenderer _spriteRenderer;
     private ColorChromosome _colorChromosome;
 
@@ -18,7 +21,7 @@ public class ColorCreature : Creature
     {
         base.Spawn(randomizeChromosome);
 
-        transform.position = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), 0);
+        transform.position = _colorChromosome.GetPosition();
         _spriteRenderer.color = _colorChromosome.GetColor();
     }
 
@@ -37,7 +40,10 @@ public class ColorCreature : Creature
         float fitnessG = Mathf.Abs(currentColor.g - _desiredColor.g);
         float fitnessB = Mathf.Abs(currentColor.b - _desiredColor.b);
 
-        fitness = Mathf.Pow(16, (3 - fitnessR - fitnessG - fitnessB)/3);
+        float distanceFitness = 1 - Vector3.Distance(_colorChromosome.GetPosition(), _desiredPosition.position) / 100;
+        float colorFitness = (3 - fitnessR - fitnessG - fitnessB) / 3;
+
+        fitness = Mathf.Pow(4, distanceFitness + colorFitness);
 
         _fitnessText.text = fitness.ToString();
 
