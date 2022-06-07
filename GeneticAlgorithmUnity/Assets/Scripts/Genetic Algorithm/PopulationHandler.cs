@@ -208,6 +208,6 @@ public class PopulationHandler : MonoBehaviour
             }
         }
 
-        UIManager.Instance.SetPopulationFitness(_populationFitness);
+        UIManager.Instance.SetPopulationFitness(_populationFitness, _populationFitness/_populationSize);
     }
 }
