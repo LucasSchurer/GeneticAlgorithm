@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de71fd32ac885e4baa4c03e37cf815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mutationRate: 0.3
+  _mutationRate: 0.1
   _fitnessValue: 0
   _desiredColor: {r: 0, g: 0.9150943, b: 0.025759762, a: 1}
   _fitnessText: {fileID: 1829750200}
@@ -1154,7 +1154,7 @@ MonoBehaviour:
   _generationCreaturesHolder: {fileID: 0}
   _newGenerationCreaturesHolder: {fileID: 0}
   shouldUpdateGeneration: 0
-  _timeToStartNewGeneration: 0.5
+  _timeToStartNewGeneration: 0.1
   _newGenerationTimer: 0
   _populationFitness: 0
   fittestCreature: {fileID: 0}

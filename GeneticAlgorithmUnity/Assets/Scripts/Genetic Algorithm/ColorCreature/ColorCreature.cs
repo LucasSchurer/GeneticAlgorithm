@@ -19,7 +19,7 @@ public class ColorCreature : Creature
         base.Spawn(randomizeChromosome);
 
         transform.position = new Vector3(Random.Range(-20, 20), Random.Range(-20, 20), 0);
-        _spriteRenderer.color = ((ColorGene)_colorChromosome.GetGene((int)ColorChromosome.GeneType.Color)).Color;
+        _spriteRenderer.color = _colorChromosome.GetColor();
     }
 
     public override void UpdateCreature()
@@ -31,14 +31,13 @@ public class ColorCreature : Creature
     {
         float fitness = 0;
 
-        Color currentColor = ((ColorGene)_colorChromosome.GetGene((int)ColorChromosome.GeneType.Color)).Color;
+        Color currentColor = _colorChromosome.GetColor();
 
         float fitnessR = Mathf.Abs(currentColor.r - _desiredColor.r);
         float fitnessG = Mathf.Abs(currentColor.g - _desiredColor.g);
         float fitnessB = Mathf.Abs(currentColor.b - _desiredColor.b);
 
-        fitness = (3 - fitnessR - fitnessG - fitnessB)/3;
-        fitness *= 100;
+        fitness = Mathf.Pow(16, (3 - fitnessR - fitnessG - fitnessB)/3);
 
         _fitnessText.text = fitness.ToString();
 
