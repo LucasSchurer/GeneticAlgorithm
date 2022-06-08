@@ -6,7 +6,7 @@ using UnityEngine;
 public class ColorCreature : Creature
 {
     [SerializeField]
-    private Color _desiredColor;
+    public Color _desiredColor;
 
     [SerializeField]
     private Transform _desiredPosition;
@@ -20,13 +20,22 @@ public class ColorCreature : Creature
     [SerializeField]
     private TextMeshPro _fitnessText;
 
-    public override void Spawn(bool randomizeChromosome)
+    public override Chromosome Chromosome { get =>_chromosome; set {
+            _chromosome = value;
+            _colorChromosome = (ColorChromosome)_chromosome;
+        } }
+
+    public override void UpdateValues()
+    {
+        /*transform.position = _colorChromosome.GetPosition();*/
+        _spriteRenderer.color = _colorChromosome.GetColor();
+    }
+
+    public override void Spawn(bool randomizeChromosome = false)
     {
         base.Spawn(randomizeChromosome);
 
         transform.position = _colorChromosome.GetPosition();
-        _spriteRenderer.color = _colorChromosome.GetColor();
-        /*_meshRenderer.material.color = _colorChromosome.GetColor();*/
     }
 
     public override void UpdateCreature()
@@ -56,12 +65,10 @@ public class ColorCreature : Creature
 
     public override void InitializeChromosomes()
     {
-        if (_chromosome == null)
+        if (Chromosome == null)
         {
-            _chromosome = new ColorChromosome(_mutationRate, true);
+            Chromosome = new ColorChromosome(_mutationRate, true);
         }
-            
-        _colorChromosome = (ColorChromosome)_chromosome;
     }
 
     public override void InitializeComponents()

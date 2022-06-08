@@ -9,11 +9,9 @@ public abstract class Creature : MonoBehaviour
     [SerializeField]
     protected float _mutationRate;
     [SerializeField]
-    protected float _fitnessValue;
+    public float _fitnessValue;
 
-    public float Fitness => _fitnessValue;
-
-    public Chromosome Chromosome { get => _chromosome; set => _chromosome = value; }
+    public virtual Chromosome Chromosome { get => _chromosome; set => _chromosome = value; }
 
     protected abstract float FitnessFunction();
 
@@ -52,7 +50,10 @@ public abstract class Creature : MonoBehaviour
         }
 
         InitializeComponents();
+        UpdateValues();
     }
+
+    public abstract void UpdateValues();
 
     private void RandomizeChromosome()
     {

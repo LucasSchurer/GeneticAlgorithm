@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,17 +9,12 @@ public class PopulationHandler : MonoBehaviour
     private Creature _baseCreature;
     [SerializeField]
     private int _populationSize = 1;
-    [SerializeField]
     private Creature[] _population;
-    [SerializeField]
-    private Creature[] _newGenerationPopulation;
+    private Chromosome[] _newGenerationChromosomes;
     [SerializeField]
     private int _currentGeneration = 0;
     [SerializeField]
     private GameObject _generationCreaturesHolder;
-    [SerializeField]
-    private GameObject _newGenerationCreaturesHolder;
-    private Creature _bestGenerationCreature;
     [SerializeField]
     private bool shouldUpdateGeneration = false;
     [SerializeField]
@@ -27,20 +23,36 @@ public class PopulationHandler : MonoBehaviour
     private float _newGenerationTimer = 0f;
     [SerializeField]
     private float _populationFitness = 0;
+    private float[] _populationSumFitness;
 
     [SerializeField]
     private Creature fittestCreature;
 
+    [SerializeField]
+    private int numberOfIterations = 0;
+
     private void Awake()
     {
         _population = new Creature[_populationSize];
+        _newGenerationChromosomes = new Chromosome[_populationSize];
+        _populationSumFitness = new float[_populationSize];
         _generationCreaturesHolder = new GameObject("Generation Creatures");
-        _newGenerationCreaturesHolder = new GameObject("New Generation Creatures");
     }
 
     private void Start()
     {
+        InitializePopulation();
         StartGeneration();
+    }
+
+    private void InitializePopulation()
+    {
+        for (int i = 0; i < _populationSize; i++)
+        {
+            _population[i] = Object.Instantiate(_baseCreature, _generationCreaturesHolder.transform);
+            _population[i].gameObject.SetActive(true);
+            _population[i].Spawn(true);
+        }
     }
 
     private void Update()
@@ -53,23 +65,24 @@ public class PopulationHandler : MonoBehaviour
 
     private void StartGeneration()
     {
+        if (_currentGeneration != 0)
+        {
+            /*return;*/
+        }
+
         _currentGeneration++;
         _newGenerationTimer = _timeToStartNewGeneration;
         shouldUpdateGeneration = true;
 
         _generationCreaturesHolder.name = $"{_currentGeneration} Generation Creatures";
 
-        for (int i = 0; i < _populationSize; i++)
+        foreach (Creature creature in _population)
         {
-            if (_currentGeneration == 1)
-            {
-                _population[i] = Object.Instantiate(_baseCreature, _generationCreaturesHolder.transform);
-                _population[i].gameObject.SetActive(true);
-            }
-
-            _population[i].Spawn(_currentGeneration == 1);
+            creature.UpdateValues();
+            numberOfIterations++;
         }
 
+        fittestCreature = _population[0];
         UpdatePopulationFitness();
 
         UIManager.Instance.SetGeneration(_currentGeneration);
@@ -94,16 +107,9 @@ public class PopulationHandler : MonoBehaviour
     {
         shouldUpdateGeneration = false;
 
-        /*UpdatePopulationFitness();*/
-
         Selection();
 
         StartGeneration();
-    }
-
-    private void InitializePopulation()
-    {
-
     }
 
     /// <summary>
@@ -111,72 +117,152 @@ public class PopulationHandler : MonoBehaviour
     /// </summary>
     private void Selection()
     {
-        _newGenerationPopulation = new Creature[_populationSize];
+        _population = _population.OrderBy(c => c._fitnessValue).ToArray();
 
-        Creature fittestChildA = Instantiate(fittestCreature, _newGenerationCreaturesHolder.transform);
-        Creature fittestChildB = Instantiate(fittestCreature, _newGenerationCreaturesHolder.transform);
-
-        fittestChildA.Chromosome = System.ObjectExtensions.Copy(fittestCreature.Chromosome);
-        fittestChildB.Chromosome = System.ObjectExtensions.Copy(fittestCreature.Chromosome);
-
-        _newGenerationPopulation[0] = fittestChildA;
-        _newGenerationPopulation[1] = fittestChildB;
+        _newGenerationChromosomes[0] = fittestCreature.Chromosome;
+        _newGenerationChromosomes[1] = fittestCreature.Chromosome;
 
         for (int i = 2; i < _populationSize; i++)
         {
+            numberOfIterations++;
+
             // Selection
-            Creature parentA = GetParent();
-            Creature parentB = GetParent();
+            int parentA = GetParentIndex();
+            int parentB = GetParentIndex();
 
             // Crossover
-            System.Tuple<Chromosome, Chromosome> offspring = Chromosome.Crossover(parentA.Chromosome, parentB.Chromosome);
-
-            Creature childA = Instantiate(parentA, _newGenerationCreaturesHolder.transform);
-            Creature childB = Instantiate(parentB, _newGenerationCreaturesHolder.transform);
-            childA.Chromosome = offspring.Item1;
-            childB.Chromosome = offspring.Item2;
+            System.Tuple<Chromosome, Chromosome> offspring = Chromosome.Crossover(_population[GetParentIndex()].Chromosome, _population[GetParentIndex()].Chromosome);
 
             // Mutation
-            childA.Chromosome.Mutate();
-            childB.Chromosome.Mutate();
+            offspring.Item1.Mutate();
+            offspring.Item2.Mutate();
 
-            childA.ClearFitnessValue();
-            childB.ClearFitnessValue();
-            _newGenerationPopulation[i] = childA;
-            _newGenerationPopulation[i + 1] = childB;
+            _newGenerationChromosomes[i] = offspring.Item1;
+            _newGenerationChromosomes[i + 1] = offspring.Item2;
             i++;
         }
 
         for (int i = 0; i < _populationSize; i++)
         {
-            Destroy(_population[i].gameObject);
-            _population[i] = null;
-            _population[i] = _newGenerationPopulation[i];
-            _population[i].transform.parent = _generationCreaturesHolder.transform;
+            numberOfIterations++;
+            _population[i].Chromosome = System.ObjectExtensions.Copy(_newGenerationChromosomes[i]);
         }
-
-        _newGenerationPopulation = null;
 
         fittestCreature = null;
     }
 
-    private Creature GetParent()
+    private int GetParentIndex()
     {
-        float random = Random.Range(0, _populationFitness);
-        float fitnessRange = 0;
+        /*return Random.Range(Mathf.FloorToInt(_populationSize / 2), _populationSize - 1);*/
 
-        foreach (Creature possibleParent in _population)
+        float randomFitness = Random.Range(0, _populationFitness);
+
+        int max = _populationSize - 1;
+        int min = 0;
+        int middle = Mathf.FloorToInt((min + max) / 2);
+
+        int stop = 0;
+        /*float fitnessRange = 0f;*/
+
+        return BinarySearchParent(randomFitness, 0, _populationSize - 1);
+
+        /*for (int i = _populationSize -1; i >= 0; i--)
         {
-            fitnessRange += possibleParent.Fitness;
+            numberOfIterations++;
 
-            if (fitnessRange > random)
+            fitnessRange += _population[i]._fitnessValue;
+
+            if (fitnessRange > randomFitness)
             {
-                return possibleParent;
+                return i;
             }
+        }*/
+
+        /*if (randomFitness <= _populationSumFitness[min])
+        {
+            return min;
         }
 
-        Debug.Log("Invalid Parent Returned");
-        return null;
+        if (randomFitness <= _populationSumFitness[max] && randomFitness > _populationSumFitness[max - 1])
+        {
+            return max;
+        }
+
+        while (min < max && stop < _populationSize)
+        {
+            numberOfIterations++;
+
+            if (randomFitness <= _populationSumFitness[middle] && randomFitness > _populationSumFitness[middle - 1])
+            {
+                return middle;
+            }
+
+            if (randomFitness > _populationSumFitness[middle])
+            {
+                min = middle;
+            }
+
+            if (randomFitness < _populationSumFitness[middle])
+            {
+                max = middle;
+            }
+
+            middle = Mathf.FloorToInt((min + max) / 2);
+        }*/
+
+        return 0;
+    }
+
+    private int ExponentialSearchParent(float desiredFitness)
+    {
+        int bound = 1;
+
+        while (bound < _populationSize && _population[bound]._fitnessValue < desiredFitness)
+        {
+            numberOfIterations++;
+            bound *= 2;
+        }
+
+        return BinarySearchParent(desiredFitness, bound / 2, Mathf.Min(bound + 1, _populationSize - 1));
+    }
+
+    private int BinarySearchParent(float desiredFitness, int min, int max)
+    {
+        int middle = Mathf.FloorToInt((min + max) / 2);
+
+        if (desiredFitness <= _populationSumFitness[min])
+        {
+            return min;
+        }
+
+        if (desiredFitness <= _populationSumFitness[max] && desiredFitness > _populationSumFitness[max - 1])
+        {
+            return max;
+        }
+
+        while (min < max)
+        {
+            numberOfIterations++;
+
+            if (desiredFitness <= _populationSumFitness[middle] && desiredFitness > _populationSumFitness[middle - 1])
+            {
+                return middle;
+            }
+
+            if (desiredFitness > _populationSumFitness[middle])
+            {
+                min = middle;
+            }
+
+            if (desiredFitness < _populationSumFitness[middle])
+            {
+                max = middle;
+            }
+
+            middle = Mathf.FloorToInt((min + max) / 2);
+        }
+
+        return 0;
     }
 
     private void Crossover()
@@ -191,20 +277,21 @@ public class PopulationHandler : MonoBehaviour
 
     private void UpdatePopulationFitness()
     {
+        _population = _population.OrderBy(c => c._fitnessValue).ToArray();
         _populationFitness = 0;
 
-        foreach (Creature creature in _population)
+        fittestCreature = _population[0];
+
+        for (int i = 0; i < _populationSize; i++)
         {
-            _populationFitness += creature.UpdateFitness();
+            numberOfIterations++;
 
-            if (fittestCreature == null)
-            {
-                fittestCreature = creature;
-            }
+            _populationFitness += _population[i].UpdateFitness();
+            _populationSumFitness[i] = _populationFitness;
 
-            if (fittestCreature.Fitness < creature.Fitness)
+            if (fittestCreature._fitnessValue < _population[i]._fitnessValue)
             {
-                fittestCreature = creature;
+                fittestCreature = _population[i];
             }
         }
 

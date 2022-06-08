@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de71fd32ac885e4baa4c03e37cf815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mutationRate: 0.2
+  _mutationRate: 0.005
   _fitnessValue: 0
   _desiredColor: {r: 0.095185116, g: 0.12390198, b: 0.6509434, a: 1}
   _desiredPosition: {fileID: 309514509}
@@ -1186,7 +1186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1829750199
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1822,13 +1822,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseCreature: {fileID: 265945789}
   _populationSize: 300
-  _population: []
-  _newGenerationPopulation: []
   _currentGeneration: 0
   _generationCreaturesHolder: {fileID: 0}
-  _newGenerationCreaturesHolder: {fileID: 0}
   shouldUpdateGeneration: 0
   _timeToStartNewGeneration: 0
   _newGenerationTimer: 0
   _populationFitness: 0
   fittestCreature: {fileID: 0}
+  numberOfIterations: 10
