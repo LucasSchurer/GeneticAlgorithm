@@ -10,4 +10,6 @@ public abstract class Gene
     public abstract void Mutate();
 
     public abstract void Randomize();
+
+    public abstract Gene Copy();
 }

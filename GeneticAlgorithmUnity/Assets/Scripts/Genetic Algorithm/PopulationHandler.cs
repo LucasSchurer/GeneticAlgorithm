@@ -145,7 +145,7 @@ public class PopulationHandler : MonoBehaviour
         for (int i = 0; i < _populationSize; i++)
         {
             numberOfIterations++;
-            _population[i].Chromosome = System.ObjectExtensions.Copy(_newGenerationChromosomes[i]);
+            _population[i].Chromosome = _newGenerationChromosomes[i].Copy();
         }
 
         fittestCreature = null;
@@ -153,8 +153,6 @@ public class PopulationHandler : MonoBehaviour
 
     private int GetParentIndex()
     {
-        /*return Random.Range(Mathf.FloorToInt(_populationSize / 2), _populationSize - 1);*/
-
         float randomFitness = Random.Range(0, _populationFitness);
 
         int max = _populationSize - 1;
@@ -162,11 +160,11 @@ public class PopulationHandler : MonoBehaviour
         int middle = Mathf.FloorToInt((min + max) / 2);
 
         int stop = 0;
-        /*float fitnessRange = 0f;*/
+        float fitnessRange = 0f;
 
         return BinarySearchParent(randomFitness, 0, _populationSize - 1);
 
-        /*for (int i = _populationSize -1; i >= 0; i--)
+        for (int i = _populationSize - 1; i >= 0; i--)
         {
             numberOfIterations++;
 
@@ -176,7 +174,7 @@ public class PopulationHandler : MonoBehaviour
             {
                 return i;
             }
-        }*/
+        }
 
         /*if (randomFitness <= _populationSumFitness[min])
         {

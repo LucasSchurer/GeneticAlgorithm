@@ -16,6 +16,14 @@ public class PositionGene : Gene
         this.maxBounds = maxBounds;
     }
 
+    public override Gene Copy()
+    {
+        PositionGene copy = new PositionGene(variance, minBounds, maxBounds);
+        copy.position = position;
+
+        return copy;
+    }
+
     public override void Mutate()
     {
         float offsetXRange = Random.Range(-variance.x, variance.x);

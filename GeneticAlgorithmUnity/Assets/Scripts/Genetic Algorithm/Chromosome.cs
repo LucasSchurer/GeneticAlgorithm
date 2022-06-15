@@ -8,20 +8,28 @@ public abstract class Chromosome
     /// Property that controls if the mutatation rate will be used only one time to each gene
     /// or will be calculated for each gene to apply mutation.
     /// </summary>
-    private bool _shouldMutateIndividually = false;
-    private float _mutationRate;
+    protected bool _shouldMutateIndividually = false;
+    protected float _mutationRate;
     protected Gene[] _genes;
 
     public Gene GetGene(int i) => _genes.Length > i ? _genes[i] : null;
 
-    public Chromosome(float mutationRate, bool shouldMutateIndividually = false)
+    public Chromosome(float mutationRate, bool shouldMutateIndividually = false, Gene[] genes = null)
     {
-        SetGenes();
+        if (genes != null)
+        {
+            SetGenes(genes);
+        } else
+        {
+            SetGenes();
+        }
+
         _shouldMutateIndividually = shouldMutateIndividually;
         _mutationRate = mutationRate;
     }
 
     protected abstract void SetGenes();
+    protected abstract void SetGenes(Gene[] genes);
 
     public void RandomizeGenes()
     {
@@ -68,12 +76,14 @@ public abstract class Chromosome
         }
     }
 
+    public abstract Chromosome Copy();
+
     public static System.Tuple<Chromosome, Chromosome> Crossover(Chromosome a, Chromosome b)
     {
         int crossoverPoint = Random.Range(0, a._genes.Length-1);
 
-        Chromosome offspringA = System.ObjectExtensions.Copy(a);
-        Chromosome offspringB = System.ObjectExtensions.Copy(b);
+        Chromosome offspringA = a.Copy();
+        Chromosome offspringB = b.Copy();
 
         for (int i = 0; i < crossoverPoint; i++)
         {

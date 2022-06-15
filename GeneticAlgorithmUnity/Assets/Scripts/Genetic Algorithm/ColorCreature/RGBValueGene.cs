@@ -11,6 +11,12 @@ public class RGBValueGene : Gene
         this.value = value;
     }
 
+    public override Gene Copy()
+    {
+        RGBValueGene copy = new RGBValueGene(this.value);
+        return copy;
+    }
+
     public override void Mutate()
     {
         value = Random.Range(0f, 1f);

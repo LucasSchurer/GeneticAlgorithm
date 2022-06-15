@@ -39,4 +39,9 @@ public class ColorGene : Gene
         _color.g = Random.Range(0f, 1f);
         _color.b = Random.Range(0f, 1f);
     }
+
+    public override Gene Copy()
+    {
+        throw new System.NotImplementedException();
+    }
 }

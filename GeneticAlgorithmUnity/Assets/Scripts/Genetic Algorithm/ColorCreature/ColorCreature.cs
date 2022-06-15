@@ -27,7 +27,7 @@ public class ColorCreature : Creature
 
     public override void UpdateValues()
     {
-        /*transform.position = _colorChromosome.GetPosition();*/
+        transform.position = _colorChromosome.GetPosition();
         _spriteRenderer.color = _colorChromosome.GetColor();
     }
 
