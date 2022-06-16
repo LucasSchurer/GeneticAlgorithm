@@ -2,9 +2,13 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class PopulationHandler : MonoBehaviour
 {
+    [SerializeField]
+    private int _threadNumber = 2;
+
     [SerializeField]
     private Creature _baseCreature;
     [SerializeField]
@@ -107,9 +111,89 @@ public class PopulationHandler : MonoBehaviour
     {
         shouldUpdateGeneration = false;
 
-        Selection();
+        ThreadSelection();
 
         StartGeneration();
+    }
+
+    private void ParallelSelection(int startIndex, int endIndex)
+    {
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            numberOfIterations++;
+
+            // Selection
+            int parentA = GetParentIndex();
+            int parentB = GetParentIndex();
+
+            // Crossover
+            System.Tuple<Chromosome, Chromosome> offspring = Chromosome.Crossover(_population[GetParentIndex()].Chromosome, _population[GetParentIndex()].Chromosome);
+
+            // Mutation
+            offspring.Item1.Mutate();
+            offspring.Item2.Mutate();
+
+            _newGenerationChromosomes[i] = offspring.Item1;
+
+            if (i + 1 < _populationSize)
+                _newGenerationChromosomes[i + 1] = offspring.Item2;
+            
+            i++;
+        }
+    }
+
+    private void ThreadSelection()
+    {
+        _population = _population.OrderBy(c => c._fitnessValue).ToArray();
+
+        _newGenerationChromosomes[0] = fittestCreature.Chromosome;
+        _newGenerationChromosomes[1] = fittestCreature.Chromosome;
+
+        Thread[] threads = new Thread[_threadNumber];
+        int sliceSize = _populationSize / _threadNumber;
+
+        for (int i = 0; i < _threadNumber; i++)
+        {
+            int aux = i;
+
+            if (i == 0)
+            {
+                threads[i] = new Thread(() => ParallelSelection(2 + sliceSize * aux, sliceSize * (aux + 1)));
+            } else
+            {
+                threads[i] = new Thread(() => ParallelSelection(sliceSize * aux, sliceSize * (aux + 1)));
+            }
+            threads[i].Start();
+        }
+
+        foreach (Thread thread in threads)
+        {
+            thread.Join();
+        }
+    
+        for (int i = 0; i < _threadNumber; i++)
+        {
+            int aux = i;
+            threads[i] = new Thread(() => ParallelPopulationReplace(sliceSize * aux, sliceSize * (aux + 1)));
+            threads[i].Start();
+        }
+
+        foreach (Thread thread in threads)
+        {
+            thread.Join();
+        }
+
+        fittestCreature = null;
+    }
+
+
+    private void ParallelPopulationReplace(int startIndex, int endIndex)
+    {
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            numberOfIterations++;
+            _population[i].Chromosome = _newGenerationChromosomes[i].Copy();
+        }
     }
 
     /// <summary>
@@ -117,8 +201,6 @@ public class PopulationHandler : MonoBehaviour
     /// </summary>
     private void Selection()
     {
-        _population = _population.OrderBy(c => c._fitnessValue).ToArray();
-
         _newGenerationChromosomes[0] = fittestCreature.Chromosome;
         _newGenerationChromosomes[1] = fittestCreature.Chromosome;
 
@@ -153,7 +235,8 @@ public class PopulationHandler : MonoBehaviour
 
     private int GetParentIndex()
     {
-        float randomFitness = Random.Range(0, _populationFitness);
+        /*float randomFitness = Random.Range(0, _populationFitness);*/
+        float randomFitness = StaticRandom.RandomFloat(0, _populationFitness);
 
         int max = _populationSize - 1;
         int min = 0;

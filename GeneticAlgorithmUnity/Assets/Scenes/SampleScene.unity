@@ -1820,12 +1820,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d21d8d6572c7a48b21064397f0397a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _threadNumber: 10
   _baseCreature: {fileID: 265945789}
-  _populationSize: 10000
+  _populationSize: 100000
   _currentGeneration: 0
   _generationCreaturesHolder: {fileID: 0}
   shouldUpdateGeneration: 0
-  _timeToStartNewGeneration: 1
+  _timeToStartNewGeneration: 3
   _newGenerationTimer: 0
   _populationFitness: 0
   fittestCreature: {fileID: 0}

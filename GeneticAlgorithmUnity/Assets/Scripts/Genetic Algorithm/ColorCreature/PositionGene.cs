@@ -26,9 +26,13 @@ public class PositionGene : Gene
 
     public override void Mutate()
     {
-        float offsetXRange = Random.Range(-variance.x, variance.x);
+        /*float offsetXRange = Random.Range(-variance.x, variance.x);
         float offsetYRange = Random.Range(-variance.y, variance.y);
-        float offsetZRange = Random.Range(-variance.z, variance.z);
+        float offsetZRange = Random.Range(-variance.z, variance.z);*/
+
+        float offsetXRange = StaticRandom.RandomFloat(-variance.x, variance.x);
+        float offsetYRange = StaticRandom.RandomFloat(-variance.y, variance.y);
+        float offsetZRange = StaticRandom.RandomFloat(-variance.z, variance.z);
 
         position.x = Mathf.Clamp(position.x + offsetXRange, minBounds.x, maxBounds.x);
         position.y = Mathf.Clamp(position.y + offsetYRange, minBounds.y, maxBounds.y);
