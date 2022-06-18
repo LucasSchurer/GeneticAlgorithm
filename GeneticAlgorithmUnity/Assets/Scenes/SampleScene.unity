@@ -274,7 +274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &265945789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de71fd32ac885e4baa4c03e37cf815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mutationRate: 0.005
+  _mutationRate: 0.01
   _fitnessValue: 0
   _desiredColor: {r: 0.095185116, g: 0.12390198, b: 0.6509434, a: 1}
   _desiredPosition: {fileID: 309514509}
@@ -407,7 +407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &307830304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de71fd32ac885e4baa4c03e37cf815b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mutationRate: 0.05
+  _mutationRate: 0.001
   _fitnessValue: 0
   _desiredColor: {r: 0, g: 0.6132076, b: 0.122936286, a: 0}
   _desiredPosition: {fileID: 309514509}
@@ -1820,13 +1820,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d21d8d6572c7a48b21064397f0397a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _threadNumber: 10
-  _baseCreature: {fileID: 265945789}
-  _populationSize: 100000
+  _baseCreature: {fileID: 307830304}
+  _populationSize: 300
   _currentGeneration: 0
   _generationCreaturesHolder: {fileID: 0}
   shouldUpdateGeneration: 0
-  _timeToStartNewGeneration: 3
+  _timeToStartNewGeneration: 0.1
   _newGenerationTimer: 0
   _populationFitness: 0
   fittestCreature: {fileID: 0}

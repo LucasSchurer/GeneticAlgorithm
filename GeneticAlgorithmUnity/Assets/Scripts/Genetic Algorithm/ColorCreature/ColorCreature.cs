@@ -28,7 +28,8 @@ public class ColorCreature : Creature
     public override void UpdateValues()
     {
         transform.position = _colorChromosome.GetPosition();
-        _spriteRenderer.color = _colorChromosome.GetColor();
+        /*_spriteRenderer.color = _colorChromosome.GetColor();*/
+        _meshRenderer.material.color = _colorChromosome.GetColor();
     }
 
     public override void Spawn(bool randomizeChromosome = false)
@@ -73,7 +74,7 @@ public class ColorCreature : Creature
 
     public override void InitializeComponents()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        /*_meshRenderer = GetComponent<MeshRenderer>();*/
+        /*_spriteRenderer = GetComponent<SpriteRenderer>();*/
+        _meshRenderer = GetComponent<MeshRenderer>();
     }
 }

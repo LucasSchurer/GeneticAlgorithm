@@ -36,13 +36,13 @@ public class PositionGene : Gene
 
         position.x = Mathf.Clamp(position.x + offsetXRange, minBounds.x, maxBounds.x);
         position.y = Mathf.Clamp(position.y + offsetYRange, minBounds.y, maxBounds.y);
-        /*position.z = Mathf.Clamp(position.z + offsetZRange, minBounds.z, maxBounds.z);*/
+        position.z = Mathf.Clamp(position.z + offsetZRange, minBounds.z, maxBounds.z);
     }
 
     public override void Randomize()
     {
         position.x = Random.Range(minBounds.x, maxBounds.x);
         position.y = Random.Range(minBounds.y, maxBounds.y);
-        /*position.z = Random.Range(minBounds.z, maxBounds.z);*/
+        position.z = Random.Range(minBounds.z, maxBounds.z);
     }
 }
