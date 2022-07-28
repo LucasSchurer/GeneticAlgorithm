@@ -50,7 +50,7 @@ public class ColorChromosome : Chromosome
             g = ((RGBValueGene)_genes[(int)GeneType.GreenColor]).value,
             b = ((RGBValueGene)_genes[(int)GeneType.BlueColor]).value,
             a = 1f
-    };
+        };
     }
 
     public Vector3 GetPosition()

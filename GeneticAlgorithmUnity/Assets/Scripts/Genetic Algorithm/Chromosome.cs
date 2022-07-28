@@ -82,7 +82,6 @@ public abstract class Chromosome
     public static System.Tuple<Chromosome, Chromosome> Crossover(Chromosome a, Chromosome b)
     {
         int crossoverPoint = StaticRandom.RandomInt(0, a._genes.Length - 1);
-        /*int crossoverPoint = Random.Range(0, a._genes.Length-1);*/
 
         Chromosome offspringA = a.Copy();
         Chromosome offspringB = b.Copy();

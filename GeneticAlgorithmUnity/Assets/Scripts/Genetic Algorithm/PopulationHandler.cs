@@ -156,8 +156,6 @@ public class PopulationHandler : MonoBehaviour
         int stop = 0;
         float fitnessRange = 0f;
 
-        /*return BinarySearchParent(randomFitness, 0, _populationSize - 1);*/
-
         for (int i = _populationSize - 1; i >= 0; i--)
         {
             numberOfIterations++;
@@ -170,106 +168,12 @@ public class PopulationHandler : MonoBehaviour
             }
         }
 
-        /*if (randomFitness <= _populationSumFitness[min])
-        {
-            return min;
-        }
-
-        if (randomFitness <= _populationSumFitness[max] && randomFitness > _populationSumFitness[max - 1])
-        {
-            return max;
-        }
-
-        while (min < max && stop < _populationSize)
-        {
-            numberOfIterations++;
-
-            if (randomFitness <= _populationSumFitness[middle] && randomFitness > _populationSumFitness[middle - 1])
-            {
-                return middle;
-            }
-
-            if (randomFitness > _populationSumFitness[middle])
-            {
-                min = middle;
-            }
-
-            if (randomFitness < _populationSumFitness[middle])
-            {
-                max = middle;
-            }
-
-            middle = Mathf.FloorToInt((min + max) / 2);
-        }*/
-
         return 0;
-    }
-
-    private int ExponentialSearchParent(float desiredFitness)
-    {
-        int bound = 1;
-
-        while (bound < _populationSize && _population[bound]._fitnessValue < desiredFitness)
-        {
-            numberOfIterations++;
-            bound *= 2;
-        }
-
-        return BinarySearchParent(desiredFitness, bound / 2, Mathf.Min(bound + 1, _populationSize - 1));
-    }
-
-    private int BinarySearchParent(float desiredFitness, int min, int max)
-    {
-        int middle = Mathf.FloorToInt((min + max) / 2);
-
-        if (desiredFitness <= _populationSumFitness[min])
-        {
-            return min;
-        }
-
-        if (desiredFitness <= _populationSumFitness[max] && desiredFitness > _populationSumFitness[max - 1])
-        {
-            return max;
-        }
-
-        while (min < max)
-        {
-            numberOfIterations++;
-
-            if (desiredFitness <= _populationSumFitness[middle] && desiredFitness > _populationSumFitness[middle - 1])
-            {
-                return middle;
-            }
-
-            if (desiredFitness > _populationSumFitness[middle])
-            {
-                min = middle;
-            }
-
-            if (desiredFitness < _populationSumFitness[middle])
-            {
-                max = middle;
-            }
-
-            middle = Mathf.FloorToInt((min + max) / 2);
-        }
-
-        return 0;
-    }
-
-    private void Crossover()
-    {
-
-    }
-
-    private void Mutation()
-    {
-
     }
 
     private void UpdatePopulationFitness()
     {
-        _population = _population.OrderBy(c => c._fitnessValue).ToArray();
+        _population = _population.OrderBy(c => c._fitnessValue).ToArray();  
         _populationFitness = 0;
 
         fittestCreature = _population[0];
