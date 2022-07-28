@@ -6,38 +6,58 @@ public abstract class Projectile : MonoBehaviour
 {
     public enum Type
     {
-        Basic,
-        Fast,
+        Bullet,
         Count
     }
 
-    public Weapon weapon;
-    public Entity owner;
-
-    [SerializeField]
-    private LayerMask _entityLayer;
-    [SerializeField]
-    private LayerMask _obstacleLayer;
-    
-    [SerializeField]
-    protected float _damage;
-    [SerializeField]
-    protected float _speed;
-    protected Vector2 _direction;
-    protected CircleCollider2D _collider2D;
-
-    private void Awake()
+    [System.Serializable]
+    public struct ProjectileData
     {
-        _collider2D = GetComponent<CircleCollider2D>();
+        public float speed;
+        public float damage;
+        public Vector2 size;
+        public Color color;
+    }
+
+    [SerializeField]
+    protected LayerMask _obstacleLayer;
+
+    protected Weapon _weapon;
+    protected Entity _owner;
+
+    protected ProjectileData _data;
+    protected Vector2 _direction;
+    protected LayerMask _entityLayer;
+    protected SpriteRenderer _spriteRenderer;
+
+    protected void Awake()
+    {
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
     }
 
     public void Initialize(Weapon weapon, Vector2 direction)
     {
-        this.weapon = weapon;
         _direction = direction;
-        transform.position = this.weapon.transform.position;
-        owner = this.weapon.owner;
-        _entityLayer = owner.enemyLayerMask;
+        _weapon = weapon;
+        _owner = _weapon.owner;
+        _data = _weapon.ProjectileData;
+
+        _entityLayer = _owner.enemyLayerMask;
+        transform.localScale = _data.size;
+        transform.position = _weapon.transform.position;
+
+        if (_spriteRenderer == null)
+        {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.color = _data.color;
+        }
     }
 
     /// <summary>
@@ -52,26 +72,7 @@ public abstract class Projectile : MonoBehaviour
     /// </summary>
     protected abstract void UnregisterToOwnerEvents();
 
-    protected virtual void CheckCollision()
-    {
-        Collider2D hitCollider = Physics2D.OverlapCircle(transform.position, _collider2D.radius, _obstacleLayer | _entityLayer);
-
-        if (hitCollider != null)
-        {
-            if (hitCollider.gameObject.tag == "Obstacle")
-            {
-                Destroy(gameObject);
-            } else
-            {
-                Entity hitEntity = hitCollider.gameObject.GetComponent<Entity>();
-
-                if (hitEntity != null)
-                {
-                    HitEntity(hitEntity);
-                }
-            }
-        }
-    }
+    protected abstract void CheckCollision();
 
     protected abstract void HitEntity(Entity entity);
 

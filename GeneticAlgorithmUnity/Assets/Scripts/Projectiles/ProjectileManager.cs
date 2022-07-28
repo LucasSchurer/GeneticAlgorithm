@@ -6,9 +6,7 @@ public class ProjectileManager : MonoBehaviour
 {
     [Header("Prefabs")]
     [SerializeField]
-    private BasicProjectile _basicProjectile;
-    [SerializeField]
-    private BasicProjectile _fastProjectile;
+    private Bullet _bullet;
 
     [Header("References")]
     [SerializeField]
@@ -42,15 +40,10 @@ public class ProjectileManager : MonoBehaviour
     {
         switch (type)
         {
-            case Projectile.Type.Basic:
-                Projectile basic = Instantiate(_basicProjectile, _projectileContainer);
-                basic.Initialize(owner, direction);
-                return basic;
-
-            case Projectile.Type.Fast:
-                Projectile fast = Instantiate(_fastProjectile, _projectileContainer);
-                fast.Initialize(owner, direction);
-                return fast;
+            case Projectile.Type.Bullet:
+                Projectile bullet = Instantiate(_bullet, _projectileContainer);
+                bullet.Initialize(owner, direction);
+                return bullet;
 
             default:
                 return null;

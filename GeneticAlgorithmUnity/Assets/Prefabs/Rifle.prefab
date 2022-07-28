@@ -44,5 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  damage: 1
   _rateOfFire: 0.2
+  _projectileData:
+    speed: 20
+    damage: 1
+    size: {x: 0.1, y: 0.1}
+    color: {r: 1, g: 1, b: 1, a: 1}

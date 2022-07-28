@@ -398,7 +398,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6684871066796294434, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
       propertyPath: _rateOfFire
-      value: 0.4
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6684871066796294434, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
+      propertyPath: _projectileData.color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6684871066796294435, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
       propertyPath: m_RootOrder
@@ -491,8 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6375376f93a40a144bbd91c0e6462675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _basicProjectile: {fileID: 2943601170649728300, guid: 4ad6561f5758cfa4a9d1b6c319c619ba, type: 3}
-  _fastProjectile: {fileID: 8135481286546061200, guid: 67cb963784987074f8d65d9e8ac10e68, type: 3}
+  _bullet: {fileID: 6205352384448318813, guid: f578d66bdfd8d9a4d81cfab2fc5799f4, type: 3}
   _projectileContainer: {fileID: 1178869344}
 --- !u!4 &459160920
 Transform:

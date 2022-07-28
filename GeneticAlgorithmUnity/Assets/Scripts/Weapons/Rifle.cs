@@ -11,7 +11,7 @@ public class Rifle : Weapon
             return;
         }
 
-        ProjectileManager.Instance.SpawnProjectile(this, Projectile.Type.Basic, direction);
+        ProjectileManager.Instance.SpawnProjectile(this, Projectile.Type.Bullet, direction);
 
         _rateOfFireTimer = _rateOfFire;
     }

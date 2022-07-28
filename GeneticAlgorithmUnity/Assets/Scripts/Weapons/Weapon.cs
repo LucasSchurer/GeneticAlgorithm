@@ -11,11 +11,15 @@ public abstract class Weapon : MonoBehaviour
     }
 
     public Entity owner;
-    public float damage;
 
     [SerializeField]
     protected float _rateOfFire;
     protected float _rateOfFireTimer;
+
+    [SerializeField]
+    protected Projectile.ProjectileData _projectileData;
+
+    public Projectile.ProjectileData ProjectileData => _projectileData;
 
     /// <summary>
     /// Should be called after the component is instantiated.

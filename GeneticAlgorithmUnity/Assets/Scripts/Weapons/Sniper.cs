@@ -11,7 +11,7 @@ public class Sniper : Weapon
             return;
         }
 
-        ProjectileManager.Instance.SpawnProjectile(this, Projectile.Type.Fast, direction);
+        ProjectileManager.Instance.SpawnProjectile(this, Projectile.Type.Bullet, direction);
 
         _rateOfFireTimer = _rateOfFire;
     }
