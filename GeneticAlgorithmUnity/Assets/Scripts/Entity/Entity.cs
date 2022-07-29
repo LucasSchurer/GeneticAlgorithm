@@ -26,6 +26,7 @@ public abstract class Entity : MonoBehaviour
     protected Vector2 _position;
     [SerializeField]
     protected bool isDead = false;
+    public bool canMove = true;
 
     public float MovementSpeed => _movementSpeed;
 
@@ -65,5 +66,12 @@ public abstract class Entity : MonoBehaviour
     {
         isDead = true;
         gameObject.SetActive(false);
+    }
+
+    public void Knockback(Vector3 direction, float strength)
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        rb.AddForce(-transform.forward * strength, ForceMode.Impulse);
     }
 }

@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class Sniper : Weapon
 {
+    [SerializeField]
+    private Transform barrel;
+
+    [SerializeField]
+    private float _lockTime = 0.1f;
+    private bool _isLockingOnTarget = false;
+    private Vector3 _lockedTargetPosition;
+
+    [SerializeField]
+    private float _recoilStrength = 4f;
+
     private LineRenderer _lineRenderer;
-
-    public Vector3 direction;
-
+    
     private void Awake()
     {
         _lineRenderer = GetComponent<LineRenderer>();
@@ -15,14 +24,34 @@ public class Sniper : Weapon
 
     public override void Use(Vector2 direction)
     {
-        if (!CanShoot())
+        if (!CanShoot() || _isLockingOnTarget)
         {
             return;
         }
 
-        ProjectileManager.Instance.SpawnProjectile(this, Projectile.Type.Bullet, transform.forward);
+        _isLockingOnTarget = true;
+
+        StartCoroutine(LockAndFire());
+    }
+
+    private IEnumerator LockAndFire()
+    {
+        _lockedTargetPosition = barrel.position + (transform.forward * 20);
+        owner.canMove = false;
+
+        yield return new WaitForSeconds(_lockTime);
+
+        ProjectileManager.Instance.SpawnProjectile(this, barrel, Projectile.Type.Bullet);
+
+        yield return new WaitForSeconds(0.2f);
 
         _rateOfFireTimer = _rateOfFire;
+
+        ReduceAmmo();
+
+        owner.Knockback(Vector3.back, _recoilStrength);
+        _isLockingOnTarget = false;
+        owner.canMove = true;
     }
 
     protected override void Update()
@@ -44,12 +73,17 @@ public class Sniper : Weapon
 
     private void DrawLine()
     {
-        direction = transform.forward;
-
         if (_lineRenderer != null)
         {
-            _lineRenderer.SetPosition(0, transform.position);
-            _lineRenderer.SetPosition(1, transform.position + (transform.forward * 10));
+            if (_isLockingOnTarget)
+            {
+                _lineRenderer.SetPosition(1, _lockedTargetPosition);
+            } else
+            {
+                _lineRenderer.SetPosition(1, barrel.position + (transform.forward * 20));
+            }
+
+            _lineRenderer.SetPosition(0, barrel.position);
         }
     }
 }

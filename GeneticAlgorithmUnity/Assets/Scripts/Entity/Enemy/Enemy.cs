@@ -44,7 +44,7 @@ public class Enemy : Entity
     /// </summary>
     public void UpdateValues()
     {
-        GetComponent<SpriteRenderer>().color = this.chromosome.GetColor();
+        GetComponent<MeshRenderer>().material.color = this.chromosome.GetColor();
         _behaviour = chromosome.GetBehaviour();
         
         if (weapon != null)

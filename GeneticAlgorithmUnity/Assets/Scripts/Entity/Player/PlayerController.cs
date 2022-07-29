@@ -5,32 +5,42 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Player _player;
-    private Controller2D _controller2D;
+    private Rigidbody _rb;
+    private Vector3 _direction;
 
     private void Awake()
     {
         _player = GetComponent<Player>();
-        _controller2D = GetComponent<Controller2D>();
+        _rb = GetComponent<Rigidbody>();
         
     }
 
     private void Update()
     {
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        Move(input);
+        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        _direction.x = input.x;
+        _direction.z = input.z;
+        _direction.Normalize();
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
             UseWeapon();
         }
+    }
 
-        RotateWeapon();
+    private void FixedUpdate()
+    {
+        if (_player.canMove)
+        {
+            Move();
+            Rotate();
+        }
     }
 
     /// <summary>
     /// Returns the normalized mouse direction.
     /// </summary>
-    private Vector2 GetMouseDirection()
+    private Vector3 GetMouseDirection()
     {
         return (GetMousePosition() - transform.position).normalized;
     }
@@ -38,29 +48,34 @@ public class PlayerController : MonoBehaviour
     private Vector3 GetMousePosition()
     {
         Vector3 cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        cameraPosition.z = 0;
         return cameraPosition;
     }
 
-
-    private void Move(Vector2 direction)
+    private void Move()
     {
-        if (direction != Vector2.zero)
+        if (_direction != Vector3.zero)
         {
-            _controller2D.Move(direction * _player.MovementSpeed * Time.deltaTime);
+            _rb.AddForce(_direction * _player.MovementSpeed * 10f, ForceMode.Force);
+            _direction = Vector3.zero;
+        }
+    }
+
+    private void Rotate()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            Quaternion smoothRotation = Quaternion.LookRotation(hit.point - transform.position);
+
+            smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * 6);
+
+            transform.rotation = Quaternion.Euler(new Vector3(0, smoothRotation.eulerAngles.y));
         }
     }
 
     private void UseWeapon()
     {
         _player.weapon.Use(GetMouseDirection());
-    }
-
-    private void RotateWeapon()
-    {
-        if (_player.weapon != null)
-        {
-            _player.weapon.transform.LookAt(GetMousePosition());
-        }
     }
 }

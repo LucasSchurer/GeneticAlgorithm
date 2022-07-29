@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private Vector3 _velocity;
+    private Vector3 _direction;
 
     [SerializeField]
     private float _distanceBetweenEnemies = 10f;
@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
     private float _detectionRange = 10f;
 
     private Enemy _enemy;
-    private BoxController2D _controller2D;
+    private Rigidbody _rb;
 
     public bool followPlayer = false;
 
@@ -25,37 +25,45 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         _enemy = GetComponent<Enemy>();
-        _controller2D = GetComponent<BoxController2D>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
-        RotateWeapon();
         UseWeapon();
     }
 
-    private void RotateWeapon()
+    private void FixedUpdate()
     {
-        if (_enemy.weapon != null)
+        if (_enemy.canMove)
         {
-            _enemy.weapon.transform.LookAt(GameManager.Instance.PlayerPosition);
+            Move();
+            Rotate();
         }
+    }
+
+
+    private void Rotate()
+    {
+        Quaternion smoothRotation = Quaternion.LookRotation(GameManager.Instance.PlayerPosition - transform.position);
+
+        smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * 6);
+
+        transform.rotation = Quaternion.Euler(new Vector3(0, smoothRotation.eulerAngles.y));
     }
 
     private void UseWeapon()
     {
         if (_enemy.weapon != null && HasLineOfSight())
         {
-            Vector2 direction = (GameManager.Instance.PlayerPosition - transform.position).normalized;
-            _enemy.weapon.Use(direction);
+            _enemy.weapon.Use(Vector3.zero);
         }
     }
 
     private void Move()
     {
-        _velocity = Vector3.zero;
+        _direction = Vector3.zero;
 
         switch (_enemy.Behaviour)
         {
@@ -72,18 +80,19 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
-        if (_velocity != Vector3.zero)
+        if (_direction != Vector3.zero)
         {
-            _controller2D.Move(_velocity * Time.deltaTime * _enemy.MovementSpeed);
+            _rb.AddForce(_direction * _enemy.MovementSpeed * 10f, ForceMode.Force);
+            _direction = Vector3.zero;
         }
     }
 
     private void AggressiveMovement()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _distanceBetweenEnemies, LayerMask.GetMask("Enemy"));
+        Collider[] hits = Physics.OverlapSphere(transform.position, _distanceBetweenEnemies, LayerMask.GetMask("Enemy"));
         Vector3 direction = Vector3.zero;
 
-        foreach (Collider2D hit in hits)
+        foreach (Collider hit in hits)
         {
             if (hit.gameObject != this)
             {
@@ -98,15 +107,15 @@ public class EnemyController : MonoBehaviour
             direction += playerDirection;
         }
 
-        _velocity += direction.normalized;
+        _direction += direction.normalized;
     }
 
     private void CautiousMovement()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _distanceBetweenEnemies, LayerMask.GetMask("Enemy"));
+        Collider[] hits = Physics.OverlapSphere(transform.position, _distanceBetweenEnemies, LayerMask.GetMask("Enemy"));
         Vector3 direction = Vector3.zero;
 
-        foreach (Collider2D hit in hits)
+        foreach (Collider hit in hits)
         {
             if (hit.gameObject != this)
             {
@@ -125,15 +134,15 @@ public class EnemyController : MonoBehaviour
             direction -= playerDirection;
         }
 
-        _velocity += direction.normalized;
+        _direction += direction.normalized;
     }
 
     private void StationaryMovement()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _distanceBetweenEnemies, LayerMask.GetMask("Enemy"));
+        Collider[] hits = Physics.OverlapSphere(transform.position, _distanceBetweenEnemies, LayerMask.GetMask("Enemy"));
         Vector3 direction = Vector3.zero;
 
-        foreach (Collider2D hit in hits)
+        foreach (Collider hit in hits)
         {
             if (hit.gameObject != this)
             {
@@ -141,12 +150,11 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        _velocity += direction.normalized;
+        _direction += direction.normalized;
     }
 
     private bool HasLineOfSight()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, DirectionToPlayer, _detectionRange, _enemy.selfLayerMask | _enemy.obstacleLayerMask);
-        return !hit;
+        return !Physics.Raycast(transform.position, DirectionToPlayer, _detectionRange, _enemy.selfLayerMask | _enemy.obstacleLayerMask);
     }
 }

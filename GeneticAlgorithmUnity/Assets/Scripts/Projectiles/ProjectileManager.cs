@@ -36,13 +36,13 @@ public class ProjectileManager : MonoBehaviour
     /// <param name="user"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    public Projectile SpawnProjectile(Weapon owner, Projectile.Type type, Vector3 direction)
+    public Projectile SpawnProjectile(Weapon owner, Transform barrel, Projectile.Type type, Quaternion? customRotation = null)
     {
         switch (type)
         {
             case Projectile.Type.Bullet:
-                Projectile bullet = Instantiate(_bullet, _projectileContainer);
-                bullet.Initialize(owner, direction);
+                Projectile bullet = Instantiate(_bullet, barrel.position, customRotation ?? barrel.rotation, _projectileContainer);
+                bullet.Initialize(owner);
                 return bullet;
 
             default:

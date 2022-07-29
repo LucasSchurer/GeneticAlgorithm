@@ -72,7 +72,7 @@ public class EnemyPopulationHandler : MonoBehaviour
 
     private Vector2 GetSpawnPosition()
     {
-        return new Vector2(Random.Range(-_arenaSize.x / 2, _arenaSize.x / 2), Random.Range(-_arenaSize.y / 2, _arenaSize.y / 2));
+        return new Vector3(Random.Range(-_arenaSize.x / 2, _arenaSize.x / 2), 0.6f, Random.Range(-_arenaSize.y / 2, _arenaSize.y / 2));
     }
 
     private IEnumerator Respawn()

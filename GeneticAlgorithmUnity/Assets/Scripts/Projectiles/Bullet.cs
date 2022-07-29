@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class Bullet : Projectile
 {
-    private CircleCollider2D _collider2D;
-
-    private void Awake()
-    {
-        _collider2D = GetComponent<CircleCollider2D>();
-    }
-
     private void Update()
     {
-        CheckCollision();
-        transform.Translate(_direction * _data.speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * _data.speed * Time.deltaTime);
     }
 
     protected override void RegisterToOwnerEvents()
@@ -33,23 +25,19 @@ public class Bullet : Projectile
         Destroy(gameObject);
     }
 
-    protected override void CheckCollision()
+    private void OnCollisionEnter(Collision collision)
     {
-        Collider2D hitCollider = Physics2D.OverlapCircle(transform.position, _collider2D.radius, _obstacleLayer | _entityLayer);
-
-        if (hitCollider != null)
+        if (((_obstacleLayer.value | _entityLayer.value) & (1 << collision.transform.gameObject.layer)) > 0)
         {
-            if (hitCollider.gameObject.tag == "Obstacle")
+            if (collision.gameObject.tag == "Obstacle")
             {
                 Destroy(gameObject);
-            }
-            else
+            } else
             {
-                Entity hitEntity = hitCollider.gameObject.GetComponent<Entity>();
-
-                if (hitEntity != null)
+                Entity entity = collision.gameObject.GetComponent<Entity>();
+                if (entity != null)
                 {
-                    HitEntity(hitEntity);
+                    HitEntity(entity);
                 }
             }
         }

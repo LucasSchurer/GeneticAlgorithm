@@ -17,6 +17,15 @@ public abstract class Weapon : MonoBehaviour
     protected float _rateOfFireTimer;
 
     [SerializeField]
+    protected int _maxAmmo;
+    [SerializeField]
+    protected int _currentAmmo;
+
+    [SerializeField]
+    protected float _reloadTime;
+    protected bool _isReloading = false;
+
+    [SerializeField]
     protected Projectile.ProjectileData _projectileData;
 
     public Projectile.ProjectileData ProjectileData => _projectileData;
@@ -46,15 +55,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual bool CanShoot()
     {
-        return _rateOfFireTimer <= 0;
-    }
-
-    protected virtual void UpdateRateOfFireTimer()
-    {
-        if (_rateOfFireTimer > 0)
-        {
-            _rateOfFireTimer -= Time.deltaTime;
-        }
+        return _rateOfFireTimer <= 0 && !_isReloading;
     }
 
     /// <summary>
@@ -77,5 +78,25 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void OnDisable()
     {
         UnregisterToOwnerEvents();
+    }
+
+    protected IEnumerator Reload()
+    {
+        _isReloading = true;
+
+        yield return new WaitForSeconds(_reloadTime);
+
+        _isReloading = false;
+        _currentAmmo = _maxAmmo;
+    }
+
+    protected void ReduceAmmo()
+    {
+        _currentAmmo--;
+
+        if (_currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+        }
     }
 }

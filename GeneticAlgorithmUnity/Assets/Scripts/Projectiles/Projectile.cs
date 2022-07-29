@@ -15,7 +15,7 @@ public abstract class Projectile : MonoBehaviour
     {
         public float speed;
         public float damage;
-        public Vector2 size;
+        public Vector3 size;
         public Color color;
         public float range;
     }
@@ -26,39 +26,28 @@ public abstract class Projectile : MonoBehaviour
     protected Weapon _weapon;
     protected Entity _owner;
 
+    protected Rigidbody _rb;
     protected ProjectileData _data;
-    protected Vector2 _direction;
+    [SerializeField]
     protected LayerMask _entityLayer;
-    protected SpriteRenderer _spriteRenderer;
 
     protected void Awake()
     {
-        if (_spriteRenderer != null)
+        if (_rb == null)
         {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _rb = GetComponent<Rigidbody>();
         }
     }
 
-    public void Initialize(Weapon weapon, Vector2 direction)
+    public void Initialize(Weapon weapon)
     {
-        _direction = direction;
         _weapon = weapon;
         _owner = _weapon.owner;
         _data = _weapon.ProjectileData;
 
-        _entityLayer = _owner.enemyLayerMask;
         transform.localScale = _data.size;
-        transform.position = _weapon.transform.position;
 
-        if (_spriteRenderer == null)
-        {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-
-        if (_spriteRenderer != null)
-        {
-            _spriteRenderer.color = _data.color;
-        }
+        _entityLayer = _owner.enemyLayerMask;
     }
 
     /// <summary>
@@ -72,8 +61,6 @@ public abstract class Projectile : MonoBehaviour
     /// OnDisable()
     /// </summary>
     protected abstract void UnregisterToOwnerEvents();
-
-    protected abstract void CheckCollision();
 
     protected abstract void HitEntity(Entity entity);
 
