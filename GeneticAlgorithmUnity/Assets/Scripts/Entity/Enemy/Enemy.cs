@@ -56,19 +56,12 @@ public class Enemy : Entity
 
     public void UpdateFitness()
     {
-        _fitness = 1 / statistics.projectilesFired;
+        _fitness = 1 / _statistics.projectilesFired;
     }
 
     private void Update()
     {
-        statistics.timeAlive += Time.deltaTime;
-    }
-
-    protected override void Killed()
-    {
-        isDead = true;
-
-        StartCoroutine(DeathAnimation());
+        _statistics.timeAlive += Time.deltaTime;
     }
 
     private IEnumerator DeathAnimation()
@@ -93,28 +86,38 @@ public class Enemy : Entity
         yield return new WaitForSeconds(4f);
     }
 
-    protected override void OnHitEvent(Entity entity, float damage, Projectile projectile = null)
+    protected override void OnHitEvent(Entity target, float damage, Projectile projectile = null)
     {
-        throw new System.NotImplementedException();
+        if (target.tag == "Enemy")
+        {
+            _statistics.friendlyFireHits++;
+        } else
+        {
+            _statistics.hitCount++;
+            _statistics.damageDealt += damage;
+        }
     }
 
-    protected override void WhenHitEvent(Entity entity, float damage, Projectile projectile = null)
+    protected override void WhenHitEvent(Entity attacker, float damage, Projectile projectile = null)
     {
-        throw new System.NotImplementedException();
+        ReceiveDamage(attacker, damage, projectile);
+        _statistics.damageTaken += damage;
     }
 
-    protected override void OnKillEvent(Entity entity, Projectile projectile = null)
+    protected override void OnKillEvent(Entity target, Projectile projectile = null)
     {
-        
+        _statistics.killCount++;
     }
 
-    protected override void WhenKilledEvent(Entity entity, Projectile projectile = null)
+    protected override void WhenKilledEvent(Entity attacker, Projectile projectile = null)
     {
-        throw new System.NotImplementedException();
+        isDead = true;
+        _statistics.deathCount++;
+        StartCoroutine(DeathAnimation());
     }
 
     protected override void OnWeaponFiredEvent()
     {
-        throw new System.NotImplementedException();
+        _statistics.projectilesFired++;
     }
 }

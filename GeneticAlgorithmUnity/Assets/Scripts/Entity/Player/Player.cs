@@ -4,33 +4,29 @@ using UnityEngine;
 
 public class Player : Entity
 {
-    protected override void Killed()
+    protected override void OnHitEvent(Entity target, float damage, Projectile projectile = null)
     {
-        
+        _statistics.damageDealt += damage;
     }
 
-    protected override void OnHitEvent(Entity entity, float damage, Projectile projectile = null)
+    protected override void OnKillEvent(Entity target, Projectile projectile = null)
     {
-        
-    }
-
-    protected override void OnKillEvent(Entity entity, Projectile projectile = null)
-    {
-        throw new System.NotImplementedException();
+        _statistics.killCount++;
     }
 
     protected override void OnWeaponFiredEvent()
     {
-        throw new System.NotImplementedException();
+        _statistics.projectilesFired++;
     }
 
-    protected override void WhenHitEvent(Entity entity, float damage, Projectile projectile = null)
+    protected override void WhenHitEvent(Entity attacker, float damage, Projectile projectile = null)
     {
-        throw new System.NotImplementedException();
+        /*ReceiveDamage(attacker, damage, projectile);*/
+        _statistics.damageTaken += damage;
     }
 
-    protected override void WhenKilledEvent(Entity entity, Projectile projectile = null)
+    protected override void WhenKilledEvent(Entity attacker, Projectile projectile = null)
     {
-        throw new System.NotImplementedException();
+        _statistics.deathCount++;
     }
 }

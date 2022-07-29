@@ -19,14 +19,6 @@ public class Bullet : Projectile
 
     }
 
-    protected override void HitEntity(Entity entity)
-    {
-        _owner.onHit?.Invoke(entity, _data.damage, this);
-        entity.whenHit?.Invoke(_owner, _data.damage, this);
-        entity.Damage(_owner, _data.damage);
-        Destroy(gameObject);
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (((_obstacleLayer.value | _entityLayer.value) & (1 << collision.transform.gameObject.layer)) > 0)

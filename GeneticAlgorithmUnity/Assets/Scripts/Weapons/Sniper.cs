@@ -43,6 +43,8 @@ public class Sniper : Weapon
 
         ProjectileManager.Instance.SpawnProjectile(this, barrel, Projectile.Type.Bullet);
 
+        owner.onWeaponFired?.Invoke();
+
         yield return new WaitForSeconds(0.1f);
 
         _rateOfFireTimer = _rateOfFire;

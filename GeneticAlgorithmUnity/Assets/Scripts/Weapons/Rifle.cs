@@ -22,6 +22,7 @@ public class Rifle : Weapon
         Quaternion randomBulletDirection = Quaternion.Euler(barrel.rotation.eulerAngles.x, yAngle, barrel.rotation.eulerAngles.z);
 
         ProjectileManager.Instance.SpawnProjectile(this, barrel, Projectile.Type.Bullet, randomBulletDirection);
+        owner.onWeaponFired?.Invoke();
 
         _rateOfFireTimer = _rateOfFire;
         ReduceAmmo();

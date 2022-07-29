@@ -62,7 +62,16 @@ public abstract class Projectile : MonoBehaviour
     /// </summary>
     protected abstract void UnregisterToOwnerEvents();
 
-    protected abstract void HitEntity(Entity entity);
+    /// <summary>
+    /// Invoke the onHit and whenHit events and destroy the projectile.
+    /// </summary>
+    /// <param name="entity"></param>
+    protected virtual void HitEntity(Entity entity)
+    {
+        _owner.onHit?.Invoke(entity, _data.damage, this);
+        entity.whenHit?.Invoke(_owner, _data.damage, this);
+        Destroy(gameObject);
+    }
 
     protected virtual void OnEnable()
     {

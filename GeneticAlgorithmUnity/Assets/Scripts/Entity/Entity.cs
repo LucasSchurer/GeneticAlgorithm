@@ -19,15 +19,18 @@ public abstract class Entity : MonoBehaviour
     public delegate void OnWeaponFired();
     public OnWeaponFired onWeaponFired;
 
-    public struct Statistics
+    [System.Serializable]
+    public struct EntityStatistics
     {
         public float timeAlive;
         public float damageTaken;
         public float damageDealt;
-        public float projectilesFired;
-        public float projectilesTaken;
-        public float hitCount;
-        public float friendlyFireHits;
+        public int projectilesFired;
+        public int projectilesTaken;
+        public int hitCount;
+        public int friendlyFireHits;
+        public int killCount;
+        public int deathCount;
         public float Accuracy => hitCount / projectilesFired;
     }
 
@@ -43,7 +46,10 @@ public abstract class Entity : MonoBehaviour
     public bool isDead = false;
     public bool canMove = true;
 
-    public Statistics statistics;
+    [SerializeField]
+    protected EntityStatistics _statistics;
+
+    public EntityStatistics Statistics => _statistics;
 
     public float MovementSpeed => _movementSpeed;
 
@@ -53,10 +59,10 @@ public abstract class Entity : MonoBehaviour
     public LayerMask selfLayerMask;
     public LayerMask obstacleLayerMask;
 
-    protected abstract void OnHitEvent(Entity entity, float damage, Projectile projectile = null);
-    protected abstract void WhenHitEvent(Entity entity, float damage, Projectile projectile = null);
-    protected abstract void OnKillEvent(Entity entity, Projectile projectile = null);
-    protected abstract void WhenKilledEvent(Entity entity, Projectile projectile = null);
+    protected abstract void OnHitEvent(Entity target, float damage, Projectile projectile = null);
+    protected abstract void WhenHitEvent(Entity attacker, float damage, Projectile projectile = null);
+    protected abstract void OnKillEvent(Entity target, Projectile projectile = null);
+    protected abstract void WhenKilledEvent(Entity attacker, Projectile projectile = null);
     protected abstract void OnWeaponFiredEvent();
     protected virtual void RegisterToEvents()
     {
@@ -85,37 +91,33 @@ public abstract class Entity : MonoBehaviour
         UnregisterToEvents();
     }
 
-    public virtual void Damage(Entity source, float damage)
+    /// <summary>
+    /// Method to damage an entity. 
+    /// Should by called by the attacked entity.
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="damage"></param>
+    /// <param name="projectile"></param>
+    protected virtual void ReceiveDamage(Entity attacker, float damage, Projectile projectile = null)
     {
-        if (isDead)
-        {
-            return;
-        }
-
         if (damage > 0)
         {
             _health -= damage;
 
             if (_health <= 0)
             {
-                whenKilled?.Invoke(source);
-                source.onKill?.Invoke(source);
+                whenKilled?.Invoke(attacker, projectile);
+                attacker.onKill?.Invoke(this, projectile);
             }
         }
     }
 
-    public virtual void Heal(Entity source, float healing)
+    protected virtual void Heal(Entity source, float healing)
     {
         if (healing > 0)
         {
             _health = Mathf.Clamp(_health + healing, 0, _maxHealth);
         }
-    }
-
-    protected virtual void Killed()
-    {
-        isDead = true;
-        gameObject.SetActive(false);
     }
 
     public void Knockback(Vector3 direction, float strength)

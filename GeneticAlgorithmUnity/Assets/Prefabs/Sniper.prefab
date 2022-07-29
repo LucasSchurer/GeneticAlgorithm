@@ -128,8 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   _rateOfFire: 1
-  _maxAmmo: 3
-  _currentAmmo: 3
+  _maxAmmo: 0
+  _currentAmmo: 0
   _reloadTime: 4
   _projectileData:
     speed: 70

@@ -362,7 +362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7172801744424597003, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
       propertyPath: _rateOfFire
-      value: 0.1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7172801744424597003, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
       propertyPath: _bulletDirectionVariation
@@ -507,7 +507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3795117043649526009, guid: 18ff369da945a6847933b0bee3c4a83d, type: 3}
       propertyPath: _enemiesPerWave
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ff369da945a6847933b0bee3c4a83d, type: 3}
