@@ -46,8 +46,6 @@ public class Sniper : Weapon
         yield return new WaitForSeconds(0.1f);
 
         _rateOfFireTimer = _rateOfFire;
-
-        owner.projectilesFired++;
         ReduceAmmo();
 
         owner.Knockback(Vector3.back, _recoilStrength);

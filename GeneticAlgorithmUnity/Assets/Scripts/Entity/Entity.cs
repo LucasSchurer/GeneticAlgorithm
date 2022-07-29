@@ -4,20 +4,32 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    public delegate void OnHit(Entity self, Entity other, float damage);
+    public delegate void OnHit(Entity entity, float damage, Projectile projectile = null);
     public OnHit onHit;
 
-    public delegate void WhenHit(Entity self, Entity other, float damage);
+    public delegate void WhenHit(Entity entity, float damage, Projectile projectile = null);
     public WhenHit whenHit;
 
-    public delegate void OnKill(Entity self, Entity other);
+    public delegate void OnKill(Entity entity, Projectile projectile = null);
     public OnKill onKill;
 
-    public delegate void WhenKilled(Entity self, Entity other);
+    public delegate void WhenKilled(Entity entity, Projectile projectile = null);
     public WhenKilled whenKilled;
 
     public delegate void OnWeaponFired();
     public OnWeaponFired onWeaponFired;
+
+    public struct Statistics
+    {
+        public float timeAlive;
+        public float damageTaken;
+        public float damageDealt;
+        public float projectilesFired;
+        public float projectilesTaken;
+        public float hitCount;
+        public float friendlyFireHits;
+        public float Accuracy => hitCount / projectilesFired;
+    }
 
     [SerializeField]
     protected float _health;
@@ -31,14 +43,7 @@ public abstract class Entity : MonoBehaviour
     public bool isDead = false;
     public bool canMove = true;
 
-    public float timeAlive = 0f;
-    public float damageTaken = 0f;
-    public float damageDealt = 0f;
-    public float projectilesFired = 0f;
-    public float hitCount = 0f;
-    public float friendlyFireHits = 0f;
-
-    public float Accuracy => hitCount / projectilesFired;
+    public Statistics statistics;
 
     public float MovementSpeed => _movementSpeed;
 
@@ -47,6 +52,38 @@ public abstract class Entity : MonoBehaviour
     public LayerMask enemyLayerMask;
     public LayerMask selfLayerMask;
     public LayerMask obstacleLayerMask;
+
+    protected abstract void OnHitEvent(Entity entity, float damage, Projectile projectile = null);
+    protected abstract void WhenHitEvent(Entity entity, float damage, Projectile projectile = null);
+    protected abstract void OnKillEvent(Entity entity, Projectile projectile = null);
+    protected abstract void WhenKilledEvent(Entity entity, Projectile projectile = null);
+    protected abstract void OnWeaponFiredEvent();
+    protected virtual void RegisterToEvents()
+    {
+        onHit += OnHitEvent;
+        whenHit += WhenHitEvent;
+        onKill += OnKillEvent;
+        whenKilled += WhenKilledEvent;
+        onWeaponFired += OnWeaponFiredEvent;
+    }
+    protected virtual void UnregisterToEvents()
+    {
+        onHit -= OnHitEvent;
+        whenHit -= WhenHitEvent;
+        onKill -= OnKillEvent;
+        whenKilled -= WhenKilledEvent;
+        onWeaponFired -= OnWeaponFiredEvent;
+    }
+
+    protected virtual void OnEnable()
+    {
+        RegisterToEvents();
+    }
+
+    protected virtual void OnDisable()
+    {
+        UnregisterToEvents();
+    }
 
     public virtual void Damage(Entity source, float damage)
     {
@@ -59,14 +96,10 @@ public abstract class Entity : MonoBehaviour
         {
             _health -= damage;
 
-            whenHit?.Invoke(this, source, damage);
-            source.onHit?.Invoke(source, this, damage);
-
             if (_health <= 0)
             {
-                whenKilled?.Invoke(this, source);
-                source.onKill?.Invoke(source, this);
-                Killed();
+                whenKilled?.Invoke(source);
+                source.onKill?.Invoke(source);
             }
         }
     }

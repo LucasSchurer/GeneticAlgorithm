@@ -56,34 +56,12 @@ public class Enemy : Entity
 
     public void UpdateFitness()
     {
-        _fitness = 1/projectilesFired;
-    }
-
-    private void WhenDamageTaken(Entity self, Entity other, float damage)
-    {
-        damageTaken += damage;
-    }
-
-    private void WhenDamageDealt(Entity self, Entity other, float damage)
-    {
-        damageDealt += damage;
+        _fitness = 1 / statistics.projectilesFired;
     }
 
     private void Update()
     {
-        timeAlive += Time.deltaTime;
-    }
-
-    private void OnEnable()
-    {
-        whenHit += WhenDamageTaken;
-        onHit += WhenDamageDealt;
-    }
-
-    private void OnDisable()
-    {
-        whenHit -= WhenDamageTaken;
-        onHit -= WhenDamageDealt;
+        statistics.timeAlive += Time.deltaTime;
     }
 
     protected override void Killed()
@@ -113,5 +91,30 @@ public class Enemy : Entity
         gameObject.layer = LayerMask.NameToLayer("Nothing");
 
         yield return new WaitForSeconds(4f);
+    }
+
+    protected override void OnHitEvent(Entity entity, float damage, Projectile projectile = null)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void WhenHitEvent(Entity entity, float damage, Projectile projectile = null)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void OnKillEvent(Entity entity, Projectile projectile = null)
+    {
+        
+    }
+
+    protected override void WhenKilledEvent(Entity entity, Projectile projectile = null)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void OnWeaponFiredEvent()
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -24,8 +24,6 @@ public class Rifle : Weapon
         ProjectileManager.Instance.SpawnProjectile(this, barrel, Projectile.Type.Bullet, randomBulletDirection);
 
         _rateOfFireTimer = _rateOfFire;
-
-        owner.projectilesFired++;
         ReduceAmmo();
     }
 

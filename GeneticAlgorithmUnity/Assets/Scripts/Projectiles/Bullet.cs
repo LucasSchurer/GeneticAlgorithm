@@ -21,6 +21,8 @@ public class Bullet : Projectile
 
     protected override void HitEntity(Entity entity)
     {
+        _owner.onHit?.Invoke(entity, _data.damage, this);
+        entity.whenHit?.Invoke(_owner, _data.damage, this);
         entity.Damage(_owner, _data.damage);
         Destroy(gameObject);
     }
@@ -38,7 +40,6 @@ public class Bullet : Projectile
                 if (entity != null)
                 {
                     HitEntity(entity);
-                    _owner.hitCount++;
                 }
             }
         }
