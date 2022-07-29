@@ -56,7 +56,7 @@ public class Enemy : Entity
 
     public void UpdateFitness()
     {
-        _fitness = 1 / _statistics.projectilesFired;
+        _fitness = _statistics.damageDealt;
     }
 
     private void Update()
@@ -88,9 +88,9 @@ public class Enemy : Entity
 
     protected override void OnHitEvent(Entity target, float damage, Projectile projectile = null)
     {
-        if (target.tag == "Enemy")
+        if (target.tag == tag)
         {
-            _statistics.friendlyFireHits++;
+            _statistics.friendlyFireHitCount++;
         } else
         {
             _statistics.hitCount++;
@@ -100,8 +100,11 @@ public class Enemy : Entity
 
     protected override void WhenHitEvent(Entity attacker, float damage, Projectile projectile = null)
     {
-        ReceiveDamage(attacker, damage, projectile);
-        _statistics.damageTaken += damage;
+        if (attacker.tag != tag)
+        {
+            ReceiveDamage(attacker, damage, projectile);
+            _statistics.damageTaken += damage;
+        }
     }
 
     protected override void OnKillEvent(Entity target, Projectile projectile = null)

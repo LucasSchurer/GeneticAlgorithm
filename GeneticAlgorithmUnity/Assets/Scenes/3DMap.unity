@@ -362,7 +362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7172801744424597003, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
       propertyPath: _rateOfFire
-      value: 2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7172801744424597003, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
       propertyPath: _bulletDirectionVariation
@@ -507,7 +507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3795117043649526009, guid: 18ff369da945a6847933b0bee3c4a83d, type: 3}
       propertyPath: _enemiesPerWave
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ff369da945a6847933b0bee3c4a83d, type: 3}
@@ -1743,6 +1743,16 @@ MonoBehaviour:
   _position: {x: 0, y: 0}
   isDead: 0
   canMove: 1
+  _statistics:
+    timeAlive: 0
+    damageTaken: 0
+    damageDealt: 0
+    projectilesFired: 0
+    projectilesTaken: 0
+    hitCount: 0
+    friendlyFireHits: 0
+    killCount: 0
+    deathCount: 0
   weapon: {fileID: 444137330}
   enemyLayerMask:
     serializedVersion: 2

@@ -5,9 +5,6 @@ using UnityEngine;
 public class Sniper : Weapon
 {
     [SerializeField]
-    private Transform barrel;
-
-    [SerializeField]
     private float _lockTime = 0.1f;
     private bool _isLockingOnTarget = false;
     private Vector3 _lockedTargetPosition;
@@ -22,9 +19,9 @@ public class Sniper : Weapon
         _lineRenderer = GetComponent<LineRenderer>();
     }
 
-    public override void Use(Vector2 direction)
+    public override void Fire()
     {
-        if (!CanShoot() || _isLockingOnTarget)
+        if (!CanShoot())
         {
             return;
         }
@@ -34,14 +31,19 @@ public class Sniper : Weapon
         StartCoroutine(LockAndFire());
     }
 
+    protected override bool CanShoot()
+    {
+        return base.CanShoot() && !_isLockingOnTarget;
+    }
+
     private IEnumerator LockAndFire()
     {
-        _lockedTargetPosition = barrel.position + (transform.forward * 20);
+        _lockedTargetPosition = _barrel.position + (transform.forward * 20);
         owner.canMove = false;
 
         yield return new WaitForSeconds(_lockTime);
 
-        ProjectileManager.Instance.SpawnProjectile(this, barrel, Projectile.Type.Bullet);
+        ProjectileManager.Instance.SpawnProjectile(this, _barrel, Projectile.Type.Bullet);
 
         owner.onWeaponFired?.Invoke();
 
@@ -62,16 +64,6 @@ public class Sniper : Weapon
         DrawLine();
     }
 
-    protected override void RegisterToOwnerEvents()
-    {
-        
-    }
-
-    protected override void UnregisterToOwnerEvents()
-    {
-        
-    }
-
     private void DrawLine()
     {
         if (_lineRenderer != null)
@@ -81,10 +73,10 @@ public class Sniper : Weapon
                 _lineRenderer.SetPosition(1, _lockedTargetPosition);
             } else
             {
-                _lineRenderer.SetPosition(1, barrel.position + (transform.forward * 20));
+                _lineRenderer.SetPosition(1, _barrel.position + (transform.forward * 20));
             }
 
-            _lineRenderer.SetPosition(0, barrel.position);
+            _lineRenderer.SetPosition(0, _barrel.position);
         }
     }
 }

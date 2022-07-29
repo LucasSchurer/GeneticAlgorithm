@@ -9,24 +9,15 @@ public class Bullet : Projectile
         transform.Translate(Vector3.forward * _data.speed * Time.deltaTime);
     }
 
-    protected override void RegisterToOwnerEvents()
-    {
-
-    }
-
-    protected override void UnregisterToOwnerEvents()
-    {
-
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if (((_obstacleLayer.value | _entityLayer.value) & (1 << collision.transform.gameObject.layer)) > 0)
+        if (((_owner.obstacleLayerMask.value | _owner.enemyLayerMask.value | _owner.selfLayerMask) & (1 << collision.transform.gameObject.layer)) > 0)
         {
             if (collision.gameObject.tag == "Obstacle")
             {
                 Destroy(gameObject);
-            } else
+            }
+            else
             {
                 Entity entity = collision.gameObject.GetComponent<Entity>();
                 if (entity != null)

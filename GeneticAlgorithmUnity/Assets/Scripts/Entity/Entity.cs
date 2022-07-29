@@ -27,8 +27,8 @@ public abstract class Entity : MonoBehaviour
         public float damageDealt;
         public int projectilesFired;
         public int projectilesTaken;
+        public int friendlyFireHitCount;
         public int hitCount;
-        public int friendlyFireHits;
         public int killCount;
         public int deathCount;
         public float Accuracy => hitCount / projectilesFired;

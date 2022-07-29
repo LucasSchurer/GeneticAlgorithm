@@ -60,7 +60,7 @@ public class EnemyController : MonoBehaviour
     {
         if (_enemy.weapon != null && HasLineOfSight())
         {
-            _enemy.weapon.Use(Vector3.zero);
+            _enemy.weapon.Fire();
         }
     }
 

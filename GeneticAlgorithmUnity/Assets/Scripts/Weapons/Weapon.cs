@@ -26,6 +26,9 @@ public abstract class Weapon : MonoBehaviour
     protected bool _isReloading = false;
 
     [SerializeField]
+    protected Transform _barrel;
+
+    [SerializeField]
     protected Projectile.ProjectileData _projectileData;
 
     public Projectile.ProjectileData ProjectileData => _projectileData;
@@ -47,37 +50,11 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Use a weapon, usually creating a projectile to a direction.
-    /// </summary>
-    /// <param name="direction"></param>
-    public abstract void Use(Vector2 direction);
+    public abstract void Fire();
 
     protected virtual bool CanShoot()
     {
         return _rateOfFireTimer <= 0 && !_isReloading;
-    }
-
-    /// <summary>
-    /// Use to register to the owner's events. Is called on 
-    /// OnEnable()
-    /// </summary>
-    protected abstract void RegisterToOwnerEvents();
-
-    /// <summary>
-    /// Use to unregister to the owner's events. Is called on 
-    /// OnDisable()
-    /// </summary>
-    protected abstract void UnregisterToOwnerEvents();
-
-    protected virtual void OnEnable()
-    {
-        RegisterToOwnerEvents();
-    }
-
-    protected virtual void OnDisable()
-    {
-        UnregisterToOwnerEvents();
     }
 
     protected IEnumerator Reload()

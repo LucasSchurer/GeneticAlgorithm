@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 2302758236936240491}
   m_Layer: 8
   m_Name: Enemy3D
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -603,6 +603,16 @@ MonoBehaviour:
   _position: {x: 0, y: 0}
   isDead: 0
   canMove: 1
+  _statistics:
+    timeAlive: 0
+    damageTaken: 0
+    damageDealt: 0
+    projectilesFired: 0
+    projectilesTaken: 0
+    hitCount: 0
+    friendlyFireHits: 0
+    killCount: 0
+    deathCount: 0
   weapon: {fileID: 0}
   enemyLayerMask:
     serializedVersion: 2
@@ -626,9 +636,6 @@ MonoBehaviour:
   _mutationRate: 0.2
   _behaviour: 0
   _desiredColor: {r: 0, g: 1, b: 0, a: 1}
-  timeAlive: 0
-  damageTaken: 0
-  damageDealt: 0
 --- !u!1 &4279701906464887736
 GameObject:
   m_ObjectHideFlags: 0

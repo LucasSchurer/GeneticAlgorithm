@@ -76,6 +76,6 @@ public class PlayerController : MonoBehaviour
 
     private void UseWeapon()
     {
-        _player.weapon.Use(GetMouseDirection());
+        _player.weapon.Fire();
     }
 }

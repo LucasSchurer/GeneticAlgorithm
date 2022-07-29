@@ -5,36 +5,23 @@ using UnityEngine;
 public class Rifle : Weapon
 {
     [SerializeField]
-    private Transform barrel;
-
-    [SerializeField]
     private float _bulletDirectionVariation = 10f;
 
-    public override void Use(Vector2 direction)
+    public override void Fire()
     {
         if (!CanShoot())
         {
             return;
         }
 
-        float yAngle = Random.Range(barrel.rotation.eulerAngles.y - _bulletDirectionVariation, barrel.rotation.eulerAngles.y + _bulletDirectionVariation);
+        float yAngle = Random.Range(_barrel.rotation.eulerAngles.y - _bulletDirectionVariation, _barrel.rotation.eulerAngles.y + _bulletDirectionVariation);
 
-        Quaternion randomBulletDirection = Quaternion.Euler(barrel.rotation.eulerAngles.x, yAngle, barrel.rotation.eulerAngles.z);
+        Quaternion randomBulletDirection = Quaternion.Euler(_barrel.rotation.eulerAngles.x, yAngle, _barrel.rotation.eulerAngles.z);
 
-        ProjectileManager.Instance.SpawnProjectile(this, barrel, Projectile.Type.Bullet, randomBulletDirection);
+        ProjectileManager.Instance.SpawnProjectile(this, _barrel, Projectile.Type.Bullet, randomBulletDirection);
         owner.onWeaponFired?.Invoke();
 
         _rateOfFireTimer = _rateOfFire;
         ReduceAmmo();
-    }
-
-    protected override void RegisterToOwnerEvents()
-    {
-        
-    }
-
-    protected override void UnregisterToOwnerEvents()
-    {
-        
     }
 }
