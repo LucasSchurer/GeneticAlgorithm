@@ -15,11 +15,6 @@ public class EnemyController : MonoBehaviour
     private Enemy _enemy;
     private Rigidbody _rb;
 
-    public bool followPlayer = false;
-
-    /// <summary>
-    /// 
-    /// </summary>
     private Vector3 DirectionToPlayer => GameManager.Instance.PlayerPosition - transform.position;
 
     private void Awake()
@@ -45,7 +40,6 @@ public class EnemyController : MonoBehaviour
             Rotate();
         }
     }
-
 
     private void Rotate()
     {
@@ -92,16 +86,7 @@ public class EnemyController : MonoBehaviour
 
     private void AggressiveMovement()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, _distanceBetweenEnemies, LayerMask.GetMask("Enemy"));
-        Vector3 direction = Vector3.zero;
-
-        foreach (Collider hit in hits)
-        {
-            if (hit.gameObject != this)
-            {
-                direction += (transform.position - hit.transform.position) * Vector3.Distance(transform.position, hit.transform.position);
-            }
-        }
+        Vector3 direction = GetDirectionBasedOnNearbyEnemies();
 
         if (Vector3.Distance(GameManager.Instance.PlayerPosition, transform.position) > 2f)
         {
@@ -115,16 +100,7 @@ public class EnemyController : MonoBehaviour
 
     private void CautiousMovement()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, _distanceBetweenEnemies, LayerMask.GetMask("Enemy"));
-        Vector3 direction = Vector3.zero;
-
-        foreach (Collider hit in hits)
-        {
-            if (hit.gameObject != this)
-            {
-                direction += (transform.position - hit.transform.position) * Vector3.Distance(transform.position, hit.transform.position);
-            }
-        }
+        Vector3 direction = GetDirectionBasedOnNearbyEnemies();
 
         Vector3 playerDirection = (GameManager.Instance.PlayerPosition - transform.position);
         float distance = Vector2.Distance(transform.position, GameManager.Instance.PlayerPosition);
@@ -142,6 +118,18 @@ public class EnemyController : MonoBehaviour
 
     private void StationaryMovement()
     {
+        Vector3 direction = GetDirectionBasedOnNearbyEnemies();
+
+        _direction += direction.normalized;
+    }
+
+    /// <summary>
+    /// Change the enemy direction aiming to keep a minimum space between
+    /// them, avoiding unnecessary collisions. 
+    /// Returns the non-normalized direction vector.
+    /// </summary>
+    private Vector3 GetDirectionBasedOnNearbyEnemies()
+    {
         Collider[] hits = Physics.OverlapSphere(transform.position, _distanceBetweenEnemies, LayerMask.GetMask("Enemy"));
         Vector3 direction = Vector3.zero;
 
@@ -153,7 +141,7 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        _direction += direction.normalized;
+        return direction;
     }
 
     private bool HasLineOfSight()

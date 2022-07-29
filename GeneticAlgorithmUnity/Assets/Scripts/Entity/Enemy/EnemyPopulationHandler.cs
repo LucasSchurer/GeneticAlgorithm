@@ -42,6 +42,9 @@ public class EnemyPopulationHandler : MonoBehaviour
     [SerializeField]
     private Enemy _fittestEnemy;
 
+    [SerializeField]
+    private Transform _enemyContainer;
+
     public static EnemyPopulationHandler Instance { get; private set; }
 
     private void Awake()
@@ -62,7 +65,7 @@ public class EnemyPopulationHandler : MonoBehaviour
 
     private void Start()
     {
-        SpawnEnemies();
+        SpawnPopulation();
     }
 
     private void Update()
@@ -73,11 +76,11 @@ public class EnemyPopulationHandler : MonoBehaviour
         }
     }
 
-    private void SpawnEnemies()
+    private void SpawnPopulation()
     {
         for (int i = 0; i < _enemiesPerWave; i++)
         {
-            _enemies[i] = Instantiate(_enemyPrefab, transform);
+            _enemies[i] = Instantiate(_enemyPrefab, _enemyContainer);
             _enemies[i].Initialize();
             _enemies[i].chromosome.RandomizeGenes();
             _enemies[i].UpdateValues();
@@ -92,7 +95,7 @@ public class EnemyPopulationHandler : MonoBehaviour
 
         yield return new WaitForSeconds(_respawnTimer);
 
-        GenerateEnemies();
+        GenerateNewPopulation();
         _isRespawning = false;
     }
 
@@ -122,7 +125,7 @@ public class EnemyPopulationHandler : MonoBehaviour
     /// Generate a new set of enemies using a 
     /// genetic algorithm.
     /// </summary>
-    private void GenerateEnemies()
+    private void GenerateNewPopulation()
     {
         Enemy[] newEnemies = new Enemy[_enemiesPerWave];
 
@@ -130,8 +133,8 @@ public class EnemyPopulationHandler : MonoBehaviour
         UpdatePopulationFitness();
 
         // Elitist selection
-        newEnemies[0] = Instantiate(_enemyPrefab, transform);
-        newEnemies[1] = Instantiate(_enemyPrefab, transform);
+        newEnemies[0] = Instantiate(_enemyPrefab, _enemyContainer);
+        newEnemies[1] = Instantiate(_enemyPrefab, _enemyContainer);
         newEnemies[0].Initialize(_fittestEnemy.chromosome);
         newEnemies[1].Initialize(_fittestEnemy.chromosome);
 
@@ -148,8 +151,8 @@ public class EnemyPopulationHandler : MonoBehaviour
             offspring.Item1.Mutate();
             offspring.Item2.Mutate();
 
-            newEnemies[i] = Instantiate(_enemyPrefab, transform);
-            newEnemies[i + 1] = Instantiate(_enemyPrefab, transform);
+            newEnemies[i] = Instantiate(_enemyPrefab, _enemyContainer);
+            newEnemies[i + 1] = Instantiate(_enemyPrefab, _enemyContainer);
             
             newEnemies[i].Initialize((EnemyChromosome)offspring.Item1);
             newEnemies[i + 1].Initialize((EnemyChromosome)offspring.Item2);
