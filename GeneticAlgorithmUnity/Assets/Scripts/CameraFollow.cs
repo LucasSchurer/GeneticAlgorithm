@@ -7,29 +7,16 @@ using UnityEngine;
 /// </summary>
 public class CameraFollow : MonoBehaviour
 {
+    [SerializeField]
     private Transform _target;
     [SerializeField]
-    private float _interpolationSpeed;
+    private float _height;
     [SerializeField]
-    private float pixelToUnits = 40f;
+    private float _interpolationSpeed;
 
-    private Camera cam;
-
-    private void Awake()
-    {
-        cam = GetComponent<Camera>();
-    }
-
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         Follow();
-    }
-    public void SetTarget(Transform target)
-    {
-        if (target != null)
-        {
-            _target = target;
-        }
     }
 
     /// <summary>
@@ -40,15 +27,8 @@ public class CameraFollow : MonoBehaviour
         if (_target != null)
         {
             Vector3 newPosition = Vector3.Lerp(transform.position, _target.position, _interpolationSpeed);
-            newPosition.z = -10;
+            newPosition.y = _height;
             transform.position = newPosition;
         }
-    }
-    public float RoundToNearestPixel(float unityUnits)
-    {
-        float valueInPixels = unityUnits * pixelToUnits;
-        valueInPixels = Mathf.Round(valueInPixels);
-        float roundedUnityUnits = valueInPixels * (1 / pixelToUnits);
-        return roundedUnityUnits;
     }
 }

@@ -584,7 +584,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _distanceBetweenEnemies: 5
   _detectionRange: 10
-  followPlayer: 0
 --- !u!114 &2302758236936240491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,8 +608,8 @@ MonoBehaviour:
     damageDealt: 0
     projectilesFired: 0
     projectilesTaken: 0
+    friendlyFireHitCount: 0
     hitCount: 0
-    friendlyFireHits: 0
     killCount: 0
     deathCount: 0
   weapon: {fileID: 0}
@@ -633,7 +632,7 @@ MonoBehaviour:
   - {fileID: 7142967294278140082}
   - {fileID: 8884735994891722716}
   _fitness: 0
-  _mutationRate: 0.2
+  _mutationRate: 0.35
   _behaviour: 0
   _desiredColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &4279701906464887736

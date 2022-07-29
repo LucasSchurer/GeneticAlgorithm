@@ -51,6 +51,12 @@ public class Enemy : Entity
             Destroy(weapon.gameObject);
         }
 
+        foreach (Rigidbody rb in _bodyParts)
+        {
+            rb.GetComponent<MeshRenderer>().material.color = chromosome.GetColor();
+            rb.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", chromosome.GetColor() * 1.7f);
+        }
+
         WeaponManager.Instance.CreateWeapon(this, chromosome.GetWeapon());
     }
 
