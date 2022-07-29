@@ -38,6 +38,7 @@ public class Bullet : Projectile
                 if (entity != null)
                 {
                     HitEntity(entity);
+                    _owner.hitCount++;
                 }
             }
         }

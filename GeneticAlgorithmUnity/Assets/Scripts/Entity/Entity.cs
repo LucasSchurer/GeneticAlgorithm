@@ -16,6 +16,9 @@ public abstract class Entity : MonoBehaviour
     public delegate void WhenKilled(Entity self, Entity other);
     public WhenKilled whenKilled;
 
+    public delegate void OnWeaponFired();
+    public OnWeaponFired onWeaponFired;
+
     [SerializeField]
     protected float _health;
     [SerializeField]
@@ -27,6 +30,15 @@ public abstract class Entity : MonoBehaviour
     [SerializeField]
     public bool isDead = false;
     public bool canMove = true;
+
+    public float timeAlive = 0f;
+    public float damageTaken = 0f;
+    public float damageDealt = 0f;
+    public float projectilesFired = 0f;
+    public float hitCount = 0f;
+    public float friendlyFireHits = 0f;
+
+    public float Accuracy => hitCount / projectilesFired;
 
     public float MovementSpeed => _movementSpeed;
 

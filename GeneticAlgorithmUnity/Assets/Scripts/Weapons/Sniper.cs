@@ -43,10 +43,11 @@ public class Sniper : Weapon
 
         ProjectileManager.Instance.SpawnProjectile(this, barrel, Projectile.Type.Bullet);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
         _rateOfFireTimer = _rateOfFire;
 
+        owner.projectilesFired++;
         ReduceAmmo();
 
         owner.Knockback(Vector3.back, _recoilStrength);

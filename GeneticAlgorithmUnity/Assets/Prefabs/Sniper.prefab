@@ -132,13 +132,13 @@ MonoBehaviour:
   _currentAmmo: 3
   _reloadTime: 4
   _projectileData:
-    speed: 40
+    speed: 70
     damage: 10
     size: {x: 0.3, y: 0.3, z: 0.3}
     color: {r: 0.05724907, g: 0, b: 1, a: 1}
     range: 10
   barrel: {fileID: 2271407791718549234}
-  _lockTime: 0.5
+  _lockTime: 0.1
   _recoilStrength: 20
 --- !u!120 &7912062479324731709
 LineRenderer:

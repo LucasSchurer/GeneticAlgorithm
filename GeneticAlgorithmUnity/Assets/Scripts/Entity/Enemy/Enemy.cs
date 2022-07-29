@@ -25,10 +25,6 @@ public class Enemy : Entity
 
     public BehaviourType Behaviour => _behaviour;
 
-    public float timeAlive = 0f;
-    public float damageTaken = 0f;
-    public float damageDealt = 0f;
-
     public void Initialize(EnemyChromosome chromosome = null)
     {
         if (chromosome == null)
@@ -60,16 +56,7 @@ public class Enemy : Entity
 
     public void UpdateFitness()
     {
-        /*        Color currentColor = chromosome.GetColor();
-
-                Vector3 currentColorPosition = new Vector3(currentColor.r, currentColor.g, currentColor.b);
-                Vector3 desiredColorPosition = new Vector3(_desiredColor.r, _desiredColor.g, _desiredColor.b);
-
-                float distance = Vector3.Distance(currentColorPosition.normalized, desiredColorPosition.normalized);
-
-                _fitness = 1 / distance;*/
-
-        _fitness = damageDealt;
+        _fitness = 1/projectilesFired;
     }
 
     private void WhenDamageTaken(Entity self, Entity other, float damage)

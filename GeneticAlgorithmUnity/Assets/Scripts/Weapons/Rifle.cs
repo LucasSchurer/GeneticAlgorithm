@@ -25,6 +25,7 @@ public class Rifle : Weapon
 
         _rateOfFireTimer = _rateOfFire;
 
+        owner.projectilesFired++;
         ReduceAmmo();
     }
 
