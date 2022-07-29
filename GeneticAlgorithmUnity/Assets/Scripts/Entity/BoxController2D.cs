@@ -64,7 +64,7 @@ public class BoxController2D : Controller2D
 
             Debug.DrawRay(rayOrigin, Vector2.up * direction * rayLength, Color.red);
 
-            if (hit)
+            if (hit && hit.collider.gameObject != gameObject)
             {
                 velocity.y = (hit.distance - skinWidth) * direction;
                 rayLength = hit.distance;
@@ -85,7 +85,7 @@ public class BoxController2D : Controller2D
 
             Debug.DrawRay(rayOrigin, Vector2.right * direction * rayLength, Color.red);
 
-            if (hit)
+            if (hit && hit.collider.gameObject != gameObject)
             {
                 velocity.x = (hit.distance - skinWidth) * direction;
                 rayLength = hit.distance;

@@ -25,6 +25,9 @@ public class EnemyPopulationHandler : MonoBehaviour
     [SerializeField]
     private Enemy _fittestEnemy;
 
+    [SerializeField]
+    private float _distanceBetweenEnemies = 5f;
+
     private void Awake()
     {
         _enemies = new Enemy[_enemiesPerWave];

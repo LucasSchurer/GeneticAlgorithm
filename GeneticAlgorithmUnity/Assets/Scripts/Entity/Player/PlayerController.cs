@@ -7,11 +7,6 @@ public class PlayerController : MonoBehaviour
     private Player _player;
     private Controller2D _controller2D;
 
-    /// <summary>
-    /// Returns the normalized mouse direction.
-    /// </summary>
-    private Vector2 MouseDirection => (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -28,7 +23,25 @@ public class PlayerController : MonoBehaviour
         {
             UseWeapon();
         }
+
+        RotateWeapon();
     }
+
+    /// <summary>
+    /// Returns the normalized mouse direction.
+    /// </summary>
+    private Vector2 GetMouseDirection()
+    {
+        return (GetMousePosition() - transform.position).normalized;
+    }
+
+    private Vector3 GetMousePosition()
+    {
+        Vector3 cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        cameraPosition.z = 0;
+        return cameraPosition;
+    }
+
 
     private void Move(Vector2 direction)
     {
@@ -40,6 +53,14 @@ public class PlayerController : MonoBehaviour
 
     private void UseWeapon()
     {
-        _player.weapon.Use(MouseDirection);
+        _player.weapon.Use(GetMouseDirection());
+    }
+
+    private void RotateWeapon()
+    {
+        if (_player.weapon != null)
+        {
+            _player.weapon.transform.LookAt(GetMousePosition());
+        }
     }
 }

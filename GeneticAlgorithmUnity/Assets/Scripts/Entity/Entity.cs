@@ -32,6 +32,8 @@ public abstract class Entity : MonoBehaviour
     public Weapon weapon;
 
     public LayerMask enemyLayerMask;
+    public LayerMask selfLayerMask;
+    public LayerMask obstacleLayerMask;
 
     public virtual void Damage(Entity source, float damage)
     {

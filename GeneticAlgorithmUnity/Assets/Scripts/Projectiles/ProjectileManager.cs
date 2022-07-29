@@ -36,7 +36,7 @@ public class ProjectileManager : MonoBehaviour
     /// <param name="user"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    public Projectile SpawnProjectile(Weapon owner, Projectile.Type type, Vector2 direction)
+    public Projectile SpawnProjectile(Weapon owner, Projectile.Type type, Vector3 direction)
     {
         switch (type)
         {

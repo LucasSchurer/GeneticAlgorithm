@@ -17,6 +17,7 @@ public abstract class Projectile : MonoBehaviour
         public float damage;
         public Vector2 size;
         public Color color;
+        public float range;
     }
 
     [SerializeField]

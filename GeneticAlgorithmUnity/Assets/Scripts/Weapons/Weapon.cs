@@ -30,7 +30,7 @@ public abstract class Weapon : MonoBehaviour
         this.owner = owner;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_rateOfFireTimer >= 0)
         {
