@@ -8,6 +8,9 @@ public class EnemyPopulationHandler : MonoBehaviour
     private int _enemiesPerWave = 10;
 
     [SerializeField]
+    private bool _isRespawning = false;
+
+    [SerializeField]
     private Vector2 _arenaSize;
 
     [SerializeField]
@@ -36,15 +39,13 @@ public class EnemyPopulationHandler : MonoBehaviour
     private void Start()
     {
         SpawnEnemies();
-        /*Selection();*/
-        /*StartCoroutine(Respawn());*/
     }
 
     private void Update()
     {
-        if (_enemies.Where(e => e.gameObject.activeSelf).Count() <= 0)
+        if (_enemies.Where(e => !e.isDead).Count() <= 0 && !_isRespawning)
         {
-            Selection();
+            StartCoroutine(Respawn());
         }
     }
 
@@ -77,12 +78,12 @@ public class EnemyPopulationHandler : MonoBehaviour
 
     private IEnumerator Respawn()
     {
+        _isRespawning = true;
+
         yield return new WaitForSeconds(_respawnTimer);
 
         Selection();
-        /*DestroyEnemies();
-        SpawnEnemies();*/
-        StartCoroutine(Respawn());
+        _isRespawning = false;
     }
 
     private void UpdatePopulationFitness()

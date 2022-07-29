@@ -25,7 +25,7 @@ public abstract class Entity : MonoBehaviour
     [SerializeField]
     protected Vector2 _position;
     [SerializeField]
-    protected bool isDead = false;
+    public bool isDead = false;
     public bool canMove = true;
 
     public float MovementSpeed => _movementSpeed;
@@ -38,6 +38,11 @@ public abstract class Entity : MonoBehaviour
 
     public virtual void Damage(Entity source, float damage)
     {
+        if (isDead)
+        {
+            return;
+        }
+
         if (damage > 0)
         {
             _health -= damage;

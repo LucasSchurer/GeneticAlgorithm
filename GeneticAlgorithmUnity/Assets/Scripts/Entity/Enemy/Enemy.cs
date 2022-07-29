@@ -7,6 +7,9 @@ public class Enemy : Entity
     public EnemyChromosome chromosome;
 
     [SerializeField]
+    private Rigidbody[] _bodyParts;
+
+    [SerializeField]
     private float _fitness;
 
     public float Fitness => _fitness;
@@ -94,5 +97,34 @@ public class Enemy : Entity
     {
         whenHit -= WhenDamageTaken;
         onHit -= WhenDamageDealt;
+    }
+
+    protected override void Killed()
+    {
+        isDead = true;
+
+        StartCoroutine(DeathAnimation());
+    }
+
+    private IEnumerator DeathAnimation()
+    {
+        isDead = true;
+
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+
+        weapon.gameObject.SetActive(false);
+
+        foreach (Rigidbody rb in _bodyParts)
+        {
+            rb.isKinematic = false;
+            rb.GetComponent<Collider>().enabled = true;
+            rb.AddExplosionForce(Random.Range(5, 10) * 100, transform.position, Random.Range(5, 10) * 10);
+            rb.gameObject.layer = LayerMask.NameToLayer("Nothing");
+        }
+
+        gameObject.layer = LayerMask.NameToLayer("Nothing");
+
+        yield return new WaitForSeconds(4f);
     }
 }

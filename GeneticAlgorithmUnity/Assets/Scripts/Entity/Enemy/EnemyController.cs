@@ -31,12 +31,15 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UseWeapon();
+        if (!_enemy.isDead)
+        {
+            UseWeapon();
+        }
     }
 
     private void FixedUpdate()
     {
-        if (_enemy.canMove)
+        if (_enemy.canMove && !_enemy.isDead)
         {
             Move();
             Rotate();
