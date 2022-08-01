@@ -20,8 +20,8 @@ public abstract class Projectile : MonoBehaviour
         public float range;
     }
 
-    protected Weapon _weapon;
-    protected Entity _owner;
+    public Weapon weapon;
+    public Entity owner;
     protected ProjectileData _data;
 
     protected LayerMask _selfLayerMask;
@@ -30,9 +30,9 @@ public abstract class Projectile : MonoBehaviour
 
     public void Initialize(Weapon weapon)
     {
-        _weapon = weapon;
-        _owner = _weapon.owner;
-        _data = _weapon.ProjectileData;
+        this.weapon = weapon;
+        owner = this.weapon.owner;
+        _data = this.weapon.ProjectileData;
 
         transform.localScale = _data.size;
     }
@@ -43,8 +43,8 @@ public abstract class Projectile : MonoBehaviour
     /// <param name="entity"></param>
     protected virtual void HitEntity(Entity entity)
     {
-        _owner.onHit?.Invoke(entity, _data.damage, this);
-        entity.whenHit?.Invoke(_owner, _data.damage, this);
+        owner.onHit?.Invoke(entity, _data.damage, this);
+        entity.whenHit?.Invoke(owner, _data.damage, this);
         Destroy(gameObject);        
     }
 }

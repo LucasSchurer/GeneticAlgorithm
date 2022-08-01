@@ -596,8 +596,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d40fffb5d37e2b4f97f0c8344fb00a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 0
-  _maxHealth: 0
+  _health: 10
+  _maxHealth: 10
   _movementSpeed: 10
   _position: {x: 0, y: 0}
   isDead: 0

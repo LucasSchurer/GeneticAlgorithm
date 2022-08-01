@@ -62,7 +62,9 @@ public class Enemy : Entity
 
     public void UpdateFitness()
     {
-        _fitness = _statistics.damageDealt;
+        /*_fitness = _statistics.damageTaken > 0 ? (1 / _statistics.damageTaken) : 1;*/
+
+        _fitness = _statistics.Accuracy;
     }
 
     private void Update()
@@ -70,8 +72,24 @@ public class Enemy : Entity
         _statistics.timeAlive += Time.deltaTime;
     }
 
-    private IEnumerator DeathAnimation()
+    private IEnumerator DeathAnimation(Projectile projectile = null)
     {
+        Vector3 impactPoint;
+        float explosionForce;
+        float explosionRadius;
+
+        if (projectile != null)
+        {
+            impactPoint = projectile.transform.position;
+            explosionForce = projectile.weapon.ProjectileData.damage;
+        } else
+        {
+            impactPoint = transform.position;
+            explosionForce = 5;
+        }
+
+        explosionRadius = Random.Range(5, 20) * 3;
+
         isDead = true;
 
         GetComponent<Collider>().enabled = false;
@@ -83,7 +101,7 @@ public class Enemy : Entity
         {
             rb.isKinematic = false;
             rb.GetComponent<Collider>().enabled = true;
-            rb.AddExplosionForce(Random.Range(5, 10) * 100, transform.position, Random.Range(5, 10) * 10);
+            rb.AddExplosionForce(explosionForce * 600, impactPoint, explosionRadius);
             rb.gameObject.layer = LayerMask.NameToLayer("Nothing");
         }
 
@@ -122,7 +140,7 @@ public class Enemy : Entity
     {
         isDead = true;
         _statistics.deathCount++;
-        StartCoroutine(DeathAnimation());
+        StartCoroutine(DeathAnimation(projectile));
     }
 
     protected override void OnWeaponFiredEvent()

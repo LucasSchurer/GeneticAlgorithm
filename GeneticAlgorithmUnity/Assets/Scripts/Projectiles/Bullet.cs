@@ -11,7 +11,7 @@ public class Bullet : Projectile
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (((_owner.obstacleLayerMask.value | _owner.enemyLayerMask.value | _owner.selfLayerMask) & (1 << collision.transform.gameObject.layer)) > 0)
+        if (((owner.obstacleLayerMask.value | owner.enemyLayerMask.value | owner.selfLayerMask) & (1 << collision.transform.gameObject.layer)) > 0)
         {
             if (collision.gameObject.tag == "Obstacle")
             {
