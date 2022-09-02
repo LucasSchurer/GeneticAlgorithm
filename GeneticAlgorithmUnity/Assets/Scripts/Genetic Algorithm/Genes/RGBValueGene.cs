@@ -19,8 +19,7 @@ public class RGBValueGene : Gene
 
     public override void Mutate()
     {
-        /*value = Random.Range(0f, 1f);*/
-        value = StaticRandom.RandomFloat(0f, 1f);
+        value = Random.Range(0f, 1f);
     }
 
     public override void Randomize()

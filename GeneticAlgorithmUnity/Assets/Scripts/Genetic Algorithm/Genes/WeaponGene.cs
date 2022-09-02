@@ -23,6 +23,6 @@ public class WeaponGene : Gene
 
     public override void Randomize()
     {
-        type = (Weapon.Type)StaticRandom.RandomInt(0, (int)Weapon.Type.Count);
+        type = (Weapon.Type)Random.Range(0, (int)Weapon.Type.Count);
     }
 }

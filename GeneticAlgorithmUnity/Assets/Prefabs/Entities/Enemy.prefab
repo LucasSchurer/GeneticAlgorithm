@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 2302758236936240500}
   - component: {fileID: 2302758236936240491}
   m_Layer: 8
-  m_Name: Enemy3D
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -596,8 +596,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d40fffb5d37e2b4f97f0c8344fb00a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 10
-  _maxHealth: 10
+  _health: 3
+  _maxHealth: 3
   _movementSpeed: 10
   _position: {x: 0, y: 0}
   isDead: 0

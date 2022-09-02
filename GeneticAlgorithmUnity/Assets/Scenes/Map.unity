@@ -188,7 +188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3795117043649526009, guid: 18ff369da945a6847933b0bee3c4a83d, type: 3}
       propertyPath: _enemiesPerWave
-      value: 20
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 3795117043649526009, guid: 18ff369da945a6847933b0bee3c4a83d, type: 3}
       propertyPath: _enemyContainer
@@ -675,7 +675,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427624061}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.6117797, y: 30.010008, z: 5.3690023}
+  m_LocalPosition: {x: -1.6096702, y: 30.010008, z: 5.3690023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 311515143}
@@ -745,7 +745,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537717871}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.6117797, y: 30.010008, z: 5.3690023}
+  m_LocalPosition: {x: -1.6096702, y: 30.010008, z: 5.3690023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 322486312}
@@ -900,6 +900,18 @@ PrefabInstance:
       propertyPath: _bulletDirectionVariation
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4632602908173076231, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
+      propertyPath: _maxHealth
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4632602908173076231, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
+      propertyPath: _movementSpeed
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798012600522279093, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
+      propertyPath: _stats
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5798012600522279093, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
       propertyPath: weapon
       value: 
@@ -954,7 +966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5798012600522279099, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
       propertyPath: m_Name
-      value: Player3D
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}

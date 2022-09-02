@@ -23,6 +23,6 @@ public class BehaviourGene : Gene
 
     public override void Randomize()
     {
-        type = (BehaviourType)StaticRandom.RandomInt(0, (int)BehaviourType.Count);
+        type = (BehaviourType)Random.Range(0, (int)BehaviourType.Count);
     }
 }
