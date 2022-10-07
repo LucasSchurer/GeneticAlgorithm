@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AIController : MonoBehaviour
 {
+    [SerializeField]
+    private BehaviourType _behaviourType;
+    private AIBehaviour _behaviour;
+
     private Vector3 _direction;
     private Transform _playerPosition;
 
@@ -24,5 +28,16 @@ public class AIController : MonoBehaviour
     {
         _movementController?.Move(_direction);
         _movementController?.Rotate(_direction);
+    }
+
+    private AIBehaviour GetAIBehaviour()
+    {
+        switch (_behaviourType)
+        {
+            case BehaviourType.Aggressive:
+                return null;
+        }
+
+        return null;
     }
 }
