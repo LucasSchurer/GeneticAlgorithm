@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 5798012600522279098}
   - component: {fileID: 5798012600522279103}
   - component: {fileID: 5798012600522279096}
-  - component: {fileID: 5798012600522279094}
-  - component: {fileID: 5798012600522279093}
+  - component: {fileID: 3654192166795811366}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -32,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.6, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3167974001879428365}
   m_Father: {fileID: 0}
@@ -56,6 +56,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -115,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &5798012600522279094
+--- !u!114 &3654192166795811366
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,47 +125,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5798012600522279099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3c992fae8439ad4faabe9b4ed02f05e, type: 3}
+  m_Script: {fileID: 11500000, guid: 81199fe8a0d18e2468ed18d5ce2b2fff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5798012600522279093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5798012600522279099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9a981a55eb28e140b8a8f6396f5e257, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 0
-  _maxHealth: 0
-  _movementSpeed: 16
-  _position: {x: 0, y: 0}
-  isDead: 0
-  canMove: 1
-  _statistics:
-    timeAlive: 0
-    damageTaken: 0
-    damageDealt: 0
-    projectilesFired: 0
-    projectilesTaken: 0
-    friendlyFireHitCount: 0
-    hitCount: 0
-    killCount: 0
-    deathCount: 0
-  weapon: {fileID: 3167974001879428464}
-  enemyLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  selfLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  obstacleLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1001 &5223065881798040443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -175,7 +138,7 @@ PrefabInstance:
     - target: {fileID: 7172801744424597003, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
       propertyPath: owner
       value: 
-      objectReference: {fileID: 5798012600522279093}
+      objectReference: {fileID: 0}
     - target: {fileID: 7172801744424597003, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
       propertyPath: _maxAmmo
       value: 30
@@ -247,14 +210,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7172801744424597110, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
   m_PrefabInstance: {fileID: 5223065881798040443}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3167974001879428464 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7172801744424597003, guid: 16e89f1f69d9874438c17a32d9b2be0b, type: 3}
-  m_PrefabInstance: {fileID: 5223065881798040443}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c986154de58d554088aa9f9e0cfc5d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

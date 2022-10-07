@@ -1,5 +1,6 @@
 public enum CombatEventType
 {
     OnHitTaken,
-    OnDeath
+    OnDeath,
+    OnAttack
 }
