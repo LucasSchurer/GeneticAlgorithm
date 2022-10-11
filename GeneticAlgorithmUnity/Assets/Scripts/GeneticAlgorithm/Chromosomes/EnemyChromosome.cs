@@ -25,7 +25,7 @@ public class EnemyChromosome : Chromosome
         _genes[(int)Genes.GreenColor] = new RGBValueGene(1f);
         _genes[(int)Genes.BlueColor] = new RGBValueGene(1f);
         _genes[(int)Genes.Behaviour] = new BehaviourGene(BehaviourType.Aggressive);
-        _genes[(int)Genes.Weapon] = new WeaponGene(Weapon.Type.Rifle);
+        _genes[(int)Genes.Weapon] = new WeaponGene(WeaponOld.Type.Rifle);
     }
 
     protected override void SetGenes(Gene[] genes)
@@ -54,7 +54,7 @@ public class EnemyChromosome : Chromosome
         return ((BehaviourGene)_genes[(int)Genes.Behaviour]).type;
     }
 
-    public Weapon.Type GetWeapon()
+    public WeaponOld.Type GetWeapon()
     {
         return ((WeaponGene)_genes[(int)Genes.Weapon]).type;
     }

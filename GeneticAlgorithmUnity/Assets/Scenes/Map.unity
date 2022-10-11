@@ -681,7 +681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &383514876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,7 +1593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1090374447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2712,6 +2712,10 @@ PrefabInstance:
     - target: {fileID: 4704558567819986835, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
       propertyPath: m_Name
       value: WeaponManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704558567819986836, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _weapons.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4704558567819986837, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
       propertyPath: m_RootOrder
@@ -3853,7 +3857,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &7376468162384894459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4182,6 +4186,7 @@ GameObject:
   - component: {fileID: 1275424132193808770}
   - component: {fileID: 8319228963035603745}
   - component: {fileID: 8319228963035603744}
+  - component: {fileID: 8319228963035603746}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -4215,6 +4220,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _usingGamepad: 0
+--- !u!114 &8319228963035603746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8319228963035603743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c986154de58d554088aa9f9e0cfc5d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: de1db428c558ece4c8a59f7658e14cc5, type: 2}
+  _projectile: {fileID: 2524293719138724245, guid: ab91959d863ffe44b93ca9a5458abe76, type: 3}
+  _cooldown: 0
 --- !u!33 &8351471623403917240
 MeshFilter:
   m_ObjectHideFlags: 0

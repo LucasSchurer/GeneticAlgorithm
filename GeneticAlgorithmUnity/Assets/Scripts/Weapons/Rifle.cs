@@ -1,27 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Projectiles;
 
-public class Rifle : Weapon
+namespace Game.Weapons
 {
-    [SerializeField]
-    private float _bulletDirectionVariation = 10f;
-
-    public override void Fire()
+    public class Rifle : Weapon
     {
-        if (!CanShoot())
+        [SerializeField]
+        private Projectile _projectile;
+        [SerializeField]
+        private float _cooldown;
+
+        private bool _canFire = true;
+
+        protected override void Awake()
         {
-            return;
+            base.Awake();
+            _projectile.owner = gameObject;
         }
 
-        float yAngle = Random.Range(_barrel.rotation.eulerAngles.y - _bulletDirectionVariation, _barrel.rotation.eulerAngles.y + _bulletDirectionVariation);
+        private void Fire(EntityEventContext ctx)
+        {
+            if (_canFire)
+            {
+                Instantiate(_projectile, transform.position, transform.rotation);
+                StartCoroutine(Recharge());
+            }
+        }
 
-        Quaternion randomBulletDirection = Quaternion.Euler(_barrel.rotation.eulerAngles.x, yAngle, _barrel.rotation.eulerAngles.z);
+        private IEnumerator Recharge()
+        {
+            _canFire = false;
 
-        ProjectileManager.Instance.SpawnProjectile(this, _barrel, Projectile.Type.Bullet, randomBulletDirection);
-        owner.onWeaponFired?.Invoke();
+            yield return new WaitForSeconds(_cooldown);
 
-        _rateOfFireTimer = _rateOfFire;
-        ReduceAmmo();
-    }
+            _canFire = true;
+        }
+
+        public override void StartListening()
+        {
+            base.StartListening();
+
+            _eventController?.AddListener(EntityEventType.OnPrimaryActionPerformed, Fire);
+        }
+
+        public override void StopListening()
+        {
+            base.StopListening();
+
+            _eventController?.RemoveListener(EntityEventType.OnPrimaryActionPerformed, Fire);
+        }
+    } 
 }

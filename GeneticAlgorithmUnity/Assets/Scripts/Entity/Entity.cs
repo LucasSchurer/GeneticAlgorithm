@@ -4,16 +4,16 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    public delegate void OnHit(Entity entity, float damage, Projectile projectile = null);
+    public delegate void OnHit(Entity entity, float damage, ProjectileOld projectile = null);
     public OnHit onHit;
 
-    public delegate void WhenHit(Entity entity, float damage, Projectile projectile = null);
+    public delegate void WhenHit(Entity entity, float damage, ProjectileOld projectile = null);
     public WhenHit whenHit;
 
-    public delegate void OnKill(Entity entity, Projectile projectile = null);
+    public delegate void OnKill(Entity entity, ProjectileOld projectile = null);
     public OnKill onKill;
 
-    public delegate void WhenKilled(Entity entity, Projectile projectile = null);
+    public delegate void WhenKilled(Entity entity, ProjectileOld projectile = null);
     public WhenKilled whenKilled;
 
     public delegate void OnWeaponFired();
@@ -53,16 +53,16 @@ public abstract class Entity : MonoBehaviour
 
     public float MovementSpeed => _movementSpeed;
 
-    public Weapon weapon;
+    public WeaponOld weapon;
 
     public LayerMask enemyLayerMask;
     public LayerMask selfLayerMask;
     public LayerMask obstacleLayerMask;
 
-    protected abstract void OnHitEvent(Entity target, float damage, Projectile projectile = null);
-    protected abstract void WhenHitEvent(Entity attacker, float damage, Projectile projectile = null);
-    protected abstract void OnKillEvent(Entity target, Projectile projectile = null);
-    protected abstract void WhenKilledEvent(Entity attacker, Projectile projectile = null);
+    protected abstract void OnHitEvent(Entity target, float damage, ProjectileOld projectile = null);
+    protected abstract void WhenHitEvent(Entity attacker, float damage, ProjectileOld projectile = null);
+    protected abstract void OnKillEvent(Entity target, ProjectileOld projectile = null);
+    protected abstract void WhenKilledEvent(Entity attacker, ProjectileOld projectile = null);
     protected abstract void OnWeaponFiredEvent();
     protected virtual void RegisterToEvents()
     {
@@ -98,7 +98,7 @@ public abstract class Entity : MonoBehaviour
     /// <param name="source"></param>
     /// <param name="damage"></param>
     /// <param name="projectile"></param>
-    protected virtual void ReceiveDamage(Entity attacker, float damage, Projectile projectile = null)
+    protected virtual void ReceiveDamage(Entity attacker, float damage, ProjectileOld projectile = null)
     {
         if (damage > 0)
         {

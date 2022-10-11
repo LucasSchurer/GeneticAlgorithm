@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class WeaponGene : Gene
 {
-    public Weapon.Type type;
+    public WeaponOld.Type type;
 
-    public WeaponGene(Weapon.Type type)
+    public WeaponGene(WeaponOld.Type type)
     {
         this.type = type;
     }
@@ -23,6 +23,6 @@ public class WeaponGene : Gene
 
     public override void Randomize()
     {
-        type = (Weapon.Type)Random.Range(0, (int)Weapon.Type.Count);
+        type = (WeaponOld.Type)Random.Range(0, (int)WeaponOld.Type.Count);
     }
 }

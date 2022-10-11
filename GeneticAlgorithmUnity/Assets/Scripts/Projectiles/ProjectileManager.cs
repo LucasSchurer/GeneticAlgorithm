@@ -6,7 +6,7 @@ public class ProjectileManager : MonoBehaviour
 {
     [Header("Prefabs")]
     [SerializeField]
-    private Bullet _bullet;
+    private BulletOld _bullet;
 
     [Header("References")]
     [SerializeField]
@@ -14,7 +14,7 @@ public class ProjectileManager : MonoBehaviour
 
     public static ProjectileManager Instance { get; private set; }
 
-    private List<Projectile> _projectiles;
+    private List<ProjectileOld> _projectiles;
 
     private void Awake()
     {
@@ -36,12 +36,12 @@ public class ProjectileManager : MonoBehaviour
     /// <param name="user"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    public Projectile SpawnProjectile(Weapon owner, Transform barrel, Projectile.Type type, Quaternion? customRotation = null)
+    public ProjectileOld SpawnProjectile(WeaponOld owner, Transform barrel, ProjectileOld.Type type, Quaternion? customRotation = null)
     {
         switch (type)
         {
-            case Projectile.Type.Bullet:
-                Projectile bullet = Instantiate(_bullet, barrel.position, customRotation ?? barrel.rotation, _projectileContainer);
+            case ProjectileOld.Type.Bullet:
+                ProjectileOld bullet = Instantiate(_bullet, barrel.position, customRotation ?? barrel.rotation, _projectileContainer);
                 bullet.Initialize(owner);
                 return bullet;
 

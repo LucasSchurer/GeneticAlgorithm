@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sniper : Weapon
+public class Sniper : WeaponOld
 {
     [SerializeField]
     private float _lockTime = 0.1f;
@@ -43,7 +43,7 @@ public class Sniper : Weapon
 
         yield return new WaitForSeconds(_lockTime);
 
-        ProjectileManager.Instance.SpawnProjectile(this, _barrel, Projectile.Type.Bullet);
+        ProjectileManager.Instance.SpawnProjectile(this, _barrel, ProjectileOld.Type.Bullet);
 
         owner.onWeaponFired?.Invoke();
 

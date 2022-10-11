@@ -72,7 +72,7 @@ public class Enemy : Entity
         _statistics.timeAlive += Time.deltaTime;
     }
 
-    private IEnumerator DeathAnimation(Projectile projectile = null)
+    private IEnumerator DeathAnimation(ProjectileOld projectile = null)
     {
         Vector3 impactPoint;
         float explosionForce;
@@ -110,7 +110,7 @@ public class Enemy : Entity
         yield return new WaitForSeconds(4f);
     }
 
-    protected override void OnHitEvent(Entity target, float damage, Projectile projectile = null)
+    protected override void OnHitEvent(Entity target, float damage, ProjectileOld projectile = null)
     {
         if (target.tag == tag)
         {
@@ -122,7 +122,7 @@ public class Enemy : Entity
         }
     }
 
-    protected override void WhenHitEvent(Entity attacker, float damage, Projectile projectile = null)
+    protected override void WhenHitEvent(Entity attacker, float damage, ProjectileOld projectile = null)
     {
         if (attacker.tag != tag)
         {
@@ -131,12 +131,12 @@ public class Enemy : Entity
         }
     }
 
-    protected override void OnKillEvent(Entity target, Projectile projectile = null)
+    protected override void OnKillEvent(Entity target, ProjectileOld projectile = null)
     {
         _statistics.killCount++;
     }
 
-    protected override void WhenKilledEvent(Entity attacker, Projectile projectile = null)
+    protected override void WhenKilledEvent(Entity attacker, ProjectileOld projectile = null)
     {
         isDead = true;
         _statistics.deathCount++;

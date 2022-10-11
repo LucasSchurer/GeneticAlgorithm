@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Player : Entity
 {
-    protected override void OnHitEvent(Entity target, float damage, Projectile projectile = null)
+    protected override void OnHitEvent(Entity target, float damage, ProjectileOld projectile = null)
     {
         _statistics.damageDealt += damage;
     }
 
-    protected override void OnKillEvent(Entity target, Projectile projectile = null)
+    protected override void OnKillEvent(Entity target, ProjectileOld projectile = null)
     {
         _statistics.killCount++;
     }
@@ -19,13 +19,13 @@ public class Player : Entity
         _statistics.projectilesFired++;
     }
 
-    protected override void WhenHitEvent(Entity attacker, float damage, Projectile projectile = null)
+    protected override void WhenHitEvent(Entity attacker, float damage, ProjectileOld projectile = null)
     {
         /*ReceiveDamage(attacker, damage, projectile);*/
         _statistics.damageTaken += damage;
     }
 
-    protected override void WhenKilledEvent(Entity attacker, Projectile projectile = null)
+    protected override void WhenKilledEvent(Entity attacker, ProjectileOld projectile = null)
     {
         _statistics.deathCount++;
     }

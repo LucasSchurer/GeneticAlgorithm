@@ -5,10 +5,8 @@ using UnityEngine;
 namespace Game.ScriptableObjects
 {
     [CreateAssetMenu]
-    public class Projectile : ScriptableObject
+    public class RangedWeapon : Weapon
     {
-        public float speed;
-        public float damage;
-        public float timeToDespawn;
+        public Projectiles.Projectile baseProjectile;
     } 
 }
