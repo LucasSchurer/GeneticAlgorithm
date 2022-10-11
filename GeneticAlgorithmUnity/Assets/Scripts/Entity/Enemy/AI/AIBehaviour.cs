@@ -2,33 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AIBehaviour : MonoBehaviour
+namespace Game.Entities.AI
 {
-    protected Transform _playerTransform;
-    protected Vector3 DirectionToPlayer => (_playerTransform.position - transform.position).normalized;
-    protected BehaviourType _behaviourType;
-
-    protected virtual void Awake()
+    public abstract class AIBehaviour : MonoBehaviour
     {
-        _behaviourType = GetBehaviourType();
-        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-    }
+        protected Transform _playerTransform;
+        protected Vector3 DirectionToPlayer => (_playerTransform.position - transform.position).normalized;
+        protected BehaviourType _behaviourType;
 
-    public abstract BehaviourType GetBehaviourType();
-
-    public static void AddAIBehaviour(GameObject go, BehaviourType type)
-    {
-        switch (type)
+        protected virtual void Awake()
         {
-            case BehaviourType.Aggressive:
-                go.AddComponent<AIAggressiveBehaviour>();
-                break;
-            case BehaviourType.Cautious:
-                break;
-            case BehaviourType.Stationary:
-                break;
-            case BehaviourType.Count:
-                break;
+            _behaviourType = GetBehaviourType();
+            _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         }
-    }
+
+        public abstract BehaviourType GetBehaviourType();
+
+        public static void AddAIBehaviour(GameObject go, BehaviourType type)
+        {
+            switch (type)
+            {
+                case BehaviourType.Aggressive:
+                    go.AddComponent<AggressiveBehaviour>();
+                    break;
+                case BehaviourType.Cautious:
+                    break;
+                case BehaviourType.Stationary:
+                    break;
+                case BehaviourType.Count:
+                    break;
+            }
+        }
+    } 
 }

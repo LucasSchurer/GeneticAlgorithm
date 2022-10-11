@@ -7,50 +7,53 @@ using UnityEngine;
 /// Including method register/unregister and 
 /// event invokes
 /// </summary>
-public class EntityEventController : MonoBehaviour
+namespace Game.Events
 {
-    public delegate void CombatEvent(EntityEventContext ctx);
-    private Dictionary<EntityEventType, CombatEvent> _combatEvents;
-
-    private void Awake()
+    public class EntityEventController : MonoBehaviour
     {
-        if (_combatEvents == null)
-        {
-            _combatEvents = new Dictionary<EntityEventType, CombatEvent>();
-        }
-    }
+        public delegate void CombatEvent(EntityEventContext ctx);
+        private Dictionary<EntityEventType, CombatEvent> _combatEvents;
 
-    public void AddListener(EntityEventType type, CombatEvent callback)
-    {
-        if (_combatEvents == null)
+        private void Awake()
         {
-            _combatEvents = new Dictionary<EntityEventType, CombatEvent>();
+            if (_combatEvents == null)
+            {
+                _combatEvents = new Dictionary<EntityEventType, CombatEvent>();
+            }
         }
 
-        if (_combatEvents.ContainsKey(type))
+        public void AddListener(EntityEventType type, CombatEvent callback)
         {
-            _combatEvents[type] += callback;
-        }
-        else
-        {
-            _combatEvents.Add(type, null);
-            _combatEvents[type] += callback;
-        }
-    }
+            if (_combatEvents == null)
+            {
+                _combatEvents = new Dictionary<EntityEventType, CombatEvent>();
+            }
 
-    public void RemoveListener(EntityEventType type, CombatEvent callback)
-    {
-        if (_combatEvents.ContainsKey(type))
-        {
-            _combatEvents[type] -= callback;
+            if (_combatEvents.ContainsKey(type))
+            {
+                _combatEvents[type] += callback;
+            }
+            else
+            {
+                _combatEvents.Add(type, null);
+                _combatEvents[type] += callback;
+            }
         }
-    }
 
-    public void EventTrigger(EntityEventType type, EntityEventContext ctx)
-    {
-        if (_combatEvents.ContainsKey(type))
+        public void RemoveListener(EntityEventType type, CombatEvent callback)
         {
-            _combatEvents[type]?.Invoke(ctx);
+            if (_combatEvents.ContainsKey(type))
+            {
+                _combatEvents[type] -= callback;
+            }
         }
-    }
+
+        public void EventTrigger(EntityEventType type, EntityEventContext ctx)
+        {
+            if (_combatEvents.ContainsKey(type))
+            {
+                _combatEvents[type]?.Invoke(ctx);
+            }
+        }
+    } 
 }

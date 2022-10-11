@@ -1,60 +1,64 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Events;
 
-public class HealthController : MonoBehaviour, IEventListener
+namespace Game.Entities
 {
-    [SerializeField]
-    private ScriptableObjects.Health _health;
-
-    private EntityEventController _eventController;
-
-    private float _maxHealth;
-    [SerializeField]
-    private float _currentHealth;
-
-    public float MaxHealth { get => _maxHealth; private set => _maxHealth = value; }
-    public float CurrentHealth { get => _currentHealth; private set => _currentHealth = value; }
-
-    private void Awake()
+    public class HealthController : MonoBehaviour, IEventListener
     {
-        _eventController = GetComponent<EntityEventController>();
-        CurrentHealth = _health.maxHealth;
-    }
+        [SerializeField]
+        private ScriptableObjects.Health _health;
 
-    private void OnHitTaken(EntityEventContext ctx)
-    {
-        CurrentHealth += ctx.healthModifier;
+        private EntityEventController _eventController;
 
-        if (CurrentHealth <= 0)
+        private float _maxHealth;
+        [SerializeField]
+        private float _currentHealth;
+
+        public float MaxHealth { get => _maxHealth; private set => _maxHealth = value; }
+        public float CurrentHealth { get => _currentHealth; private set => _currentHealth = value; }
+
+        private void Awake()
         {
-            _eventController.EventTrigger(EntityEventType.OnDeath, ctx);
+            _eventController = GetComponent<EntityEventController>();
+            CurrentHealth = _health.maxHealth;
         }
-    }
 
-    private void OnEnable()
-    {
-        StartListening();
-    }
-
-    private void OnDisable()
-    {
-        StopListening();
-    }
-
-    public void StartListening()
-    {
-        if (_eventController != null)
+        private void OnHitTaken(EntityEventContext ctx)
         {
-            _eventController.AddListener(EntityEventType.OnHitTaken, OnHitTaken);
-        }
-    }
+            CurrentHealth += ctx.healthModifier;
 
-    public void StopListening()
-    {
-        if (_eventController != null)
-        {
-            _eventController.RemoveListener(EntityEventType.OnHitTaken, OnHitTaken);
+            if (CurrentHealth <= 0)
+            {
+                _eventController.EventTrigger(EntityEventType.OnDeath, ctx);
+            }
         }
-    }
+
+        private void OnEnable()
+        {
+            StartListening();
+        }
+
+        private void OnDisable()
+        {
+            StopListening();
+        }
+
+        public void StartListening()
+        {
+            if (_eventController != null)
+            {
+                _eventController.AddListener(EntityEventType.OnHitTaken, OnHitTaken);
+            }
+        }
+
+        public void StopListening()
+        {
+            if (_eventController != null)
+            {
+                _eventController.RemoveListener(EntityEventType.OnHitTaken, OnHitTaken);
+            }
+        }
+    } 
 }
