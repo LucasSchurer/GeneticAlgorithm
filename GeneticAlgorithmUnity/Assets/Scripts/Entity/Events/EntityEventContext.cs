@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatEventContext
+public class EntityEventContext
 {
     public Entity owner;
     public Entity target;

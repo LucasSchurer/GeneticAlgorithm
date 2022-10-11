@@ -1,57 +1,101 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+/// <summary>
+/// Handles player input
+/// </summary>
 public class InputController : MonoBehaviour
 {
+    public struct InputData
+    {
+        public Vector3 movementDirection;
+        public Vector3 lookDirection;
+
+        public bool isPressingPrimaryAction;
+    }
+
+    [SerializeField]
+    private bool _usingGamepad = false;
+
     private EntityEventController _eventController;
     private MovementController _movementController;
-    private Vector3 _direction;
-
+    private PlayerInputActions _playerInput;
+    private InputData _inputData;
+    
     private void Awake()
     {
-        _eventController = GetComponent<EntityEventController>();
         _movementController = GetComponent<MovementController>();
+        _eventController = GetComponent<EntityEventController>();
+        _playerInput = new PlayerInputActions();
     }
 
     private void Update()
     {
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        _direction.x = input.x;
-        _direction.z = input.z;
-        _direction.Normalize();
+        UpdateInputData();
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (_inputData.isPressingPrimaryAction)
         {
-            _eventController.EventTrigger(CombatEventType.OnAttack, new CombatEventContext() { owner = GetComponent<Entity>(), healthModifier = -1 });
+            _eventController?.EventTrigger(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext());
         }
     }
 
     private void FixedUpdate()
     {
-        _movementController?.Move(_direction);
+        _movementController.Move(_inputData.movementDirection);
+        _movementController.Rotate(_inputData.lookDirection);
+    }
 
-        Vector3 mousePosition;
+    private void UpdateInputData()
+    {
+        SetLookDirection();
+        Vector2 axis = _playerInput.Gameplay.Movement.ReadValue<Vector2>();
 
-        if (TryGetMousePosition(out mousePosition))
+        _inputData.movementDirection.x = axis.x;
+        _inputData.movementDirection.z = axis.y;
+        _inputData.isPressingPrimaryAction = _playerInput.Gameplay.PrimaryButton.IsPressed();
+    }
+
+    private void SetLookDirection()
+    {
+        if (_usingGamepad)
         {
-            _movementController?.Rotate((mousePosition - transform.position).normalized);
+            _inputData.lookDirection = _playerInput.Gameplay.RightStickRotation.ReadValue<Vector3>();
+        }
+        else
+        {
+            Ray ray = Camera.main.ScreenPointToRay(_playerInput.Gameplay.MousePosition.ReadValue<Vector2>());
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                _inputData.lookDirection = (hit.point - transform.position).normalized;
+            } else
+            {
+                _inputData.lookDirection = Vector3.zero;
+            }
         }
     }
 
-    private bool TryGetMousePosition(out Vector3 mousePosition)
+    private void OnEnable()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        EnableInputActions();
+    }
 
-        if (Physics.Raycast(ray, out hit))
-        {
-            mousePosition = hit.point;
-            return true;
-        } else
-        {
-            mousePosition = Vector3.zero;
-            return false;
-        }
+    private void OnDisable()
+    {
+        DisposeInputActions();
+    }
+
+    private void EnableInputActions()
+    {
+        _playerInput.Gameplay.Enable();
+    }
+
+    private void DisposeInputActions()
+    {
+        _playerInput.Gameplay.PrimaryButton.Dispose();
+        _playerInput.Gameplay.Disable();
     }
 }

@@ -9,22 +9,22 @@ using UnityEngine;
 /// </summary>
 public class EntityEventController : MonoBehaviour
 {
-    public delegate void CombatEvent(CombatEventContext ctx);
-    private Dictionary<CombatEventType, CombatEvent> _combatEvents;
+    public delegate void CombatEvent(EntityEventContext ctx);
+    private Dictionary<EntityEventType, CombatEvent> _combatEvents;
 
     private void Awake()
     {
         if (_combatEvents == null)
         {
-            _combatEvents = new Dictionary<CombatEventType, CombatEvent>();
+            _combatEvents = new Dictionary<EntityEventType, CombatEvent>();
         }
     }
 
-    public void AddListener(CombatEventType type, CombatEvent callback)
+    public void AddListener(EntityEventType type, CombatEvent callback)
     {
         if (_combatEvents == null)
         {
-            _combatEvents = new Dictionary<CombatEventType, CombatEvent>();
+            _combatEvents = new Dictionary<EntityEventType, CombatEvent>();
         }
 
         if (_combatEvents.ContainsKey(type))
@@ -38,7 +38,7 @@ public class EntityEventController : MonoBehaviour
         }
     }
 
-    public void RemoveListener(CombatEventType type, CombatEvent callback)
+    public void RemoveListener(EntityEventType type, CombatEvent callback)
     {
         if (_combatEvents.ContainsKey(type))
         {
@@ -46,7 +46,7 @@ public class EntityEventController : MonoBehaviour
         }
     }
 
-    public void EventTrigger(CombatEventType type, CombatEventContext ctx)
+    public void EventTrigger(EntityEventType type, EntityEventContext ctx)
     {
         if (_combatEvents.ContainsKey(type))
         {

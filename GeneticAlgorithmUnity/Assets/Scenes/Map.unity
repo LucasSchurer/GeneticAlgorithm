@@ -4211,9 +4211,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8319228963035603743}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 229d7fb8cbf2b8141ac9c4a805745ab9, type: 3}
+  m_Script: {fileID: 11500000, guid: 735f70ac20ef7134b8fb0deb0f4dbbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _usingGamepad: 0
 --- !u!33 &8351471623403917240
 MeshFilter:
   m_ObjectHideFlags: 0

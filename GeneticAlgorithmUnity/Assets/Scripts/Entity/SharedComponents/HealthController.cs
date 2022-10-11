@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthController : MonoBehaviour, IEventListener
 {
     [SerializeField]
-    private Health _health;
+    private ScriptableObjects.Health _health;
 
     private EntityEventController _eventController;
 
@@ -22,13 +22,13 @@ public class HealthController : MonoBehaviour, IEventListener
         CurrentHealth = _health.maxHealth;
     }
 
-    private void OnHitTaken(CombatEventContext ctx)
+    private void OnHitTaken(EntityEventContext ctx)
     {
         CurrentHealth += ctx.healthModifier;
 
         if (CurrentHealth <= 0)
         {
-            _eventController.EventTrigger(CombatEventType.OnDeath, ctx);
+            _eventController.EventTrigger(EntityEventType.OnDeath, ctx);
         }
     }
 
@@ -46,7 +46,7 @@ public class HealthController : MonoBehaviour, IEventListener
     {
         if (_eventController != null)
         {
-            _eventController.AddListener(CombatEventType.OnHitTaken, OnHitTaken);
+            _eventController.AddListener(EntityEventType.OnHitTaken, OnHitTaken);
         }
     }
 
@@ -54,7 +54,7 @@ public class HealthController : MonoBehaviour, IEventListener
     {
         if (_eventController != null)
         {
-            _eventController.RemoveListener(CombatEventType.OnHitTaken, OnHitTaken);
+            _eventController.RemoveListener(EntityEventType.OnHitTaken, OnHitTaken);
         }
     }
 }

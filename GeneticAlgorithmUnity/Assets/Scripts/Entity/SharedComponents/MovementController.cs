@@ -37,6 +37,8 @@ public class MovementController : MonoBehaviour
 
     public void Rotate(Vector3 direction)
     {
+        if (direction == Vector3.zero) return;
+
         Quaternion smoothRotation = Quaternion.LookRotation(direction);
 
         smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * 6);
