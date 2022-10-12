@@ -41,12 +41,12 @@ namespace Game.Entities.Player
 
             if (_inputData.isPressingPrimaryAction)
             {
-                _eventController?.EventTrigger(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext());
+                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext());
             }
 
             if (Input.GetKeyDown(KeyCode.K))
             {
-                _eventController?.EventTrigger(EntityEventType.OnTest, new EntityEventContext() { healthModifier = -1 });
+                _eventController?.TriggerEvent(EntityEventType.OnTest, new EntityEventContext() { healthModifier = -1 });
             }
         }
 

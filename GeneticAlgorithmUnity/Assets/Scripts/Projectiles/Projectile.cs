@@ -33,7 +33,7 @@ namespace Game.Projectiles
         {
             if (!_owner.Equals(other.gameObject))
             {
-                other.GetComponent<EntityEventController>()?.EventTrigger(EntityEventType.OnHitTaken, new EntityEventContext() { owner = _owner, target = other.gameObject, healthModifier = -_damage });
+                other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { owner = _owner, target = other.gameObject, healthModifier = -_damage });
                 Destroy(gameObject);
             }
         }

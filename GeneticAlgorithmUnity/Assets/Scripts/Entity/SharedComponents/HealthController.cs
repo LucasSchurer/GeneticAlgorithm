@@ -32,7 +32,7 @@ namespace Game.Entities
 
             if (CurrentHealth <= 0)
             {
-                _eventController.EventTrigger(EntityEventType.OnDeath, ctx);
+                _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
             }
         }
 

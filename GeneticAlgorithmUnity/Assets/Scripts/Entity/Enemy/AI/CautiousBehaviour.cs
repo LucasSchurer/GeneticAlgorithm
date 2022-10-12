@@ -24,7 +24,7 @@ namespace Game.Entities.AI
                 _movementController.Rotate(DirectionToPlayer);
             }
 
-            GetComponent<Game.Events.EntityEventController>()?.EventTrigger(EntityEventType.OnPrimaryActionPerformed, null);
+            GetComponent<Game.Events.EntityEventController>()?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, null);
         }
     } 
 }
