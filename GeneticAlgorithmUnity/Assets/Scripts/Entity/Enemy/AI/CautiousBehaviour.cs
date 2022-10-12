@@ -23,6 +23,8 @@ namespace Game.Entities.AI
                 _movementController.Move(DirectionToPlayer * -1);
                 _movementController.Rotate(DirectionToPlayer);
             }
+
+            GetComponent<Game.Events.EntityEventController>()?.EventTrigger(EntityEventType.OnPrimaryActionPerformed, null);
         }
     } 
 }

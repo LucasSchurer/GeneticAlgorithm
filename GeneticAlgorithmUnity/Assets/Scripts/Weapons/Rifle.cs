@@ -6,37 +6,44 @@ using Game.Events;
 
 namespace Game.Weapons
 {
-    public class Rifle : Weapon
+    public class Rifle : Weapon<ScriptableObjects.RangedWeapon>
     {
-        [SerializeField]
         private Projectile _projectile;
-        [SerializeField]
-        private float _cooldown;
-
-        private bool _canFire = true;
 
         protected override void Awake()
         {
             base.Awake();
-            _projectile.owner = gameObject;
+            _projectile = _settings.baseProjectile;
+            _canUse = true;
         }
 
         private void Fire(EntityEventContext ctx)
         {
-            if (_canFire)
+            if (_canUse)
             {
-                Instantiate(_projectile, transform.position, transform.rotation);
+                if (_settings.projectileVariation > 0)
+                {
+                    float yAngle = Random.Range(transform.rotation.eulerAngles.y - _settings.projectileVariation, transform.rotation.eulerAngles.y + _settings.projectileVariation);
+                    Quaternion projectileDirection = Quaternion.Euler(transform.rotation.eulerAngles.x, yAngle, transform.rotation.eulerAngles.z);
+                    Projectile projectile = Instantiate(_projectile, transform.position, projectileDirection);
+                    projectile.Instantiate(gameObject, _settings.damage);
+                } else
+                {
+                    Projectile projectile = Instantiate(_projectile, transform.position, transform.rotation);
+                    projectile.Instantiate(gameObject, _settings.damage);
+                }
+                
                 StartCoroutine(Recharge());
             }
         }
 
         private IEnumerator Recharge()
         {
-            _canFire = false;
+            _canUse = false;
 
-            yield return new WaitForSeconds(_cooldown);
+            yield return new WaitForSeconds(_settings.cooldown);
 
-            _canFire = true;
+            _canUse = true;
         }
 
         public override void StartListening()

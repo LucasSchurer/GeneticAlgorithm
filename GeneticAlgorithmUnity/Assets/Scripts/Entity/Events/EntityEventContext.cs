@@ -7,8 +7,8 @@ namespace Game.Events
 {
     public class EntityEventContext
     {
-        public Entity owner;
-        public Entity target;
+        public GameObject owner;
+        public GameObject target;
         public float healthModifier;
     } 
 }

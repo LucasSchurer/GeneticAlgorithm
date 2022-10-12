@@ -7,7 +7,7 @@ namespace Game.Entities
     public class MovementController : MonoBehaviour
     {
         [SerializeField]
-        private float _movementSpeed;
+        private ScriptableObjects.Movement _settings;
         private Rigidbody _rb;
 
         private void Awake()
@@ -19,21 +19,7 @@ namespace Game.Entities
         {
             if (direction != Vector3.zero)
             {
-                _rb.AddForce(direction * _movementSpeed * 10f, ForceMode.Force);
-            }
-        }
-
-        public void RotateOld(Vector3 direction)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                Quaternion smoothRotation = Quaternion.LookRotation(hit.point - transform.position);
-
-                smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * 6);
-
-                transform.rotation = Quaternion.Euler(new Vector3(0, smoothRotation.eulerAngles.y));
+                _rb.AddForce(direction * _settings.movementSpeed * 10f, ForceMode.Force);
             }
         }
 
@@ -43,7 +29,7 @@ namespace Game.Entities
 
             Quaternion smoothRotation = Quaternion.LookRotation(direction);
 
-            smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * 6);
+            smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * _settings.rotationSpeed);
 
             transform.rotation = Quaternion.Euler(new Vector3(0, smoothRotation.eulerAngles.y));
         }

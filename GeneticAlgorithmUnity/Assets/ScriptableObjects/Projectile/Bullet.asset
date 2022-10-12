@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 258290a3610a1b448ac230b7ab4e7782, type: 3}
   m_Name: Bullet
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 30
   damage: 1
   timeToDespawn: 1

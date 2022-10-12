@@ -5,13 +5,15 @@ using Game.Events;
 
 namespace Game.Weapons
 {
-    public abstract class Weapon : MonoBehaviour, IEventListener
+    public abstract class Weapon<T> : MonoBehaviour, IEventListener
+        where T: ScriptableObjects.Weapon
     {
         [SerializeField]
-        protected ScriptableObjects.Weapon _settings;
+        protected T _settings;
         protected EntityEventController _eventController;
+        protected bool _canUse;
 
-        public virtual void Initialize(ScriptableObjects.Weapon settings)
+        public virtual void Initialize(T settings)
         {
             _settings = settings;
         }

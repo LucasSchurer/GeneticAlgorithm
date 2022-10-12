@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ScriptableObjects
+namespace Game.ScriptableObjects
 {
     [CreateAssetMenu]
     public class Movement : ScriptableObject

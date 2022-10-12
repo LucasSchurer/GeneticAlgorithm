@@ -14,7 +14,7 @@ namespace Game.Entities
             _eventController = GetComponent<EntityEventController>();
         }
 
-        private void OnDeath(EntityEventContext ctx)
+        protected virtual void OnDeath(EntityEventContext ctx)
         {
             Destroy(gameObject);
         }
