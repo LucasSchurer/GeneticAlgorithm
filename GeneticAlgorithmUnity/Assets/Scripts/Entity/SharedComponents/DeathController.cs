@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Events;
+using System;
 
 namespace Game.Entities
 {
@@ -14,7 +15,7 @@ namespace Game.Entities
             _eventController = GetComponent<EntityEventController>();
         }
 
-        protected virtual void OnDeath(EntityEventContext ctx)
+        protected virtual void OnDeath(ref EntityEventContext ctx)
         {
             Destroy(gameObject);
         }
@@ -34,7 +35,14 @@ namespace Game.Entities
             if (_eventController != null)
             {
                 _eventController.AddListener(EntityEventType.OnDeath, OnDeath);
+                _eventController.AddListener(EntityEventType.OnTest, OnTest, EventExecutionOrder.Before);
             }
+        }
+
+        private void OnTest(ref EntityEventContext ctx)
+        {
+            Debug.Log("Damage reduction");
+            ctx.healthModifier++;
         }
 
         public void StopListening()

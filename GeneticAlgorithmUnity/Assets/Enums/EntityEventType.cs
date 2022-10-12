@@ -2,5 +2,6 @@ public enum EntityEventType
 {
     OnHitTaken,
     OnDeath,
-    OnPrimaryActionPerformed
+    OnPrimaryActionPerformed,
+    OnTest
 }

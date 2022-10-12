@@ -5,7 +5,7 @@ using Game.Entities;
 
 namespace Game.Events
 {
-    public class EntityEventContext
+    public class EntityEventContext : EventContext
     {
         public GameObject owner;
         public GameObject target;

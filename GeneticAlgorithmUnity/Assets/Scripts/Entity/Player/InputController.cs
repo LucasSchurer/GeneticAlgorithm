@@ -43,6 +43,11 @@ namespace Game.Entities.Player
             {
                 _eventController?.EventTrigger(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext());
             }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                _eventController?.EventTrigger(EntityEventType.OnTest, new EntityEventContext() { healthModifier = -1 });
+            }
         }
 
         private void FixedUpdate()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Events;
+using System;
 
 namespace Game.Entities
 {
@@ -25,7 +26,7 @@ namespace Game.Entities
             CurrentHealth = _health.maxHealth;
         }
 
-        private void OnHitTaken(EntityEventContext ctx)
+        private void OnHitTaken(ref EntityEventContext ctx)
         {
             CurrentHealth += ctx.healthModifier;
 
@@ -50,7 +51,13 @@ namespace Game.Entities
             if (_eventController != null)
             {
                 _eventController.AddListener(EntityEventType.OnHitTaken, OnHitTaken);
+                _eventController.AddListener(EntityEventType.OnTest, OnTest);
             }
+        }
+
+        private void OnTest(ref EntityEventContext ctx)
+        {
+            Debug.Log("Take damage: " + ctx.healthModifier);
         }
 
         public void StopListening()

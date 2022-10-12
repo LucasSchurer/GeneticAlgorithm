@@ -17,7 +17,7 @@ namespace Game.Weapons
             _canUse = true;
         }
 
-        private void Fire(EntityEventContext ctx)
+        private void Fire(ref EntityEventContext ctx)
         {
             if (_canUse)
             {
