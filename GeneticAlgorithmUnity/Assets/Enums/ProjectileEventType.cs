@@ -1,5 +1,6 @@
 public enum ProjectileEventType
 { 
+    OnHit
 }
 
     

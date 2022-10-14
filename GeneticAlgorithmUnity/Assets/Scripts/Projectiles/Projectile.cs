@@ -12,7 +12,7 @@ namespace Game.Projectiles
         
         private float _damage;
         private GameObject _owner;
-        private EntityEventController _ownerEventController;
+        protected ProjectileEventController _eventController;
 
         protected virtual void Awake()
         {
@@ -26,15 +26,15 @@ namespace Game.Projectiles
         {
             _owner = owner;
             _damage = damage;
-            _ownerEventController = _owner.GetComponent<EntityEventController>();
+            _eventController = GetComponent<ProjectileEventController>();
         }
 
         protected virtual void OnTriggerEnter(Collider other)
         {
             if (!_owner.Equals(other.gameObject))
             {
+                _eventController?.TriggerEvent(ProjectileEventType.OnHit, new ProjectileEventContext());
                 other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { owner = _owner, target = other.gameObject, healthModifier = -_damage });
-                Destroy(gameObject);
             }
         }
     } 
