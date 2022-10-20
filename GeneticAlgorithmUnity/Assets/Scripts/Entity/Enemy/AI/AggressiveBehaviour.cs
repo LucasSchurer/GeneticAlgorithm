@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Events;
 
 namespace Game.Entities.AI
 {
@@ -24,6 +25,8 @@ namespace Game.Entities.AI
                 _movementController.Move(DirectionToPlayer);
                 _movementController.Rotate(DirectionToPlayer);
             }
+
+            GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { owner = gameObject });
         }
     } 
 }

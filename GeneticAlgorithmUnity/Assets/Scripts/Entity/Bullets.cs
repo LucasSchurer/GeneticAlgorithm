@@ -12,12 +12,15 @@ namespace Game.ScriptableObjects
         private Projectiles.Projectile _projectile;
         [SerializeField]
         private int _quantity;
+        [SerializeField]
+        private float _cooldown;
 
         public override void Action(ref EntityEventContext ctx)
         {
             for (int i = 0; i < _quantity; i++)
             {
-                Instantiate(_projectile, Vector3.zero, Quaternion.identity);
+                Projectiles.Projectile projectile = Instantiate(_projectile, ctx.owner.transform.position, ctx.owner.transform.rotation);
+                projectile.Instantiate(ctx.owner, 1);
             }
         }
     }

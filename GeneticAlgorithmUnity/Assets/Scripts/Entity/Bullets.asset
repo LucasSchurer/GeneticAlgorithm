@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   type: 2
-  _projectile: {fileID: 11400000, guid: 80a28932546cf4346b6a7361cd0ebf50, type: 2}
+  _projectile: {fileID: 2524293719138724245, guid: ab91959d863ffe44b93ca9a5458abe76, type: 3}
   _quantity: 4
+  _cooldown: 0

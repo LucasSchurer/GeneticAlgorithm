@@ -5,23 +5,25 @@ using Game.Events;
 using Game.ScriptableObjects;
 using System;
 
-namespace Game.Entities
+namespace Game
 {
-    public class EntityTraits : MonoBehaviour, IEventListener
+    public class TraitController<Type, Context, Controller> : MonoBehaviour, IEventListener
+        where Context: EventContext
+        where Controller: EventController<Type, Context>
     {
         [SerializeField]
-        private List<Trait<EntityEventType, EntityEventContext>> _traits;
+        private List<Trait<Type, Context>> _traits;
         [SerializeField]
-        private EntityEventController _eventController;
+        private Controller _eventController;
 
 
         private void Awake()
         {
-            _eventController = GetComponent<EntityEventController>();
+            _eventController = GetComponent<Controller>();
 
             if (_eventController)
             {
-                foreach (Trait<EntityEventType, EntityEventContext> trait in _traits)
+                foreach (Trait<Type, Context> trait in _traits)
                 {
                     trait.Added(gameObject);
                     _eventController.AddListener(trait.type, trait.Action);
@@ -29,7 +31,6 @@ namespace Game.Entities
             }
 
         }
-
 
         public void StartListening()
         {
@@ -43,7 +44,7 @@ namespace Game.Entities
 
         private void OnDestroy()
         {
-            foreach (Trait<EntityEventType, EntityEventContext> trait in _traits)
+            foreach (Trait<Type, Context> trait in _traits)
             {
                 trait.Added(gameObject);
             }
