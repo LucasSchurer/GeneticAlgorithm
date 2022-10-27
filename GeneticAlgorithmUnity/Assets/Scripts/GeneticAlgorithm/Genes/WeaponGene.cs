@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,3 +26,4 @@ public class WeaponGene : Gene
         type = (WeaponOld.Type)Random.Range(0, (int)WeaponOld.Type.Count);
     }
 }
+*/

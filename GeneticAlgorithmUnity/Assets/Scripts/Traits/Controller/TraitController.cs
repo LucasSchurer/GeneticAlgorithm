@@ -8,12 +8,9 @@ using System;
 namespace Game
 {
     public class TraitController<Type, Context, Controller> : MonoBehaviour, IEventListener
-        where Context: EventContext
-        where Controller: EventController<Type, Context>
+        where Context : EventContext
+        where Controller : EventController<Type, Context>
     {
-        [SerializeField]
-        private List<Trait<Type, Context>> _traits;
-        [SerializeField]
         private Controller _eventController;
 
 
@@ -23,11 +20,11 @@ namespace Game
 
             if (_eventController)
             {
-                foreach (Trait<Type, Context> trait in _traits)
+                /*foreach (TraitSO<Type, Context, Trait<Type, Context>> trait in _traitsSO)
                 {
                     trait.Added(gameObject);
                     _eventController.AddListener(trait.type, trait.Action);
-                }
+                }*/
             }
 
         }
@@ -44,10 +41,10 @@ namespace Game
 
         private void OnDestroy()
         {
-            foreach (Trait<Type, Context> trait in _traits)
+            /*foreach (TraitSO<Type, Context, Trait<Type, Context>> trait in _traitsSO)
             {
                 trait.Added(gameObject);
-            }
+            }*/
         }
-    } 
+    }
 }

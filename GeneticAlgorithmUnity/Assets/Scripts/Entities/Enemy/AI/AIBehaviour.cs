@@ -7,7 +7,7 @@ namespace Game.Entities.AI
     public abstract class AIBehaviour : MonoBehaviour
     {
         protected Transform _playerTransform;
-        protected Vector3 DirectionToPlayer => (_playerTransform.position - transform.position).normalized;
+        protected Vector3 DirectionToPlayer => _playerTransform ? (_playerTransform.position - transform.position).normalized : Vector3.zero;
         protected BehaviourType _behaviourType;
 
         protected virtual void Awake()

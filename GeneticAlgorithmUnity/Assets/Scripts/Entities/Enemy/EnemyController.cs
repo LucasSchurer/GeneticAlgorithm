@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -149,3 +149,4 @@ public class EnemyController : MonoBehaviour
         return !Physics.Raycast(transform.position, DirectionToPlayer, _detectionRange, _enemy.selfLayerMask | _enemy.obstacleLayerMask);
     }
 }
+*/

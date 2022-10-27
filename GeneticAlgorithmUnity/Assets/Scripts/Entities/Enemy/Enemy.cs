@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,7 +62,7 @@ public class Enemy : Entity
 
     public void UpdateFitness()
     {
-        /*_fitness = _statistics.damageTaken > 0 ? (1 / _statistics.damageTaken) : 1;*/
+        *//*_fitness = _statistics.damageTaken > 0 ? (1 / _statistics.damageTaken) : 1;*//*
 
         _fitness = _statistics.Accuracy;
     }
@@ -148,3 +148,4 @@ public class Enemy : Entity
         _statistics.projectilesFired++;
     }
 }
+*/
