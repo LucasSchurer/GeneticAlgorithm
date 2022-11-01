@@ -11,12 +11,16 @@ namespace Game
         where Context : EventContext
         where Controller : EventController<Type, Context>
     {
-        private Controller _eventController;
+        protected Controller _eventController;
 
+        [SerializeField]
+        protected Trait _trait;
+        protected List<TraitAction> _actions;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _eventController = GetComponent<Controller>();
+            _actions = new List<TraitAction>();
 
             if (_eventController)
             {
@@ -26,7 +30,6 @@ namespace Game
                     _eventController.AddListener(trait.type, trait.Action);
                 }*/
             }
-
         }
 
         public void StartListening()

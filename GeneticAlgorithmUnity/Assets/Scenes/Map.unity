@@ -762,6 +762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fbfcc205f243e429be801c9344f2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _trait: {fileID: 0}
 --- !u!1 &470415652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1035,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 721796719}
-  - component: {fileID: 721796718}
   m_Layer: 0
   m_Name: TestEvents
   m_TagString: Untagged
@@ -1042,18 +1042,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &721796718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721796716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6163a58fb2ceb2849bea0e3c5aab1bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &721796719
 Transform:
   m_ObjectHideFlags: 0
@@ -2253,3 +2241,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fbfcc205f243e429be801c9344f2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _trait: {fileID: 11400000, guid: 7f9a4c31adc43f644a7cb6e23c8e6652, type: 2}

@@ -7,5 +7,19 @@ namespace Game
 {
     public class EntityTraitController : TraitController<EntityEventType, EntityEventContext, EntityEventController>
     {
+        protected override void Awake()
+        {
+            base.Awake();
+
+            if (_trait)
+            {
+                foreach (Trait.Definition def in _trait.Definitions)
+                {
+                    TraitAction trait = new TraitAction(this, def.settings);
+                    _eventController?.AddListener(def.eventType, trait.Action, def.eventOrder);
+                    _actions.Add(trait);
+                }
+            }
+        }
     } 
 }
