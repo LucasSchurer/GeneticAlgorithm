@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3539d872fe92e484d8bc8773612091dd, type: 3}
-  m_Name: TesteSettings
+  m_Name: Teste2Settings
   m_EditorClassIdentifier: 
   _cooldown: 1
-  _message: aa
+  _message: aaa

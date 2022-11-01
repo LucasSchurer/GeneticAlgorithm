@@ -20,7 +20,7 @@ public class TraitAction
     {
         if (_canAct)
         {
-            Debug.Log("Ação");
+            Debug.Log(_settings.Message);
 
             _traitController.StartCoroutine(CooldownCoroutine());
         }
