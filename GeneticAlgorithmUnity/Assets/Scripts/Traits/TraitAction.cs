@@ -4,11 +4,11 @@ using UnityEngine;
 using Game;
 using Game.Events;
 
-public class TraitAction
+public abstract class TraitAction
 {
-    private TraitActionSettings _settings;
-    private bool _canAct = true;
-    private EntityTraitController _traitController;
+    protected TraitActionSettings _settings;
+    protected bool _canAct = true;
+    protected EntityTraitController _traitController;
 
     public TraitAction(EntityTraitController traitController, TraitActionSettings settings)
     {
@@ -16,17 +16,8 @@ public class TraitAction
         _settings = settings;
     }
 
-    public void Action(ref EntityEventContext ctx)
-    {
-        if (_canAct)
-        {
-            Debug.Log(_settings.Message);
-
-            _traitController.StartCoroutine(CooldownCoroutine());
-        }
-    }
-
-    private IEnumerator CooldownCoroutine()
+    public abstract void Action(ref EntityEventContext ctx);
+    protected IEnumerator CooldownCoroutine()
     {
         _canAct = false;
 
