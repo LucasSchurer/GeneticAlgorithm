@@ -14,8 +14,8 @@ namespace Game
         protected Controller _eventController;
 
         [SerializeField]
-        protected Trait<Type, Context> _trait;
-        protected TraitTrigger _traitTrigger;
+        protected Trait<Type, Context>[] _traits;
+        protected TraitTrigger[] _traitTriggers;
 
         protected class TraitTrigger
         {
@@ -50,10 +50,14 @@ namespace Game
         protected virtual void Awake()
         {
             _eventController = GetComponent<Controller>();
-            _traitTrigger = new TraitTrigger(this, _trait);
+            _traitTriggers = new TraitTrigger[_traits.Length];
 
             if (_eventController)
             {
+                for (int i = 0; i < _traits.Length; i++)
+                {
+                    _traitTriggers[i] = new TraitTrigger(this, _traits[i]);
+                }
             }
         }
 
@@ -61,7 +65,10 @@ namespace Game
         {
             if (_eventController)
             {
-                _eventController?.AddListener(_trait.eventType, _traitTrigger.Trigger, _trait.executionOrder);
+                foreach (TraitTrigger trigger in _traitTriggers)
+                {
+                    _eventController.AddListener(trigger.trait.eventType, trigger.Trigger, trigger.trait.executionOrder);
+                }
             }
         }
 
@@ -69,7 +76,10 @@ namespace Game
         {
             if (_eventController)
             {
-                _eventController?.RemoveListener(_trait.eventType, _traitTrigger.Trigger, _trait.executionOrder);
+                foreach (TraitTrigger trigger in _traitTriggers)
+                {
+                    _eventController.RemoveListener(trigger.trait.eventType, trigger.Trigger, trigger.trait.executionOrder);
+                }
             }
         }
 

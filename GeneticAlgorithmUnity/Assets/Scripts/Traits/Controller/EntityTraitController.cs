@@ -7,9 +7,5 @@ namespace Game
 {
     public class EntityTraitController : TraitController<EntityEventType, EntityEventContext, EntityEventController>
     {
-        protected override void Awake()
-        {
-            base.Awake();
-        }
     } 
 }
