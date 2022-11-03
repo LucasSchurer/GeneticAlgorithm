@@ -9,7 +9,7 @@ public class Trait : ScriptableObject
     [System.Serializable]
     public struct Definition
     {
-        public TraitActionSettings settings;
+        public TraitAction settings;
         public EntityEventType eventType;
         public EventExecutionOrder eventOrder;
     }

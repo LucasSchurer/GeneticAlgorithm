@@ -15,9 +15,9 @@ namespace Game
             {
                 foreach (Trait.Definition def in _trait.Definitions)
                 {
-                    TraitAction trait = new TestTraitAction(this, def.settings);
+                    /*typeof() trait = new TestTraitAction(this, def.settings);
                     _eventController?.AddListener(def.eventType, trait.Action, def.eventOrder);
-                    _actions.Add(trait);
+                    _actions.Add(trait);*/
                 }
             }
         }

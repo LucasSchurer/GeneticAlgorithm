@@ -15,12 +15,10 @@ namespace Game
 
         [SerializeField]
         protected Trait _trait;
-        protected List<TraitAction> _actions;
 
         protected virtual void Awake()
         {
             _eventController = GetComponent<Controller>();
-            _actions = new List<TraitAction>();
 
             if (_eventController)
             {
