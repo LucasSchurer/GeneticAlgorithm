@@ -564,7 +564,6 @@ GameObject:
   - component: {fileID: 383514884}
   - component: {fileID: 383514885}
   - component: {fileID: 383514886}
-  - component: {fileID: 383514887}
   m_Layer: 8
   m_Name: Enemy (1)
   m_TagString: Enemy
@@ -750,19 +749,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: de1db428c558ece4c8a59f7658e14cc5, type: 2}
---- !u!114 &383514887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383514874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70fbfcc205f243e429be801c9344f2df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trait: {fileID: 0}
 --- !u!1 &470415652
 GameObject:
   m_ObjectHideFlags: 0
@@ -2210,23 +2196,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fbfcc205f243e429be801c9344f2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trait: {fileID: 0}
---- !u!114 &8319228963035603764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8319228963035603743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08196165102f2f4cb9b14f906652dd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 2
-  eventType: 2
-  executionOrder: 1
-  effects:
-  - {fileID: 11400000, guid: 03003cf17b6a140469041d5a454ee389, type: 2}
-  - {fileID: 11400000, guid: aef2b298b16c1c143a8fbb33777d6042, type: 2}
-  canAct: 1
+  _trait: {fileID: 11400000, guid: eb92c3f65e74d8141b70a8fc6cc0fb6d, type: 2}

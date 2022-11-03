@@ -14,7 +14,7 @@ namespace Game
         protected Controller _eventController;
 
         [SerializeField]
-        protected Trait _trait;
+        protected Trait<Type, Context> _trait;
 
         protected virtual void Awake()
         {
@@ -22,30 +22,33 @@ namespace Game
 
             if (_eventController)
             {
-                /*foreach (TraitSO<Type, Context, Trait<Type, Context>> trait in _traitsSO)
-                {
-                    trait.Added(gameObject);
-                    _eventController.AddListener(trait.type, trait.Action);
-                }*/
             }
         }
 
         public void StartListening()
         {
-            throw new System.NotImplementedException();
+            if (_eventController)
+            {
+                _eventController?.AddListener(_trait.eventType, _trait.TriggerEffects, _trait.executionOrder);
+            }
         }
 
         public void StopListening()
         {
-            throw new System.NotImplementedException();
+            if (_eventController)
+            {
+                _eventController?.RemoveListener(_trait.eventType, _trait.TriggerEffects, _trait.executionOrder);
+            }
         }
 
-        private void OnDestroy()
+        private void OnEnable()
         {
-            /*foreach (TraitSO<Type, Context, Trait<Type, Context>> trait in _traitsSO)
-            {
-                trait.Added(gameObject);
-            }*/
+            StartListening();
+        }
+
+        private void OnDisable()
+        {
+            StopListening();
         }
     }
 }

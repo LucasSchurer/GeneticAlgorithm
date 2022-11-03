@@ -10,14 +10,6 @@ namespace Game
         protected override void Awake()
         {
             base.Awake();
-
-            if (_trait)
-            {
-/*                foreach (Trait.Definition def in _trait.Definitions)
-                {
-                    
-                }*/
-            }
         }
     } 
 }

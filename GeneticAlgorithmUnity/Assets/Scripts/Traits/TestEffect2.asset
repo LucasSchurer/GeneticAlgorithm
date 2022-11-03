@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca7f753178f2a854fb748ff2490c8431, type: 3}
-  m_Name: New Test Effect
+  m_Name: TestEffect2
   m_EditorClassIdentifier: 
-  _message: bbb
+  _message: 2

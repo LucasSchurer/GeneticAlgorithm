@@ -4,52 +4,20 @@ using UnityEngine;
 using Game.Events;
 using System;
 
-public class Trait : MonoBehaviour, IEventListener
+public abstract class Trait<Type, Context> : ScriptableObject
+    where Context: EventContext
 {
+    public TraitIdentifier identifier;
     public float cooldown;
-    public EntityEventType eventType;
+    public Type eventType;
     public EventExecutionOrder executionOrder;
-    public Effect<EntityEventContext>[] effects;
-    public bool canAct = true;
+    public Effect<Context>[] effects;
 
-    private void TriggerEffects(ref EntityEventContext ctx)
+    public void TriggerEffects(ref Context ctx)
     {
-        if (canAct)
+        foreach (Effect<Context> effect in effects)
         {
-            foreach (Effect<EntityEventContext> effect in effects)
-            {
-                effect.Trigger(ref ctx);
-            }
-            
-            canAct = false;
-            StartCoroutine(CooldownCoroutine());
+            effect.Trigger(ref ctx);
         }
-    }
-
-    private IEnumerator CooldownCoroutine()
-    {
-        yield return new WaitForSeconds(cooldown);
-
-        canAct = true;
-    }
-
-    private void OnEnable()
-    {
-        StartListening();
-    }
-
-    private void OnDisable()
-    {
-        StopListening();
-    }
-
-    public void StartListening()
-    {
-        GetComponent<EntityEventController>()?.AddListener(eventType, TriggerEffects, executionOrder);
-    }
-
-    public void StopListening()
-    {
-        GetComponent<EntityEventController>()?.RemoveListener(eventType, TriggerEffects, executionOrder);
     }
 }
