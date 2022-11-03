@@ -6,5 +6,6 @@ namespace Game.Events
 {
     public abstract class EventContext
     {
+        public GameObject owner;
     } 
 }
