@@ -9,6 +9,7 @@ namespace Game.Events
     {
         public GameObject owner;
         public GameObject target;
+        public EntityEventController eventController;
         public float healthModifier;
     } 
 }

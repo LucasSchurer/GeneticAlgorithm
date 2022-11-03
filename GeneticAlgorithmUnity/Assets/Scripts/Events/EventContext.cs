@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Events
 {
-    public class EventContext
+    public abstract class EventContext
     {
     } 
 }

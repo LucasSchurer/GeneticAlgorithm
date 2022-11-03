@@ -11,5 +11,9 @@ namespace Game.Events
 {
     public class ProjectileEventController : EventController<ProjectileEventType, ProjectileEventContext>
     {
+        protected override void AddEventControllerToContext(ref ProjectileEventContext ctx)
+        {
+            ctx.eventController = this;
+        }
     }
 }

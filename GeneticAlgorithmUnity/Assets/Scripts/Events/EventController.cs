@@ -26,32 +26,12 @@ namespace Game.Events
 
             if (_events.ContainsKey(type))
             {
-                /*Event<Context> e = _events[type];
-                e.AddListener(callback, order);*/
                 _events[type]?.AddListener(callback, order);
             } else
             {
                 _events.Add(type, new Event<Context>());
                 _events[type]?.AddListener(callback, order);
             }
-/*            if (_combatEvents == null)
-            {
-                _combatEvents = new Dictionary<EntityEventType, Event>();
-            }
-
-            if (_combatEvents.ContainsKey(type))
-            {
-                Event e = _combatEvents[type];
-                e.AddListener(callback, executionOrder);
-                _combatEvents[type] = e;
-            }
-            else
-            {
-                _combatEvents.Add(type, new Event());
-                Event e = _combatEvents[type];
-                e.AddListener(callback, executionOrder);
-                _combatEvents[type] = e;
-            }*/
         }
 
         public virtual void RemoveListener(Type type, Event<Context>.Delegate callback, EventExecutionOrder order = EventExecutionOrder.Standard)
@@ -66,8 +46,11 @@ namespace Game.Events
         {
             if (_events.ContainsKey(type))
             {
+                AddEventControllerToContext(ref ctx);
                 _events[type]?.Invoke(ctx);
             }
         }
+
+        protected abstract void AddEventControllerToContext(ref Context ctx);
     } 
 }

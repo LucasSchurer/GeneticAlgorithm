@@ -13,12 +13,10 @@ namespace Game
 
             if (_trait)
             {
-                foreach (Trait.Definition def in _trait.Definitions)
+/*                foreach (Trait.Definition def in _trait.Definitions)
                 {
-                    /*typeof() trait = new TestTraitAction(this, def.settings);
-                    _eventController?.AddListener(def.eventType, trait.Action, def.eventOrder);
-                    _actions.Add(trait);*/
-                }
+                    
+                }*/
             }
         }
     } 

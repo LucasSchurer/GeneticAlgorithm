@@ -2,20 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Events;
+using System;
 
-[CreateAssetMenu]
-public class Trait : ScriptableObject
+public class Trait : MonoBehaviour, IEventListener
 {
-    [System.Serializable]
-    public struct Definition
+    public float cooldown;
+    public EntityEventType eventType;
+    public EventExecutionOrder executionOrder;
+    public Effect<EntityEventContext>[] effects;
+    public bool canAct = true;
+
+    private void TriggerEffects(ref EntityEventContext ctx)
     {
-        public TraitAction settings;
-        public EntityEventType eventType;
-        public EventExecutionOrder eventOrder;
+        if (canAct)
+        {
+            foreach (Effect<EntityEventContext> effect in effects)
+            {
+                effect.Trigger(ref ctx);
+            }
+            
+            canAct = false;
+            StartCoroutine(CooldownCoroutine());
+        }
     }
 
-    [SerializeField]
-    protected Definition[] _definitions;
+    private IEnumerator CooldownCoroutine()
+    {
+        yield return new WaitForSeconds(cooldown);
 
-    public Definition[] Definitions => _definitions;
+        canAct = true;
+    }
+
+    private void OnEnable()
+    {
+        StartListening();
+    }
+
+    private void OnDisable()
+    {
+        StopListening();
+    }
+
+    public void StartListening()
+    {
+        GetComponent<EntityEventController>()?.AddListener(eventType, TriggerEffects, executionOrder);
+    }
+
+    public void StopListening()
+    {
+        GetComponent<EntityEventController>()?.RemoveListener(eventType, TriggerEffects, executionOrder);
+    }
 }

@@ -11,5 +11,9 @@ namespace Game.Events
 {
     public class EntityEventController : EventController<EntityEventType, EntityEventContext>
     {
-    } 
+        protected override void AddEventControllerToContext(ref EntityEventContext ctx)
+        {
+            ctx.eventController = this;
+        }
+    }
 }
