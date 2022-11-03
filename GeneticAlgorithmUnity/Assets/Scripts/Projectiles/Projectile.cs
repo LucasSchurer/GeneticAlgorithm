@@ -13,6 +13,7 @@ namespace Game.Projectiles
         private float _damage;
         private GameObject _owner;
         protected ProjectileEventController _eventController;
+        protected bool _canTriggerOnHitDealt;
 
         protected virtual void Awake()
         {
@@ -22,19 +23,39 @@ namespace Game.Projectiles
             }
         }
 
-        public void Instantiate(GameObject owner, float damage)
+        public void Instantiate(GameObject owner, float damage, bool canTriggerOnHitDealt = true)
         {
             _owner = owner;
             _damage = damage;
             _eventController = GetComponent<ProjectileEventController>();
+            _canTriggerOnHitDealt = canTriggerOnHitDealt;
         }
 
         protected virtual void OnTriggerEnter(Collider other)
         {
+            if (!_owner)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             if (!_owner.Equals(other.gameObject))
             {
                 _eventController?.TriggerEvent(ProjectileEventType.OnHit, new ProjectileEventContext());
-                other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { owner = _owner, target = other.gameObject, healthModifier = -_damage });
+
+                EntityEventController hitEventController = other.GetComponent<EntityEventController>();
+
+                if (hitEventController)
+                {
+                    hitEventController.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { owner = other.gameObject, other = _owner, healthModifier = -_damage });
+
+                    if (_canTriggerOnHitDealt)
+                    {
+                        _owner.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext { other = other.gameObject, healthModifier = -_damage });
+                    }
+                }
+
+                Destroy(gameObject);
             }
         }
     } 

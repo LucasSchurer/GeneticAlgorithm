@@ -7,7 +7,6 @@ namespace Game.Events
 {
     public class EntityEventContext : EventContext
     {
-        public GameObject target;
         public EntityEventController eventController;
         public float healthModifier;
     } 

@@ -7,8 +7,5 @@ using Game.Events;
 public abstract class Effect<Context> : ScriptableObject
     where Context : EventContext
 {
-    [SerializeField]
-    protected string _message;
-
     public abstract void Trigger(ref Context ctx); 
 }
