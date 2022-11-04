@@ -6,28 +6,21 @@ using Game.Projectiles;
 
 namespace Game.Traits.Effects
 {
+    [CreateAssetMenu(fileName = "SpawnProjectileAroundEntity", menuName = "Traits/Effects/Spawn Projectile Around Entity")]
     public class SpawnProjectileAroundEntity : Effect<EntityEventContext>
     {
-        private enum Target
-        {
-            Self,
-            Other
-        }
-
         [SerializeField]
-        private Bullet _bullet;
+        private Projectile _bullet;
         [SerializeField]
         private float _damage = 1;
         [SerializeField]
         private int _amount = 1;
         [SerializeField]
-        private Target _target;
+        private TargetType _targetType;
 
         public override void Trigger(ref EntityEventContext ctx)
         {
-            GameObject target = GetTarget(ref ctx);
-
-            if (target && ctx.owner)
+            if (ctx.owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
             {
                 for (int i = 0; i < _amount; i++)
                 {
@@ -36,19 +29,6 @@ namespace Game.Traits.Effects
                     Projectile projectile = Instantiate(_bullet, target.transform.position, Quaternion.Euler(0, rotationY, 0));
                     projectile.Instantiate(ctx.owner, _damage);
                 }
-            }
-        }
-
-        private GameObject GetTarget(ref EntityEventContext ctx)
-        {
-            switch (_target)
-            {
-                case Target.Self:
-                    return ctx.owner;
-                case Target.Other:
-                    return ctx.other;
-                default:
-                    return null;
             }
         }
     } 
