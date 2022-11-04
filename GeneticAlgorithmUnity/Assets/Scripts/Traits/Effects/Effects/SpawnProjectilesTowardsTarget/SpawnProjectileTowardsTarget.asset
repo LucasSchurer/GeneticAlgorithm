@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 517592fa55f05bf46acc4b974cd22b29, type: 3}
-  m_Name: SpawnProjectileTowardsEntity
+  m_Name: SpawnProjectileTowardsTarget
   m_EditorClassIdentifier: 
   _bullet: {fileID: 7154085737902193805, guid: a557046f966ec944a8b09a8ef74e9dff, type: 3}
   _damage: 1

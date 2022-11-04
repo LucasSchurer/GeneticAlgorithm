@@ -6,21 +6,13 @@ using Game.Projectiles;
 
 namespace Game.Traits.Effects
 {
-    [CreateAssetMenu(fileName = "SpawnProjectileTowardsEntity", menuName = "Traits/Effects/Spawn Projecitle Towards Entity")]
-    public class SpawnProjectileTowardsEntity : Effect<EntityEventContext>
+    [CreateAssetMenu(fileName = "SpawnProjectileTowardsTarget", menuName = "Traits/Effects/Spawn Projecitle Towards Target")]
+    public class SpawnProjectilesTowardsTarget : SpawnProjectileEffect<EventContext>
     {
         [SerializeField]
-        private Bullet _bullet;
-        [SerializeField]
-        private float _damage = 1;
-        [SerializeField]
-        private int _amount = 1;
-        [SerializeField]
         private float _distance = 10f;
-        [SerializeField]
-        private TargetType _targetType;
 
-        public override void Trigger(ref EntityEventContext ctx)
+        public override void Trigger(ref EventContext ctx)
         {
             if (ctx.owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
             {
@@ -36,7 +28,7 @@ namespace Game.Traits.Effects
                     Vector3 position = new Vector3(target.transform.position.x + direction.x * _distance, target.transform.position.y, ctx.other.transform.position.z + direction.z * _distance);
 
 
-                    Projectile projectile = Instantiate(_bullet, position, Quaternion.LookRotation(-direction, Vector3.up));
+                    Projectile projectile = Instantiate(_projectile, position, Quaternion.LookRotation(-direction, Vector3.up));
                     projectile.Instantiate(ctx.owner, _damage, false);
                 }
             }
