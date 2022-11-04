@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Game.Events;
-using Game.ScriptableObjects;
-using System;
 
-namespace Game
+namespace Game.Traits
 {
     public class TraitController<Type, Context, Controller> : MonoBehaviour, IEventListener
         where Context : EventContext

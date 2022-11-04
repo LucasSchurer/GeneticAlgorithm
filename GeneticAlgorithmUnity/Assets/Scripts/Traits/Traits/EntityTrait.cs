@@ -5,7 +5,7 @@ using Game.Events;
 
 namespace Game.Traits
 {
-    public class EntityTraitController : TraitController<EntityEventType, EntityEventContext, EntityEventController>
+    public class EntityTrait : Trait<EntityEventType, EntityEventContext>
     {
     } 
 }
