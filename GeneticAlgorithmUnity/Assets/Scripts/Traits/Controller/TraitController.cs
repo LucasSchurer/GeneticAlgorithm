@@ -12,59 +12,21 @@ namespace Game.Traits
 
         [SerializeField]
         protected Trait<Type, Context>[] _traits;
-        protected TraitTrigger[] _traitTriggers;
-
-        protected class TraitTrigger
-        {
-            public TraitController<Type, Context, Controller> traitController;
-            public Trait<Type, Context> trait;
-            public bool canAct = true;
-
-            public TraitTrigger(TraitController<Type, Context, Controller> traitController, Trait<Type, Context> trait)
-            {
-                this.traitController = traitController;
-                this.trait = trait;
-            }
-
-            public void Trigger(ref Context ctx)
-            {
-                if (canAct)
-                {
-                    trait.TriggerEffects(ref ctx);
-                    canAct = false;
-                    traitController.StartCoroutine(CooldownCoroutine());
-                }
-            }
-
-            private IEnumerator CooldownCoroutine()
-            {
-                yield return new WaitForSeconds(trait.cooldown);
-
-                canAct = true;
-            }
-        }
+        protected TraitHandler<Type, Context, Controller>[] _traitHandlers;
 
         protected virtual void Awake()
         {
             _eventController = GetComponent<Controller>();
-            _traitTriggers = new TraitTrigger[_traits.Length];
-
-            if (_eventController)
-            {
-                for (int i = 0; i < _traits.Length; i++)
-                {
-                    _traitTriggers[i] = new TraitTrigger(this, _traits[i]);
-                }
-            }
+            _traitHandlers = TraitHandler<Type, Context, Controller>.GetHandlersGivenTraits(this, _traits);
         }
 
         public void StartListening()
         {
             if (_eventController)
             {
-                foreach (TraitTrigger trigger in _traitTriggers)
+                foreach (TraitHandler<Type, Context, Controller> handler in _traitHandlers)
                 {
-                    _eventController.AddListener(trigger.trait.eventType, trigger.Trigger, trigger.trait.executionOrder);
+                    handler.StartListening(_eventController);
                 }
             }
         }
@@ -73,9 +35,9 @@ namespace Game.Traits
         {
             if (_eventController)
             {
-                foreach (TraitTrigger trigger in _traitTriggers)
+                foreach (TraitHandler<Type, Context, Controller> handler in _traitHandlers)
                 {
-                    _eventController.RemoveListener(trigger.trait.eventType, trigger.Trigger, trigger.trait.executionOrder);
+                    handler.StopListening(_eventController);
                 }
             }
         }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   identifier: 0
   cooldown: 0.1
-  eventType: 0
+  eventType: 3
   executionOrder: 1
   effects:
   - {fileID: 0}
