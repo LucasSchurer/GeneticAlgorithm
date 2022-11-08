@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Game.Events;
-using Game.Projectiles;
 
 namespace Game.Traits.Effects
 {
-    [CreateAssetMenu(fileName = "SpawnProjectileAroundTarget", menuName = "Traits/Effects/Spawn Projectile Around Target")]
-    public class SpawnProjectilesAroundTarget : SpawnProjectileEffect<EventContext>
+    public abstract class SpawnProjectilesAroundTarget<Context> : SpawnProjectileEffect<Context>
+        where Context: EventContext
     {
-        public override void Trigger(ref EventContext ctx)
+        public override void Trigger(ref Context ctx)
         {
             if (ctx.owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
             {

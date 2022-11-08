@@ -6,13 +6,13 @@ using Game.Projectiles;
 
 namespace Game.Traits.Effects
 {
-    [CreateAssetMenu(fileName = "SpawnProjectileTowardsTarget", menuName = "Traits/Effects/Spawn Projecitle Towards Target")]
-    public class SpawnProjectilesTowardsTarget : SpawnProjectileEffect<EventContext>
+    public abstract class SpawnProjectilesTowardsTarget<Context> : SpawnProjectileEffect<Context>
+        where Context: EventContext
     {
         [SerializeField]
         private float _distance = 10f;
 
-        public override void Trigger(ref EventContext ctx)
+        public override void Trigger(ref Context ctx)
         {
             if (ctx.owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
             {

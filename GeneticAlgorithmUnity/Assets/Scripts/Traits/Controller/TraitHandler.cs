@@ -11,6 +11,7 @@ namespace Game.Traits
         private TraitController<Type, Context, Controller> _traitController;
         private Trait<Type, Context> _trait;
         private bool canAct = true;
+        private bool isListeningToEvent = false;
 
         public TraitHandler(TraitController<Type, Context, Controller> traitController, Trait<Type, Context> trait)
         {
@@ -30,12 +31,20 @@ namespace Game.Traits
 
         public void StartListening(Controller eventController)
         {
-            eventController.AddListener(_trait.eventType, Trigger, _trait.executionOrder);
+            if (!isListeningToEvent)
+            {
+                eventController.AddListener(_trait.eventType, Trigger, _trait.executionOrder);
+                isListeningToEvent = true;
+            }
         }
 
         public void StopListening(Controller eventController)
         {
-            eventController.RemoveListener(_trait.eventType, Trigger, _trait.executionOrder);
+            if (isListeningToEvent)
+            {
+                eventController.RemoveListener(_trait.eventType, Trigger, _trait.executionOrder);
+                isListeningToEvent = false;
+            }
         }
 
         private IEnumerator CooldownCoroutine()

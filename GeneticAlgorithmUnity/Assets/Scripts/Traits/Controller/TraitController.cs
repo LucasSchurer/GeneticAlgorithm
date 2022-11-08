@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using Game.Events;
+using System.Collections.Generic;
 
 namespace Game.Traits
 {
@@ -12,12 +12,17 @@ namespace Game.Traits
 
         [SerializeField]
         protected Trait<Type, Context>[] _traits;
-        protected TraitHandler<Type, Context, Controller>[] _traitHandlers;
+        protected List<TraitHandler<Type, Context, Controller>> _traitHandlers;
 
         protected virtual void Awake()
         {
             _eventController = GetComponent<Controller>();
-            _traitHandlers = TraitHandler<Type, Context, Controller>.GetHandlersGivenTraits(this, _traits);
+            _traitHandlers = new List<TraitHandler<Type, Context, Controller>>(TraitHandler<Type, Context, Controller>.GetHandlersGivenTraits(this, _traits));
+        }
+
+        public void AddTrait(Trait<Type, Context> trait)
+        {
+            TraitHandler<Type, Context, Controller> traitHandler = new TraitHandler<Type, Context, Controller>(this, trait);
         }
 
         public void StartListening()
