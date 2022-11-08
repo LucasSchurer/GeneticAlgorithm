@@ -7,7 +7,7 @@ using Game.Entities;
 namespace Game.Traits.Effects
 {
     [CreateAssetMenu(fileName = "ModifyEntityHealth", menuName = "Traits/Effects/Entity/Modify Health")]
-    public class ModifyEntityHealth : AttributeModifyEffect<EntityEventContext, HealthController>
+    public class ModifyEntityHealth : ModifyAttributeEffect<EntityEventContext, HealthController>
     {
     } 
 }

@@ -6,7 +6,7 @@ using System;
 
 namespace Game.Entities
 {
-    public class HealthController : MonoBehaviour, IEventListener, IAttributeModifier
+    public class HealthController : MonoBehaviour, IEventListener, IModifyAttribute
     {
         [SerializeField]
         private Health _health;
@@ -68,12 +68,12 @@ namespace Game.Entities
             }
         }
 
-        public float CurrentValue()
+        public float GetCurrentValue()
         {
             return _currentHealth;
         }
 
-        public float MaximumValue()
+        public float GetMaximumValue()
         {
             return _maxHealth;
         }
@@ -86,6 +86,16 @@ namespace Game.Entities
         public void ModifyCurrentValue(float change)
         {
             _health.ModifyValue(ref _currentHealth, change);
+        }
+
+        public void ModifyMinimumValue(float changeAmount)
+        {
+            return;
+        }
+
+        public float GetMinimumValue()
+        {
+            return 0f;
         }
     } 
 }
