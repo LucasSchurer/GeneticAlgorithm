@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b851c3ba7f1b62498ac74e861b61052, type: 3}
-  m_Name: SpawnBulletsAroundSelf
+  m_Script: {fileID: 11500000, guid: d06f3e2cced5c7b45b43eb9fc78b86f5, type: 3}
+  m_Name: SpawnBulletsAroundSelfOnHitTaken
   m_EditorClassIdentifier: 
-  _projectile: {fileID: 2524293719138724245, guid: ab91959d863ffe44b93ca9a5458abe76, type: 3}
-  _targetType: 0
-  _amount: 15
-  _damage: 0.3
+  identifier: 0
+  executionType: 0
+  cooldown: 1
+  eventType: 0
+  executionOrder: 1
+  effects:
+  - {fileID: 11400000, guid: 87ba3647397d71c479af8ed908cc708c, type: 2}

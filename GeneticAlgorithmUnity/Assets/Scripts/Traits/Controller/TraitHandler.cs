@@ -31,7 +31,7 @@ namespace Game.Traits
 
         public void StartListening(Controller eventController)
         {
-            if (!isListeningToEvent)
+            if (!isListeningToEvent && _trait.executionType == TraitExecutionType.EventBased)
             {
                 eventController.AddListener(_trait.eventType, Trigger, _trait.executionOrder);
                 isListeningToEvent = true;
@@ -40,7 +40,7 @@ namespace Game.Traits
 
         public void StopListening(Controller eventController)
         {
-            if (isListeningToEvent)
+            if (isListeningToEvent && _trait.executionType == TraitExecutionType.EventBased)
             {
                 eventController.RemoveListener(_trait.eventType, Trigger, _trait.executionOrder);
                 isListeningToEvent = false;

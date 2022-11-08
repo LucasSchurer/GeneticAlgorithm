@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b851c3ba7f1b62498ac74e861b61052, type: 3}
-  m_Name: SpawnBulletsAroundSelf
+  m_Script: {fileID: 11500000, guid: 247fd00f7421ced4e80d454a28238e81, type: 3}
+  m_Name: PlayerHealth
   m_EditorClassIdentifier: 
-  _projectile: {fileID: 2524293719138724245, guid: ab91959d863ffe44b93ca9a5458abe76, type: 3}
-  _targetType: 0
-  _amount: 15
-  _damage: 0.3
+  _currentValue: 30
+  _maximumValue: 99
+  _minimumValue: 0

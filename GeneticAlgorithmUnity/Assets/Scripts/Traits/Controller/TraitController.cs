@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Game.Traits
 {
-    public class TraitController<Type, Context, Controller> : MonoBehaviour, IEventListener
+    public abstract class TraitController<Type, Context, Controller> : MonoBehaviour, IEventListener
         where Context : EventContext
         where Controller : EventController<Type, Context>
     {
@@ -17,13 +17,33 @@ namespace Game.Traits
         protected virtual void Awake()
         {
             _eventController = GetComponent<Controller>();
-            _traitHandlers = new List<TraitHandler<Type, Context, Controller>>(TraitHandler<Type, Context, Controller>.GetHandlersGivenTraits(this, _traits));
+            _traitHandlers = new List<TraitHandler<Type, Context, Controller>>();
+
+            foreach (Trait<Type, Context> trait in _traits)
+            {
+                AddTrait(trait);
+            }
         }
 
         public void AddTrait(Trait<Type, Context> trait)
         {
             TraitHandler<Type, Context, Controller> traitHandler = new TraitHandler<Type, Context, Controller>(this, trait);
+
+            switch (trait.executionType)
+            {
+                case TraitExecutionType.EventBased:
+                    traitHandler.StartListening(_eventController);
+                    break;
+                case TraitExecutionType.WhenAdded:
+                    Context ctx = GetContextForWhenAddedTraits();
+                    traitHandler.Trigger(ref ctx);
+                    break;
+            }
+
+            _traitHandlers.Add(traitHandler);
         }
+
+        protected abstract Context GetContextForWhenAddedTraits();
 
         public void StartListening()
         {

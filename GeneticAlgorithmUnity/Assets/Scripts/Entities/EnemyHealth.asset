@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d06f3e2cced5c7b45b43eb9fc78b86f5, type: 3}
-  m_Name: SpawnBulletsOnHitTaken
+  m_Script: {fileID: 11500000, guid: 247fd00f7421ced4e80d454a28238e81, type: 3}
+  m_Name: EnemyHealth
   m_EditorClassIdentifier: 
-  identifier: 0
-  executionType: 0
-  cooldown: 1
-  eventType: 0
-  executionOrder: 1
-  effects:
-  - {fileID: 11400000, guid: 87ba3647397d71c479af8ed908cc708c, type: 2}
+  _currentValue: 10
+  _maximumValue: 99
+  _minimumValue: 0

@@ -6,10 +6,10 @@ using System;
 
 namespace Game.Entities
 {
-    public class HealthController : MonoBehaviour, IEventListener
+    public class HealthController : MonoBehaviour, IEventListener, IAttributeModifier
     {
         [SerializeField]
-        private ScriptableObjects.Health _health;
+        private Health _health;
 
         private EntityEventController _eventController;
 
@@ -23,14 +23,14 @@ namespace Game.Entities
         private void Awake()
         {
             _eventController = GetComponent<EntityEventController>();
-            CurrentHealth = _health.maxHealth;
+            CurrentHealth = _health.CurrentValue;
         }
 
         private void OnHitTaken(ref EntityEventContext ctx)
         {
-            CurrentHealth += ctx.healthModifier;
+            _health.ModifyValue(ref _currentHealth, ctx.healthModifier);
 
-            if (CurrentHealth <= 0)
+            if (_currentHealth <= 0)
             {
                 _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
             }
@@ -66,6 +66,26 @@ namespace Game.Entities
             {
                 _eventController.RemoveListener(EntityEventType.OnHitTaken, OnHitTaken);
             }
+        }
+
+        public float CurrentValue()
+        {
+            return _currentHealth;
+        }
+
+        public float MaximumValue()
+        {
+            return _maxHealth;
+        }
+
+        public void ModifyMaximumValue(float change)
+        {
+            _health.ModifyValue(ref _maxHealth, change);
+        }
+
+        public void ModifyCurrentValue(float change)
+        {
+            _health.ModifyValue(ref _currentHealth, change);
         }
     } 
 }
