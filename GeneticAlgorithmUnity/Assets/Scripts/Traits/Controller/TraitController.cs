@@ -18,7 +18,10 @@ namespace Game.Traits
         {
             _eventController = GetComponent<Controller>();
             _traitHandlers = new List<TraitHandler<Type, Context, Controller>>();
+        }
 
+        protected virtual void Start()
+        {
             foreach (Trait<Type, Context> trait in _traits)
             {
                 AddTrait(trait);

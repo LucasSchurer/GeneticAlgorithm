@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d06f3e2cced5c7b45b43eb9fc78b86f5, type: 3}
-  m_Name: MoreHealth
+  m_Script: {fileID: 11500000, guid: c40dd5ef8f4e67548937775b23e23493, type: 3}
+  m_Name: TestEnemyRotationSpeed
   m_EditorClassIdentifier: 
-  identifier: 1
-  executionType: 1
-  cooldown: 0
-  eventType: 0
-  executionOrder: 1
-  effects:
-  - {fileID: 11400000, guid: 6640aca7a7c0b564594e02cd19fac7fb, type: 2}
+  _type: 3
+  _maxValue: 6
+  _minValue: 6
+  _startingValue: 6

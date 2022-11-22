@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.20749128, g: 0.21147478, b: 0.14576818, a: 1}
+  m_IndirectSpecularColor: {r: 0.20749143, g: 0.21147497, b: 0.14576834, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -604,11 +604,13 @@ GameObject:
   - component: {fileID: 383514879}
   - component: {fileID: 383514878}
   - component: {fileID: 383514877}
+  - component: {fileID: 383514888}
   - component: {fileID: 383514876}
   - component: {fileID: 383514884}
   - component: {fileID: 383514885}
   - component: {fileID: 383514886}
   - component: {fileID: 383514887}
+  - component: {fileID: 383514889}
   m_Layer: 8
   m_Name: Enemy (1)
   m_TagString: Enemy
@@ -628,7 +630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb8f669a2c0c8d4c983f8c9c605ec24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settings: {fileID: 11400000, guid: 51eeccb61a7e1b844adf7333ff122bb1, type: 2}
 --- !u!114 &383514877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -755,8 +756,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4a3bcd8f336f34cac6292dbf0f3d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 11400000, guid: 0aa1b47e19c86e54b99684d12708edca, type: 2}
-  _currentHealth: 0
+  _health:
+    _type: 0
+    _maxValue: 0
+    _minValue: 0
+    _currentValue: 0
 --- !u!114 &383514885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,9 +793,34 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 383514874}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d7625b712aa3544ab025009c0a33994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &383514888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383514874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9431adfcf8b764b89b4689ec097474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attributes: {fileID: 11400000, guid: c8ed6df5d142deb41aa522153b2824a0, type: 2}
+--- !u!114 &383514889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383514874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9294b2428783e4c9fdb6e664dcc3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &470415652
@@ -1516,7 +1545,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427624061}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.00349, y: 30.010008, z: 5.3690023}
+  m_LocalPosition: {x: -1.0121765, y: 30.010008, z: 5.3690023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1553,7 +1582,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.4760383, y: 1}
+    m_SensorSize: {x: 1.4803402, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1590,7 +1619,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537717871}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.00349, y: 30.010008, z: 5.3690023}
+  m_LocalPosition: {x: -1.0121765, y: 30.010008, z: 5.3690023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2215,8 +2244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4a3bcd8f336f34cac6292dbf0f3d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 11400000, guid: 3021a3e7c62bdab41aa1248a1d348025, type: 2}
-  _currentHealth: 0
+  _health:
+    _type: 0
+    _maxValue: 0
+    _minValue: 0
+    _currentValue: 0
 --- !u!114 &8319228963035603748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2241,4 +2273,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fbfcc205f243e429be801c9344f2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _traits: []
+  _traits:
+  - {fileID: 11400000, guid: 0a8baab33e92f3745b15a14f4f019944, type: 2}

@@ -6,20 +6,35 @@ namespace Game.Entities
 {
     public class MovementController : MonoBehaviour
     {
-        [SerializeField]
-        private ScriptableObjects.Movement _settings;
+        private AttributeController _attributeController;
+        private NonPersistentAttribute _movementSpeed;
+        private NonPersistentAttribute _rotationSpeed;
         private Rigidbody _rb;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+            _attributeController = GetComponent<AttributeController>();
+        }
+
+        private void Start()
+        {
+            if (_attributeController)
+            {
+                _movementSpeed = _attributeController.GetNonPersistentAttribute(AttributeType.MovementSpeed);
+                _rotationSpeed = _attributeController.GetNonPersistentAttribute(AttributeType.RotationSpeed);
+            } else
+            {
+                _movementSpeed = new NonPersistentAttribute();
+                _rotationSpeed = new NonPersistentAttribute();
+            }
         }
 
         public void Move(Vector3 direction)
         {
             if (direction != Vector3.zero)
             {
-                _rb.AddForce(direction * _settings.movementSpeed * 10f, ForceMode.Force);
+                _rb.AddForce(direction * _movementSpeed.CurrentValue * 10f, ForceMode.Force);
             }
         }
 
@@ -29,7 +44,7 @@ namespace Game.Entities
 
             Quaternion smoothRotation = Quaternion.LookRotation(direction);
 
-            smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * _settings.rotationSpeed);
+            smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * _rotationSpeed.CurrentValue);
 
             transform.rotation = Quaternion.Euler(new Vector3(0, smoothRotation.eulerAngles.y));
         }

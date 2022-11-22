@@ -6,31 +6,36 @@ using System;
 
 namespace Game.Entities
 {
-    public class HealthController : MonoBehaviour, IEventListener, IModifyAttribute
+    public class HealthController : MonoBehaviour, IEventListener
     {
         [SerializeField]
-        private Health _health;
+        private NonPersistentAttribute _health;
 
         private EntityEventController _eventController;
-
-        private float _maxHealth;
-        [SerializeField]
-        private float _currentHealth;
-
-        public float MaxHealth { get => _maxHealth; private set => _maxHealth = value; }
-        public float CurrentHealth { get => _currentHealth; private set => _currentHealth = value; }
+        private AttributeController _attributeController;
 
         private void Awake()
         {
             _eventController = GetComponent<EntityEventController>();
-            CurrentHealth = _health.CurrentValue;
+            _attributeController = GetComponent<AttributeController>();
+        }
+
+        private void Start()
+        {
+            if (_attributeController)
+            {
+                _health = _attributeController.GetNonPersistentAttribute(AttributeType.Health);
+            } else
+            {
+                _health = new NonPersistentAttribute();
+            }
         }
 
         private void OnHitTaken(ref EntityEventContext ctx)
         {
-            _health.ModifyValue(ref _currentHealth, ctx.healthModifier);
+            _health.CurrentValue += ctx.healthModifier;
 
-            if (_currentHealth <= 0)
+            if (_health.CurrentValue <= 0)
             {
                 _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
             }
@@ -51,13 +56,7 @@ namespace Game.Entities
             if (_eventController != null)
             {
                 _eventController.AddListener(EntityEventType.OnHitTaken, OnHitTaken);
-                _eventController.AddListener(EntityEventType.OnTest, OnTest);
             }
-        }
-
-        private void OnTest(ref EntityEventContext ctx)
-        {
-            Debug.Log("Take damage: " + ctx.healthModifier);
         }
 
         public void StopListening()
@@ -66,36 +65,6 @@ namespace Game.Entities
             {
                 _eventController.RemoveListener(EntityEventType.OnHitTaken, OnHitTaken);
             }
-        }
-
-        public float GetCurrentValue()
-        {
-            return _currentHealth;
-        }
-
-        public float GetMaximumValue()
-        {
-            return _maxHealth;
-        }
-
-        public void ModifyMaximumValue(float change)
-        {
-            _health.ModifyValue(ref _maxHealth, change);
-        }
-
-        public void ModifyCurrentValue(float change)
-        {
-            _health.ModifyValue(ref _currentHealth, change);
-        }
-
-        public void ModifyMinimumValue(float changeAmount)
-        {
-            return;
-        }
-
-        public float GetMinimumValue()
-        {
-            return 0f;
         }
     } 
 }

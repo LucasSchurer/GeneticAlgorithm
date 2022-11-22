@@ -16,15 +16,5 @@ namespace Game.Traits
                 eventController = _eventController
             };
         }
-
-        private void Start()
-        {
-            Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(TraitIdentifier.Test1);
-
-            if (trait != null)
-            {
-                AddTrait(trait);
-            }
-        }
     } 
 }
