@@ -6,16 +6,52 @@ using Game.Entities;
 
 namespace Game.GA
 {
-    public class CreatureController : MonoBehaviour, IEventListener
+    public class CreatureController : MonoBehaviour
     {
-        public void StartListening()
+        private StatisticsController _statisticsController;
+
+        public float fitness;
+        public float[] fitnessPropertiesValues;
+
+        private void Awake()
         {
-            throw new System.NotImplementedException();
+            _statisticsController = GetComponent<StatisticsController>();
         }
 
-        public void StopListening()
+        private void Start()
         {
-            throw new System.NotImplementedException();
+
+        }
+
+        public void UpdateFitness(FitnessProperty[] properties, float[] populationFitnessPropertiesValues)
+        {
+            fitness = 0f;
+
+            if (fitnessPropertiesValues == null || populationFitnessPropertiesValues == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < populationFitnessPropertiesValues.Length; i++)
+            {
+                fitness += (fitnessPropertiesValues[i] / populationFitnessPropertiesValues[i]) * properties[i].Weight;
+            }
+        }
+
+        public void UpdateFitnessPropertiesValues(FitnessProperty[] properties)
+        {
+            if (_statisticsController)
+            {
+                fitnessPropertiesValues = new float[properties.Length];
+
+                for (int i = 0; i < properties.Length; i++)
+                {
+                    fitnessPropertiesValues[i] = _statisticsController.GetStatistic(properties[i].StatisticsType);
+                }
+            } else
+            {
+                fitnessPropertiesValues = null;
+            }
         }
     } 
 }
