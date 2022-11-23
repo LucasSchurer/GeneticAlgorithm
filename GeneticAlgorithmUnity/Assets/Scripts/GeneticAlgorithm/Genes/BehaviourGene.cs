@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Entities.AI;
 
 public class BehaviourGene : Gene
 {
