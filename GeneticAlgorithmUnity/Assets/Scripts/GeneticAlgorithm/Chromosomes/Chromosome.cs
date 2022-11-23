@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class Chromosome
 {
     /// <summary>
-    /// Property that controls if the mutatation rate will be used only one time to each gene
-    /// or will be calculated for each gene to apply mutation.
+    /// Property that controls if the mutation rate will be used only one time to each gene
+    /// or will be calculated for each gene individually
     /// </summary>
     protected bool _shouldMutateIndividually = false;
     protected float _mutationRate;
