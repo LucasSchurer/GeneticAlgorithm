@@ -35,7 +35,6 @@ namespace Game.Entities
             if (_eventController != null)
             {
                 _eventController.AddListener(EntityEventType.OnDeath, OnDeath);
-                _eventController.AddListener(EntityEventType.OnTest, OnTest, EventExecutionOrder.Before);
             }
         }
 
