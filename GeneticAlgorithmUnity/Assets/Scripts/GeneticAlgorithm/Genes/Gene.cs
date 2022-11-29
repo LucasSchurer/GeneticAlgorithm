@@ -14,5 +14,6 @@ namespace Game.GA
         public abstract void Randomize();
 
         public abstract Gene Copy();
+        public abstract void Apply(CreatureController creature);
     } 
 }

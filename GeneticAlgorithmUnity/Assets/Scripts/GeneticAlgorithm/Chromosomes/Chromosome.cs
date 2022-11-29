@@ -33,6 +33,14 @@ namespace Game.GA
 
         protected abstract void SetGenes();
         protected abstract void SetGenes(Gene[] genes);
+        
+        public virtual void ApplyGenes(CreatureController creature)
+        {
+            foreach (Gene gene in _genes)
+            {
+                gene.Apply(creature);
+            }
+        }
 
         public void RandomizeGenes()
         {

@@ -14,6 +14,16 @@ namespace Game.GA
             this.type = type;
         }
 
+        public override void Apply(CreatureController creature)
+        {
+            creature.behaviourType = type;
+
+            if (type == BehaviourType.Aggressive)
+            {
+                creature.GetComponent<Weapons.Rifle>().enabled = false;
+            }
+        }
+
         public override Gene Copy()
         {
             return new BehaviourGene(type);

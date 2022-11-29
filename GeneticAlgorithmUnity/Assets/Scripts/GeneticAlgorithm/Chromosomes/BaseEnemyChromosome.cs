@@ -14,27 +14,21 @@ namespace Game.GA
         public enum Genes
         {
             Behaviour,
-            RedColor,
-            GreenColor,
-            BlueColor,
+            Color,
             Size
         }
 
         protected override void SetGenes()
         {
             _genes = new Gene[(int)Genes.Size];
-            _genes[(int)Genes.RedColor] = new RGBValueGene(1f);
-            _genes[(int)Genes.GreenColor] = new RGBValueGene(1f);
-            _genes[(int)Genes.BlueColor] = new RGBValueGene(1f);
+            _genes[(int)Genes.Color] = new ColorGene(new Color(1, 1, 1, 1));
             _genes[(int)Genes.Behaviour] = new BehaviourGene(BehaviourType.Aggressive);
         }
 
         protected override void SetGenes(Gene[] genes)
         {
             _genes = new Gene[(int)Genes.Size];
-            _genes[(int)Genes.RedColor] = genes[(int)Genes.RedColor].Copy();
-            _genes[(int)Genes.GreenColor] = genes[(int)Genes.GreenColor].Copy();
-            _genes[(int)Genes.BlueColor] = genes[(int)Genes.BlueColor].Copy();
+            _genes[(int)Genes.Color] = genes[(int)Genes.Color].Copy();
             _genes[(int)Genes.Behaviour] = genes[(int)Genes.Behaviour].Copy();
         }
 
@@ -43,22 +37,6 @@ namespace Game.GA
             BaseEnemyChromosome copy = new BaseEnemyChromosome(_mutationRate, _shouldMutateIndividually, _genes);
 
             return copy;
-        }
-
-        public Color GetColor()
-        {
-            return new Color
-            {
-                r = ((RGBValueGene)_genes[(int)Genes.RedColor]).value,
-                g = ((RGBValueGene)_genes[(int)Genes.GreenColor]).value,
-                b = ((RGBValueGene)_genes[(int)Genes.BlueColor]).value,
-                a = 1f
-            };
-        }
-
-        public BehaviourType GetBehaviour()
-        {
-            return ((BehaviourGene)_genes[(int)Genes.Behaviour]).type;
         }
     }
 }

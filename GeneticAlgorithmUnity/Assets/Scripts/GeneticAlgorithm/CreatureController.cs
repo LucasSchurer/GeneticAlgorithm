@@ -39,38 +39,7 @@ namespace Game.GA
                 this.chromosome.RandomizeGenes();
             }
 
-            UpdateChromosomeValues();
-        }
-
-        public void UpdateChromosomeValues()
-        {
-            MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-
-            Color color = chromosome.GetColor();
-
-            if (meshRenderer)
-            {
-                meshRenderer.material.color = color;
-                meshRenderer.material.SetColor("_EmissionColor", color * 1.7f);
-            }
-
-            foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
-            {
-                MeshRenderer rbMeshRenderer = rb.GetComponent<MeshRenderer>();
-
-                if (rbMeshRenderer)
-                {
-                    rbMeshRenderer.material.color = color;
-                    rbMeshRenderer.material.SetColor("_EmissionColor", color * 1.7f);
-                }
-            }
-
-            behaviourType = chromosome.GetBehaviour();
-
-            if (behaviourType == Entities.AI.BehaviourType.Aggressive)
-            {
-                GetComponent<Weapons.Rifle>().enabled = false;
-            }
+            this.chromosome.ApplyGenes(this);
         }
 
         public void UpdateFitness(FitnessProperty[] properties, float[] populationFitnessPropertiesValues)
