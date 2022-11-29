@@ -44,5 +44,21 @@ namespace Game.GA
 
             return copy;
         }
+
+        public Color GetColor()
+        {
+            return new Color
+            {
+                r = ((RGBValueGene)_genes[(int)Genes.RedColor]).value,
+                g = ((RGBValueGene)_genes[(int)Genes.GreenColor]).value,
+                b = ((RGBValueGene)_genes[(int)Genes.BlueColor]).value,
+                a = 1f
+            };
+        }
+
+        public BehaviourType GetBehaviour()
+        {
+            return ((BehaviourGene)_genes[(int)Genes.Behaviour]).type;
+        }
     }
 }

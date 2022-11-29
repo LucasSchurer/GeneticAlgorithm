@@ -19,9 +19,11 @@ namespace Game.GA
         [SerializeField]
         private bool _spawnOnStart = false;
         [SerializeField]
+        private int _spawnAmount = 4;
+        [SerializeField]
         private float _mutationRate = 0.15f;
 
-        private List<CreatureController> _creatures;
+        private CreatureController[] _creatures;
 
         public float[] populationFitnessPropertiesValuesSums;
         public float populationFitness;
@@ -29,7 +31,7 @@ namespace Game.GA
         private void Awake()
         {
             _fitnessProperties.BalancePropertiesWeights();
-            _creatures = new List<CreatureController>();
+            _creatures = new CreatureController[_spawnAmount];
         }
 
         private void Update()
@@ -37,11 +39,6 @@ namespace Game.GA
             if (Input.GetKeyDown(KeyCode.F))
             {
                 UpdatePopulationFitness();
-            }
-
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                Spawn();
             }
 
             if (Input.GetKeyDown(KeyCode.H))
@@ -54,20 +51,21 @@ namespace Game.GA
         {
             if (_spawnOnStart)
             {
-                Spawn();
+                for (int i = 0; i < _spawnAmount; i++)
+                {
+                    _creatures[i] = Instantiate(_creaturePrefab);
+                    _creatures[i].Initialize(_mutationRate, true);
+                    _creatures[i].gameObject.SetActive(true);
+                    _creatures[i].transform.position = GetSpawnPosition();
+                }
             }
-        }
-
-        private void Spawn()
-        {
-            _creatures.Add(Instantiate(_creaturePrefab, GetSpawnPosition(), Quaternion.identity));
         }
 
         private Vector3 GetSpawnPosition()
         {
             Vector3 position = _spawnPosition.position;
-            position.x += Random.Range(-5f, 5f);
-            position.z += Random.Range(-5f, 5f);
+            position.x += Random.Range(-10f, 10f);
+            position.z += Random.Range(-10f, 10f);
 
             return position;
         }
@@ -76,7 +74,7 @@ namespace Game.GA
         {
             UpdatePopulationFitness();
 
-            CreatureController[] newCreatures = new CreatureController[_creatures.Count];
+            CreatureController[] newCreatures = new CreatureController[_creatures.Length];
 
             for (int i = 0; i < newCreatures.Length; i+=2)
             {
@@ -89,13 +87,13 @@ namespace Game.GA
 
                 // Mutation
                 offspring[0].Mutate();
-                offspring[0].Mutate();
+                offspring[1].Mutate();
 
                 newCreatures[i] = Instantiate(_creaturePrefab);
                 newCreatures[i + 1] = Instantiate(_creaturePrefab);
 
-                newCreatures[i].SetChromosome((BaseEnemyChromosome)offspring[0], _mutationRate);
-                newCreatures[i + 1].SetChromosome((BaseEnemyChromosome)offspring[1], _mutationRate);
+                newCreatures[i].Initialize(_mutationRate, false, (BaseEnemyChromosome)offspring[0]);
+                newCreatures[i + 1].Initialize(_mutationRate, false, (BaseEnemyChromosome)offspring[1]);
             }
 
             for (int i = 0; i < newCreatures.Length; i++)
@@ -112,7 +110,7 @@ namespace Game.GA
             float randomFitness = Random.Range(0, populationFitness);
             float fitnessRange = 0f;
 
-            for (int i = 0; i < _creatures.Count; i++)
+            for (int i = 0; i < _creatures.Length; i++)
             {
                 fitnessRange += _creatures[i].fitness;
 

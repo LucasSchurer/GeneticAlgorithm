@@ -13,6 +13,7 @@ namespace Game.GA
     {
         private StatisticsController _statisticsController;
         public BaseEnemyChromosome chromosome;
+        public Entities.AI.BehaviourType behaviourType;
 
         public float fitness;
         public float[] fitnessPropertiesValues;
@@ -22,7 +23,7 @@ namespace Game.GA
             _statisticsController = GetComponent<StatisticsController>();
         }
 
-        public void SetChromosome(BaseEnemyChromosome chromosome, float mutationRate)
+        public void Initialize(float mutationRate, bool shouldRandomizeChromosome = true, BaseEnemyChromosome chromosome = null)
         {
             if (chromosome == null)
             {
@@ -33,12 +34,43 @@ namespace Game.GA
                 this.chromosome = (BaseEnemyChromosome)chromosome.Copy();
             }
 
+            if (shouldRandomizeChromosome)
+            {
+                this.chromosome.RandomizeGenes();
+            }
+
             UpdateChromosomeValues();
         }
 
         public void UpdateChromosomeValues()
         {
-            Debug.Log("A");
+            MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+
+            Color color = chromosome.GetColor();
+
+            if (meshRenderer)
+            {
+                meshRenderer.material.color = color;
+                meshRenderer.material.SetColor("_EmissionColor", color * 1.7f);
+            }
+
+            foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+            {
+                MeshRenderer rbMeshRenderer = rb.GetComponent<MeshRenderer>();
+
+                if (rbMeshRenderer)
+                {
+                    rbMeshRenderer.material.color = color;
+                    rbMeshRenderer.material.SetColor("_EmissionColor", color * 1.7f);
+                }
+            }
+
+            behaviourType = chromosome.GetBehaviour();
+
+            if (behaviourType == Entities.AI.BehaviourType.Aggressive)
+            {
+                GetComponent<Weapons.Rifle>().enabled = false;
+            }
         }
 
         public void UpdateFitness(FitnessProperty[] properties, float[] populationFitnessPropertiesValues)
