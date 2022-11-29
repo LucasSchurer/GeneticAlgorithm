@@ -18,28 +18,18 @@ namespace Game.GA
         [Header("Settings")]
         [SerializeField]
         private bool _spawnOnStart = false;
+        [SerializeField]
+        private float _mutationRate = 0.15f;
 
         private List<CreatureController> _creatures;
 
-        public float[] populationPropertiesSum;
-
-        public static PopulationManager Instance { get; private set; }
-        public FitnessProperties FitnessProperties => _fitnessProperties;
+        public float[] populationFitnessPropertiesValuesSums;
+        public float populationFitness;
 
         private void Awake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
-                _fitnessProperties.BalancePropertiesWeights();
-                _creatures = new List<CreatureController>();
-            }
-
-            DontDestroyOnLoad(gameObject);
+            _fitnessProperties.BalancePropertiesWeights();
+            _creatures = new List<CreatureController>();
         }
 
         private void Update()
@@ -53,6 +43,11 @@ namespace Game.GA
             {
                 Spawn();
             }
+
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                GenerateNewPopulation();
+            }
         }
 
         private void Start()
@@ -65,16 +60,75 @@ namespace Game.GA
 
         private void Spawn()
         {
+            _creatures.Add(Instantiate(_creaturePrefab, GetSpawnPosition(), Quaternion.identity));
+        }
+
+        private Vector3 GetSpawnPosition()
+        {
             Vector3 position = _spawnPosition.position;
             position.x += Random.Range(-5f, 5f);
             position.z += Random.Range(-5f, 5f);
 
-            _creatures.Add(Instantiate(_creaturePrefab, position, Quaternion.identity));
+            return position;
+        }
+
+        private void GenerateNewPopulation()
+        {
+            UpdatePopulationFitness();
+
+            CreatureController[] newCreatures = new CreatureController[_creatures.Count];
+
+            for (int i = 0; i < newCreatures.Length; i+=2)
+            {
+                // Selection
+                int parentA = RouletWheelSelection();
+                int parentB = RouletWheelSelection();
+
+                // Crossover
+                Chromosome[] offspring = Chromosome.Crossover(_creatures[parentA].chromosome, _creatures[parentB].chromosome);
+
+                // Mutation
+                offspring[0].Mutate();
+                offspring[0].Mutate();
+
+                newCreatures[i] = Instantiate(_creaturePrefab);
+                newCreatures[i + 1] = Instantiate(_creaturePrefab);
+
+                newCreatures[i].SetChromosome((BaseEnemyChromosome)offspring[0], _mutationRate);
+                newCreatures[i + 1].SetChromosome((BaseEnemyChromosome)offspring[1], _mutationRate);
+            }
+
+            for (int i = 0; i < newCreatures.Length; i++)
+            {
+                Destroy(_creatures[i].gameObject);
+                _creatures[i] = newCreatures[i];
+                _creatures[i].gameObject.SetActive(true);
+                _creatures[i].transform.position = GetSpawnPosition();
+            }
+        }
+
+        private int RouletWheelSelection()
+        {
+            float randomFitness = Random.Range(0, populationFitness);
+            float fitnessRange = 0f;
+
+            for (int i = 0; i < _creatures.Count; i++)
+            {
+                fitnessRange += _creatures[i].fitness;
+
+                if (fitnessRange > randomFitness)
+                {
+                    return i;
+                }
+            }
+
+            return 0;
         }
 
         private void UpdatePopulationFitness()
         {
-            populationPropertiesSum = new float[_fitnessProperties.Properties.Length];
+            populationFitnessPropertiesValuesSums = new float[_fitnessProperties.Properties.Length];
+            populationFitness = 0f;
 
             foreach (CreatureController creature in _creatures)
             {
@@ -82,13 +136,14 @@ namespace Game.GA
 
                 for (int i = 0; i < _fitnessProperties.Properties.Length; i++)
                 {
-                    populationPropertiesSum[i] += creature.fitnessPropertiesValues[i]; 
+                    populationFitnessPropertiesValuesSums[i] += creature.fitnessPropertiesValues[i]; 
                 }
             }
 
             foreach (CreatureController creature in _creatures)
             {
-                creature.UpdateFitness(_fitnessProperties.Properties, populationPropertiesSum);
+                creature.UpdateFitness(_fitnessProperties.Properties, populationFitnessPropertiesValuesSums);
+                populationFitness += creature.fitness;
             }
         }
     } 

@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Gene
+namespace Game.GA
 {
-    /// <summary>
-    /// Method called when the creature suffers a mutation.
-    /// </summary>
-    public abstract void Mutate();
+    public abstract class Gene
+    {
+        /// <summary>
+        /// Method called when the creature suffers a mutation.
+        /// </summary>
+        public abstract void Mutate();
 
-    public abstract void Randomize();
+        public abstract void Randomize();
 
-    public abstract Gene Copy();
+        public abstract Gene Copy();
+    } 
 }

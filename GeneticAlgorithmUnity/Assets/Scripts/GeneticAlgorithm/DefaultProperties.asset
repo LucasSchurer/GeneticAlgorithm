@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _properties:
   - _statisticType: 0
-    _weight: 0.5
+    _weight: 0.33562937
     _inverse: 0
   - _statisticType: 1
-    _weight: 0.5
+    _weight: 0.6643706
     _inverse: 0
   _autoBalance: 1
   _weightSum: 1

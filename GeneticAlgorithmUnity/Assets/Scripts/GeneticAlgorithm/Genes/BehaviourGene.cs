@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Entities.AI;
 
-public class BehaviourGene : Gene
+namespace Game.GA
 {
-    public BehaviourType type;
-
-    public BehaviourGene(BehaviourType type)
+    public class BehaviourGene : Gene
     {
-        this.type = type;
-    }
+        public BehaviourType type;
 
-    public override Gene Copy()
-    {
-        return new BehaviourGene(type);
-    }
+        public BehaviourGene(BehaviourType type)
+        {
+            this.type = type;
+        }
 
-    public override void Mutate()
-    {
-        Randomize();
-    }
+        public override Gene Copy()
+        {
+            return new BehaviourGene(type);
+        }
 
-    public override void Randomize()
-    {
-        type = (BehaviourType)Random.Range(0, (int)BehaviourType.Count);
-    }
+        public override void Mutate()
+        {
+            Randomize();
+        }
+
+        public override void Randomize()
+        {
+            type = (BehaviourType)Random.Range(0, (int)BehaviourType.Count);
+        }
+    } 
 }
