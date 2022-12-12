@@ -10,7 +10,8 @@ namespace Game.Entities
         public enum Type
         {
             OnHitTaken,
-            OnHitDealt
+            OnHitDealt,
+            OnDamageDealt
         }
 
         private EntityEventController _eventController;
@@ -74,8 +75,16 @@ namespace Game.Entities
 
         #region LISTEN METHODS
 
-        private void OnHitTaken(ref EntityEventContext ctx) { ModifyStatistic(Type.OnHitTaken, 1f); }
-        private void OnHitDealt(ref EntityEventContext ctx) { ModifyStatistic(Type.OnHitDealt, 1f); }
+        private void OnHitTaken(ref EntityEventContext ctx)
+        { 
+            ModifyStatistic(Type.OnHitTaken, 1f);
+        }
+
+        private void OnHitDealt(ref EntityEventContext ctx)
+        { 
+            ModifyStatistic(Type.OnHitDealt, 1f);
+            ModifyStatistic(Type.OnDamageDealt, -ctx.healthModifier);
+        }
 
         #endregion
     }

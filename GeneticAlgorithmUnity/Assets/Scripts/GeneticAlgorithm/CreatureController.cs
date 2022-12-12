@@ -55,10 +55,24 @@ namespace Game.GA
             {
                 if (populationFitnessPropertiesValues[i] == 0)
                 {
+                    if (properties[i].Inverse)
+                    {
+                        fitness += 1 * properties[i].Weight;
+                    }
+
                     continue;
                 }
 
-                fitness += (fitnessPropertiesValues[i] / populationFitnessPropertiesValues[i]) * properties[i].Weight;
+                float propertyValue = (fitnessPropertiesValues[i] / populationFitnessPropertiesValues[i]);
+
+                if (properties[i].Inverse)
+                {
+                    propertyValue = 1 - propertyValue;
+                }
+
+                propertyValue *= properties[i].Weight;
+
+                fitness += propertyValue;
             }
         }
 
