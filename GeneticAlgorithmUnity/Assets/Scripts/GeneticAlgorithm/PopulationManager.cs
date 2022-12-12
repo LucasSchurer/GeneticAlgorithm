@@ -79,8 +79,8 @@ namespace Game.GA
             for (int i = 0; i < newCreatures.Length; i+=2)
             {
                 // Selection
-                int parentA = RouletWheelSelection();
-                int parentB = RouletWheelSelection();
+                int parentA = RouletteWheelSelection();
+                int parentB = RouletteWheelSelection();
 
                 // Crossover
                 Chromosome[] offspring = Chromosome.Crossover(_creatures[parentA].chromosome, _creatures[parentB].chromosome);
@@ -105,7 +105,7 @@ namespace Game.GA
             }
         }
 
-        private int RouletWheelSelection()
+        private int RouletteWheelSelection()
         {
             float randomFitness = Random.Range(0, populationFitness);
             float fitnessRange = 0f;
