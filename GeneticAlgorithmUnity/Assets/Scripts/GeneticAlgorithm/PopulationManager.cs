@@ -28,7 +28,7 @@ namespace Game.GA
         public float[] populationFitnessPropertiesValuesSums;
         public float populationFitness;
 
-        private Graph _populationGraph;
+        private PopulationGraph _populationGraph;
         private int _currentCreatureId = 1;
         private int _currentGeneration = 0;
 
@@ -36,7 +36,7 @@ namespace Game.GA
         {
             _fitnessProperties.BalancePropertiesWeights();
             _creatures = new CreatureController[_spawnAmount];
-            _populationGraph = new Graph();
+            _populationGraph = new PopulationGraph();
 
             GetComponent<UI.GraphVisualizer>()?.SetGraph(_populationGraph);
         }
@@ -129,7 +129,7 @@ namespace Game.GA
 
             for (int i = 0; i < newCreatures.Length; i++)
             {
-                Vertex vertex = new Vertex(_populationGraph, _creatures[i]);
+                CreatureVertex vertex = new CreatureVertex(_populationGraph, _creatures[i]);
                 _populationGraph.AddVertex(vertex);
 
                 Destroy(_creatures[i].gameObject);

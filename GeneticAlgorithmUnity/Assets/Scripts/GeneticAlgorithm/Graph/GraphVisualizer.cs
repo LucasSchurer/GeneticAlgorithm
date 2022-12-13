@@ -27,13 +27,13 @@ namespace Game.GA.UI
         [SerializeField]
         private TextMeshProUGUI _hitsTakenValue;
 
-        private Graph _graph;
+        private PopulationGraph _graph;
 
-        private Vertex _selectedVertex;
+        private CreatureVertex _selectedVertex;
 
-        private Vertex[] _selectedVertexParents;
+        private CreatureVertex[] _selectedVertexParents;
 
-        public void SetGraph(Graph graph)
+        public void SetGraph(PopulationGraph graph)
         {
             _graph = graph;
         }
@@ -47,7 +47,7 @@ namespace Game.GA.UI
                 CreaturesRow creaturesRow = _creaturesRowManager.AddRow(i);
                 if (creaturesRow)
                 {
-                    foreach (Vertex vertex in _graph.GetGeneration(i).Values)
+                    foreach (CreatureVertex vertex in _graph.GetGeneration(i).Values)
                     {
                         CreatureButton creatureButton = creaturesRow.AddCreatureButton(vertex.Id);
 
@@ -62,7 +62,7 @@ namespace Game.GA.UI
         
         private void ChangeSelectedVertex(CreatureButton creatureButton)
         {
-            Vertex vertex = _graph.GetVertex(creatureButton.Generation, creatureButton.Id);
+            CreatureVertex vertex = _graph.GetVertex(creatureButton.Generation, creatureButton.Id);
 
             if (_selectedVertex != null)
             {
@@ -71,7 +71,7 @@ namespace Game.GA.UI
 
             if (_selectedVertexParents != null)
             {
-                foreach (Vertex parent in _selectedVertexParents)
+                foreach (CreatureVertex parent in _selectedVertexParents)
                 {
                     _creaturesRowManager._creaturesRows[parent.Generation]._creatures[parent.Id].GetComponent<Image>().color = Color.white;
                 }
@@ -83,14 +83,14 @@ namespace Game.GA.UI
 
             if (vertex.parents != null)
             {
-                _selectedVertexParents = new Vertex[vertex.parents.Length];
+                _selectedVertexParents = new CreatureVertex[vertex.parents.Length];
 
                 for (int i = 0; i < vertex.parents.Length; i++)
                 {
                     _selectedVertexParents[i] = _graph.GetVertex(vertex.Generation - 1, vertex.parents[i]);
                 }
 
-                foreach (Vertex parent in _selectedVertexParents)
+                foreach (CreatureVertex parent in _selectedVertexParents)
                 {
                     _creaturesRowManager._creaturesRows[parent.Generation]._creatures[parent.Id].GetComponent<Image>().color = Color.blue;
                 }
@@ -99,7 +99,7 @@ namespace Game.GA.UI
                 _selectedVertexParents = null;
             }
 
-            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsController.Type.DamageDealt, out float damageDealtValue))
+            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsType.DamageDealt, out float damageDealtValue))
             {
                 _damageDealtValue.text = damageDealtValue.ToString("0.000");
             } else
@@ -107,7 +107,7 @@ namespace Game.GA.UI
                 _damageDealtValue.text = "0";
             }
 
-            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsController.Type.DamageDealt, out float damageTakenValue))
+            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsType.DamageDealt, out float damageTakenValue))
             {
                 _damageTakenValue.text = damageTakenValue.ToString("0.000");
             }
@@ -116,7 +116,7 @@ namespace Game.GA.UI
                 _damageTakenValue.text = "0";
             }
 
-            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsController.Type.HitsTaken, out float hitsTakenValue))
+            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsType.HitsTaken, out float hitsTakenValue))
             {
                 _hitsTakenValue.text = hitsTakenValue.ToString("0.000");
             }
@@ -125,7 +125,7 @@ namespace Game.GA.UI
                 _hitsTakenValue.text = "0";
             }
 
-            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsController.Type.HitsDealt, out float hitsDealtValue))
+            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsType.HitsDealt, out float hitsDealtValue))
             {
                 _hitsDealtValue.text = hitsDealtValue.ToString("0.000");
             }

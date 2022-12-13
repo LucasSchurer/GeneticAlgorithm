@@ -7,28 +7,20 @@ namespace Game.Entities
 {
     public class StatisticsController : MonoBehaviour, IEventListener
     {
-        public enum Type
-        {
-            HitsTaken,
-            HitsDealt,
-            DamageDealt,
-            DamageTaken
-        }
-
         private EntityEventController _eventController;
-        private Dictionary<Type, float> _statistics;
+        private Dictionary<StatisticsType, float> _statistics;
 
         private void Awake()
         {
             _eventController = GetComponent<EntityEventController>();
-            _statistics = new Dictionary<Type, float>();
+            _statistics = new Dictionary<StatisticsType, float>();
         }
 
-        public Dictionary<Type, float> Copy()
+        public Dictionary<StatisticsType, float> Copy()
         {
-            Dictionary<Type, float> copy = new Dictionary<Type, float>();
+            Dictionary<StatisticsType, float> copy = new Dictionary<StatisticsType, float>();
 
-            foreach (KeyValuePair<Type, float> item in _statistics)
+            foreach (KeyValuePair<StatisticsType, float> item in _statistics)
             {
                 copy.Add(item.Key, item.Value);
             }
@@ -64,7 +56,7 @@ namespace Game.Entities
             }
         }
 
-        public float GetStatistic(Type type)
+        public float GetStatistic(StatisticsType type)
         {
             if (_statistics.TryGetValue(type, out float value))
             {
@@ -75,7 +67,7 @@ namespace Game.Entities
             }
         }
 
-        private void ModifyStatistic(Type type, float amount)
+        private void ModifyStatistic(StatisticsType type, float amount)
         {
             if (_statistics.ContainsKey(type))
             {
@@ -90,14 +82,14 @@ namespace Game.Entities
 
         private void OnHitTaken(ref EntityEventContext ctx)
         { 
-            ModifyStatistic(Type.HitsTaken, 1f);
-            ModifyStatistic(Type.DamageTaken, -ctx.healthModifier);
+            ModifyStatistic(StatisticsType.HitsTaken, 1f);
+            ModifyStatistic(StatisticsType.DamageTaken, -ctx.healthModifier);
         }
 
         private void OnHitDealt(ref EntityEventContext ctx)
         { 
-            ModifyStatistic(Type.HitsDealt, 1f);
-            ModifyStatistic(Type.DamageDealt, -ctx.healthModifier);
+            ModifyStatistic(StatisticsType.HitsDealt, 1f);
+            ModifyStatistic(StatisticsType.DamageDealt, -ctx.healthModifier);
         }
 
         #endregion

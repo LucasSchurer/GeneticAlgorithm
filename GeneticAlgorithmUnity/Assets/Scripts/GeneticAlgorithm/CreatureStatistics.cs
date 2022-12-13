@@ -8,7 +8,7 @@ namespace Game.GA
 {
     public class CreatureStatistics
     {
-        public Dictionary<StatisticsController.Type, float> baseStatistics;
+        public Dictionary<StatisticsType, float> baseStatistics;
         public float fitness;
         public TraitIdentifier[] traits;
         public int generation;

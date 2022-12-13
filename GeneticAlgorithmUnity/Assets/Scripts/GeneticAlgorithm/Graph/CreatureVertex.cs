@@ -6,10 +6,21 @@ using UnityEngine;
 
 namespace Game.GA
 {
-    public class Vertex
+    public class CreatureVertex
     {
+        private struct Data
+        {
+            public Dictionary<StatisticsType, float> baseStatistics;
+            public float fitness;
+            public TraitIdentifier[] traits;
+            public int generation;
+        }
+
+        private Data _data;
+
         private int _id;
         private int _generation;
+        
         public int[] parents;
         private List<int> _children;
         public CreatureStatistics statistics;
@@ -17,7 +28,7 @@ namespace Game.GA
         public int Id => _id;
         public int Generation => _generation;
 
-        public Vertex(Graph graph, CreatureController creature)
+        public CreatureVertex(PopulationGraph graph, CreatureController creature)
         {
             _id = creature.id;
             _generation = creature.generation;

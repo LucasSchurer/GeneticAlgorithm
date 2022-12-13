@@ -8,14 +8,14 @@ namespace Game.GA
     public class FitnessProperty
     {
         [SerializeField]
-        private Entities.StatisticsController.Type _statisticType;
+        private Entities.StatisticsType _statisticType;
         [Range(0f, 1f)]
         [SerializeField]
         private float _weight;
         [SerializeField]
         private bool _inverse;
 
-        public Entities.StatisticsController.Type StatisticsType => _statisticType;
+        public Entities.StatisticsType StatisticsType => _statisticType;
         public float Weight { get => _weight; set => _weight = Mathf.Clamp(value, 0f, 1f); }
         public bool Inverse => _inverse;
 
