@@ -17,11 +17,6 @@ namespace Game.GA
         public override void Apply(CreatureController creature)
         {
             creature.behaviourType = type;
-
-            if (type == BehaviourType.Aggressive)
-            {
-                creature.GetComponent<Weapons.Rifle>().enabled = false;
-            }
         }
 
         public override Gene Copy()

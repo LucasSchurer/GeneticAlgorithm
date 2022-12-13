@@ -9,15 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54814a87abd3dba43af0b12afbba085d, type: 3}
-  m_Name: DefaultProperties
+  m_Script: {fileID: 11500000, guid: b1a075a5714dd974883bfe86b8d7df84, type: 3}
+  m_Name: EnemyTraits
   m_EditorClassIdentifier: 
-  _properties:
-  - _statisticType: 0
-    _weight: 0
-    _inverse: 0
-  - _statisticType: 1
-    _weight: 1
-    _inverse: 1
-  _autoBalance: 0
-  _weightSum: 1
+  _traits:
+  - {fileID: 11400000, guid: e53ec197f58423145ab82831b6d9974d, type: 2}
+  - {fileID: 11400000, guid: 0a8baab33e92f3745b15a14f4f019944, type: 2}

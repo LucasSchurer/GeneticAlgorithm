@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Events;
+using System.Linq;
 
 namespace Game.Traits
 {
@@ -10,6 +11,7 @@ namespace Game.Traits
         [SerializeField]
         private Traits<EntityEventType, EntityEventContext> _entityTraits;
         private Dictionary<TraitIdentifier, Trait<EntityEventType, EntityEventContext>> _entityTraitsDictionary;
+        private TraitIdentifier[] _traitIdentifiers;
 
         private static TraitManager _instance;
 
@@ -32,6 +34,7 @@ namespace Game.Traits
             {
                 _instance = this;
                 _entityTraitsDictionary = _entityTraits.BuildTraitsDictionary();
+                _traitIdentifiers = _entityTraitsDictionary.Keys.ToArray();
             }
 
             if (_instance != this)
@@ -49,6 +52,11 @@ namespace Game.Traits
             {
                 return null;
             }
+        }
+
+        public TraitIdentifier GetRandomTraitIdentifier()
+        {
+            return _traitIdentifiers[Random.Range(0, _traitIdentifiers.Length)];
         }
     } 
 }

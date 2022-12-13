@@ -28,10 +28,17 @@ namespace Game.GA
         public float[] populationFitnessPropertiesValuesSums;
         public float populationFitness;
 
+        private Graph _populationGraph;
+        private int _currentCreatureId = 1;
+        private int _currentGeneration = 0;
+
         private void Awake()
         {
             _fitnessProperties.BalancePropertiesWeights();
             _creatures = new CreatureController[_spawnAmount];
+            _populationGraph = new Graph();
+
+            GetComponent<UI.GraphVisualizer>()?.SetGraph(_populationGraph);
         }
 
         private void Update()
@@ -57,7 +64,12 @@ namespace Game.GA
                     _creatures[i].Initialize(_mutationRate, true);
                     _creatures[i].gameObject.SetActive(true);
                     _creatures[i].transform.position = GetSpawnPosition();
+                    _creatures[i].id = _currentCreatureId;
+                    _creatures[i].generation = _currentGeneration;
+                    _currentCreatureId++;
                 }
+
+                _currentGeneration++;
             }
         }
 
@@ -94,10 +106,32 @@ namespace Game.GA
 
                 newCreatures[i].Initialize(_mutationRate, false, (BaseEnemyChromosome)offspring[0]);
                 newCreatures[i + 1].Initialize(_mutationRate, false, (BaseEnemyChromosome)offspring[1]);
+
+                newCreatures[i].generation = _currentGeneration;
+                newCreatures[i + 1].generation = _currentGeneration;
+
+                newCreatures[i].id = _currentCreatureId;
+                newCreatures[i + 1].id = _currentCreatureId + 1;
+
+                _currentCreatureId += 2;
+
+                newCreatures[i].parents = new int[2] { _creatures[parentA].id, _creatures[parentB].id };
+                newCreatures[i + 1].parents = new int[2] { _creatures[parentA].id, _creatures[parentB].id };
+
+                _creatures[parentA].children.Add(newCreatures[i].id);
+                _creatures[parentA].children.Add(newCreatures[i + 1].id);
+
+                _creatures[parentB].children.Add(newCreatures[i].id);
+                _creatures[parentB].children.Add(newCreatures[i + 1].id);
             }
+
+            _currentGeneration++;
 
             for (int i = 0; i < newCreatures.Length; i++)
             {
+                Vertex vertex = new Vertex(_populationGraph, _creatures[i]);
+                _populationGraph.AddVertex(vertex);
+
                 Destroy(_creatures[i].gameObject);
                 _creatures[i] = newCreatures[i];
                 _creatures[i].gameObject.SetActive(true);

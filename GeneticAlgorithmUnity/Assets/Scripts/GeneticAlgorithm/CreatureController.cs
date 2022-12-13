@@ -15,15 +15,19 @@ namespace Game.GA
         public BaseEnemyChromosome chromosome;
         public Entities.AI.BehaviourType behaviourType;
 
+        public int[] parents;
+        public List<int> children;
         public float fitness;
         public float[] fitnessPropertiesValues;
+        public int id;
+        public int generation;
 
         private void Awake()
         {
             _statisticsController = GetComponent<StatisticsController>();
         }
 
-        public void Initialize(float mutationRate, bool shouldRandomizeChromosome = true, BaseEnemyChromosome chromosome = null)
+        public void Initialize(float mutationRate, bool shouldRandomizeChromosome = true, BaseEnemyChromosome chromosome = null, int[] parents = null)
         {
             if (chromosome == null)
             {
@@ -40,6 +44,18 @@ namespace Game.GA
             }
 
             this.chromosome.ApplyGenes(this);
+
+            if (parents != null)
+            {
+                this.parents = new int[parents.Length];
+
+                for (int i = 0; i < this.parents.Length; i++)
+                {
+                    this.parents[i] = parents[i];
+                }
+            }
+
+            children = new List<int>();
         }
 
         public void UpdateFitness(FitnessProperty[] properties, float[] populationFitnessPropertiesValues)

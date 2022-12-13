@@ -15,6 +15,7 @@ namespace Game.GA
         {
             Behaviour,
             Color,
+            Traits,
             Size
         }
 
@@ -23,6 +24,7 @@ namespace Game.GA
             _genes = new Gene[(int)Genes.Size];
             _genes[(int)Genes.Color] = new ColorGene(new Color(1, 1, 1, 1));
             _genes[(int)Genes.Behaviour] = new BehaviourGene(BehaviourType.Aggressive);
+            _genes[(int)Genes.Traits] = new TraitsGene(1);
         }
 
         protected override void SetGenes(Gene[] genes)
@@ -30,6 +32,7 @@ namespace Game.GA
             _genes = new Gene[(int)Genes.Size];
             _genes[(int)Genes.Color] = genes[(int)Genes.Color].Copy();
             _genes[(int)Genes.Behaviour] = genes[(int)Genes.Behaviour].Copy();
+            _genes[(int)Genes.Traits] = genes[(int)Genes.Traits].Copy();
         }
 
         public override Chromosome Copy()

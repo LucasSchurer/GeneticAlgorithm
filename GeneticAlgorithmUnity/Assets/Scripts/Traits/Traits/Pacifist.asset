@@ -9,15 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54814a87abd3dba43af0b12afbba085d, type: 3}
-  m_Name: DefaultProperties
+  m_Script: {fileID: 11500000, guid: d06f3e2cced5c7b45b43eb9fc78b86f5, type: 3}
+  m_Name: Pacifist
   m_EditorClassIdentifier: 
-  _properties:
-  - _statisticType: 0
-    _weight: 0
-    _inverse: 0
-  - _statisticType: 1
-    _weight: 1
-    _inverse: 1
-  _autoBalance: 0
-  _weightSum: 1
+  identifier: 2
+  executionType: 1
+  cooldown: 0
+  eventType: 0
+  executionOrder: 1
+  effects:
+  - {fileID: 11400000, guid: 6f187f2dd6c79cf42ab100ebcd955235, type: 2}

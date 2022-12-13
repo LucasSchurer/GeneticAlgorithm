@@ -13,6 +13,8 @@ namespace Game.Traits
         private bool canAct = true;
         private bool isListeningToEvent = false;
 
+        public TraitIdentifier GetTraitIdentifier => _trait.identifier;
+
         public TraitHandler(TraitController<Type, Context, Controller> traitController, Trait<Type, Context> trait)
         {
             _traitController = traitController;

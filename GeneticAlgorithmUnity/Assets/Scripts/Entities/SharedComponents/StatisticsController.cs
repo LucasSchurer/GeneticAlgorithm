@@ -9,9 +9,10 @@ namespace Game.Entities
     {
         public enum Type
         {
-            OnHitTaken,
-            OnHitDealt,
-            OnDamageDealt
+            HitsTaken,
+            HitsDealt,
+            DamageDealt,
+            DamageTaken
         }
 
         private EntityEventController _eventController;
@@ -21,6 +22,18 @@ namespace Game.Entities
         {
             _eventController = GetComponent<EntityEventController>();
             _statistics = new Dictionary<Type, float>();
+        }
+
+        public Dictionary<Type, float> Copy()
+        {
+            Dictionary<Type, float> copy = new Dictionary<Type, float>();
+
+            foreach (KeyValuePair<Type, float> item in _statistics)
+            {
+                copy.Add(item.Key, item.Value);
+            }
+
+            return copy;
         }
 
         private void OnEnable()
@@ -77,13 +90,14 @@ namespace Game.Entities
 
         private void OnHitTaken(ref EntityEventContext ctx)
         { 
-            ModifyStatistic(Type.OnHitTaken, 1f);
+            ModifyStatistic(Type.HitsTaken, 1f);
+            ModifyStatistic(Type.DamageTaken, -ctx.healthModifier);
         }
 
         private void OnHitDealt(ref EntityEventContext ctx)
         { 
-            ModifyStatistic(Type.OnHitDealt, 1f);
-            ModifyStatistic(Type.OnDamageDealt, -ctx.healthModifier);
+            ModifyStatistic(Type.HitsDealt, 1f);
+            ModifyStatistic(Type.DamageDealt, -ctx.healthModifier);
         }
 
         #endregion

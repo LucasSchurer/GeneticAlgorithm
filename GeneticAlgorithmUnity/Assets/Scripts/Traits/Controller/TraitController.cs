@@ -48,6 +48,18 @@ namespace Game.Traits
 
         protected abstract Context GetContextForWhenAddedTraits();
 
+        public TraitIdentifier[] GetTraitsIdentifiers()
+        {
+            TraitIdentifier[] traitsIdentifiers = new TraitIdentifier[_traitHandlers.Count];
+
+            for (int i = 0; i < traitsIdentifiers.Length; i++)
+            {
+                traitsIdentifiers[i] = _traitHandlers[i].GetTraitIdentifier;
+            }
+
+            return traitsIdentifiers;
+        }
+
         public void StartListening()
         {
             if (_eventController)
