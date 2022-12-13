@@ -1,3 +1,4 @@
+using Game.Entities;
 using Game.Traits;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Game.GA.UI
         private CreaturesRowManager _creaturesRowManager;
 
         [Header("Info References")]
+        [SerializeField]
+        private GameObject _valuesContainer;        
         [SerializeField]
         private TextMeshProUGUI _fitnessValue;
         [SerializeField]
@@ -49,7 +52,7 @@ namespace Game.GA.UI
                 {
                     foreach (CreatureVertex vertex in _graph.GetGeneration(i).Values)
                     {
-                        CreatureButton creatureButton = creaturesRow.AddCreatureButton(vertex.Id);
+                        CreatureButton creatureButton = creaturesRow.AddCreatureButton(vertex.data.id);
 
                         if (creatureButton)
                         {
@@ -66,80 +69,61 @@ namespace Game.GA.UI
 
             if (_selectedVertex != null)
             {
-                _creaturesRowManager._creaturesRows[_selectedVertex.Generation]._creatures[_selectedVertex.Id].GetComponent<Image>().color = Color.white;
+                _creaturesRowManager._creaturesRows[_selectedVertex.data.generation]._creatures[_selectedVertex.data.id].GetComponent<Image>().color = Color.white;
             }
 
             if (_selectedVertexParents != null)
             {
                 foreach (CreatureVertex parent in _selectedVertexParents)
                 {
-                    _creaturesRowManager._creaturesRows[parent.Generation]._creatures[parent.Id].GetComponent<Image>().color = Color.white;
+                    _creaturesRowManager._creaturesRows[parent.data.generation]._creatures[parent.data.id].GetComponent<Image>().color = Color.white;
                 }
             }
 
             _selectedVertex = vertex;
 
-            _creaturesRowManager._creaturesRows[_selectedVertex.Generation]._creatures[_selectedVertex.Id].GetComponent<Image>().color = Color.red;
+            _creaturesRowManager._creaturesRows[_selectedVertex.data.generation]._creatures[_selectedVertex.data.id].GetComponent<Image>().color = Color.red;
 
-            if (vertex.parents != null)
+            if (vertex.data.parents != null)
             {
-                _selectedVertexParents = new CreatureVertex[vertex.parents.Length];
+                _selectedVertexParents = new CreatureVertex[vertex.data.parents.Length];
 
-                for (int i = 0; i < vertex.parents.Length; i++)
+                for (int i = 0; i < vertex.data.parents.Length; i++)
                 {
-                    _selectedVertexParents[i] = _graph.GetVertex(vertex.Generation - 1, vertex.parents[i]);
+                    _selectedVertexParents[i] = _graph.GetVertex(vertex.data.generation - 1, vertex.data.parents[i]);
                 }
 
                 foreach (CreatureVertex parent in _selectedVertexParents)
                 {
-                    _creaturesRowManager._creaturesRows[parent.Generation]._creatures[parent.Id].GetComponent<Image>().color = Color.blue;
+                    _creaturesRowManager._creaturesRows[parent.data.generation]._creatures[parent.data.id].GetComponent<Image>().color = Color.blue;
                 }
             } else
             {
                 _selectedVertexParents = null;
             }
 
-            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsType.DamageDealt, out float damageDealtValue))
-            {
-                _damageDealtValue.text = damageDealtValue.ToString("0.000");
-            } else
-            {
-                _damageDealtValue.text = "0";
-            }
+            UpdateDataText(vertex, StatisticsType.DamageDealt, _damageDealtValue);
+            UpdateDataText(vertex, StatisticsType.DamageTaken, _damageTakenValue);
+            UpdateDataText(vertex, StatisticsType.HitsDealt, _hitsDealtValue);
+            UpdateDataText(vertex, StatisticsType.HitsTaken, _hitsTakenValue);
 
-            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsType.DamageDealt, out float damageTakenValue))
-            {
-                _damageTakenValue.text = damageTakenValue.ToString("0.000");
-            }
-            else
-            {
-                _damageTakenValue.text = "0";
-            }
-
-            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsType.HitsTaken, out float hitsTakenValue))
-            {
-                _hitsTakenValue.text = hitsTakenValue.ToString("0.000");
-            }
-            else
-            {
-                _hitsTakenValue.text = "0";
-            }
-
-            if (vertex.statistics.baseStatistics.TryGetValue(Entities.StatisticsType.HitsDealt, out float hitsDealtValue))
-            {
-                _hitsDealtValue.text = hitsDealtValue.ToString("0.000");
-            }
-            else
-            {
-                _hitsDealtValue.text = "0";
-            }
-
-            _fitnessValue.text = vertex.statistics.fitness.ToString("0.000");
+            _fitnessValue.text = vertex.data.fitness.ToString("0.000");
             _traitsValue.text = "";
 
-            foreach (TraitIdentifier identifier in vertex.statistics.traits)
+            foreach (TraitIdentifier identifier in vertex.data.traits)
             {
                 _traitsValue.text += identifier.ToString() + " ";
+            }
+        }
+
+        private void UpdateDataText(CreatureVertex vertex, StatisticsType dataType, TextMeshProUGUI valueField)
+        {
+            if (vertex.data.statistics.TryGetValue(dataType, out float value))
+            {
+                valueField.text = value.ToString("0.000");
+            } else
+            {
+                valueField.text = "0";
             }
         }
 

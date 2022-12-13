@@ -15,12 +15,12 @@ namespace Game.GA
         public BaseEnemyChromosome chromosome;
         public Entities.AI.BehaviourType behaviourType;
 
+        public int id;
+        public int generation;
         public int[] parents;
         public List<int> children;
         public float fitness;
         public float[] fitnessPropertiesValues;
-        public int id;
-        public int generation;
 
         private void Awake()
         {

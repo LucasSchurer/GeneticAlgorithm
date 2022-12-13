@@ -7,7 +7,6 @@ namespace Game.GA
     public class PopulationGraph
     {
         private List<Dictionary<int, CreatureVertex>> _creatures;
-        private int _currentVertexId = 0;
 
         public int CurrentGeneration => _creatures.Count;
 
@@ -16,14 +15,19 @@ namespace Game.GA
             _creatures = new List<Dictionary<int, CreatureVertex>>();
         }
 
+        public void CreateAndAddVertex(CreatureController creature)
+        {
+            AddVertex(new CreatureVertex(creature));
+        }
+
         public void AddVertex(CreatureVertex vertex)
         {
-            if (vertex.Generation >= _creatures.Count)
+            if (vertex.data.generation >= _creatures.Count)
             {
                 _creatures.Add(new Dictionary<int, CreatureVertex>());
             }
 
-            _creatures[vertex.Generation].TryAdd(vertex.Id, vertex);
+            _creatures[vertex.data.generation].TryAdd(vertex.data.id, vertex);
         }
 
         public Dictionary<int, CreatureVertex> GetGeneration(int generation)

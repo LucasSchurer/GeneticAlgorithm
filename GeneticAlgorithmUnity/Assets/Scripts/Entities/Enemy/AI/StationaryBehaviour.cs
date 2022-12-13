@@ -25,7 +25,13 @@ namespace Game.Entities.AI
         {
             if (_movementController != null)
             {
-                _movementController.Rotate(DirectionToPlayer);
+                try
+                {
+                    _movementController.Rotate(DirectionToPlayer);
+                } catch (Exception e)
+                {
+
+                }
             }
 
             _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { owner = gameObject });

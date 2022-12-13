@@ -129,8 +129,7 @@ namespace Game.GA
 
             for (int i = 0; i < newCreatures.Length; i++)
             {
-                CreatureVertex vertex = new CreatureVertex(_populationGraph, _creatures[i]);
-                _populationGraph.AddVertex(vertex);
+                _populationGraph.CreateAndAddVertex(_creatures[i]);
 
                 Destroy(_creatures[i].gameObject);
                 _creatures[i] = newCreatures[i];
