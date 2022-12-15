@@ -64,8 +64,8 @@ namespace Game.GA
                     _creatures[i].Initialize(_mutationRate, true);
                     _creatures[i].gameObject.SetActive(true);
                     _creatures[i].transform.position = GetSpawnPosition();
-                    _creatures[i].id = _currentCreatureId;
-                    _creatures[i].generation = _currentGeneration;
+                    _creatures[i].data.id = _currentCreatureId;
+                    _creatures[i].data.generation = _currentGeneration;
                     _currentCreatureId++;
                 }
 
@@ -107,22 +107,22 @@ namespace Game.GA
                 newCreatures[i].Initialize(_mutationRate, false, (BaseEnemyChromosome)offspring[0]);
                 newCreatures[i + 1].Initialize(_mutationRate, false, (BaseEnemyChromosome)offspring[1]);
 
-                newCreatures[i].generation = _currentGeneration;
-                newCreatures[i + 1].generation = _currentGeneration;
+                newCreatures[i].data.generation = _currentGeneration;
+                newCreatures[i + 1].data.generation = _currentGeneration;
 
-                newCreatures[i].id = _currentCreatureId;
-                newCreatures[i + 1].id = _currentCreatureId + 1;
+                newCreatures[i].data.id = _currentCreatureId;
+                newCreatures[i + 1].data.id = _currentCreatureId + 1;
 
                 _currentCreatureId += 2;
 
-                newCreatures[i].parents = new int[2] { _creatures[parentA].id, _creatures[parentB].id };
-                newCreatures[i + 1].parents = new int[2] { _creatures[parentA].id, _creatures[parentB].id };
+                newCreatures[i].data.parents = new int[2] { _creatures[parentA].data.id, _creatures[parentB].data.id };
+                newCreatures[i + 1].data.parents = new int[2] { _creatures[parentA].data.id, _creatures[parentB].data.id };
 
-                _creatures[parentA].children.Add(newCreatures[i].id);
-                _creatures[parentA].children.Add(newCreatures[i + 1].id);
+                _creatures[parentA].data.children.Add(newCreatures[i].data.id);
+                _creatures[parentA].data.children.Add(newCreatures[i + 1].data.id);
 
-                _creatures[parentB].children.Add(newCreatures[i].id);
-                _creatures[parentB].children.Add(newCreatures[i + 1].id);
+                _creatures[parentB].data.children.Add(newCreatures[i].data.id);
+                _creatures[parentB].data.children.Add(newCreatures[i + 1].data.id);
             }
 
             _currentGeneration++;
@@ -145,7 +145,7 @@ namespace Game.GA
 
             for (int i = 0; i < _creatures.Length; i++)
             {
-                fitnessRange += _creatures[i].fitness;
+                fitnessRange += _creatures[i].data.fitness;
 
                 if (fitnessRange > randomFitness)
                 {
@@ -172,9 +172,9 @@ namespace Game.GA
 
                 for (int i = 0; i < _fitnessProperties.Properties.Length; i++)
                 {
-                    if (creature.fitnessPropertiesValues[i] > populationMaxPropertiesValues[i])
+                    if (creature.data.fitnessPropertiesValues[i] > populationMaxPropertiesValues[i])
                     {
-                        populationMaxPropertiesValues[i] = creature.fitnessPropertiesValues[i];
+                        populationMaxPropertiesValues[i] = creature.data.fitnessPropertiesValues[i];
                     }
                 }
             }
@@ -182,7 +182,7 @@ namespace Game.GA
             foreach (CreatureController creature in _creatures)
             {
                 creature.UpdateFitness(_fitnessProperties.Properties, populationMaxPropertiesValues);
-                populationFitness += creature.fitness;
+                populationFitness += creature.data.fitness;
             }
         }
     } 

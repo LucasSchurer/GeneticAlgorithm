@@ -15,16 +15,12 @@ namespace Game.GA
         public BaseEnemyChromosome chromosome;
         public Entities.AI.BehaviourType behaviourType;
 
-        public int id;
-        public int generation;
-        public int[] parents;
-        public List<int> children;
-        public float fitness;
-        public float[] fitnessPropertiesValues;
+        public CreatureData data;
 
         private void Awake()
         {
             _statisticsController = GetComponent<StatisticsController>();
+            data = new CreatureData();
         }
 
         public void Initialize(float mutationRate, bool shouldRandomizeChromosome = true, BaseEnemyChromosome chromosome = null, int[] parents = null)
@@ -47,22 +43,22 @@ namespace Game.GA
 
             if (parents != null)
             {
-                this.parents = new int[parents.Length];
+                data.parents = new int[parents.Length];
 
-                for (int i = 0; i < this.parents.Length; i++)
+                for (int i = 0; i < data.parents.Length; i++)
                 {
-                    this.parents[i] = parents[i];
+                    data.parents[i] = parents[i];
                 }
             }
 
-            children = new List<int>();
+            data.children = new List<int>();
         }
 
         public void UpdateFitness(FitnessProperty[] properties, float[] populationMaxPropertiesValues)
         {
-            fitness = 0f;
+            data.fitness = 0f;
 
-            if (fitnessPropertiesValues == null || populationMaxPropertiesValues == null)
+            if (data.fitnessPropertiesValues == null || populationMaxPropertiesValues == null)
             {
                 return;
             }
@@ -73,13 +69,13 @@ namespace Game.GA
                 {
                     if (properties[i].Inverse)
                     {
-                        fitness += 1 * properties[i].Weight;
+                        data.fitness += 1 * properties[i].Weight;
                     }
 
                     continue;
                 }
 
-                float propertyValue = (fitnessPropertiesValues[i] / populationMaxPropertiesValues[i]);
+                float propertyValue = (data.fitnessPropertiesValues[i] / populationMaxPropertiesValues[i]);
 
                 if (properties[i].Inverse)
                 {
@@ -88,7 +84,7 @@ namespace Game.GA
 
                 propertyValue *= properties[i].Weight;
 
-                fitness += propertyValue;
+                data.fitness += propertyValue;
             }
         }
 
@@ -96,15 +92,15 @@ namespace Game.GA
         {
             if (_statisticsController)
             {
-                fitnessPropertiesValues = new float[properties.Length];
+                data.fitnessPropertiesValues = new float[properties.Length];
 
                 for (int i = 0; i < properties.Length; i++)
                 {
-                    fitnessPropertiesValues[i] = _statisticsController.GetStatistic(properties[i].StatisticsType);
+                    data.fitnessPropertiesValues[i] = _statisticsController.GetStatistic(properties[i].StatisticsType);
                 }
             } else
             {
-                fitnessPropertiesValues = null;
+                data.fitnessPropertiesValues = null;
             }
         }
     } 
