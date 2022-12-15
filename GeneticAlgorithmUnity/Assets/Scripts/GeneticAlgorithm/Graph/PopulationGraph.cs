@@ -45,5 +45,10 @@ namespace Game.GA
         {
             return _creatures[generation][id];
         }
+
+        public void WriteJson()
+        {
+
+        }
     } 
 }

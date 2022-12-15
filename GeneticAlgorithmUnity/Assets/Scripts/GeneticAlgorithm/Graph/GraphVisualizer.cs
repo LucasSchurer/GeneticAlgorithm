@@ -16,19 +16,13 @@ namespace Game.GA.UI
 
         [Header("Info References")]
         [SerializeField]
-        private GameObject _valuesContainer;        
+        private GameObject _infoContainer;
         [SerializeField]
-        private TextMeshProUGUI _fitnessValue;
+        private Game.UI.LabelValue _labelValuePrefab;
         [SerializeField]
-        private TextMeshProUGUI _damageDealtValue;
+        private Game.UI.LabelValue _fitnessValue;
         [SerializeField]
-        private TextMeshProUGUI _damageTakenValue;
-        [SerializeField]
-        private TextMeshProUGUI _traitsValue;
-        [SerializeField]
-        private TextMeshProUGUI _hitsDealtValue;
-        [SerializeField]
-        private TextMeshProUGUI _hitsTakenValue;
+        private Game.UI.LabelValue _traitsValue;
 
         private PopulationGraph _graph;
 
@@ -102,18 +96,20 @@ namespace Game.GA.UI
                 _selectedVertexParents = null;
             }
 
-            UpdateDataText(vertex, StatisticsType.DamageDealt, _damageDealtValue);
+            /*UpdateDataText(vertex, StatisticsType.DamageDealt, _damageDealtValue);
             UpdateDataText(vertex, StatisticsType.DamageTaken, _damageTakenValue);
             UpdateDataText(vertex, StatisticsType.HitsDealt, _hitsDealtValue);
-            UpdateDataText(vertex, StatisticsType.HitsTaken, _hitsTakenValue);
+            UpdateDataText(vertex, StatisticsType.HitsTaken, _hitsTakenValue);*/
 
-            _fitnessValue.text = vertex.data.fitness.ToString("0.000");
-            _traitsValue.text = "";
+            _fitnessValue.SetValue(vertex.data.fitness.ToString("0.000"));
+            string traits = "";
 
             foreach (TraitIdentifier identifier in vertex.data.traits)
             {
-                _traitsValue.text += identifier.ToString() + " ";
+                traits += identifier.ToString() + " ";
             }
+
+            _traitsValue.SetValue(traits);
         }
 
         private void UpdateDataText(CreatureVertex vertex, StatisticsType dataType, TextMeshProUGUI valueField)
