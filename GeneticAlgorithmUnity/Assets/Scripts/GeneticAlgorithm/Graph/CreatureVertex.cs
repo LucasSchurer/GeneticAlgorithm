@@ -19,8 +19,6 @@ namespace Game.GA
         private void BuildData(CreatureController creature)
         {
             data = creature.data;
-            data.statistics = creature.GetComponent<StatisticsController>().Copy();
-            data.traits = creature.GetComponent<EntityTraitController>().GetTraitsIdentifiers();
         }
     } 
 }

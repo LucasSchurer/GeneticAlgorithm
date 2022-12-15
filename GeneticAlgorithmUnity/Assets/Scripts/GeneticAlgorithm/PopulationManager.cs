@@ -67,6 +67,8 @@ namespace Game.GA
                     _creatures[i].data.id = _currentCreatureId;
                     _creatures[i].data.generation = _currentGeneration;
                     _currentCreatureId++;
+
+                    _populationGraph.CreateAndAddVertex(_creatures[i]);
                 }
 
                 _currentGeneration++;
@@ -129,12 +131,11 @@ namespace Game.GA
 
             for (int i = 0; i < newCreatures.Length; i++)
             {
-                _populationGraph.CreateAndAddVertex(_creatures[i]);
-
                 Destroy(_creatures[i].gameObject);
                 _creatures[i] = newCreatures[i];
                 _creatures[i].gameObject.SetActive(true);
                 _creatures[i].transform.position = GetSpawnPosition();
+                _populationGraph.CreateAndAddVertex(_creatures[i]);
             }
         }
 

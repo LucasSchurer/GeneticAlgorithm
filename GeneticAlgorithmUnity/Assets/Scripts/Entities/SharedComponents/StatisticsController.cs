@@ -8,7 +8,7 @@ namespace Game.Entities
     public class StatisticsController : MonoBehaviour, IEventListener
     {
         private EntityEventController _eventController;
-        private Dictionary<StatisticsType, float> _statistics;
+        public Dictionary<StatisticsType, float> _statistics;
 
         private void Awake()
         {

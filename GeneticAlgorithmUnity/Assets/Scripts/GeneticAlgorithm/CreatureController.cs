@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Events;
 using Game.Entities;
+using System;
 
 namespace Game.GA
 {
@@ -20,7 +21,6 @@ namespace Game.GA
         private void Awake()
         {
             _statisticsController = GetComponent<StatisticsController>();
-            data = new CreatureData();
         }
 
         public void Initialize(float mutationRate, bool shouldRandomizeChromosome = true, BaseEnemyChromosome chromosome = null, int[] parents = null)
@@ -41,17 +41,7 @@ namespace Game.GA
 
             this.chromosome.ApplyGenes(this);
 
-            if (parents != null)
-            {
-                data.parents = new int[parents.Length];
-
-                for (int i = 0; i < data.parents.Length; i++)
-                {
-                    data.parents[i] = parents[i];
-                }
-            }
-
-            data.children = new List<int>();
+            data = new CreatureData(this, parents);
         }
 
         public void UpdateFitness(FitnessProperty[] properties, float[] populationMaxPropertiesValues)
