@@ -25,7 +25,7 @@ namespace Game.GA
 
         private CreatureController[] _creatures;
 
-        public float[] populationFitnessPropertiesValuesSums;
+        public float[] populationMaxPropertiesValues;
         public float populationFitness;
 
         private PopulationGraph _populationGraph;
@@ -158,8 +158,13 @@ namespace Game.GA
 
         private void UpdatePopulationFitness()
         {
-            populationFitnessPropertiesValuesSums = new float[_fitnessProperties.Properties.Length];
+            populationMaxPropertiesValues = new float[_fitnessProperties.Properties.Length];
             populationFitness = 0f;
+
+            for (int i = 0; i < populationMaxPropertiesValues.Length; i++)
+            {
+                populationMaxPropertiesValues[i] = 0;
+            }
 
             foreach (CreatureController creature in _creatures)
             {
@@ -167,13 +172,16 @@ namespace Game.GA
 
                 for (int i = 0; i < _fitnessProperties.Properties.Length; i++)
                 {
-                    populationFitnessPropertiesValuesSums[i] += creature.fitnessPropertiesValues[i]; 
+                    if (creature.fitnessPropertiesValues[i] > populationMaxPropertiesValues[i])
+                    {
+                        populationMaxPropertiesValues[i] = creature.fitnessPropertiesValues[i];
+                    }
                 }
             }
 
             foreach (CreatureController creature in _creatures)
             {
-                creature.UpdateFitness(_fitnessProperties.Properties, populationFitnessPropertiesValuesSums);
+                creature.UpdateFitness(_fitnessProperties.Properties, populationMaxPropertiesValues);
                 populationFitness += creature.fitness;
             }
         }

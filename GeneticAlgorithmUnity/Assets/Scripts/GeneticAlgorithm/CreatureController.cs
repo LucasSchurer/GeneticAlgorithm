@@ -58,18 +58,18 @@ namespace Game.GA
             children = new List<int>();
         }
 
-        public void UpdateFitness(FitnessProperty[] properties, float[] populationFitnessPropertiesValues)
+        public void UpdateFitness(FitnessProperty[] properties, float[] populationMaxPropertiesValues)
         {
             fitness = 0f;
 
-            if (fitnessPropertiesValues == null || populationFitnessPropertiesValues == null)
+            if (fitnessPropertiesValues == null || populationMaxPropertiesValues == null)
             {
                 return;
             }
 
-            for (int i = 0; i < populationFitnessPropertiesValues.Length; i++)
+            for (int i = 0; i < populationMaxPropertiesValues.Length; i++)
             {
-                if (populationFitnessPropertiesValues[i] == 0)
+                if (populationMaxPropertiesValues[i] == 0)
                 {
                     if (properties[i].Inverse)
                     {
@@ -79,7 +79,7 @@ namespace Game.GA
                     continue;
                 }
 
-                float propertyValue = (fitnessPropertiesValues[i] / populationFitnessPropertiesValues[i]);
+                float propertyValue = (fitnessPropertiesValues[i] / populationMaxPropertiesValues[i]);
 
                 if (properties[i].Inverse)
                 {
