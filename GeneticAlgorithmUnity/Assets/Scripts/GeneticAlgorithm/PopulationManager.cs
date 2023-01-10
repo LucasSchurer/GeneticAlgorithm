@@ -7,23 +7,34 @@ namespace Game.GA
 {
     public class PopulationManager : MonoBehaviour
     {
+        public static PopulationManager Instance { get; private set; }
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
+
+            DontDestroyOnLoad(gameObject);
+        }
+
         [Header("References")]
         [SerializeField]
         private FitnessProperties _fitnessProperties;
         [SerializeField]
         private CreatureController _creaturePrefab;
-        [SerializeField]
-        private Transform _spawnPosition;
 
-        [Header("Settings")]
-        [SerializeField]
-        private bool _spawnOnStart = false;
-        [SerializeField]
-        private int _spawnAmount = 4;
+        [Header("Settings")]        
         [SerializeField]
         private float _mutationRate = 0.15f;
 
         private CreatureController[] _creatures;
+        private List<CreatureController> _creaturesRequest;
 
         public float[] populationMaxPropertiesValues;
         public float populationFitness;
@@ -32,13 +43,16 @@ namespace Game.GA
         private int _currentCreatureId = 1;
         private int _currentGeneration = 0;
 
-        private void Awake()
+        public void Initialize(int initialPopulationSize)
         {
             _fitnessProperties.BalancePropertiesWeights();
-            _creatures = new CreatureController[_spawnAmount];
+            _creatures = new CreatureController[initialPopulationSize];
+            _creaturesRequest = new List<CreatureController>();
             _populationGraph = new PopulationGraph();
 
             GetComponent<UI.GraphVisualizer>()?.SetGraph(_populationGraph);
+
+            GenerateInitialPopulation();
         }
 
         private void Update()
@@ -54,34 +68,23 @@ namespace Game.GA
             }
         }
 
-        private void Start()
+        private void GenerateInitialPopulation()
         {
-            if (_spawnOnStart)
+            for (int i = 0; i < _creatures.Length; i++)
             {
-                for (int i = 0; i < _spawnAmount; i++)
-                {
-                    _creatures[i] = Instantiate(_creaturePrefab);
-                    _creatures[i].Initialize(_mutationRate, true);
-                    _creatures[i].gameObject.SetActive(true);
-                    _creatures[i].transform.position = GetSpawnPosition();
-                    _creatures[i].data.id = _currentCreatureId;
-                    _creatures[i].data.generation = _currentGeneration;
-                    _currentCreatureId++;
+                _creatures[i] = Instantiate(_creaturePrefab);
+                _creatures[i].Initialize(_mutationRate, true);
+                _creatures[i].gameObject.SetActive(false);
+                _creatures[i].data.id = _currentCreatureId;
+                _creatures[i].data.generation = _currentGeneration;
+                _currentCreatureId++;
 
-                    _populationGraph.CreateAndAddVertex(_creatures[i]);
-                }
+                _populationGraph.CreateAndAddVertex(_creatures[i]);
 
-                _currentGeneration++;
+                _creaturesRequest.Add(_creatures[i]);
             }
-        }
 
-        private Vector3 GetSpawnPosition()
-        {
-            Vector3 position = _spawnPosition.position;
-            position.x += Random.Range(-10f, 10f);
-            position.z += Random.Range(-10f, 10f);
-
-            return position;
+            _currentGeneration++;
         }
 
         private void GenerateNewPopulation()
@@ -128,14 +131,16 @@ namespace Game.GA
             }
 
             _currentGeneration++;
+            _creaturesRequest.Clear();
 
             for (int i = 0; i < newCreatures.Length; i++)
             {
                 Destroy(_creatures[i].gameObject);
                 _creatures[i] = newCreatures[i];
-                _creatures[i].gameObject.SetActive(true);
-                _creatures[i].transform.position = GetSpawnPosition();
+                _creatures[i].gameObject.SetActive(false);
                 _populationGraph.CreateAndAddVertex(_creatures[i]);
+
+                _creaturesRequest.Add(_creatures[i]);
             }
         }
 
@@ -185,6 +190,21 @@ namespace Game.GA
                 creature.UpdateFitness(_fitnessProperties.Properties, populationMaxPropertiesValues);
                 populationFitness += creature.data.fitness;
             }
+        }
+
+        public CreatureController RequestCreature()
+        {
+            if (_creaturesRequest.Count > 0)
+            {
+                int index = Random.Range(0, _creaturesRequest.Count);
+
+                CreatureController creature = _creaturesRequest[index];
+                _creaturesRequest.RemoveAt(index);
+
+                return creature;
+            }
+
+            return null;
         }
     } 
 }
