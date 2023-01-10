@@ -2,36 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace Game.Managers
 {
-    public static GameManager Instance { get; private set; }
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        public static GameManager Instance { get; private set; }
+
+        private void Awake()
         {
-            Destroy(gameObject);
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
+
+            DontDestroyOnLoad(gameObject);
         }
-        else
+
+        [SerializeField]
+        private WaveSettings _waveSettings;
+
+        private void Start()
         {
-            Instance = this;
+            PopulationManager populationManager = PopulationManager.Instance;
+
+            if (populationManager)
+            {
+                populationManager.Initialize(_waveSettings.enemiesPerWave);
+                WaveManager.Instance?.Initialize(_waveSettings, populationManager);
+                WaveManager.Instance?.StartWave();
+            }
         }
-
-        DontDestroyOnLoad(gameObject);
-    }
-
-    [SerializeField]
-    private WaveSettings _waveSettings;
-
-    private void Start()
-    {
-        Game.GA.PopulationManager populationManager = Game.GA.PopulationManager.Instance;
-
-        if (populationManager)
-        {
-            populationManager.Initialize(_waveSettings.enemiesPerWave);
-            WaveManager.Instance?.Initialize(_waveSettings, populationManager);
-            WaveManager.Instance?.StartWave();
-        }
-    }
+    } 
 }

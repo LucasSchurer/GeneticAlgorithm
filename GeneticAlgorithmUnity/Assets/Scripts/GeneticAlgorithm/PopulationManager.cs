@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Entities;
+using Game.GA;
 
-namespace Game.GA
+namespace Game.Managers
 {
     public class PopulationManager : MonoBehaviour
     {
@@ -50,7 +51,7 @@ namespace Game.GA
             _creaturesRequest = new List<CreatureController>();
             _populationGraph = new PopulationGraph();
 
-            GetComponent<UI.GraphVisualizer>()?.SetGraph(_populationGraph);
+            GetComponent<GA.UI.GraphVisualizer>()?.SetGraph(_populationGraph);
 
             GenerateInitialPopulation();
         }
