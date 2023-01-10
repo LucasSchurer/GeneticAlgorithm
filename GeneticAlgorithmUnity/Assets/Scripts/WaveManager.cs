@@ -1,10 +1,11 @@
+using Game.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Managers
 {
-    public class WaveManager : MonoBehaviour
+    public class WaveManager : MonoBehaviour, IEventListener
     {
         public static WaveManager Instance { get; private set; }
 
@@ -22,17 +23,19 @@ namespace Game.Managers
             DontDestroyOnLoad(gameObject);
         }
 
-        private WaveSettings _waveSettings;
-        private PopulationManager _populationManager;
+        [Header("References")]
         [SerializeField]
         private Transform _spawnPosition;
+        private PopulationManager _populationManager;
 
-        private float _waveTimeRemaining = 0;
-        private float _enemiesSpawnRemaining = 0;
+        [Header("Settings")]
+        private WaveSettings _waveSettings;
+        private float _timeRemaining = 0;
+        private bool _isSpawningEnemies = false;
+        private bool _isWaveActive = false;
 
-        private float _timeBetweenSpawns = 1f;
-
-        private bool _isSpawning = false;
+        public float TimeRemaining => _timeRemaining;
+        public bool IsWaveActive => _isWaveActive;
 
         public void Initialize(WaveSettings waveSettings, PopulationManager populationManager)
         {
@@ -51,19 +54,24 @@ namespace Game.Managers
 
         public void StartWave()
         {
-            _waveTimeRemaining = _waveSettings.waveDuration;
-            _enemiesSpawnRemaining = _waveSettings.enemiesPerWave;
-
-            _isSpawning = true;
+            _timeRemaining = _waveSettings.waveDuration;
+            _isSpawningEnemies = true;
+            _isWaveActive = true;
 
             StartCoroutine(SpawnCoroutine());
         }
 
         private void Update()
         {
-            if (_isSpawning)
+            if (_isWaveActive)
             {
-                _waveTimeRemaining -= Time.deltaTime;
+                _timeRemaining -= Time.deltaTime;
+
+                if (_timeRemaining <= 0)
+                {
+                    _isWaveActive = false;
+                    StopAllCoroutines();
+                }
             }
         }
 
@@ -71,29 +79,57 @@ namespace Game.Managers
         {
             while (true)
             {
-                Game.GA.CreatureController creature = _populationManager.RequestCreature();
+                GA.CreatureController creature = _populationManager.RequestCreature();
 
                 if (creature != null)
                 {
                     creature.transform.position = GetSpawnPosition();
                     creature.gameObject.SetActive(true);
 
-                    _enemiesSpawnRemaining--;
-
-                    yield return new WaitForSeconds(_timeBetweenSpawns);
+                    yield return new WaitForSeconds(Random.Range(_waveSettings.minSpawnInterval, _waveSettings.maxSpawnInterval));
                 }
                 else
                 {
                     break;
                 }
-
-                if (_enemiesSpawnRemaining <= 0)
-                {
-                    break;
-                }
             }
 
+            _isSpawningEnemies = false;
             yield return null;
+        }
+        private void StartWave(ref GameEventContext ctx)
+        {
+            StartWave();   
+        }
+
+        public void StartListening()
+        {
+            GameManager gameManager = GameManager.Instance;
+
+            if (gameManager)
+            {
+                gameManager.eventController.AddListener(GameEventType.OnWaveStart, StartWave, EventExecutionOrder.After);
+            }
+        }
+
+        public void StopListening()
+        {
+            GameManager gameManager = GameManager.Instance;
+
+            if (gameManager)
+            {
+                gameManager.eventController.RemoveListener(GameEventType.OnWaveStart, StartWave, EventExecutionOrder.After);
+            }
+        }
+
+        private void OnEnable()
+        {
+            StartListening();
+        }
+
+        private void OnDisable()
+        {
+            StopListening();
         }
     }
 

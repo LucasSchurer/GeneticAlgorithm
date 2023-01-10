@@ -7,4 +7,6 @@ public class WaveSettings : ScriptableObject
 {
     public int enemiesPerWave;
     public float waveDuration;
+    public float minSpawnInterval;
+    public float maxSpawnInterval;
 }

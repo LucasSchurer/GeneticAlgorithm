@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesPerWave: 10
   waveDuration: 30
+  minSpawnInterval: 0.5
+  maxSpawnInterval: 2

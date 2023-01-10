@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Entities;
 using Game.GA;
+using Game.Events;
 
 namespace Game.Managers
 {
-    public class PopulationManager : MonoBehaviour
+    public class PopulationManager : MonoBehaviour, IEventListener
     {
         public static PopulationManager Instance { get; private set; }
 
@@ -52,8 +53,6 @@ namespace Game.Managers
             _populationGraph = new PopulationGraph();
 
             GetComponent<GA.UI.GraphVisualizer>()?.SetGraph(_populationGraph);
-
-            GenerateInitialPopulation();
         }
 
         private void Update()
@@ -206,6 +205,47 @@ namespace Game.Managers
             }
 
             return null;
+        }
+
+        private void GeneratePopulation(ref GameEventContext ctx)
+        {
+            if (_currentGeneration == 0)
+            {
+                GenerateInitialPopulation();
+            } else
+            {
+                GenerateNewPopulation();
+            }
+        }
+
+        public void StartListening()
+        {
+            GameManager gameManager = GameManager.Instance;
+
+            if (gameManager)
+            {
+                gameManager.eventController.AddListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
+            }
+        }
+
+        public void StopListening()
+        {
+            GameManager gameManager = GameManager.Instance;
+
+            if (gameManager)
+            {
+
+            }
+        }
+
+        private void OnEnable()
+        {
+            StartListening();
+        }
+
+        private void OnDisable()
+        {
+            StopListening();
         }
     } 
 }

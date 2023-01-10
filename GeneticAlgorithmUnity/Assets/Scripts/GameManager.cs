@@ -1,3 +1,4 @@
+using Game.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,14 @@ namespace Game.Managers
             else
             {
                 Instance = this;
+                eventController = GetComponent<GameEventController>();
             }
 
             DontDestroyOnLoad(gameObject);
         }
+
+        [HideInInspector]
+        public GameEventController eventController;
 
         [SerializeField]
         private WaveSettings _waveSettings;
@@ -33,8 +38,9 @@ namespace Game.Managers
             {
                 populationManager.Initialize(_waveSettings.enemiesPerWave);
                 WaveManager.Instance?.Initialize(_waveSettings, populationManager);
-                WaveManager.Instance?.StartWave();
             }
+
+            eventController.TriggerEvent(GameEventType.OnWaveStart, new GameEventContext());
         }
     } 
 }
