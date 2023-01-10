@@ -9,7 +9,6 @@ namespace Game.Entities.AI
     public class StationaryBehaviour : AIBehaviour
     {
         private MovementController _movementController;
-        private EntityEventController _eventController;
 
         public override BehaviourType GetBehaviourType() { return BehaviourType.Stationary; }
 
@@ -18,7 +17,6 @@ namespace Game.Entities.AI
             base.Awake();
 
             _movementController = GetComponent<MovementController>();
-            _eventController = GetComponent<EntityEventController>();
         }
 
         private void FixedUpdate()

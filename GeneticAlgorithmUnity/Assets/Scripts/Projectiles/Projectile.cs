@@ -47,11 +47,11 @@ namespace Game.Projectiles
 
                 if (hitEventController)
                 {
-                    hitEventController.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { owner = other.gameObject, other = _owner, healthModifier = -_damage });
+                    hitEventController.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { owner = other.gameObject, other = _owner, agent = gameObject, healthModifier = -_damage });
 
                     if (_canTriggerOnHitDealt)
                     {
-                        _owner.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext { other = other.gameObject, healthModifier = -_damage });
+                        _owner.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext { other = other.gameObject, agent = gameObject, healthModifier = -_damage });
                     }
                 }
 

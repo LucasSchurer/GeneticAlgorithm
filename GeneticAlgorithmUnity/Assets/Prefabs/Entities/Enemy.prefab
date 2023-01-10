@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2880702552758079157}
   - component: {fileID: 2880702552758079154}
   m_Layer: 8
-  m_Name: Enemy3D
+  m_Name: BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 2880702552886206499}
   - component: {fileID: 2880702552886206933}
   - component: {fileID: 2880702552886206509}
-  - component: {fileID: 2880702552886206508}
+  - component: {fileID: 559991602168926277}
   - component: {fileID: 2880702552886206511}
   - component: {fileID: 2880702552886206510}
   - component: {fileID: 2880702552886206496}
@@ -183,7 +183,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2880702552886206931}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -297,8 +297,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behaviourType: 0
-  fitness: 0
-  fitnessPropertiesValues: []
 --- !u!114 &2880702552886206933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,18 +326,29 @@ MonoBehaviour:
     _maxValue: 0
     _minValue: 0
     _currentValue: 0
---- !u!114 &2880702552886206508
+--- !u!114 &559991602168926277
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2880702552886206931}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ad329e2fb59d247ac369db059bbfab, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d1d8cdf9bbb6a74297780930b072a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bodyParts:
+  - {fileID: 2880702552758079154}
+  - {fileID: 2880702552958241915}
+  - {fileID: 2880702554371335120}
+  - {fileID: 2880702553318333864}
+  - {fileID: 2880702553502907120}
+  - {fileID: 2880702554697417078}
+  - {fileID: 2880702553025649792}
+  - {fileID: 2880702553877006223}
+  _explosionRadiusInterval: {x: 5, y: 20}
+  _explosionForce: 300
 --- !u!114 &2880702552886206511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +413,7 @@ GameObject:
   - component: {fileID: 2880702552958241914}
   - component: {fileID: 2880702552958241915}
   m_Layer: 8
-  m_Name: Enemy3D (1)
+  m_Name: BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,7 +527,7 @@ GameObject:
   - component: {fileID: 2880702553025649795}
   - component: {fileID: 2880702553025649792}
   m_Layer: 8
-  m_Name: Enemy3D (6)
+  m_Name: BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,7 +641,7 @@ GameObject:
   - component: {fileID: 2880702553318333867}
   - component: {fileID: 2880702553318333864}
   m_Layer: 8
-  m_Name: Enemy3D (3)
+  m_Name: BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,7 +755,7 @@ GameObject:
   - component: {fileID: 2880702553502907123}
   - component: {fileID: 2880702553502907120}
   m_Layer: 8
-  m_Name: Enemy3D (4)
+  m_Name: BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -860,7 +869,7 @@ GameObject:
   - component: {fileID: 2880702553877006222}
   - component: {fileID: 2880702553877006223}
   m_Layer: 8
-  m_Name: Enemy3D (7)
+  m_Name: BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -974,7 +983,7 @@ GameObject:
   - component: {fileID: 2880702554371335123}
   - component: {fileID: 2880702554371335120}
   m_Layer: 8
-  m_Name: Enemy3D (2)
+  m_Name: BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1088,7 +1097,7 @@ GameObject:
   - component: {fileID: 2880702554697417033}
   - component: {fileID: 2880702554697417078}
   m_Layer: 8
-  m_Name: Enemy3D (5)
+  m_Name: BodyPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

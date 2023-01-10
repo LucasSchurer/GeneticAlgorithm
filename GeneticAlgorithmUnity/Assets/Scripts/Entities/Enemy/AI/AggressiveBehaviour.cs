@@ -26,7 +26,7 @@ namespace Game.Entities.AI
                 _movementController.Rotate(DirectionToPlayer);
             }
 
-            GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { owner = gameObject });
+            _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { owner = gameObject });
         }
     } 
 }

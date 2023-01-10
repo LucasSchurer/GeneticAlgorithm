@@ -38,12 +38,6 @@ namespace Game.Entities
             }
         }
 
-        private void OnTest(ref EntityEventContext ctx)
-        {
-            Debug.Log("Damage reduction");
-            ctx.healthModifier++;
-        }
-
         public void StopListening()
         {
             if (_eventController != null)

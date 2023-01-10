@@ -11,6 +11,7 @@ namespace Game.GA
     {
         public int id;
         public int generation;
+        public bool isDead = false;
         public Dictionary<StatisticsType, float> statistics;
         public TraitIdentifier[] traits;
         public float fitness;
