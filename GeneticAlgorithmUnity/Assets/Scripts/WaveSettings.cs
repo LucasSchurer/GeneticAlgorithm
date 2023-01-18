@@ -9,4 +9,5 @@ public class WaveSettings : ScriptableObject
     public float waveDuration;
     public float minSpawnInterval;
     public float maxSpawnInterval;
+    public float waveRespawnTime;
 }

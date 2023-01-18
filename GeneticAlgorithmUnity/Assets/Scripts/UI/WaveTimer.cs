@@ -40,7 +40,7 @@ namespace Game.UI
 
                 float timeRemaining = _waveManager.TimeRemaining;
 
-                if (timeRemaining < 6f)
+                if (timeRemaining < 6.5f)
                 {
                     _timerLabel.color = Color.red;
                 }

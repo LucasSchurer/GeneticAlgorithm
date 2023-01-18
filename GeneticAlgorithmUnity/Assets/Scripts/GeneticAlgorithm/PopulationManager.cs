@@ -225,6 +225,15 @@ namespace Game.Managers
             if (gameManager)
             {
                 gameManager.eventController.AddListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
+                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
+            }
+        }
+
+        private void KillPopulation(ref GameEventContext ctx)
+        {
+            foreach (CreatureController creature in _creatures)
+            {
+                creature.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnDeath, new EntityEventContext());
             }
         }
 
@@ -234,7 +243,8 @@ namespace Game.Managers
 
             if (gameManager)
             {
-
+                gameManager.eventController.RemoveListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
+                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
             }
         }
 

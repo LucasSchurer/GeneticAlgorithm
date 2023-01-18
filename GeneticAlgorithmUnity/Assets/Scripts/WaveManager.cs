@@ -71,6 +71,7 @@ namespace Game.Managers
                 {
                     _isWaveActive = false;
                     StopAllCoroutines();
+                    GameManager.Instance.eventController.TriggerEvent(GameEventType.OnWaveEnd, new GameEventContext());
                 }
             }
         }
@@ -101,6 +102,17 @@ namespace Game.Managers
         {
             StartWave();   
         }
+        private void RespawnWave(ref GameEventContext ctx)
+        {
+            StartCoroutine(RespawnWaveCoroutine());
+        }
+
+        private IEnumerator RespawnWaveCoroutine()
+        {
+            yield return new WaitForSeconds(_waveSettings.waveRespawnTime);
+
+            GameManager.Instance?.eventController.TriggerEvent(GameEventType.OnWaveStart, new GameEventContext());
+        }
 
         public void StartListening()
         {
@@ -108,7 +120,8 @@ namespace Game.Managers
 
             if (gameManager)
             {
-                gameManager.eventController.AddListener(GameEventType.OnWaveStart, StartWave, EventExecutionOrder.After);
+                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, RespawnWave);
+                gameManager.eventController.AddListener(GameEventType.OnWaveStart, StartWave);
             }
         }
 
@@ -118,7 +131,8 @@ namespace Game.Managers
 
             if (gameManager)
             {
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveStart, StartWave, EventExecutionOrder.After);
+                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, RespawnWave);
+                gameManager.eventController.RemoveListener(GameEventType.OnWaveStart, StartWave);
             }
         }
 

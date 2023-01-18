@@ -19,5 +19,5 @@ MonoBehaviour:
   - _statisticType: 1
     _weight: 1
     _inverse: 1
-  _autoBalance: 1
+  _autoBalance: 0
   _weightSum: 1
