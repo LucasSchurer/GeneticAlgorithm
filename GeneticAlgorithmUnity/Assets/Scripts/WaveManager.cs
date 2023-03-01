@@ -21,6 +21,10 @@ namespace Game.Managers
         public float TimeRemaining => _timeRemaining;
         public bool IsWaveActive => _isWaveActive;
 
+        protected override void SingletonAwake()
+        {
+        }
+
         public void Initialize(WaveSettings waveSettings, PopulationController populationManager)
         {
             _waveSettings = waveSettings;
@@ -129,11 +133,5 @@ namespace Game.Managers
         {
             StopListening();
         }
-
-        protected override void SingletonAwake()
-        {
-            throw new System.NotImplementedException();
-        }
     }
-
 }
