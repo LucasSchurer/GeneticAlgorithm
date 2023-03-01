@@ -5,24 +5,12 @@ using Game.Events;
 
 namespace Game.GA
 {
+    /// <summary>
+    /// Controls the creation of populations,
+    /// using selection, crossover and mutation methods.
+    /// </summary>
     public class PopulationController : MonoBehaviour, IEventListener
     {
-        public static PopulationController Instance { get; private set; }
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
-            }
-
-            DontDestroyOnLoad(gameObject);
-        }
-
         [Header("References")]
         [SerializeField]
         private FitnessProperties _fitnessProperties;
@@ -39,17 +27,21 @@ namespace Game.GA
         public float[] populationMaxPropertiesValues;
         public float populationFitness;
 
-        private GenerationController _generationManager;
+        private GeneticAlgorithmManager _gaManager;
         private int _currentCreatureId = 1;
         private int _currentGeneration = 0;
 
-        public void Initialize(int initialPopulationSize)
+        private void Awake()
         {
-            _fitnessProperties.BalancePropertiesWeights();
-            _creatures = new CreatureController[initialPopulationSize];
-            _creaturesRequest = new List<CreatureController>();
+            WaveManager waveManager = WaveManager.Instance;
+            GeneticAlgorithmManager gaManager = GeneticAlgorithmManager.Instance;
 
-            _generationManager = new GenerationController();
+            if (waveManager != null && gaManager != null)
+            {
+                _creatures = new CreatureController[waveManager.waveSettings.enemiesPerWave];
+                _creaturesRequest = new List<CreatureController>();
+                _gaManager = gaManager;
+            }
         }
 
         private void Update()
@@ -76,7 +68,7 @@ namespace Game.GA
                 _creatures[i].data.generation = _currentGeneration;
                 _currentCreatureId++;
 
-                _generationManager.AddCreatureToGeneration(_creatures[i]);
+                _gaManager.GenerationController.AddCreatureToGeneration(_creatures[i]);
 
                 _creaturesRequest.Add(_creatures[i]);
             }
@@ -136,7 +128,7 @@ namespace Game.GA
                 _creatures[i] = newCreatures[i];
                 _creatures[i].gameObject.SetActive(false);
 
-                _generationManager.AddCreatureToGeneration(_creatures[i]);
+                _gaManager.GenerationController.AddCreatureToGeneration(_creatures[i]);
 
                 _creaturesRequest.Add(_creatures[i]);
             }
@@ -233,9 +225,6 @@ namespace Game.GA
             {
                 creature.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnDeath, new EntityEventContext());
             }
-
-            GeneticAlgorithmData geneticAlgorithmData = new GeneticAlgorithmData(_generationManager.GenerationsArray);
-            geneticAlgorithmData.ToXML();
         }
 
         public void StopListening()

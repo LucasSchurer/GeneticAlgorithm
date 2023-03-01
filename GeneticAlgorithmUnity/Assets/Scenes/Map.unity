@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.20749128, g: 0.21147478, b: 0.14576818, a: 1}
+  m_IndirectSpecularColor: {r: 0.20749143, g: 0.21147497, b: 0.14576834, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &64694633 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 455665110927770016, guid: 627bfb6ac615bc04faad085aaa0508b2, type: 3}
-  m_PrefabInstance: {fileID: 455665110950127817}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bfae15b4f99a3d468bfe7ca99e2bf9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &148764886
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,11 +781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1dbe979af5200440bddfcaeabf69976, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _creaturesRowManager: {fileID: 64694633}
-  _infoContainer: {fileID: 839370540}
-  _labelValuePrefab: {fileID: 0}
-  _fitnessValue: {fileID: 0}
-  _traitsValue: {fileID: 0}
 --- !u!1 &751529882
 GameObject:
   m_ObjectHideFlags: 0
@@ -874,11 +858,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751529882}
   m_CullTransparentMesh: 1
---- !u!1 &839370540 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 455665111349205228, guid: 627bfb6ac615bc04faad085aaa0508b2, type: 3}
-  m_PrefabInstance: {fileID: 455665110950127817}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1052017158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,7 +1158,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427624061}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.6142163, y: 30.010008, z: 5.3690023}
+  m_LocalPosition: {x: -1.6119347, y: 30.010008, z: 5.3690023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1216,7 +1195,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7784946, y: 1}
+    m_SensorSize: {x: 1.7773645, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1304,7 +1283,7 @@ GameObject:
   - component: {fileID: 1501763951}
   - component: {fileID: 1501763950}
   m_Layer: 0
-  m_Name: SpawnManager
+  m_Name: WaveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1323,6 +1302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPosition: {fileID: 1264361737}
+  waveSettings: {fileID: 11400000, guid: 2cede3b21fccb7842b8f90a78639bc63, type: 2}
 --- !u!4 &1501763951
 Transform:
   m_ObjectHideFlags: 0
@@ -1366,7 +1346,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537717871}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.6142163, y: 30.010008, z: 5.3690023}
+  m_LocalPosition: {x: -1.6119347, y: 30.010008, z: 5.3690023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
