@@ -14,16 +14,19 @@ namespace Game.GA
         public int id;
         public int generation;
         public bool isDead = false;
+        
         [XmlIgnore]
         public Dictionary<StatisticsType, float> statistics;
         [XmlArray("Statistics")]
         [XmlArrayItem("Statistic")]
         public List<SerializableDictionary<StatisticsType, float>> serializableStatistics => SerializableDictionary<StatisticsType, float>.BuildListFromDictionary(statistics);
+        
         public TraitIdentifier[] traits;
         public float fitness;
         public int[] parents;
         public List<int> children;
         public float[] fitnessPropertiesValues;
+        public BaseEnemyChromosome chromosome;
 
         public CreatureData(CreatureController creature, int[] parents)
         {

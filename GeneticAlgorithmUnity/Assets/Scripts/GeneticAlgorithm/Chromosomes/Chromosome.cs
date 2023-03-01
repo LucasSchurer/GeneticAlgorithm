@@ -7,7 +7,7 @@ namespace Game.GA
     public abstract class Chromosome
     {
         /// <summary>
-        /// Property that controls if the mutation rate will be used only one time to each gene
+        /// Property that controls if the mutation rate will be used only one time to all genes
         /// or will be calculated for each gene individually
         /// </summary>
         protected bool _shouldMutateIndividually = false;

@@ -13,15 +13,16 @@ namespace Game.GA
         [XmlArray("Creatures")]
         [XmlArrayItem("Creature")]
         public List<SerializableDictionary<int, CreatureData>> serializableCreatures => SerializableDictionary<int, CreatureData>.BuildListFromDictionary(creatures);
+        public float generationFitness;
 
         public GenerationData()
         {
             creatures = new Dictionary<int, CreatureData>();
         }
 
-        public void AddCreature(CreatureController creature)
+        public void AddCreatureData(CreatureData data)
         {
-            creatures.TryAdd(creature.data.id, creature.data);
+            creatures.TryAdd(data.id, data);
         }
     } 
 }
