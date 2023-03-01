@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.GA.UI
 {
-    public class CreaturesRowManager : MonoBehaviour
+    public class CreaturesRowController : MonoBehaviour
     {
         [Header("References")]
         [SerializeField]

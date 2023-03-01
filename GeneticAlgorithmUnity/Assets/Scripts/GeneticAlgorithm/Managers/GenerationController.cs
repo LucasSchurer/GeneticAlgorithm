@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace Game.GA
 {
-    public class GenerationManager
+    public class GenerationController
     {
         private Dictionary<int, GenerationData> _generations;
 
         public GenerationData CurrentGenerationData => _generations[_generations.Count];
         public GenerationData[] GenerationsArray => _generations.Values.ToArray();
 
-        public GenerationManager()
+        public GenerationController()
         {
             _generations = new Dictionary<int, GenerationData>();
         }

@@ -1,32 +1,16 @@
 using Game.Events;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Game.GA;
 
 namespace Game.Managers
 {
-    public class WaveManager : MonoBehaviour, IEventListener
+    public class WaveManager : Singleton<WaveManager>, IEventListener
     {
-        public static WaveManager Instance { get; private set; }
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
-            }
-
-            DontDestroyOnLoad(gameObject);
-        }
-
         [Header("References")]
         [SerializeField]
         private Transform _spawnPosition;
-        private PopulationManager _populationManager;
+        private PopulationController _populationManager;
 
         [Header("Settings")]
         private WaveSettings _waveSettings;
@@ -37,7 +21,7 @@ namespace Game.Managers
         public float TimeRemaining => _timeRemaining;
         public bool IsWaveActive => _isWaveActive;
 
-        public void Initialize(WaveSettings waveSettings, PopulationManager populationManager)
+        public void Initialize(WaveSettings waveSettings, PopulationController populationManager)
         {
             _waveSettings = waveSettings;
             _populationManager = populationManager;
@@ -144,6 +128,11 @@ namespace Game.Managers
         private void OnDisable()
         {
             StopListening();
+        }
+
+        protected override void SingletonAwake()
+        {
+            throw new System.NotImplementedException();
         }
     }
 

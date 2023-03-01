@@ -1,7 +1,6 @@
 using Game.Events;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Game.GA;
 
 namespace Game.Managers
 {
@@ -15,7 +14,7 @@ namespace Game.Managers
 
         private void Start()
         {
-            PopulationManager populationManager = PopulationManager.Instance;
+            PopulationController populationManager = PopulationController.Instance;
 
             if (populationManager)
             {

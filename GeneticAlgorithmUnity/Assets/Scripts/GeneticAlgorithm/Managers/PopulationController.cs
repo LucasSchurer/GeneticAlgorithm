@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Game.Entities;
-using Game.GA;
+using Game.Managers;
 using Game.Events;
 
-namespace Game.Managers
+namespace Game.GA
 {
-    public class PopulationManager : MonoBehaviour, IEventListener
+    public class PopulationController : MonoBehaviour, IEventListener
     {
-        public static PopulationManager Instance { get; private set; }
+        public static PopulationController Instance { get; private set; }
 
         private void Awake()
         {
@@ -41,7 +39,7 @@ namespace Game.Managers
         public float[] populationMaxPropertiesValues;
         public float populationFitness;
 
-        private GenerationManager _generationManager;
+        private GenerationController _generationManager;
         private int _currentCreatureId = 1;
         private int _currentGeneration = 0;
 
@@ -51,7 +49,7 @@ namespace Game.Managers
             _creatures = new CreatureController[initialPopulationSize];
             _creaturesRequest = new List<CreatureController>();
 
-            _generationManager = new GenerationManager();
+            _generationManager = new GenerationController();
         }
 
         private void Update()
