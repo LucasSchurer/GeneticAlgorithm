@@ -5,25 +5,8 @@ using UnityEngine;
 
 namespace Game.Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
-        public static GameManager Instance { get; private set; }
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
-                eventController = GetComponent<GameEventController>();
-            }
-
-            DontDestroyOnLoad(gameObject);
-        }
-
         [HideInInspector]
         public GameEventController eventController;
 
@@ -41,6 +24,11 @@ namespace Game.Managers
             }
 
             eventController.TriggerEvent(GameEventType.OnWaveStart, new GameEventContext());
+        }
+
+        protected override void SingletonAwake()
+        {
+            eventController = GetComponent<GameEventController>();
         }
     } 
 }
