@@ -26,9 +26,9 @@ namespace Game.GA.UI
 
         private PopulationGraph _graph;
 
-        private CreatureVertex _selectedVertex;
+        private CreatureData _selectedVertex;
 
-        private CreatureVertex[] _selectedVertexParents;
+        private CreatureData[] _selectedVertexParents;
 
         public void SetGraph(PopulationGraph graph)
         {
@@ -44,9 +44,9 @@ namespace Game.GA.UI
                 CreaturesRow creaturesRow = _creaturesRowManager.AddRow(i);
                 if (creaturesRow)
                 {
-                    foreach (CreatureVertex vertex in _graph.GetGeneration(i).Values)
+                    foreach (CreatureData vertex in _graph.GetGeneration(i).Values)
                     {
-                        CreatureButton creatureButton = creaturesRow.AddCreatureButton(vertex.data.id);
+                        CreatureButton creatureButton = creaturesRow.AddCreatureButton(vertex.id);
 
                         if (creatureButton)
                         {
@@ -59,37 +59,37 @@ namespace Game.GA.UI
         
         private void ChangeSelectedVertex(CreatureButton creatureButton)
         {
-            CreatureVertex vertex = _graph.GetVertex(creatureButton.Generation, creatureButton.Id);
+            CreatureData vertex = _graph.GetVertex(creatureButton.Generation, creatureButton.Id);
 
             if (_selectedVertex != null)
             {
-                _creaturesRowManager._creaturesRows[_selectedVertex.data.generation]._creatures[_selectedVertex.data.id].GetComponent<Image>().color = Color.white;
+                _creaturesRowManager._creaturesRows[_selectedVertex.generation]._creatures[_selectedVertex.id].GetComponent<Image>().color = Color.white;
             }
 
             if (_selectedVertexParents != null)
             {
-                foreach (CreatureVertex parent in _selectedVertexParents)
+                foreach (CreatureData parent in _selectedVertexParents)
                 {
-                    _creaturesRowManager._creaturesRows[parent.data.generation]._creatures[parent.data.id].GetComponent<Image>().color = Color.white;
+                    _creaturesRowManager._creaturesRows[parent.generation]._creatures[parent.id].GetComponent<Image>().color = Color.white;
                 }
             }
 
             _selectedVertex = vertex;
 
-            _creaturesRowManager._creaturesRows[_selectedVertex.data.generation]._creatures[_selectedVertex.data.id].GetComponent<Image>().color = Color.red;
+            _creaturesRowManager._creaturesRows[_selectedVertex.generation]._creatures[_selectedVertex.id].GetComponent<Image>().color = Color.red;
 
-            if (vertex.data.parents != null)
+            if (vertex.parents != null)
             {
-                _selectedVertexParents = new CreatureVertex[vertex.data.parents.Length];
+                _selectedVertexParents = new CreatureData[vertex.parents.Length];
 
-                for (int i = 0; i < vertex.data.parents.Length; i++)
+                for (int i = 0; i < vertex.parents.Length; i++)
                 {
-                    _selectedVertexParents[i] = _graph.GetVertex(vertex.data.generation - 1, vertex.data.parents[i]);
+                    _selectedVertexParents[i] = _graph.GetVertex(vertex.generation - 1, vertex.parents[i]);
                 }
 
-                foreach (CreatureVertex parent in _selectedVertexParents)
+                foreach (CreatureData parent in _selectedVertexParents)
                 {
-                    _creaturesRowManager._creaturesRows[parent.data.generation]._creatures[parent.data.id].GetComponent<Image>().color = Color.blue;
+                    _creaturesRowManager._creaturesRows[parent.generation]._creatures[parent.id].GetComponent<Image>().color = Color.blue;
                 }
             } else
             {
@@ -101,10 +101,10 @@ namespace Game.GA.UI
             UpdateDataText(vertex, StatisticsType.HitsDealt, _hitsDealtValue);
             UpdateDataText(vertex, StatisticsType.HitsTaken, _hitsTakenValue);*/
 
-            _fitnessValue.SetValue(vertex.data.fitness.ToString("0.000"));
+            _fitnessValue.SetValue(vertex.fitness.ToString("0.000"));
             string traits = "";
 
-            foreach (TraitIdentifier identifier in vertex.data.traits)
+            foreach (TraitIdentifier identifier in vertex.traits)
             {
                 traits += identifier.ToString() + " ";
             }
@@ -112,9 +112,9 @@ namespace Game.GA.UI
             _traitsValue.SetValue(traits);
         }
 
-        private void UpdateDataText(CreatureVertex vertex, StatisticsType dataType, TextMeshProUGUI valueField)
+        private void UpdateDataText(CreatureData vertex, StatisticsType dataType, TextMeshProUGUI valueField)
         {
-            if (vertex.data.statistics.TryGetValue(dataType, out float value))
+            if (vertex.statistics.TryGetValue(dataType, out float value))
             {
                 valueField.text = value.ToString("0.000");
             } else

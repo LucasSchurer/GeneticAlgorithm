@@ -48,6 +48,8 @@ namespace Game.GA
             {
                 traits = traitController.GetTraitsIdentifiers();
             }
+
+            creature.data = this;
         }
 
         public CreatureData()

@@ -12,31 +12,31 @@ namespace Game.GA
     {
         private string xmlFileName = "";
 
-        private List<Dictionary<int, CreatureVertex>> _creatures;
+        private List<Dictionary<int, CreatureData>> _creatures;
 
         public int CurrentGeneration => _creatures.Count;
 
         public PopulationGraph()
         {
-            _creatures = new List<Dictionary<int, CreatureVertex>>();
+            _creatures = new List<Dictionary<int, CreatureData>>();
         }
 
         public void CreateAndAddVertex(CreatureController creature)
         {
-            AddVertex(new CreatureVertex(creature));
+            AddVertex(creature.data);
         }
 
-        public void AddVertex(CreatureVertex vertex)
+        public void AddVertex(CreatureData data)
         {
-            if (vertex.data.generation >= _creatures.Count)
+            if (data.generation >= _creatures.Count)
             {
-                _creatures.Add(new Dictionary<int, CreatureVertex>());
+                _creatures.Add(new Dictionary<int, CreatureData>());
             }
 
-            _creatures[vertex.data.generation].TryAdd(vertex.data.id, vertex);
+            _creatures[data.generation].TryAdd(data.id, data);
         }
 
-        public Dictionary<int, CreatureVertex> GetGeneration(int generation)
+        public Dictionary<int, CreatureData> GetGeneration(int generation)
         {
             if (generation < _creatures.Count)
             {
@@ -47,7 +47,7 @@ namespace Game.GA
             }
         }
 
-        public CreatureVertex GetVertex(int generation, int id)
+        public CreatureData GetVertex(int generation, int id)
         {
             return _creatures[generation][id];
         }
@@ -59,11 +59,11 @@ namespace Game.GA
                 xmlFileName = $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.xml";
             }
 
-            CreatureVertex[] vertices = _creatures[0].Values.ToArray();
+            CreatureData[] vertices = _creatures[0].Values.ToArray();
 
-            foreach (CreatureVertex vertex in vertices)
+            foreach (CreatureData data in vertices)
             {
-                XMLHelper.SerializeData($"{Application.persistentDataPath}/{xmlFileName}", vertex.data);
+                XMLHelper.SerializeData($"{Application.persistentDataPath}/{xmlFileName}", data);
             }
         }
     } 
