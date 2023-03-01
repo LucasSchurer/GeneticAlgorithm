@@ -1,11 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml.Serialization;
 using UnityEngine;
 
 namespace Game.GA
 {
     public class PopulationGraph
     {
+        private string xmlFileName = "";
+
         private List<Dictionary<int, CreatureVertex>> _creatures;
 
         public int CurrentGeneration => _creatures.Count;
@@ -46,9 +52,19 @@ namespace Game.GA
             return _creatures[generation][id];
         }
 
-        public void WriteJson()
+        public void ToXML()
         {
+            if (xmlFileName == "")
+            {
+                xmlFileName = $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.xml";
+            }
 
+            CreatureVertex[] vertices = _creatures[0].Values.ToArray();
+
+            foreach (CreatureVertex vertex in vertices)
+            {
+                XMLHelper.SerializeData($"{Application.persistentDataPath}/{xmlFileName}", vertex.data);
+            }
         }
     } 
 }

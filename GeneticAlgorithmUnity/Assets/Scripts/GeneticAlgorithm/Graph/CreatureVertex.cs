@@ -1,9 +1,5 @@
-using Game.Entities;
-using Game.Traits;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace Game.GA
 {

@@ -42,6 +42,7 @@ namespace Game.Managers
         public float populationFitness;
 
         private PopulationGraph _populationGraph;
+        private Dictionary<int, GenerationData> _generationsData;
         private int _currentCreatureId = 1;
         private int _currentGeneration = 0;
 
@@ -235,6 +236,8 @@ namespace Game.Managers
             {
                 creature.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnDeath, new EntityEventContext());
             }
+
+            _populationGraph.ToXML();
         }
 
         public void StopListening()
