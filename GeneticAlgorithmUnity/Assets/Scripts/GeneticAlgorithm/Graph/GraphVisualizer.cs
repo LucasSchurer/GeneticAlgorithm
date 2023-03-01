@@ -10,7 +10,7 @@ namespace Game.GA.UI
 {
     public class GraphVisualizer : MonoBehaviour
     {
-        [Header("References")]
+        /*[Header("References")]
         [SerializeField]
         private CreaturesRowManager _creaturesRowManager;
 
@@ -24,20 +24,13 @@ namespace Game.GA.UI
         [SerializeField]
         private Game.UI.LabelValue _traitsValue;
 
-        private PopulationGraph _graph;
-
         private CreatureData _selectedVertex;
 
         private CreatureData[] _selectedVertexParents;
 
-        public void SetGraph(PopulationGraph graph)
-        {
-            _graph = graph;
-        }
-
         public void UpdateUI()
         {
-            _creaturesRowManager.Clear();
+*//*            _creaturesRowManager.Clear();
 
             for (int i = 0; i < _graph.CurrentGeneration; i++)
             {
@@ -54,7 +47,7 @@ namespace Game.GA.UI
                         }
                     }
                 }
-            }
+            }*//*
         }
         
         private void ChangeSelectedVertex(CreatureButton creatureButton)
@@ -96,10 +89,10 @@ namespace Game.GA.UI
                 _selectedVertexParents = null;
             }
 
-            /*UpdateDataText(vertex, StatisticsType.DamageDealt, _damageDealtValue);
+            *//*UpdateDataText(vertex, StatisticsType.DamageDealt, _damageDealtValue);
             UpdateDataText(vertex, StatisticsType.DamageTaken, _damageTakenValue);
             UpdateDataText(vertex, StatisticsType.HitsDealt, _hitsDealtValue);
-            UpdateDataText(vertex, StatisticsType.HitsTaken, _hitsTakenValue);*/
+            UpdateDataText(vertex, StatisticsType.HitsTaken, _hitsTakenValue);*//*
 
             _fitnessValue.SetValue(vertex.fitness.ToString("0.000"));
             string traits = "";
@@ -129,6 +122,6 @@ namespace Game.GA.UI
             {
                 UpdateUI();
             }
-        }
+        }*/
     } 
 }

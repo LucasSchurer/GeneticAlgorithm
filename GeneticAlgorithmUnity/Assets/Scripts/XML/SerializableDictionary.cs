@@ -6,7 +6,7 @@ namespace Game
     [XmlRoot("Dictionary")]
     public class SerializableDictionary<Key, Value>
     {
-        [XmlElement("Key")]
+        [XmlAttribute("Key")]
         public Key key;
         [XmlElement("Value")]
         public Value value;

@@ -41,8 +41,7 @@ namespace Game.Managers
         public float[] populationMaxPropertiesValues;
         public float populationFitness;
 
-        private PopulationGraph _populationGraph;
-        private Dictionary<int, GenerationData> _generationsData;
+        private GenerationManager _generationManager;
         private int _currentCreatureId = 1;
         private int _currentGeneration = 0;
 
@@ -51,9 +50,8 @@ namespace Game.Managers
             _fitnessProperties.BalancePropertiesWeights();
             _creatures = new CreatureController[initialPopulationSize];
             _creaturesRequest = new List<CreatureController>();
-            _populationGraph = new PopulationGraph();
 
-            GetComponent<GA.UI.GraphVisualizer>()?.SetGraph(_populationGraph);
+            _generationManager = new GenerationManager();
         }
 
         private void Update()
@@ -80,7 +78,7 @@ namespace Game.Managers
                 _creatures[i].data.generation = _currentGeneration;
                 _currentCreatureId++;
 
-                _populationGraph.CreateAndAddVertex(_creatures[i]);
+                _generationManager.AddCreatureToGeneration(_creatures[i]);
 
                 _creaturesRequest.Add(_creatures[i]);
             }
@@ -139,7 +137,8 @@ namespace Game.Managers
                 Destroy(_creatures[i].gameObject);
                 _creatures[i] = newCreatures[i];
                 _creatures[i].gameObject.SetActive(false);
-                _populationGraph.CreateAndAddVertex(_creatures[i]);
+
+                _generationManager.AddCreatureToGeneration(_creatures[i]);
 
                 _creaturesRequest.Add(_creatures[i]);
             }
@@ -237,7 +236,8 @@ namespace Game.Managers
                 creature.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnDeath, new EntityEventContext());
             }
 
-            _populationGraph.ToXML();
+            GeneticAlgorithmData geneticAlgorithmData = new GeneticAlgorithmData(_generationManager.GenerationsArray);
+            geneticAlgorithmData.ToXML();
         }
 
         public void StopListening()
