@@ -735,7 +735,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &674039815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,9 +748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff68848a274f50a4a8439daa47f1d2a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fitnessProperties: {fileID: 11400000, guid: 9cb84518dddd37a468e983f6e084c92f, type: 2}
   _creaturePrefab: {fileID: 2880702552886206499, guid: bc21e420ce107e641a147f92b518c26d, type: 3}
-  _mutationRate: 0.1
   populationMaxPropertiesValues: []
   populationFitness: 0
 --- !u!4 &674039816
@@ -1037,6 +1035,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbf3d94d2447434bb8bf7854ccae07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1248763610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1248763615}
+  - component: {fileID: 1248763614}
+  - component: {fileID: 1248763613}
+  - component: {fileID: 1248763612}
+  - component: {fileID: 1248763611}
+  m_Layer: 0
+  m_Name: GeneticAlgorithmManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1248763611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248763610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1dbe979af5200440bddfcaeabf69976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1248763612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248763610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff68848a274f50a4a8439daa47f1d2a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _creaturePrefab: {fileID: 2880702552886206499, guid: bc21e420ce107e641a147f92b518c26d, type: 3}
+  populationMaxPropertiesValues: []
+  populationFitness: 0
+--- !u!114 &1248763613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248763610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42da2740393cf314dba4d52be1f4c1b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1248763614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248763610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f50164205c3e001439871d475cec9d9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fitnessProperties: {fileID: 11400000, guid: 9cb84518dddd37a468e983f6e084c92f, type: 2}
+  _mutationRate: 0.15
+--- !u!4 &1248763615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248763610}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 19.164747, y: -2.5909429, z: -5.3072734}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1264361736
 GameObject:
   m_ObjectHideFlags: 0

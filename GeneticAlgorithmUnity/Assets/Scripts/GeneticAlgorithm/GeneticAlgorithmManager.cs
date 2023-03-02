@@ -25,7 +25,7 @@ namespace Game.GA
         {
             _geneticAlgorithmData = new GeneticAlgorithmData();
             _populationController = GetComponent<PopulationController>();
-            _generationController = new GenerationController();
+            _generationController = GetComponent<GenerationController>();
         }
     }
 }

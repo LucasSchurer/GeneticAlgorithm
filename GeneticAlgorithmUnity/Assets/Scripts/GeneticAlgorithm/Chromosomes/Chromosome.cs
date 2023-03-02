@@ -77,7 +77,7 @@ namespace Game.GA
 
         private void MutateAll()
         {
-            float random = Random.Range(0, 1);
+            float random = Random.Range(0f, 1f);
 
             if (random <= _mutationRate)
             {

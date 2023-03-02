@@ -15,47 +15,33 @@ namespace Game.GA
         public int generation;
         public bool isDead = false;
         
-        [XmlIgnore]
+/*        [XmlIgnore]
         public Dictionary<StatisticsType, float> statistics;
         [XmlArray("Statistics")]
         [XmlArrayItem("Statistic")]
-        public List<SerializableDictionary<StatisticsType, float>> serializableStatistics => SerializableDictionary<StatisticsType, float>.BuildListFromDictionary(statistics);
+        public List<SerializableDictionary<StatisticsType, float>> serializableStatistics => SerializableDictionary<StatisticsType, float>.BuildListFromDictionary(statistics);*/
         
-        public TraitIdentifier[] traits;
-        public float fitness;
+        private TraitIdentifier[] _traits;
+        private Fitness _fitness;
         public int[] parents;
+        private CreatureData[] _parents;
         public List<int> children;
+        private List<CreatureData> _children;
         public float[] fitnessPropertiesValues;
         public BaseEnemyChromosome chromosome;
+        public TraitIdentifier[] Traits { get => _traits; set => _traits = value; }
+        public Fitness Fitness => _fitness;
+        public CreatureData[] Parents { get => _parents; set => _parents = value; }
+        public List<CreatureData> Children => _children;
 
         public CreatureData(CreatureController creature, int[] parents)
         {
-            children = new List<int>();
-            
-            if (parents != null)
-            {
-                this.parents = new int[parents.Length];
-                Array.Copy(parents, this.parents, this.parents.Length);
-            }
-
-            StatisticsController statisticsController = creature.GetComponent<StatisticsController>();
-
-            if (statisticsController)
-            {
-                statistics = statisticsController._statistics;
-            }
-
-            EntityTraitController traitController = creature.GetComponent<EntityTraitController>();
-
-            if (traitController)
-            {
-                traits = traitController.GetTraitsIdentifiers();
-            }
-
-            creature.data = this;
         }
 
         public CreatureData()
-        { }
+        {
+            _children = new List<CreatureData>();
+            _fitness = new Fitness();
+        }
     }
 }

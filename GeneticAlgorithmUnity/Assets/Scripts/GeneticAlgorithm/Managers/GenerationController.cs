@@ -1,3 +1,4 @@
+using Game.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,10 +7,10 @@ using UnityEngine;
 
 namespace Game.GA
 {
-    public class GenerationController
+    public class GenerationController : MonoBehaviour, IEventListener
     {
         private int _currentGeneration = 0;
-        private int _currentCreatureId = 0;
+        private int _currentCreatureId = 1;
         
         private Dictionary<int, GenerationData> _generations;
         public List<GenerationData> Generations => _generations.Values.ToList();
@@ -24,12 +25,52 @@ namespace Game.GA
         {
             _currentGeneration++;
 
+            GenerationData generationData = new GenerationData();
+            generationData.number = _currentGeneration;
+
             if (_currentGeneration == 1)
             {
                 CreateFreshGeneration();
             } else
             {
-                CreateGeneration(CurrentGenerationData.number - 1);
+                CreateGeneration(_currentGeneration - 1);
+            }
+        }
+        
+        /// <summary>
+        /// Update partial values of each creature, resulting in it's final fitness value.
+        /// Update the passed generation fitness.
+        /// </summary>
+        /// <param name="generation"></param>
+        private void UpdateGenerationFitness(int generation)
+        {
+            if (_generations.TryGetValue(generation, out GenerationData generationData))
+            {
+                generationData.generationFitness = 0;
+                Dictionary<Entities.StatisticsType, float> maxRawValues = new Dictionary<Entities.StatisticsType, float>();
+
+                foreach (CreatureData creatureData in generationData.creatures.Values)
+                {
+                    foreach (Fitness.PartialValue partialValue in creatureData.Fitness.PartialValues)
+                    {
+                        if (maxRawValues.ContainsKey(partialValue.Type))
+                        {
+                            if (maxRawValues[partialValue.Type] <= partialValue.RawValue)
+                            {
+                                maxRawValues[partialValue.Type] = partialValue.RawValue;
+                            }
+                        } else
+                        {
+                            maxRawValues.Add(partialValue.Type, partialValue.RawValue);
+                        }
+                    }
+                }
+
+                foreach (CreatureData creatureData in generationData.creatures.Values)
+                {
+                    creatureData.Fitness.UpdateFitness(maxRawValues);
+                    generationData.generationFitness += creatureData.Fitness.Value;
+                }
             }
         }
 
@@ -42,7 +83,29 @@ namespace Game.GA
         /// </summary>
         private void CreateGeneration(int parentsGeneration)
         {
+            GenerationData currentGeneration = CurrentGenerationData;
 
+            if (_generations.ContainsKey(parentsGeneration) && currentGeneration != null)
+            {
+                int numberOfCreatures = Managers.WaveManager.Instance.waveSettings.enemiesPerWave;
+
+                for (int i = 0; i < numberOfCreatures; i++)
+                {
+                    // TODO 
+                    // SELECT PARENTS
+                    CreatureData[] parents = RouletteWheelSelection(parentsGeneration, 1);
+
+                    CreatureData newCreature = CreateCreatureData(_currentGeneration, parents);
+
+                    newCreature.chromosome.Mutate();
+
+                    AddCreatureDataToGeneration(newCreature);
+                }
+
+            } else
+            {
+                Debug.LogWarning("Parent Generation Number is invalid. Won't create a new generation!");
+            }
         }
 
         /// <summary>
@@ -53,17 +116,33 @@ namespace Game.GA
         {
             for (int i = 0; i < Managers.WaveManager.Instance.waveSettings.enemiesPerWave; i++)
             {
-                AddCreatureDataToGeneration(CreateCreatureData());
+                AddCreatureDataToGeneration(CreateCreatureData(1));
             }
         }
 
-        private CreatureData CreateCreatureData(int[] parents = null)
+        private CreatureData CreateCreatureData(int generation, CreatureData[] parents = null)
         {
             CreatureData data = new CreatureData();
             data.id = _currentCreatureId;
-            data.generation = _currentGeneration;
+            data.generation = generation;
             data.isDead = false;
-            data.parents = parents;
+            data.Parents = parents;
+
+            if (parents != null)
+            {
+                data.chromosome = (BaseEnemyChromosome)parents[0].chromosome.Copy();
+            } else
+            {
+                data.chromosome = new BaseEnemyChromosome(0.15f, false);
+                data.chromosome.RandomizeGenes();
+            }
+
+            /*// TODO
+            // Crossover if parents != null
+            if (parents != null)
+            {
+                data.chromosome = parents[0].chromosome;
+            }*/
 
             _currentCreatureId++;
 
@@ -99,8 +178,77 @@ namespace Game.GA
             }
         }
 
-        #region SELECTION METHODS
+        /// <summary>
+        /// Return n <see cref="CreatureData"/>
+        /// selected by the roulette wheel selection method.
+        /// <see href="https://en.wikipedia.org/wiki/Fitness_proportionate_selection"/>
+        /// </summary>
+        /// <returns></returns>
+        private CreatureData[] RouletteWheelSelection(int generation, int amount = 1)
+        {
+            if (_generations.TryGetValue(generation, out GenerationData generationData))
+            {
+                List<CreatureData> parents = new List<CreatureData>();
 
-        #endregion
+                for (int i = 0; i < amount; i++)
+                {
+                    float randomFitness = UnityEngine.Random.Range(0, generationData.generationFitness);
+                    float fitnessRange = 0f;
+
+                    foreach (CreatureData creatureData in generationData.creatures.Values)
+                    {
+                        fitnessRange += creatureData.Fitness.Value;
+
+                        if (fitnessRange > randomFitness)
+                        {
+                            parents.Add(creatureData);
+                            break;
+                        }
+                    }
+                }
+
+                return parents.ToArray();
+
+            } else
+            {
+                Debug.LogWarning("Generation Number is invalid. Won't select parents!");
+                return null;
+            }
+        }
+
+        private void UpdateCurrentGenerationFitnessOnWaveEnd(ref GameEventContext ctx)
+        {
+            UpdateGenerationFitness(_currentGeneration);
+        }
+
+        public void StartListening()
+        {
+            Managers.GameManager gameManager = Managers.GameManager.Instance;
+
+            if (gameManager != null && gameManager.eventController != null)
+            {
+                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, UpdateCurrentGenerationFitnessOnWaveEnd, EventExecutionOrder.Standard);
+            }
+        }
+
+        public void StopListening()
+        {
+            Managers.GameManager gameManager = Managers.GameManager.Instance;
+
+            if (gameManager != null && gameManager.eventController != null)
+            {
+                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, UpdateCurrentGenerationFitnessOnWaveEnd, EventExecutionOrder.Standard);
+            }
+        }
+
+        private void OnEnable()
+        {
+            StartListening();
+        }
+
+        private void OnDisable()
+        {
+            StopListening();
+        }
     }
 }

@@ -46,32 +46,17 @@ namespace Game.GA
 
             CreatureData[] creaturesData = generationController.GetCurrentGenerationCreaturesData();
 
-            if (generationController.CurrentGeneration == 1)
+            for (int i = 0; i < creaturesData.Length; i++)
             {
-                for (int i = 0; i < creaturesData.Length; i++)
-                {
-                    _creatures[i] = Instantiate(_creaturePrefab);
-                    _creatures[i].Initialize(_gaManager.MutationRate, true);
-                    _creatures[i].gameObject.SetActive(false);
-                    _creatures[i].data = creaturesData[i];
+                _creatures[i] = Instantiate(_creaturePrefab);
+                _creatures[i].Initialize(creaturesData[i]);
+                _creatures[i].gameObject.SetActive(false);
 
-                    _creaturesRequest.Add(_creatures[i]);
-                }
-            } else
-            {
-                for (int i = 0; i < creaturesData.Length; i++)
-                {
-                    _creatures[i] = Instantiate(_creaturePrefab);
-                    _creatures[i].Initialize(_gaManager.MutationRate, false, creaturesData[i].chromosome);
-                    _creatures[i].gameObject.SetActive(false);
-                    _creatures[i].data = creaturesData[i];
-
-                    _creaturesRequest.Add(_creatures[i]);
-                }
+                _creaturesRequest.Add(_creatures[i]);
             }
         }
 
-        private void GenerateNewPopulation()
+        /*private void GenerateNewPopulation()
         {
             UpdatePopulationFitness();
 
@@ -123,39 +108,15 @@ namespace Game.GA
                 _creatures[i] = newCreatures[i];
                 _creatures[i].gameObject.SetActive(false);
 
-                /*_gaManager.GenerationController.AddCreatureToGeneration(_creatures[i]);*/
+                *//*_gaManager.GenerationController.AddCreatureToGeneration(_creatures[i]);*//*
 
                 _creaturesRequest.Add(_creatures[i]);
             }
-        }
-
-        /// <summary>
-        /// Returns the ID of a creature
-        /// selected by the roulette wheel method.
-        /// <see href="https://en.wikipedia.org/wiki/Fitness_proportionate_selection"/>
-        /// </summary>
-        /// <returns></returns>
-        private int RouletteWheelSelection()
-        {
-            float randomFitness = Random.Range(0, populationFitness);
-            float fitnessRange = 0f;
-
-            for (int i = 0; i < _creatures.Length; i++)
-            {
-                fitnessRange += _creatures[i].data.fitness;
-
-                if (fitnessRange > randomFitness)
-                {
-                    return i;
-                }
-            }
-
-            return 0;
-        }
+        }*/
 
         private void UpdatePopulationFitness()
         {
-            populationMaxPropertiesValues = new float[_gaManager.FitnessProperties.Properties.Length];
+            /*populationMaxPropertiesValues = new float[_gaManager.FitnessProperties.Properties.Length];
             populationFitness = 0f;
 
             for (int i = 0; i < populationMaxPropertiesValues.Length; i++)
@@ -179,8 +140,8 @@ namespace Game.GA
             foreach (CreatureController creature in _creatures)
             {
                 creature.UpdateFitness(_gaManager.FitnessProperties.Properties, populationMaxPropertiesValues);
-                populationFitness += creature.data.fitness;
-            }
+                populationFitness += creature.data._fitness;
+            }*/
         }
 
         public CreatureController RequestCreature()
@@ -201,14 +162,6 @@ namespace Game.GA
         private void GeneratePopulation(ref GameEventContext ctx)
         {
             GetNewPopulation();
-
-/*            if (_currentGeneration == 0)
-            {
-                GenerateInitialPopulation();
-            } else
-            {
-                *//*GenerateNewPopulation();*//*
-            }*/
         }
 
         public void StartListening()
