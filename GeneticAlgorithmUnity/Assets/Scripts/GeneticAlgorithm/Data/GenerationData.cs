@@ -1,17 +1,15 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace Game.GA
 {
-    [XmlRoot("Generation")]
+    [DataContract(Name = "Generation")]
     public class GenerationData
     {
-        [XmlAttribute]
+        [DataMember()]
         public int number;
-        [XmlIgnore]
         public Dictionary<int, CreatureData> creatures;
-        [XmlArray("Creatures")]
-        [XmlArrayItem("Creature")]
         public List<SerializableDictionary<int, CreatureData>> serializableCreatures => SerializableDictionary<int, CreatureData>.BuildListFromDictionary(creatures);
         public float generationFitness;
 

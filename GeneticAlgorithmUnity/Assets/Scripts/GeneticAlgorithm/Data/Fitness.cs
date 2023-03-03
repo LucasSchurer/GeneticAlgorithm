@@ -1,18 +1,16 @@
 using Game.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Game.GA
 {
-    [System.Serializable]
-    [XmlRoot("Fitness")]
+    [DataContract(Name = "Fitness")]
     public class Fitness
     {
         private float _value;
         private Dictionary<StatisticsType, PartialValue> _partialValues;
         public float Value => _value;
-        [XmlIgnore]
         public PartialValue[] PartialValues => _partialValues.Values.ToArray();
         
         public Fitness()

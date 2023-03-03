@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -13,22 +12,16 @@ namespace Game.GA
     /// and statistics.
     /// Used to build the XML file.
     /// </summary>
-    [XmlRoot("Genetic_Algorithm")]
+    [DataContract(Name = "GeneticAlgorithm")]
     public class GeneticAlgorithmData
     {
         private string xmlFileName = "";
-        [XmlAttribute]
-        public int version = 1;
+        private int version = 1;
 
-        [XmlArray("Generations")]
-        [XmlArrayItem("Generation")]
+        [DataMember]
         public GenerationData[] generations;
 
-        public GeneticAlgorithmData() { }
-        public GeneticAlgorithmData(GenerationData[] generations)
-        {
-            this.generations = generations;
-        }
+        public GeneticAlgorithmData() { }        
 
         public void ToXML()
         {

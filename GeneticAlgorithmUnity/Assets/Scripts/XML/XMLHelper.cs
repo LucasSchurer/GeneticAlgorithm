@@ -1,10 +1,6 @@
-using Game.GA;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
-using UnityEngine;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace Game
 {
@@ -12,11 +8,19 @@ namespace Game
     {
         public static void SerializeData<DataType>(string path, DataType data, bool append = true)
         {
-            StreamWriter writer = new StreamWriter(path, append);
+            FileStream fileStream = new FileStream(path, FileMode.Create);
 
-            XmlSerializer xmls = new XmlSerializer(typeof(DataType));
+            XmlWriterSettings settings = new XmlWriterSettings()
+            {
+                Indent = true,
+                IndentChars = "\t",
+            };
 
-            xmls.Serialize(writer.BaseStream, data);
+            XmlWriter writer = XmlWriter.Create(fileStream, settings);
+
+            DataContractSerializer serializer = new DataContractSerializer(typeof(DataType));
+
+            serializer.WriteObject(writer, data);
 
             writer.Close();
         }
