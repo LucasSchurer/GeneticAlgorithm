@@ -26,9 +26,9 @@ namespace Game.GA
             _currentGeneration++;
 
             GenerationData generationData = new GenerationData();
-            generationData.number = _currentGeneration;
+            generationData.Number = _currentGeneration;
 
-            _generations.TryAdd(generationData.number, generationData);
+            _generations.TryAdd(generationData.Number, generationData);
 
             if (_currentGeneration == 1)
             {
@@ -48,10 +48,10 @@ namespace Game.GA
         {
             if (_generations.TryGetValue(generation, out GenerationData generationData))
             {
-                generationData.generationFitness = 0;
+                generationData.GenerationFitness = 0;
                 Dictionary<Entities.StatisticsType, float> maxRawValues = new Dictionary<Entities.StatisticsType, float>();
 
-                foreach (CreatureData creatureData in generationData.creatures.Values)
+                foreach (CreatureData creatureData in generationData.Creatures.Values)
                 {
                     foreach (Fitness.PartialValue partialValue in creatureData.Fitness.PartialValues)
                     {
@@ -68,10 +68,10 @@ namespace Game.GA
                     }
                 }
 
-                foreach (CreatureData creatureData in generationData.creatures.Values)
+                foreach (CreatureData creatureData in generationData.Creatures.Values)
                 {
                     creatureData.Fitness.UpdateFitness(maxRawValues);
-                    generationData.generationFitness += creatureData.Fitness.Value;
+                    generationData.GenerationFitness += creatureData.Fitness.Value;
                 }
             }
         }
@@ -123,8 +123,8 @@ namespace Game.GA
         private CreatureData CreateCreatureData(int generation, CreatureData[] parents = null)
         {
             CreatureData data = new CreatureData();
-            data.id = _currentCreatureId;
-            data.generation = generation;
+            data.Id = _currentCreatureId;
+            data.Generation = generation;
             data.isDead = false;
             data.Parents = parents;
 
@@ -149,19 +149,19 @@ namespace Game.GA
 
         public CreatureData[] GetCurrentGenerationCreaturesData()
         {
-            return CurrentGenerationData.creatures.Values.ToArray();
+            return CurrentGenerationData.Creatures.Values.ToArray();
         }
 
         public void AddGenerationData(GenerationData data)
         {
-            _generations.TryAdd(data.number, data);
+            _generations.TryAdd(data.Number, data);
         }
 
         private void AddCreatureDataToGeneration(CreatureData data)
         {
-            _generations.TryAdd(data.generation, new GenerationData());
+            _generations.TryAdd(data.Generation, new GenerationData());
 
-            _generations[data.generation].AddCreatureData(data);
+            _generations[data.Generation].AddCreatureData(data);
         }
 
         public GenerationData GetGenerationData(int generation)
@@ -190,10 +190,10 @@ namespace Game.GA
 
                 for (int i = 0; i < amount; i++)
                 {
-                    float randomFitness = UnityEngine.Random.Range(0, generationData.generationFitness);
+                    float randomFitness = UnityEngine.Random.Range(0, generationData.GenerationFitness);
                     float fitnessRange = 0f;
 
-                    foreach (CreatureData creatureData in generationData.creatures.Values)
+                    foreach (CreatureData creatureData in generationData.Creatures.Values)
                     {
                         fitnessRange += creatureData.Fitness.Value;
 

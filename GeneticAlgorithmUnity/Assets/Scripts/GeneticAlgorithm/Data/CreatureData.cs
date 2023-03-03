@@ -1,45 +1,38 @@
-using Game.Entities;
 using Game.Traits;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
-using UnityEngine;
 
 namespace Game.GA
 {
-    [XmlRoot("Creature")]
+    [DataContract(Name = "Creature", Namespace = "")]
     public class CreatureData
     {
-        public int id;
-        public int generation;
+        [DataMember(Name = "Id", Order = 0)]
+        private int id;
+        [DataMember(Name = "Generation", Order = 1)]
+        private int _generation;
         public bool isDead = false;
-                
-        private TraitIdentifier[] _traits;
+        [DataMember(Name = "Fitness", Order = 2)]
         private Fitness _fitness;
-        public int[] parents;
+        [DataMember(Name = "Traits", Order = 3)]
+        private TraitIdentifier[] _traits;
         private CreatureData[] _parents;
-        public List<int> children;
         private List<CreatureData> _children;
-        public float[] fitnessPropertiesValues;
-        [XmlIgnore]
         public BaseEnemyChromosome chromosome;
-        public TraitIdentifier[] Traits { get => _traits; set => _traits = value; }
-        [XmlElement]
-        public Fitness Fitness { get => _fitness; set => _fitness = value; }
-        [XmlIgnore]
-        public CreatureData[] Parents { get => _parents; set => _parents = value; }
-        [XmlIgnore]
-        public List<CreatureData> Children => _children;
-        // Only used to XML
-        public List<int> ChildrenID => _children.Select(c => c.id).ToList();
-        // Only used to XML
-        public List<int> ParentsID => _parents != null ? _parents.Select(p => p.id).ToList() : new List<int>();
+        public float[] fitnessPropertiesValues;
 
-        public CreatureData(CreatureController creature, int[] parents)
-        {
-        }
+        public int Id { get => id; set => id = value; }
+        public int Generation { get => _generation; set => _generation = value; }
+        public TraitIdentifier[] Traits { get => _traits; set => _traits = value; }
+        public Fitness Fitness { get => _fitness; set => _fitness = value; }
+        public CreatureData[] Parents { get => _parents; set => _parents = value; }
+        public List<CreatureData> Children => _children;
+        [DataMember(Name = "Parents", Order = 98)]
+        private List<int> ParentsID => _parents != null ? _parents.Select(p => p.Id).ToList() : new List<int>();
+        [DataMember(Name = "Children", Order = 99)]
+        private List<int> ChildrenID => _children.Select(c => c.Id).ToList();
 
         public CreatureData()
         {
