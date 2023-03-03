@@ -18,12 +18,7 @@ namespace Game.GA
         private CreatureController[] _creatures;
         private List<CreatureController> _creaturesRequest;
 
-        public float[] populationMaxPropertiesValues;
-        public float populationFitness;
-
         private GeneticAlgorithmManager _gaManager;
-        private int _currentCreatureId = 1;
-        private int _currentGeneration = 0;
 
         private void Awake()
         {
@@ -54,94 +49,6 @@ namespace Game.GA
 
                 _creaturesRequest.Add(_creatures[i]);
             }
-        }
-
-        /*private void GenerateNewPopulation()
-        {
-            UpdatePopulationFitness();
-
-            CreatureController[] newCreatures = new CreatureController[_creatures.Length];
-
-            for (int i = 0; i < newCreatures.Length; i+=2)
-            {
-                // Selection
-                int parentA = RouletteWheelSelection();
-                int parentB = RouletteWheelSelection();
-
-                // Crossover
-                Chromosome[] offspring = Chromosome.Crossover(_creatures[parentA].chromosome, _creatures[parentB].chromosome);
-
-                // Mutation
-                offspring[0].Mutate();
-                offspring[1].Mutate();
-
-                newCreatures[i] = Instantiate(_creaturePrefab);
-                newCreatures[i + 1] = Instantiate(_creaturePrefab);
-
-                newCreatures[i].Initialize(_gaManager.MutationRate, false, (BaseEnemyChromosome)offspring[0]);
-                newCreatures[i + 1].Initialize(_gaManager.MutationRate, false, (BaseEnemyChromosome)offspring[1]);
-
-                newCreatures[i].data.generation = _currentGeneration;
-                newCreatures[i + 1].data.generation = _currentGeneration;
-
-                newCreatures[i].data.id = _currentCreatureId;
-                newCreatures[i + 1].data.id = _currentCreatureId + 1;
-
-                _currentCreatureId += 2;
-
-                newCreatures[i].data.parents = new int[2] { _creatures[parentA].data.id, _creatures[parentB].data.id };
-                newCreatures[i + 1].data.parents = new int[2] { _creatures[parentA].data.id, _creatures[parentB].data.id };
-
-                _creatures[parentA].data.children.Add(newCreatures[i].data.id);
-                _creatures[parentA].data.children.Add(newCreatures[i + 1].data.id);
-
-                _creatures[parentB].data.children.Add(newCreatures[i].data.id);
-                _creatures[parentB].data.children.Add(newCreatures[i + 1].data.id);
-            }
-
-            _currentGeneration++;
-            _creaturesRequest.Clear();
-
-            for (int i = 0; i < newCreatures.Length; i++)
-            {
-                Destroy(_creatures[i].gameObject);
-                _creatures[i] = newCreatures[i];
-                _creatures[i].gameObject.SetActive(false);
-
-                *//*_gaManager.GenerationController.AddCreatureToGeneration(_creatures[i]);*//*
-
-                _creaturesRequest.Add(_creatures[i]);
-            }
-        }*/
-
-        private void UpdatePopulationFitness()
-        {
-            /*populationMaxPropertiesValues = new float[_gaManager.FitnessProperties.Properties.Length];
-            populationFitness = 0f;
-
-            for (int i = 0; i < populationMaxPropertiesValues.Length; i++)
-            {
-                populationMaxPropertiesValues[i] = 0;
-            }
-
-            foreach (CreatureController creature in _creatures)
-            {
-                creature.UpdateFitnessPropertiesValues(_gaManager.FitnessProperties.Properties);
-
-                for (int i = 0; i < _gaManager.FitnessProperties.Properties.Length; i++)
-                {
-                    if (creature.data.fitnessPropertiesValues[i] > populationMaxPropertiesValues[i])
-                    {
-                        populationMaxPropertiesValues[i] = creature.data.fitnessPropertiesValues[i];
-                    }
-                }
-            }
-
-            foreach (CreatureController creature in _creatures)
-            {
-                creature.UpdateFitness(_gaManager.FitnessProperties.Properties, populationMaxPropertiesValues);
-                populationFitness += creature.data._fitness;
-            }*/
         }
 
         public CreatureController RequestCreature()
