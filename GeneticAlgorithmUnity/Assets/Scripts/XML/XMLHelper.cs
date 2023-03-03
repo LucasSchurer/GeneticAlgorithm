@@ -8,21 +8,21 @@ namespace Game
     {
         public static void SerializeData<DataType>(string path, DataType data, bool append = true)
         {
-            FileStream fileStream = new FileStream(path, FileMode.Create);
-
             XmlWriterSettings settings = new XmlWriterSettings()
             {
                 Indent = true,
                 IndentChars = "\t",
             };
 
-            XmlWriter writer = XmlWriter.Create(fileStream, settings);
-
             DataContractSerializer serializer = new DataContractSerializer(typeof(DataType));
 
-            serializer.WriteObject(writer, data);
-
-            writer.Close();
+            using (FileStream fileStream = new FileStream(path, FileMode.Create))
+            {
+                using (XmlWriter writer = XmlWriter.Create(fileStream, settings))
+                {
+                    serializer.WriteObject(writer, data);
+                }
+            }
         }
     }
 }

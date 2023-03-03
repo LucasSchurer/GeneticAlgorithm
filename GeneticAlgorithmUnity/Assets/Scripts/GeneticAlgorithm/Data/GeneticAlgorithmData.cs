@@ -12,16 +12,15 @@ namespace Game.GA
     /// and statistics.
     /// Used to build the XML file.
     /// </summary>
-    [DataContract(Name = "GeneticAlgorithm")]
+    [DataContract(Name = "GeneticAlgorithm", Namespace = "")]
     public class GeneticAlgorithmData
     {
         private string xmlFileName = "";
-        private int version = 1;
+        [DataMember(Name = "Version")]
+        private readonly int version = 1;
 
-        [DataMember]
-        public GenerationData[] generations;
-
-        public GeneticAlgorithmData() { }        
+        [DataMember(Name = "Generations")]
+        public GenerationData[] generations;    
 
         public void ToXML()
         {

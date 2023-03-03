@@ -5,12 +5,14 @@ using System.Runtime.Serialization;
 
 namespace Game.GA
 {
-    [DataContract(Name = "Fitness")]
+    [DataContract(Name = "Fitness", Namespace = "")]
     public class Fitness
     {
-        private float _value;
+        [DataMember(Name = "Value", Order = 0)]
+        private float _value = 0;
         private Dictionary<StatisticsType, PartialValue> _partialValues;
         public float Value => _value;
+        [DataMember(Name = "PartialValues", Order = 1)]
         public PartialValue[] PartialValues => _partialValues.Values.ToArray();
         
         public Fitness()
@@ -53,13 +55,18 @@ namespace Game.GA
             }
         }
 
+        [DataContract(Name = "PartialValue", Namespace = "")]
         public class PartialValue
         {
             private FitnessProperty _property;
+            [DataMember(Name = "Type", Order = 0)]
             private StatisticsType _type;
+            [DataMember(Name = "RawValue", Order = 1)]
             private float _rawValue = 0;
-            private float _normalizedValue = 0;
+            [DataMember(Name = "MaxValue", Order = 2)]
             private float _maxValue = 0;
+            [DataMember(Name = "NormalizedValue", Order = 3)]
+            private float _normalizedValue = 0;
 
             public float NormalizedValue => _normalizedValue;
             public float RawValue { get => _rawValue; set => _rawValue = value; }

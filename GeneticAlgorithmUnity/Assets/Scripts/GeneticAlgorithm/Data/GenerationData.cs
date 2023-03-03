@@ -1,26 +1,37 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace Game.GA
 {
-    [DataContract(Name = "Generation")]
+    [DataContract(Name = "Generation", Namespace = "")]
     public class GenerationData
     {
-        [DataMember()]
-        public int number;
-        public Dictionary<int, CreatureData> creatures;
-        public List<SerializableDictionary<int, CreatureData>> serializableCreatures => SerializableDictionary<int, CreatureData>.BuildListFromDictionary(creatures);
-        public float generationFitness;
+        [DataMember(Name = "Number", Order = 0)]
+        private int _number;
+        [DataMember(Name = "GenerationFitness", Order = 1)]
+        private float _generationFitness = 0f;
+        private Dictionary<int, CreatureData> _creatures;
+        public int Number { get => _number; set => _number = value >= 0 ? value : 0; }
+        public float GenerationFitness { get => _generationFitness; set => _generationFitness = value >= 0 ? value : 0; }
+        public Dictionary<int, CreatureData> Creatures { get => _creatures; private set => _creatures = value; }
+        [DataMember(Name = "Creatures", Order = 99)]
+        private List<CreatureData> CreaturesList => _creatures.Values.ToList();
 
         public GenerationData()
         {
-            creatures = new Dictionary<int, CreatureData>();
+            _creatures = new Dictionary<int, CreatureData>();
         }
 
         public void AddCreatureData(CreatureData data)
         {
-            creatures.TryAdd(data.id, data);
+            _creatures.TryAdd(data.Id, data);
+        }
+
+        public void RemoveCreatureData(CreatureData data)
+        {
+            _creatures.Remove(data.Id);
         }
     } 
 }
