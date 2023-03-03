@@ -13,7 +13,7 @@ namespace Game.GA
         private int _currentCreatureId = 1;
         
         private Dictionary<int, GenerationData> _generations;
-        public List<GenerationData> Generations => _generations.Values.ToList();
+        public GenerationData[] Generations => _generations.Values.ToArray();
         public GenerationData CurrentGenerationData => _generations[_generations.Count];
         public GenerationController()
         {
@@ -27,6 +27,8 @@ namespace Game.GA
 
             GenerationData generationData = new GenerationData();
             generationData.number = _currentGeneration;
+
+            _generations.TryAdd(generationData.number, generationData);
 
             if (_currentGeneration == 1)
             {
@@ -91,8 +93,6 @@ namespace Game.GA
 
                 for (int i = 0; i < numberOfCreatures; i++)
                 {
-                    // TODO 
-                    // SELECT PARENTS
                     CreatureData[] parents = RouletteWheelSelection(parentsGeneration, 1);
 
                     CreatureData newCreature = CreateCreatureData(_currentGeneration, parents);
@@ -130,19 +130,17 @@ namespace Game.GA
 
             if (parents != null)
             {
+                foreach (CreatureData parent in parents)
+                {
+                    parent.Children.Add(data);
+                }
+
                 data.chromosome = (BaseEnemyChromosome)parents[0].chromosome.Copy();
             } else
             {
                 data.chromosome = new BaseEnemyChromosome(0.15f, false);
                 data.chromosome.RandomizeGenes();
             }
-
-            /*// TODO
-            // Crossover if parents != null
-            if (parents != null)
-            {
-                data.chromosome = parents[0].chromosome;
-            }*/
 
             _currentCreatureId++;
 
