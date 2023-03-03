@@ -10,10 +10,10 @@ namespace Game.Managers
         [Header("References")]
         [SerializeField]
         private Transform _spawnPosition;
-        private PopulationController _populationManager;
+        private PopulationController _populationController;
 
         [Header("Settings")]
-        private WaveSettings _waveSettings;
+        public WaveSettings waveSettings;
         private float _timeRemaining = 0;
         private bool _isSpawningEnemies = false;
         private bool _isWaveActive = false;
@@ -23,12 +23,7 @@ namespace Game.Managers
 
         protected override void SingletonAwake()
         {
-        }
-
-        public void Initialize(WaveSettings waveSettings, PopulationController populationManager)
-        {
-            _waveSettings = waveSettings;
-            _populationManager = populationManager;
+            _populationController = FindObjectOfType<PopulationController>();
         }
 
         private Vector3 GetSpawnPosition()
@@ -42,7 +37,7 @@ namespace Game.Managers
 
         public void StartWave()
         {
-            _timeRemaining = _waveSettings.waveDuration;
+            _timeRemaining = waveSettings.waveDuration;
             _isSpawningEnemies = true;
             _isWaveActive = true;
 
@@ -68,14 +63,14 @@ namespace Game.Managers
         {
             while (true)
             {
-                GA.CreatureController creature = _populationManager.RequestCreature();
+                GA.CreatureController creature = _populationController.RequestCreature();
 
                 if (creature != null)
                 {
                     creature.transform.position = GetSpawnPosition();
                     creature.gameObject.SetActive(true);
 
-                    yield return new WaitForSeconds(Random.Range(_waveSettings.minSpawnInterval, _waveSettings.maxSpawnInterval));
+                    yield return new WaitForSeconds(Random.Range(waveSettings.minSpawnInterval, waveSettings.maxSpawnInterval));
                 }
                 else
                 {
@@ -97,7 +92,7 @@ namespace Game.Managers
 
         private IEnumerator RespawnWaveCoroutine()
         {
-            yield return new WaitForSeconds(_waveSettings.waveRespawnTime);
+            yield return new WaitForSeconds(waveSettings.waveRespawnTime);
 
             GameManager.Instance?.eventController.TriggerEvent(GameEventType.OnWaveStart, new GameEventContext());
         }

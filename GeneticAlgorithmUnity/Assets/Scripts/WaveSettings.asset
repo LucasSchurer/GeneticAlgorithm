@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WaveSettings
   m_EditorClassIdentifier: 
   enemiesPerWave: 10
-  waveDuration: 2
-  minSpawnInterval: 0.2
-  maxSpawnInterval: 1
+  waveDuration: 6
+  minSpawnInterval: 0
+  maxSpawnInterval: 0
   waveRespawnTime: 1

@@ -7,7 +7,7 @@ namespace Game.GA
     public abstract class Chromosome
     {
         /// <summary>
-        /// Property that controls if the mutation rate will be used only one time to each gene
+        /// Property that controls if the mutation rate will be used only one time to all genes
         /// or will be calculated for each gene individually
         /// </summary>
         protected bool _shouldMutateIndividually = false;
@@ -77,7 +77,7 @@ namespace Game.GA
 
         private void MutateAll()
         {
-            float random = Random.Range(0, 1);
+            float random = Random.Range(0f, 1f);
 
             if (random <= _mutationRate)
             {
