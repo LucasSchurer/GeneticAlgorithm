@@ -21,7 +21,6 @@ namespace Game.GA
         private CreatureData[] _parents;
         private List<CreatureData> _children;
         public BaseEnemyChromosome chromosome;
-        public float[] fitnessPropertiesValues;
 
         public int Id { get => id; set => id = value; }
         public int Generation { get => _generation; set => _generation = value; }
