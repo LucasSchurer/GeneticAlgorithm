@@ -97,7 +97,7 @@ namespace Game.GA
 
                     CreatureData newCreature = CreateCreatureData(_currentGeneration, parents);
 
-                    newCreature.chromosome.Mutate();
+                    newCreature.Chromosome.Mutate();
 
                     AddCreatureDataToGeneration(newCreature);
                 }
@@ -125,7 +125,6 @@ namespace Game.GA
             CreatureData data = new CreatureData();
             data.Id = _currentCreatureId;
             data.Generation = generation;
-            data.isDead = false;
             data.Parents = parents;
 
             if (parents != null)
@@ -135,11 +134,11 @@ namespace Game.GA
                     parent.Children.Add(data);
                 }
 
-                data.chromosome = (BaseEnemyChromosome)parents[0].chromosome.Copy();
+                data.Chromosome = (BaseEnemyChromosome)parents[0].Chromosome.Copy();
             } else
             {
-                data.chromosome = new BaseEnemyChromosome(0.15f, false);
-                data.chromosome.RandomizeGenes();
+                data.Chromosome = new BaseEnemyChromosome(0.15f, false);
+                data.Chromosome.RandomizeGenes();
             }
 
             _currentCreatureId++;

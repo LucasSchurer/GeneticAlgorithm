@@ -23,7 +23,7 @@ namespace Game.GA
         public void Initialize(CreatureData data)
         {
             this._data = data;
-            data.chromosome.ApplyGenes(this);
+            data.Chromosome.ApplyGenes(this);
         }
 
         private void UpdateCreatureDataOnWaveEnd(ref GameEventContext ctx)

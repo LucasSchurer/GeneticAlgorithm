@@ -13,14 +13,13 @@ namespace Game.GA
         private int id;
         [DataMember(Name = "Generation", Order = 1)]
         private int _generation;
-        public bool isDead = false;
         [DataMember(Name = "Fitness", Order = 2)]
         private Fitness _fitness;
         [DataMember(Name = "Traits", Order = 3)]
         private TraitIdentifier[] _traits;
         private CreatureData[] _parents;
         private List<CreatureData> _children;
-        public BaseEnemyChromosome chromosome;
+        private BaseEnemyChromosome _chromosome;
 
         public int Id { get => id; set => id = value; }
         public int Generation { get => _generation; set => _generation = value; }
@@ -32,6 +31,7 @@ namespace Game.GA
         private List<int> ParentsID => _parents != null ? _parents.Select(p => p.Id).ToList() : new List<int>();
         [DataMember(Name = "Children", Order = 99)]
         private List<int> ChildrenID => _children.Select(c => c.Id).ToList();
+        public BaseEnemyChromosome Chromosome { get => _chromosome; set => _chromosome = value; }
 
         public CreatureData()
         {
