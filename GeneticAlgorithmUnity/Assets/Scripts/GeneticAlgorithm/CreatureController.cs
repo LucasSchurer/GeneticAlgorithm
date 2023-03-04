@@ -13,10 +13,7 @@ namespace Game.GA
     public class CreatureController : MonoBehaviour, IEventListener
     {
         private StatisticsController _statisticsController;
-        public BaseEnemyChromosome chromosome;
-        public Entities.AI.BehaviourType behaviourType;
-
-        public CreatureData data;
+        private CreatureData _data;
 
         private void Awake()
         {
@@ -25,72 +22,22 @@ namespace Game.GA
 
         public void Initialize(CreatureData data)
         {
-            this.data = data;
-            data.chromosome.ApplyGenes(this);
-        }
-
-        public void UpdateFitness(FitnessProperty[] properties, float[] populationMaxPropertiesValues)
-        {
-            /*data.Fitness = 0f;
-
-            if (data.fitnessPropertiesValues == null || populationMaxPropertiesValues == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < populationMaxPropertiesValues.Length; i++)
-            {
-                if (populationMaxPropertiesValues[i] == 0)
-                {
-                    if (properties[i].Inverse)
-                    {
-                        data._fitness += 1 * properties[i].Weight;
-                    }
-
-                    continue;
-                }
-
-                float propertyValue = (data.fitnessPropertiesValues[i] / populationMaxPropertiesValues[i]);
-
-                if (properties[i].Inverse)
-                {
-                    propertyValue = 1 - propertyValue;
-                }
-
-                propertyValue *= properties[i].Weight;
-
-                data._fitness += propertyValue;
-            }*/
-        }
-
-        public void UpdateFitnessPropertiesValues(FitnessProperty[] properties)
-        {
-            if (_statisticsController)
-            {
-                data.fitnessPropertiesValues = new float[properties.Length];
-
-                for (int i = 0; i < properties.Length; i++)
-                {
-                    data.fitnessPropertiesValues[i] = _statisticsController.GetStatistic(properties[i].StatisticsType);
-                }
-            } else
-            {
-                data.fitnessPropertiesValues = null;
-            }
+            this._data = data;
+            data.Chromosome.ApplyGenes(this);
         }
 
         private void UpdateCreatureDataOnWaveEnd(ref GameEventContext ctx)
         {
             if (_statisticsController)
             {
-                data.Fitness.UpdateRawFitnessValue(_statisticsController);
+                _data.Fitness.UpdateRawFitnessValue(_statisticsController);
             }
 
             Traits.EntityTraitController traitController = GetComponent<Traits.EntityTraitController>();
 
             if (traitController)
             {
-                data.Traits = traitController.GetTraitsIdentifiers();
+                _data.Traits = traitController.GetTraitsIdentifiers();
             }
         }
 

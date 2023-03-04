@@ -11,15 +11,16 @@ namespace Game.GA
     {
         private int _currentGeneration = 0;
         private int _currentCreatureId = 1;
-        
         private Dictionary<int, GenerationData> _generations;
+        
+        public int CurrentGeneration => _currentGeneration;
         public GenerationData[] Generations => _generations.Values.ToArray();
-        public GenerationData CurrentGenerationData => _generations[_generations.Count];
+        public GenerationData CurrentGenerationData => _generations[_currentGeneration];
+        
         public GenerationController()
         {
             _generations = new Dictionary<int, GenerationData>();
         }
-        public int CurrentGeneration => _currentGeneration;
 
         public void CreateGeneration()
         {
@@ -49,24 +50,7 @@ namespace Game.GA
             if (_generations.TryGetValue(generation, out GenerationData generationData))
             {
                 generationData.GenerationFitness = 0;
-                Dictionary<Entities.StatisticsType, float> maxRawValues = new Dictionary<Entities.StatisticsType, float>();
-
-                foreach (CreatureData creatureData in generationData.Creatures.Values)
-                {
-                    foreach (Fitness.PartialValue partialValue in creatureData.Fitness.PartialValues)
-                    {
-                        if (maxRawValues.ContainsKey(partialValue.Type))
-                        {
-                            if (maxRawValues[partialValue.Type] <= partialValue.RawValue)
-                            {
-                                maxRawValues[partialValue.Type] = partialValue.RawValue;
-                            }
-                        } else
-                        {
-                            maxRawValues.Add(partialValue.Type, partialValue.RawValue);
-                        }
-                    }
-                }
+                Dictionary<Entities.StatisticsType, float> maxRawValues = GetMaxRawValues(generationData);
 
                 foreach (CreatureData creatureData in generationData.Creatures.Values)
                 {
@@ -74,6 +58,31 @@ namespace Game.GA
                     generationData.GenerationFitness += creatureData.Fitness.Value;
                 }
             }
+        }
+
+        private Dictionary<Entities.StatisticsType, float> GetMaxRawValues(GenerationData generation)
+        {
+            Dictionary<Entities.StatisticsType, float> maxRawValues = new Dictionary<Entities.StatisticsType, float>();
+
+            foreach (CreatureData creatureData in generation.Creatures.Values)
+            {
+                foreach (Fitness.PartialValue partialValue in creatureData.Fitness.PartialValues)
+                {
+                    if (maxRawValues.ContainsKey(partialValue.Type))
+                    {
+                        if (maxRawValues[partialValue.Type] <= partialValue.RawValue)
+                        {
+                            maxRawValues[partialValue.Type] = partialValue.RawValue;
+                        }
+                    }
+                    else
+                    {
+                        maxRawValues.Add(partialValue.Type, partialValue.RawValue);
+                    }
+                }
+            }
+
+            return maxRawValues;
         }
 
         /// <summary>
@@ -97,7 +106,7 @@ namespace Game.GA
 
                     CreatureData newCreature = CreateCreatureData(_currentGeneration, parents);
 
-                    newCreature.chromosome.Mutate();
+                    newCreature.Chromosome.Mutate();
 
                     AddCreatureDataToGeneration(newCreature);
                 }
@@ -125,7 +134,6 @@ namespace Game.GA
             CreatureData data = new CreatureData();
             data.Id = _currentCreatureId;
             data.Generation = generation;
-            data.isDead = false;
             data.Parents = parents;
 
             if (parents != null)
@@ -135,11 +143,11 @@ namespace Game.GA
                     parent.Children.Add(data);
                 }
 
-                data.chromosome = (BaseEnemyChromosome)parents[0].chromosome.Copy();
+                data.Chromosome = (BaseEnemyChromosome)parents[0].Chromosome.Copy();
             } else
             {
-                data.chromosome = new BaseEnemyChromosome(0.15f, false);
-                data.chromosome.RandomizeGenes();
+                data.Chromosome = new BaseEnemyChromosome(0.15f, false);
+                data.Chromosome.RandomizeGenes();
             }
 
             _currentCreatureId++;
