@@ -13,9 +13,7 @@ namespace Game.GA
     public class CreatureController : MonoBehaviour, IEventListener
     {
         private StatisticsController _statisticsController;
-        public Entities.AI.BehaviourType behaviourType;
-
-        public CreatureData data;
+        private CreatureData _data;
 
         private void Awake()
         {
@@ -24,7 +22,7 @@ namespace Game.GA
 
         public void Initialize(CreatureData data)
         {
-            this.data = data;
+            this._data = data;
             data.chromosome.ApplyGenes(this);
         }
 
@@ -32,14 +30,14 @@ namespace Game.GA
         {
             if (_statisticsController)
             {
-                data.Fitness.UpdateRawFitnessValue(_statisticsController);
+                _data.Fitness.UpdateRawFitnessValue(_statisticsController);
             }
 
             Traits.EntityTraitController traitController = GetComponent<Traits.EntityTraitController>();
 
             if (traitController)
             {
-                data.Traits = traitController.GetTraitsIdentifiers();
+                _data.Traits = traitController.GetTraitsIdentifiers();
             }
         }
 
