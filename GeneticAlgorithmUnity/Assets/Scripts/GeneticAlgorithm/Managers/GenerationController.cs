@@ -146,7 +146,7 @@ namespace Game.GA
                 data.Chromosome = Chromosome.Crossover(parents.Select(c => c.Chromosome).ToArray());
             } else
             {
-                data.Chromosome = new BaseEnemyChromosome(GeneticAlgorithmManager.Instance.MutationRate, false);
+                data.Chromosome = new BaseEnemyChromosome();
                 data.Chromosome.RandomizeGenes();
             }
 

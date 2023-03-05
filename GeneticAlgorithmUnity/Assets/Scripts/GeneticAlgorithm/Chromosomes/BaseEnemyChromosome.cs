@@ -7,7 +7,7 @@ namespace Game.GA
 {
     public class BaseEnemyChromosome : Chromosome
     {
-        public BaseEnemyChromosome(float mutationRate, bool shouldMutateIndividually = false, Gene[] genes = null) : base(mutationRate, shouldMutateIndividually, genes)
+        public BaseEnemyChromosome(Gene[] genes = null) : base(genes)
         {
         }
 
@@ -37,7 +37,7 @@ namespace Game.GA
 
         public override Chromosome Copy()
         {
-            BaseEnemyChromosome copy = new BaseEnemyChromosome(_mutationRate, _shouldMutateIndividually, _genes);
+            BaseEnemyChromosome copy = new BaseEnemyChromosome(_genes);
 
             return copy;
         }

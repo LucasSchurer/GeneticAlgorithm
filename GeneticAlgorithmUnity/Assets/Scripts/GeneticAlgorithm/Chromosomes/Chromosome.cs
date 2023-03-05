@@ -6,17 +6,11 @@ namespace Game.GA
 {
     public abstract class Chromosome
     {
-        /// <summary>
-        /// Property that controls if the mutation rate will be used only one time to all genes
-        /// or will be calculated for each gene individually
-        /// </summary>
-        protected bool _shouldMutateIndividually = false;
-        protected float _mutationRate;
         protected Gene[] _genes;
 
         public Gene GetGene(int i) => _genes.Length > i ? _genes[i] : null;
 
-        public Chromosome(float mutationRate, bool shouldMutateIndividually = false, Gene[] genes = null)
+        public Chromosome(Gene[] genes = null)
         {
             if (genes != null)
             {
@@ -26,9 +20,6 @@ namespace Game.GA
             {
                 SetGenes();
             }
-
-            _shouldMutateIndividually = shouldMutateIndividually;
-            _mutationRate = mutationRate;
         }
 
         protected abstract void SetGenes();
@@ -52,7 +43,7 @@ namespace Game.GA
 
         public void Mutate()
         {
-            if (_shouldMutateIndividually)
+            if (GeneticAlgorithmManager.Instance.MutateIndividually)
             {
                 MutateIndividually();
             }
@@ -119,13 +110,13 @@ namespace Game.GA
             {
                 for (int j = lastCrossoverPoint; j < crossoverPoints[i]; j++)
                 {
-                    offspring._genes[j] = parents[i]._genes[j];
+                    offspring._genes[j] = parents[i]._genes[j].Copy();
                 }
 
                 lastCrossoverPoint = crossoverPoints[i];
             }
 
-            return (T)offspring.Copy();
+            return offspring;
         }
     } 
 }
