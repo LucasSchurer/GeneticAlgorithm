@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Entities.AI;
+using System.Runtime.Serialization;
 
 namespace Game.GA
 {
+    [DataContract(Name = "BaseEnemyChromosome", Namespace = "")]
     public class BaseEnemyChromosome : Chromosome
     {
-        public BaseEnemyChromosome(float mutationRate, bool shouldMutateIndividually = false, Gene[] genes = null) : base(mutationRate, shouldMutateIndividually, genes)
+        public BaseEnemyChromosome(Gene[] genes = null) : base(genes)
         {
         }
 
@@ -37,7 +39,7 @@ namespace Game.GA
 
         public override Chromosome Copy()
         {
-            BaseEnemyChromosome copy = new BaseEnemyChromosome(_mutationRate, _shouldMutateIndividually, _genes);
+            BaseEnemyChromosome copy = new BaseEnemyChromosome(_genes);
 
             return copy;
         }

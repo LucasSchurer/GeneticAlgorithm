@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 namespace Game.GA
 {
+    [DataContract(Name = "ColorGene", Namespace = "")]
+    [KnownType(typeof(ColorGene))]
     public class ColorGene : Gene
     {
         public Color color;
+        [DataMember(Name = "Teste")]
         public float value;
 
         public ColorGene(Color color)

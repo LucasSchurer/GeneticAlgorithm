@@ -11,6 +11,16 @@ namespace Game.GA
         private FitnessProperties _fitnessProperties;
         [SerializeField]
         private float _mutationRate = 0.15f;
+        [Tooltip("Amount of parents selected to generate a new creature")]
+        [Range(1, 10)]
+        [SerializeField]
+        private int _parentsAmount = 1;
+        /// <summary>
+        /// Property that controls if the mutation rate will be used only one time to all genes
+        /// or will be calculated for each gene individually
+        /// </summary>
+        [SerializeField]
+        private bool _mutateIndividually = false;
 
         private GeneticAlgorithmData _geneticAlgorithmData;
         private PopulationController _populationController;
@@ -21,6 +31,8 @@ namespace Game.GA
         public GenerationController GenerationController => _generationController;
         public FitnessProperties FitnessProperties => _fitnessProperties;
         public float MutationRate => _mutationRate;
+        public int ParentsAmount => _parentsAmount;
+        public bool MutateIndividually => _mutateIndividually;
         
         protected override void SingletonAwake()
         {
