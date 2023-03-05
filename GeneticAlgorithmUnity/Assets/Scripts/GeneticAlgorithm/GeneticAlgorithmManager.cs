@@ -11,6 +11,10 @@ namespace Game.GA
         private FitnessProperties _fitnessProperties;
         [SerializeField]
         private float _mutationRate = 0.15f;
+        [Tooltip("Amount of parents selected to generate a new creature")]
+        [Range(1, 10)]
+        [SerializeField]
+        private int _parentsAmount = 1;
 
         private GeneticAlgorithmData _geneticAlgorithmData;
         private PopulationController _populationController;
@@ -21,6 +25,7 @@ namespace Game.GA
         public GenerationController GenerationController => _generationController;
         public FitnessProperties FitnessProperties => _fitnessProperties;
         public float MutationRate => _mutationRate;
+        public int ParentsAmount => _parentsAmount;
         
         protected override void SingletonAwake()
         {

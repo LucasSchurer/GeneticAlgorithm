@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.GA
@@ -68,7 +68,7 @@ namespace Game.GA
             {
                 float random = Random.Range(0f, 1f);
 
-                if (random <= _mutationRate)
+                if (random <= GeneticAlgorithmManager.Instance.MutationRate)
                 {
                     gene.Mutate();
                 }
@@ -79,7 +79,7 @@ namespace Game.GA
         {
             float random = Random.Range(0f, 1f);
 
-            if (random <= _mutationRate)
+            if (random <= GeneticAlgorithmManager.Instance.MutationRate)
             {
                 foreach (Gene gene in _genes)
                 {
@@ -90,22 +90,42 @@ namespace Game.GA
 
         public abstract Chromosome Copy();
 
-        public static Chromosome[] Crossover(Chromosome a, Chromosome b)
+        public static T Crossover<T>(T[] parents)
+            where T: Chromosome
         {
-            int crossoverPoint = Random.Range(0, a._genes.Length - 1);
+            T offspring = (T)parents[0].Copy();
 
-            Chromosome offspringA = a.Copy();
-            Chromosome offspringB = b.Copy();
-
-            for (int i = 0; i < crossoverPoint; i++)
+            if (parents.Length == 1)
             {
-                offspringA._genes[i] = b._genes[i];
-                offspringB._genes[i] = a._genes[i];
+                return offspring;
             }
 
-            Chromosome[] offspring = new Chromosome[2] { offspringA, offspringB };
+            List<int> validPoints = Enumerable.Range(1, offspring._genes.Length).ToList();
 
-            return offspring;
+            int[] crossoverPoints = new int[parents.Length > offspring._genes.Length ? offspring._genes.Length : parents.Length];
+
+            for (int i = 0; i < crossoverPoints.Length; i++)
+            {
+                int randomIndex = Random.Range(0, validPoints.Count);
+                crossoverPoints[i] = validPoints.ElementAt(randomIndex);
+                validPoints.RemoveAt(randomIndex);
+            }
+
+            crossoverPoints = crossoverPoints.OrderBy(p => p).ToArray();
+
+            int lastCrossoverPoint = 0;
+
+            for (int i = 0; i < crossoverPoints.Length; i++)
+            {
+                for (int j = lastCrossoverPoint; j < crossoverPoints[i]; j++)
+                {
+                    offspring._genes[j] = parents[i]._genes[j];
+                }
+
+                lastCrossoverPoint = crossoverPoints[i];
+            }
+
+            return (T)offspring.Copy();
         }
     } 
 }

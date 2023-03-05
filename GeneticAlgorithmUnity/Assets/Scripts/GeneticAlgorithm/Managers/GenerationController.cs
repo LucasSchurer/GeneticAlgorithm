@@ -102,7 +102,7 @@ namespace Game.GA
 
                 for (int i = 0; i < numberOfCreatures; i++)
                 {
-                    CreatureData[] parents = RouletteWheelSelection(parentsGeneration, 1);
+                    CreatureData[] parents = RouletteWheelSelection(parentsGeneration, GeneticAlgorithmManager.Instance.ParentsAmount);
 
                     CreatureData newCreature = CreateCreatureData(_currentGeneration, parents);
 
@@ -143,10 +143,10 @@ namespace Game.GA
                     parent.Children.Add(data);
                 }
 
-                data.Chromosome = (BaseEnemyChromosome)parents[0].Chromosome.Copy();
+                data.Chromosome = Chromosome.Crossover(parents.Select(c => c.Chromosome).ToArray());
             } else
             {
-                data.Chromosome = new BaseEnemyChromosome(0.15f, false);
+                data.Chromosome = new BaseEnemyChromosome(GeneticAlgorithmManager.Instance.MutationRate, false);
                 data.Chromosome.RandomizeGenes();
             }
 
