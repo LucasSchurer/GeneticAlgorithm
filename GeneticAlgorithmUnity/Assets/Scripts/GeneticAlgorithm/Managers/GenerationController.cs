@@ -205,7 +205,7 @@ namespace Game.GA
                     {
                         fitnessRange += creatureData.Fitness.Value;
 
-                        if (fitnessRange > randomFitness)
+                        if (fitnessRange >= randomFitness)
                         {
                             parents.Add(creatureData);
                             break;

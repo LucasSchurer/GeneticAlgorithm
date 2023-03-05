@@ -13,11 +13,7 @@ namespace Game.GA
             if (traits != null)
             {
                 _traits = new TraitIdentifier[traits.Length];
-
-                for (int i = 0; i < _traits.Length; i++)
-                {
-                    _traits[i] = traits[i];
-                }
+                System.Array.Copy(traits, _traits, traits.Length);
             } else if (startingSize > 0)
             {
                 _traits = new TraitIdentifier[startingSize];
@@ -42,12 +38,7 @@ namespace Game.GA
                 {
                     foreach (TraitIdentifier identifier in _traits)
                     {
-                        Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(identifier);
-
-                        if (trait)
-                        {
-                            traitController.AddTrait(trait);
-                        }
+                        AddTrait(identifier, traitController);
                     }
                 }
             }
@@ -58,9 +49,16 @@ namespace Game.GA
             return new TraitsGene(0, _traits);
         }
 
+        /// <summary>
+        /// Exchange one trait for another one.
+        /// </summary>
         public override void Mutate()
         {
-            
+            int removedTraitIndex = Random.Range(0, _traits.Length - 1);
+
+            TraitIdentifier addedTrait = TraitManager.Instance.GetRandomTraitIdentifier();
+
+            _traits[removedTraitIndex] = addedTrait;
         }
 
         public override void Randomize()
@@ -68,16 +66,14 @@ namespace Game.GA
             
         }
 
-        private void PrintTraits()
+        private void AddTrait(TraitIdentifier identifier, EntityTraitController controller)
         {
-            string traitDebug = "";
+            Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(identifier);
 
-            foreach (TraitIdentifier identifier in _traits)
+            if (trait)
             {
-                traitDebug += identifier.ToString() + " ";
+                controller.AddTrait(trait);
             }
-
-            Debug.Log(traitDebug);
         }
     } 
 }

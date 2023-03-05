@@ -43,6 +43,11 @@ namespace Game.GA
 
             for (int i = 0; i < creaturesData.Length; i++)
             {
+                if (_creatures[i] != null)
+                {
+                    Destroy(_creatures[i].gameObject);
+                }
+
                 _creatures[i] = Instantiate(_creaturePrefab);
                 _creatures[i].Initialize(creaturesData[i]);
                 _creatures[i].gameObject.SetActive(false);
