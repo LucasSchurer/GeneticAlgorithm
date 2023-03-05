@@ -10,6 +10,7 @@ namespace Game.Traits
     {
         private TraitController<Type, Context, Controller> _traitController;
         private Trait<Type, Context> _trait;
+        private int _currentStacks = 1;
         private bool canAct = true;
         private bool isListeningToEvent = false;
 
@@ -21,13 +22,32 @@ namespace Game.Traits
             _trait = trait;
         }
 
+        public bool TryAddStack(int numberOfStacks = 1)
+        {
+            if (_currentStacks < _trait.maxStacks)
+            {
+                _currentStacks++;
+
+                return true;
+            }
+
+            return false;
+        }
+
         public void Trigger(ref Context ctx)
         {
             if (canAct)
             {
-                _trait.TriggerEffects(ref ctx);
-                canAct = false;
-                _traitController.StartCoroutine(CooldownCoroutine());
+                if (_trait.executionType == TraitExecutionType.WhenAdded)
+                {
+                    _trait.TriggerEffects(ref ctx);
+                }
+                else
+                {
+                    _trait.TriggerEffects(ref ctx, _currentStacks);
+                    canAct = false;
+                    _traitController.StartCoroutine(CooldownCoroutine());
+                }
             }
         }
 
