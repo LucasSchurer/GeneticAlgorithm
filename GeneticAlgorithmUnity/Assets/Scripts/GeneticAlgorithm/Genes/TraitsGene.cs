@@ -13,11 +13,7 @@ namespace Game.GA
             if (traits != null)
             {
                 _traits = new TraitIdentifier[traits.Length];
-
-                for (int i = 0; i < _traits.Length; i++)
-                {
-                    _traits[i] = traits[i];
-                }
+                System.Array.Copy(traits, _traits, traits.Length);
             } else if (startingSize > 0)
             {
                 _traits = new TraitIdentifier[startingSize];
@@ -66,18 +62,6 @@ namespace Game.GA
         public override void Randomize()
         {
             
-        }
-
-        private void PrintTraits()
-        {
-            string traitDebug = "";
-
-            foreach (TraitIdentifier identifier in _traits)
-            {
-                traitDebug += identifier.ToString() + " ";
-            }
-
-            Debug.Log(traitDebug);
         }
     } 
 }
