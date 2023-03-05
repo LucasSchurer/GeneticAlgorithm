@@ -32,18 +32,13 @@ namespace Game.GA
         {
             if (_traits != null)
             {
-                EntityTraitController traitController = creature.GetComponent<EntityTraitController>();
+                _traitController = creature.GetComponent<EntityTraitController>();
 
-                if (traitController)
+                if (_traitController)
                 {
                     foreach (TraitIdentifier identifier in _traits)
                     {
-                        Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(identifier);
-
-                        if (trait)
-                        {
-                            traitController.AddTrait(trait);
-                        }
+                        AddTrait(identifier, _traitController);
                     }
                 }
             }
@@ -54,14 +49,31 @@ namespace Game.GA
             return new TraitsGene(0, _traits);
         }
 
+        /// <summary>
+        /// Exchange one trait for another one.
+        /// </summary>
         public override void Mutate()
         {
-            
+            int removedTraitIndex = Random.Range(0, _traits.Length - 1);
+
+            TraitIdentifier addedTrait = TraitManager.Instance.GetRandomTraitIdentifier();
+
+            _traits[removedTraitIndex] = addedTrait;
         }
 
         public override void Randomize()
         {
             
+        }
+
+        private void AddTrait(TraitIdentifier identifier, EntityTraitController controller)
+        {
+            Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(identifier);
+
+            if (trait)
+            {
+                controller.AddTrait(trait);
+            }
         }
     } 
 }
