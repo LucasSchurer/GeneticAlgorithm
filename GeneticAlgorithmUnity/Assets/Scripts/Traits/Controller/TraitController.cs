@@ -33,7 +33,11 @@ namespace Game.Traits
         {
             if (_traitHandlers.TryGetValue(trait.identifier, out TraitHandler<Type, Context, Controller> handler))
             {
-                Debug.LogWarning("Trait already exists");
+                if (handler.TryAddStack() && trait.executionType == TraitExecutionType.WhenAdded)
+                {
+                    Context ctx = GetContextForWhenAddedTraits();
+                    handler.Trigger(ref ctx);
+                }
             } else
             {
                 TraitHandler<Type, Context, Controller> traitHandler = new TraitHandler<Type, Context, Controller>(this, trait);
