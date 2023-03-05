@@ -32,13 +32,13 @@ namespace Game.GA
         {
             if (_traits != null)
             {
-                _traitController = creature.GetComponent<EntityTraitController>();
+                EntityTraitController traitController = creature.GetComponent<EntityTraitController>();
 
-                if (_traitController)
+                if (traitController)
                 {
                     foreach (TraitIdentifier identifier in _traits)
                     {
-                        AddTrait(identifier, _traitController);
+                        AddTrait(identifier, traitController);
                     }
                 }
             }
