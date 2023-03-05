@@ -26,7 +26,7 @@ namespace Game.Traits.Effects
         [SerializeField]
         private float _changeAmount;
 
-        public override void Trigger(ref EntityEventContext ctx)
+        public override void Trigger(ref EntityEventContext ctx, int currentStacks = 1)
         {
             if (EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
             {

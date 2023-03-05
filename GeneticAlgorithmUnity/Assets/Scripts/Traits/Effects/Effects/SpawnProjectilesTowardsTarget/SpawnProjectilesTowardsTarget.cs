@@ -12,7 +12,7 @@ namespace Game.Traits.Effects
         [SerializeField]
         private float _distance = 10f;
 
-        public override void Trigger(ref Context ctx)
+        public override void Trigger(ref Context ctx, int currentStacks = 1)
         {
             if (ctx.owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
             {

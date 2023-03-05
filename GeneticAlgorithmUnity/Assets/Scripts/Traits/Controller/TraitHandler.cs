@@ -44,11 +44,7 @@ namespace Game.Traits
                 }
                 else
                 {
-                    for (int i = 0; i < _currentStacks; i++)
-                    {
-                        _trait.TriggerEffects(ref ctx);
-                    }
-
+                    _trait.TriggerEffects(ref ctx, _currentStacks);
                     canAct = false;
                     _traitController.StartCoroutine(CooldownCoroutine());
                 }

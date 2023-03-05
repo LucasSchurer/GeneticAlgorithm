@@ -6,13 +6,15 @@ namespace Game.Traits.Effects
     public abstract class SpawnProjectilesAroundTarget<Context> : SpawnProjectileEffect<Context>
         where Context: EventContext
     {
-        public override void Trigger(ref Context ctx)
+        public override void Trigger(ref Context ctx, int currentStacks = 1)
         {
             if (ctx.owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
             {
-                for (int i = 0; i < _amount; i++)
+                int amount = _amount * currentStacks;
+
+                for (int i = 0; i < amount; i++)
                 {
-                    float rotationY = (360 / _amount) * i;
+                    float rotationY = (360 / amount) * i;
 
                     InstantiateProjectile(ctx.owner, target.transform.position, Quaternion.Euler(0, rotationY, 0));
                 }
