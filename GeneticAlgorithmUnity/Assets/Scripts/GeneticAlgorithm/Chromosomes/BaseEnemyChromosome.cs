@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Entities.AI;
+using System.Runtime.Serialization;
 
 namespace Game.GA
 {
+    [DataContract(Name = "BaseEnemyChromosome", Namespace = "")]
     public class BaseEnemyChromosome : Chromosome
     {
         public BaseEnemyChromosome(Gene[] genes = null) : base(genes)

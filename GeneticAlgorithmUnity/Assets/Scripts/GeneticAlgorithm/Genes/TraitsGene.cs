@@ -1,11 +1,15 @@
 using UnityEngine;
 using Game.Traits;
 using Game.Events;
+using System.Runtime.Serialization;
 
 namespace Game.GA
 {
+    [DataContract(Name = "TraitsGene", Namespace = "")]
+    [KnownType(typeof(TraitsGene))]
     public class TraitsGene : Gene
     {
+        [DataMember(Name = "Traits")]
         private TraitIdentifier[] _traits;
 
         public TraitsGene(int startingSize = 0, TraitIdentifier[] traits = null)

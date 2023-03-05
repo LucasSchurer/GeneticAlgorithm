@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 namespace Game.GA
 {
+    [DataContract(Name = "Chromosome", Namespace = "")]
     public abstract class Chromosome
     {
+        [DataMember(Name = "Genes")]
         protected Gene[] _genes;
 
         public Gene GetGene(int i) => _genes.Length > i ? _genes[i] : null;
@@ -110,13 +113,13 @@ namespace Game.GA
             {
                 for (int j = lastCrossoverPoint; j < crossoverPoints[i]; j++)
                 {
-                    offspring._genes[j] = parents[i]._genes[j].Copy();
+                    offspring._genes[j] = parents[i]._genes[j];
                 }
 
                 lastCrossoverPoint = crossoverPoints[i];
             }
 
-            return offspring;
+            return (T)offspring.Copy();
         }
     } 
 }

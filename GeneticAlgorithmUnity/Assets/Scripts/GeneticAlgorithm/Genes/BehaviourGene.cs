@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Entities.AI;
+using System.Runtime.Serialization;
 
 namespace Game.GA
 {
+    [DataContract(Name = "BehaviourGene", Namespace = "")]
+    [KnownType(typeof(BehaviourGene))]
     public class BehaviourGene : Gene
     {
+        [DataMember(Name = "BehaviourType")]
         public BehaviourType type;
 
         public BehaviourGene(BehaviourType type)

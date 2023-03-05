@@ -32,13 +32,6 @@ namespace Game.GA
             {
                 _data.Fitness.UpdateRawFitnessValue(_statisticsController);
             }
-
-            Traits.EntityTraitController traitController = GetComponent<Traits.EntityTraitController>();
-
-            if (traitController)
-            {
-                _data.Traits = traitController.GetTraitsIdentifiers();
-            }
         }
 
         public void StartListening()
