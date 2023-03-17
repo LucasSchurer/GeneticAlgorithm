@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestEnemyRotationSpeed
   m_EditorClassIdentifier: 
   _type: 3
-  _maxValue: 6
-  _minValue: 6
+  _maxValue: 90
+  _minValue: 0
   _startingValue: 6

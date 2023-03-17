@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Game.Pathfinding
 {
@@ -7,9 +8,9 @@ namespace Game.Pathfinding
     {
         public Vertex start;
         public Vertex goal;
-        public Action<Vertex[], bool> callback;
+        public Action<Vector3[], bool> callback;
 
-        public PathfindingRequest(Vertex start, Vertex goal, Action<Vertex[], bool> callback)
+        public PathfindingRequest(Vertex start, Vertex goal, Action<Vector3[], bool> callback)
         {
             this.start = start;
             this.goal = goal;

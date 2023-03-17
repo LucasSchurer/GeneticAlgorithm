@@ -17,6 +17,7 @@ namespace Game.Pathfinding
         protected override void SingletonAwake()
         {
             _graph = GetComponent<Graph>();
+            _graph.Initialize();
             _requests = new Queue<PathfindingRequest>();
         }
 
@@ -30,7 +31,7 @@ namespace Game.Pathfinding
         /// <param name="startPosition"></param>
         /// <param name="goalPosition"></param>
         /// <param name="callback"></param>
-        public void RequestPath(Vector3 startPosition, Vector3 goalPosition, Action<Vertex[], bool> callback)
+        public void RequestPath(Vector3 startPosition, Vector3 goalPosition, Action<Vector3[], bool> callback)
         {
             Vertex startVertex = _graph.GetVertexOnPosition(startPosition);
             Vertex goalVertex = _graph.GetVertexOnPosition(goalPosition);
@@ -57,7 +58,7 @@ namespace Game.Pathfinding
             }
         }
 
-        private void OnPathProcessed(Vertex[] path, bool success)
+        private void OnPathProcessed(Vector3[] path, bool success)
         {
             _currentRequest.callback(path, success);
             _isProcessingPath = false;

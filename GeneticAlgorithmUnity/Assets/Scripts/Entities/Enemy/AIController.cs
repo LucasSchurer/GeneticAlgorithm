@@ -2,6 +2,7 @@ using Game.Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Entities.AI
@@ -33,13 +34,24 @@ namespace Game.Entities.AI
             Pathfinding.Pathfinding.Instance.RequestPath(transform.position, _target.position, OnPathProcessed);
         }
 
-        private void OnPathProcessed(Vertex[] steps, bool sucess)
+        private void OnPathProcessed(Vector3[] steps, bool sucess)
         {
             if (sucess)
             {
                 _lastStep = steps[steps.Length - 1];
                 _steps = new Queue<Vertex>(steps);
                 _currentStep = _steps.Dequeue();
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (_steps != null)
+            {
+                foreach (Vertex step in _steps.ToList())
+                {
+                    Gizmos.DrawWireSphere(step.Position, 0.5f);
+                }
             }
         }
 
@@ -63,8 +75,8 @@ namespace Game.Entities.AI
 
         private void FixedUpdate()
         {
-            _movementController?.Move(_direction);
             _movementController?.Rotate(_direction);
+            _movementController?.Move(_direction);
         }
 
         private void UpdateDirection()
