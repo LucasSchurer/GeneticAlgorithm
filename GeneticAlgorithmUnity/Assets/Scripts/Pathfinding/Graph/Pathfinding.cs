@@ -96,7 +96,7 @@ namespace Game.Pathfinding
             bool foundPath = false;
             HashSet<Vertex> closedSet = new HashSet<Vertex>();
             Heap<Vertex> openSet = new Heap<Vertex>(_graph.VerticesCount);
-            Vertex[] steps = null;
+            Vector3[] steps = null;
             Vertex currentVertex;
 
             start.hCost = DistanceBetweenVertices(start, goal);
@@ -150,18 +150,45 @@ namespace Game.Pathfinding
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        private Vertex[] RetraceSteps(Vertex target)
+        private Vector3[] RetraceSteps(Vertex target)
         {
-            List<Vertex> steps = new List<Vertex>();
+            List<Vector3> steps = new List<Vector3>();
 
             while (target != null)
             {
-                steps.Add(target);
+                steps.Add(target.Position);
                 target = target.parent;
             }
 
+            steps = SimplifySteps(steps);
             steps.Reverse();
             return steps.ToArray();
+        }
+
+        private List<Vector3> SimplifySteps(List<Vector3> steps)
+        {
+            List<Vector3> simplifiedSteps = new List<Vector3>();
+            Vector3 oldDirection = Vector3.zero;
+
+            for (int i = 0; i < steps.Count; i++)
+            {
+                if (i == steps.Count - 1)
+                {
+                    simplifiedSteps.Add(steps[i]);
+                    continue;
+                }
+
+                Vector3 newDirection = (steps[i + 1] - steps[i]).normalized;
+                
+                if (newDirection != oldDirection)
+                {
+                    simplifiedSteps.Add(steps[i]);
+                }
+
+                oldDirection = newDirection;
+            }
+
+            return simplifiedSteps;
         }
 
         private int DistanceBetweenVertices(Vertex a, Vertex b)
