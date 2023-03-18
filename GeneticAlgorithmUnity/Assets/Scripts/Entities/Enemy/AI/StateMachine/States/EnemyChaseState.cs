@@ -8,7 +8,7 @@ namespace Game.Entities.AI
     {
         private Transform _target;
         private Vector3 _direction;
-        private float _maxChaseRange = 15f;
+        private float _maxChaseRange = 20f;
 
         public EnemyChaseState(EnemyStateMachine stateMachine) : base(stateMachine)
         {

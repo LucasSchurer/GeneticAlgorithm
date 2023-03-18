@@ -10,7 +10,7 @@ namespace Game.Entities.AI
     {
         private MovementController _movementController;
 
-        public override BehaviourType GetBehaviourType() { return BehaviourType.Stationary; }
+        public override BehaviourType GetBehaviourType() { return BehaviourType.Coward; }
 
         protected override void Awake()
         {

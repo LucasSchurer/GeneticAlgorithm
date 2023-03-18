@@ -1,14 +1,16 @@
+using Game.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Entities.AI
 {
-    public class EnemyStateMachine : MonoBehaviour
+    public class EnemyStateMachine : MonoBehaviour, IEventListener
     {
         [SerializeField]
         private EnemyState _initialState;
         private MovementController _movementController;
+        private EntityEventController _eventController;
         private EnemyState _currentState;
 
         private Dictionary<EnemyStateType, EnemyState> _states;
@@ -22,6 +24,7 @@ namespace Game.Entities.AI
         private void Awake()
         {
             _movementController = GetComponent<MovementController>();
+            _eventController = GetComponent<EntityEventController>();
             _states = new Dictionary<EnemyStateType, EnemyState>();
             _initialState = new EnemyIdleState(this);
             _states.Add(EnemyStateType.Idle, _initialState);
@@ -35,12 +38,18 @@ namespace Game.Entities.AI
 
         private void Update()
         {
-            _currentState.StateUpdate();
+            if (_currentState != null)
+            {
+                _currentState.StateUpdate();
+            }
         }
 
         private void FixedUpdate()
         {
-            _currentState.StateFixedUpdate();
+            if (_currentState != null)
+            {
+                _currentState.StateFixedUpdate();
+            }
         }
 
         public void ChangeCurrentState(EnemyStateType type)
@@ -78,6 +87,41 @@ namespace Game.Entities.AI
             }
 
             return null;
+        }
+
+        private void OnDeath(ref EntityEventContext ctx)
+        {
+            if (_currentState != null)
+            {
+                _currentState.StateFinish();
+                _currentState = null;
+            }
+        }
+
+        public void StartListening()
+        {
+            if (_eventController)
+            {
+                _eventController.AddListener(EntityEventType.OnDeath, OnDeath);
+            }
+        }
+
+        public void StopListening()
+        {
+            if (_eventController)
+            {
+                _eventController.RemoveListener(EntityEventType.OnDeath, OnDeath);
+            }
+        }
+
+        private void OnEnable()
+        {
+            StartListening();
+        }
+
+        private void OnDisable()
+        {
+            StopListening();
         }
     }
 }

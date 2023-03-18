@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69bea2a8b4caea14b88276f999881970, type: 3}
   m_Name: WaveSettings
   m_EditorClassIdentifier: 
-  enemiesPerWave: 10
-  waveDuration: 6
+  enemiesPerWave: 8
+  waveDuration: 25
   minSpawnInterval: 0
   maxSpawnInterval: 0
   waveRespawnTime: 1

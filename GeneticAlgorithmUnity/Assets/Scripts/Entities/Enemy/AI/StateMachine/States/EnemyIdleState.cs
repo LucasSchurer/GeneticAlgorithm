@@ -6,9 +6,10 @@ namespace Game.Entities.AI
 {
     public class EnemyIdleState : EnemyState
     {
+        private MovementController _movementController;
         private Coroutine _idleCoroutine;
         private Vector3 _direction = new Vector3(1, 0, 1);
-        private Vector2 _turnTimeRange = new Vector2(1, 6);
+        private Vector2 _turnTimeRange = new Vector2(1, 4);
         private float _detectionRange = 10f;
 
         public EnemyIdleState(EnemyStateMachine stateMachine) : base(stateMachine)
@@ -18,6 +19,7 @@ namespace Game.Entities.AI
         public override void StateStart()
         {
             _idleCoroutine = _stateMachine.StartCoroutine(IdleCoroutine());
+            _movementController = _stateMachine.GetComponent<MovementController>();
         }
 
         public override void StateUpdate()
@@ -32,8 +34,17 @@ namespace Game.Entities.AI
 
         public override void StateFixedUpdate()
         {
-            _stateMachine.MovementController.Rotate(_direction);
-            _stateMachine.MovementController.Move(_stateMachine.transform.forward);
+            if (_movementController)
+            {
+                try
+                {
+                    _movementController.Rotate(_direction);
+                    _movementController.Move(_stateMachine.transform.forward);
+                } catch (System.NullReferenceException e)
+                {
+                    Debug.Log(e.Message);
+                }
+            }
         }
 
         public override void StateFinish()

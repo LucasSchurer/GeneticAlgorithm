@@ -29,9 +29,7 @@ namespace Game.Entities.AI
                 case BehaviourType.Aggressive:
                     go.AddComponent<AggressiveBehaviour>();
                     break;
-                case BehaviourType.Cautious:
-                    break;
-                case BehaviourType.Stationary:
+                case BehaviourType.Coward:
                     break;
                 case BehaviourType.Count:
                     break;

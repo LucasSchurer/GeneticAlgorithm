@@ -4,5 +4,5 @@ using UnityEngine;
 
 namespace Game.Entities.AI
 {
-    public enum BehaviourType { Aggressive, Cautious, Stationary, Coward, Count } 
+    public enum BehaviourType { Aggressive, Coward, Count } 
 }
