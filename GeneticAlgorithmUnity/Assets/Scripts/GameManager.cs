@@ -8,6 +8,7 @@ namespace Game.Managers
     {
         [HideInInspector]
         public GameEventController eventController;
+        public LayerMask playerLayerMask;
         protected override void SingletonAwake()
         {
             eventController = GetComponent<GameEventController>();
