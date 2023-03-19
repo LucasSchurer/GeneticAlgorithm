@@ -4,14 +4,19 @@ using UnityEngine;
 
 namespace Game.Entities.AI
 {
-    public class EnemyRunState : EnemyState
+    public class RunState : State
     {
         private Transform _target;
         private Vector3 _direction;
         private float _maxRunDistance = 15f;
 
-        public EnemyRunState(EnemyStateMachine stateMachine) : base(stateMachine)
+        public RunState(StateMachine stateMachine) : base(stateMachine)
         {
+        }
+
+        public override StateType GetStateType()
+        {
+            return StateType.Run;
         }
 
         public override void StateStart()
@@ -23,7 +28,7 @@ namespace Game.Entities.AI
         {
             if (Vector3.Distance(_stateMachine.transform.position, _target.position) > _maxRunDistance)
             {
-                _stateMachine.ChangeCurrentState(EnemyStateType.Idle);
+                _stateMachine.ChangeCurrentState(StateType.Idle);
             }
 
             _direction = (_stateMachine.transform.position - _target.position).normalized;

@@ -20,7 +20,7 @@ namespace Game.GA
 
         public override void Apply(CreatureController creature)
         {
-            creature.GetComponent<EnemyStateMachine>().BehaviourType = this.type;
+            creature.GetComponent<StateMachine>().BehaviourType = this.type;
         }
 
         public override Gene Copy()

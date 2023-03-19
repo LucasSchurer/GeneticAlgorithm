@@ -4,14 +4,19 @@ using UnityEngine;
 
 namespace Game.Entities.AI
 {
-    public class EnemyChaseState : EnemyState
+    public class ChaseState : State
     {
         private Transform _target;
         private Vector3 _direction;
         private float _maxChaseRange = 20f;
 
-        public EnemyChaseState(EnemyStateMachine stateMachine) : base(stateMachine)
+        public ChaseState(StateMachine stateMachine) : base(stateMachine)
         {
+        }
+
+        public override StateType GetStateType()
+        {
+            return StateType.Chase;
         }
 
         public override void StateStart()
@@ -23,7 +28,7 @@ namespace Game.Entities.AI
         {
             if (Vector3.Distance(_stateMachine.transform.position, _target.position) > _maxChaseRange)
             {
-                _stateMachine.ChangeCurrentState(EnemyStateType.Idle);
+                _stateMachine.ChangeCurrentState(StateType.Idle);
             }
 
             _direction = (_target.position - _stateMachine.transform.position).normalized;

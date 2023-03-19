@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Entities.AI
 {
-    public class EnemyIdleState : EnemyState
+    public class IdleState : State
     {
         private MovementController _movementController;
         private Coroutine _idleCoroutine;
@@ -12,8 +12,13 @@ namespace Game.Entities.AI
         private Vector2 _turnTimeRange = new Vector2(1, 4);
         private float _detectionRange = 10f;
 
-        public EnemyIdleState(EnemyStateMachine stateMachine) : base(stateMachine)
+        public IdleState(StateMachine stateMachine) : base(stateMachine)
         {
+        }
+
+        public override StateType GetStateType()
+        {
+            return StateType.Idle;
         }
 
         public override void StateStart()
@@ -28,7 +33,7 @@ namespace Game.Entities.AI
 
             if (colliders.Length > 0)
             {
-                _stateMachine.ChangeCurrentState(_stateMachine.BehaviourType == BehaviourType.Aggressive ? EnemyStateType.Chase : EnemyStateType.Run);
+                _stateMachine.ChangeCurrentState(_stateMachine.GetTransitionState(GetStateType()));
             }
         }
 

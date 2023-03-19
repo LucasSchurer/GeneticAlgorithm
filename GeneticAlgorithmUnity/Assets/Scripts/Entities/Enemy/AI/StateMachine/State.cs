@@ -2,11 +2,14 @@ using UnityEngine;
 
 namespace Game.Entities.AI
 {
-    public abstract class EnemyState
+    public abstract class State
     {
-        protected EnemyStateMachine _stateMachine;
+        protected StateMachine _stateMachine;
+        protected StateMachineData _data;
 
-        public EnemyState(EnemyStateMachine stateMachine)
+        public abstract StateType GetStateType();
+
+        public State(StateMachine stateMachine)
         {
             _stateMachine = stateMachine;
         }

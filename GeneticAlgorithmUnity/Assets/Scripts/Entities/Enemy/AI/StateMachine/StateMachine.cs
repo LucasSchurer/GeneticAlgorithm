@@ -5,15 +5,21 @@ using UnityEngine;
 
 namespace Game.Entities.AI
 {
-    public class EnemyStateMachine : MonoBehaviour, IEventListener
+    public class StateMachine : MonoBehaviour, IEventListener
     {
         [SerializeField]
-        private EnemyState _initialState;
+        private StateMachineData _data;
+
+        private State _initialState;
+        private State _defaultState;
         private MovementController _movementController;
         private EntityEventController _eventController;
-        private EnemyState _currentState;
+        private State _currentState;
 
-        private Dictionary<EnemyStateType, EnemyState> _states;
+        [SerializeField]
+        private List<StateTransition> _transitions;
+
+        private Dictionary<StateType, State> _states;
 
         private BehaviourType _behaviourType = BehaviourType.Aggressive;
 
@@ -25,9 +31,10 @@ namespace Game.Entities.AI
         {
             _movementController = GetComponent<MovementController>();
             _eventController = GetComponent<EntityEventController>();
-            _states = new Dictionary<EnemyStateType, EnemyState>();
-            _initialState = new EnemyIdleState(this);
-            _states.Add(EnemyStateType.Idle, _initialState);
+            _states = new Dictionary<StateType, State>();
+            _initialState = new IdleState(this);
+            _defaultState = _initialState;
+            _states.Add(StateType.Idle, _initialState);
         }
 
         private void Start()
@@ -52,16 +59,16 @@ namespace Game.Entities.AI
             }
         }
 
-        public void ChangeCurrentState(EnemyStateType type)
+        public void ChangeCurrentState(StateType type)
         {
             _currentState.StateFinish();
 
-            if (_states.TryGetValue(type, out EnemyState state))
+            if (_states.TryGetValue(type, out State state))
             {
                 _currentState = state;
             } else
             {
-                EnemyState newState = GetEnemyState(this, type);
+                State newState = GetEnemyState(this, type);
                 
                 if (newState != null)
                 {
@@ -74,19 +81,34 @@ namespace Game.Entities.AI
             _currentState.StateStart();
         }
 
-        public static EnemyState GetEnemyState(EnemyStateMachine stateMachine, EnemyStateType type)
+        public static State GetEnemyState(StateMachine stateMachine, StateType type)
         {
             switch (type)
             {
-                case EnemyStateType.Idle:
-                    return new EnemyIdleState(stateMachine);
-                case EnemyStateType.Run:
-                    return new EnemyRunState(stateMachine);
-                case EnemyStateType.Chase:
-                    return new EnemyChaseState(stateMachine);
+                case StateType.Idle:
+                    return new IdleState(stateMachine);
+                case StateType.Run:
+                    return new RunState(stateMachine);
+                case StateType.Chase:
+                    return new ChaseState(stateMachine);
             }
 
             return null;
+        }
+
+        public StateType GetTransitionState(StateType fromState)
+        {
+            StateType toState = _defaultState.GetStateType();
+
+            foreach (StateTransition transition in _transitions)
+            {
+                if (transition.FromState == fromState)
+                {
+                    return transition.GetTransition();
+                }
+            }
+
+            return toState;
         }
 
         private void OnDeath(ref EntityEventContext ctx)
