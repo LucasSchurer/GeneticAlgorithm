@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Entities.AI
 {
-    [CustomEditor(typeof(StateData))]
+    [CustomEditor(typeof(StateData), true)]
     public class StateDataEditor : Editor
     {
         public override void OnInspectorGUI()

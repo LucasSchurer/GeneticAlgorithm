@@ -7,6 +7,9 @@ namespace Game.Entities.AI
 {
     public class StateMachine : MonoBehaviour, IEventListener
     {
+        [Tooltip("If initialized on awake, it will need a StateMachineData assigned")]
+        [SerializeField]
+        private bool _initializeOnAwake = false;
         [SerializeField]
         private StateMachineData _data;
         private EntityEventController _eventController;
@@ -19,14 +22,21 @@ namespace Game.Entities.AI
 
         private void Awake()
         {
+            if (_initializeOnAwake)
+            {
+                Initialize(_data);
+            }
+        }
+
+        public void Initialize(StateMachineData data)
+        {
+            _data = data;
+
             _eventController = GetComponent<EntityEventController>();
             _initialState = _data.GetInitialState(this);
             _defaultState = _data.GetDefaultState(this);
             _states = _data.GetStates(this);
-        }
 
-        private void Start()
-        {
             _currentState = _initialState;
             _currentState.StateStart();
         }
@@ -60,8 +70,6 @@ namespace Game.Entities.AI
             }
             
             _currentState.StateStart();
-
-            Debug.Log($"Changed to {_currentState.GetStateType().ToString()} state");
         }
 
         private void OnDeath(ref EntityEventContext ctx)
