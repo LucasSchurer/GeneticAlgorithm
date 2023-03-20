@@ -11,8 +11,29 @@ namespace Game.Entities.AI
         private StateData _initialState;
         [SerializeField]
         private StateData _defaultState;
-
         [SerializeField]
-        private List<StateTransition> _transitions;
+        private StateData[] _states;
+
+        public State GetInitialState(StateMachine stateMachine)
+        {
+            return _initialState.GetState(stateMachine);
+        }
+
+        public State GetDefaultState(StateMachine stateMachine)
+        {
+            return _defaultState.GetState(stateMachine);
+        }
+
+        public Dictionary<StateType, State> GetStates(StateMachine stateMachine)
+        {
+            Dictionary<StateType, State> states = new Dictionary<StateType, State>();
+
+            foreach (StateData stateData in _states)
+            {
+                states.TryAdd(stateData.GetStateType(), stateData.GetState(stateMachine));
+            }
+
+            return states;
+        }
     } 
 }

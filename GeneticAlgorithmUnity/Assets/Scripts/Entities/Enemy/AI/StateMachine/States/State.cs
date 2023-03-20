@@ -5,11 +5,10 @@ namespace Game.Entities.AI
     public abstract class State
     {
         protected StateMachine _stateMachine;
-        protected StateMachineData _data;
 
         public abstract StateType GetStateType();
 
-        public State(StateMachine stateMachine)
+        public State(StateMachine stateMachine, StateData data)
         {
             _stateMachine = stateMachine;
         }

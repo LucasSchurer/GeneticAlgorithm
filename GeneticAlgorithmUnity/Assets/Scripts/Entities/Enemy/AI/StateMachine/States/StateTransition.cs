@@ -14,23 +14,7 @@ namespace Game.Entities.AI
 
         public StateType FromState => _fromState;
 
-        public StateType GetTransition()
-        {
-            float p = UnityEngine.Random.Range(0f, 1f);
-            float pSum = 0f;
 
-            foreach (Transition t in _transitions)
-            {
-                pSum += t.probability;
-
-                if (p <= pSum)
-                {
-                    return t.state;
-                }
-            }
-
-            return StateType.Idle;
-        }
 
         [Serializable]
         public struct Transition

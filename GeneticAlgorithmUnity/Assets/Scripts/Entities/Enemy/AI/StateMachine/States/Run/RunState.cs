@@ -6,12 +6,16 @@ namespace Game.Entities.AI
 {
     public class RunState : State
     {
+        private RunStateData _data;
+
+        private MovementController _movementController;
         private Transform _target;
         private Vector3 _direction;
-        private float _maxRunDistance = 15f;
 
-        public RunState(StateMachine stateMachine) : base(stateMachine)
+        public RunState(StateMachine stateMachine, RunStateData data) : base(stateMachine, data)
         {
+            _data = data;
+            _movementController = stateMachine.GetComponent<MovementController>();
         }
 
         public override StateType GetStateType()
@@ -21,12 +25,12 @@ namespace Game.Entities.AI
 
         public override void StateStart()
         {
-            _target = GameObject.FindGameObjectWithTag("Player").transform;
+            _target = GameObject.FindGameObjectWithTag(_data.TargetTag).transform;
         }
 
         public override void StateUpdate()
         {
-            if (Vector3.Distance(_stateMachine.transform.position, _target.position) > _maxRunDistance)
+            if (Vector3.Distance(_stateMachine.transform.position, _target.position) > _data.MaxRunDistance)
             {
                 _stateMachine.ChangeCurrentState(StateType.Idle);
             }
@@ -36,8 +40,8 @@ namespace Game.Entities.AI
 
         public override void StateFixedUpdate()
         {
-            _stateMachine.MovementController.Rotate(_direction);
-            _stateMachine.MovementController.Move(_stateMachine.transform.forward);
+            _movementController.Rotate(_direction);
+            _movementController.Move(_stateMachine.transform.forward);
         }
 
         public override void StateFinish()

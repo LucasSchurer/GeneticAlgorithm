@@ -6,14 +6,16 @@ namespace Game.Entities.AI
 {
     public class IdleState : State
     {
+        private IdleStateData _data;
         private MovementController _movementController;
         private Coroutine _idleCoroutine;
-        private Vector3 _direction = new Vector3(1, 0, 1);
-        private Vector2 _turnTimeRange = new Vector2(1, 4);
-        private float _detectionRange = 10f;
 
-        public IdleState(StateMachine stateMachine) : base(stateMachine)
+        private Vector3 _direction = new Vector3(1, 0, 1);
+
+        public IdleState(StateMachine stateMachine, IdleStateData data) : base(stateMachine, data)
         {
+            _data = data;
+            _movementController = _stateMachine.GetComponent<MovementController>();
         }
 
         public override StateType GetStateType()
@@ -24,16 +26,15 @@ namespace Game.Entities.AI
         public override void StateStart()
         {
             _idleCoroutine = _stateMachine.StartCoroutine(IdleCoroutine());
-            _movementController = _stateMachine.GetComponent<MovementController>();
         }
 
         public override void StateUpdate()
         {
-            Collider[] colliders = Physics.OverlapSphere(_stateMachine.transform.position, _detectionRange, GameManager.Instance.playerLayerMask);
+            Collider[] colliders = Physics.OverlapSphere(_stateMachine.transform.position, _data.DetectionRange, GameManager.Instance.playerLayerMask);
 
             if (colliders.Length > 0)
             {
-                _stateMachine.ChangeCurrentState(_stateMachine.GetTransitionState(GetStateType()));
+                _stateMachine.ChangeCurrentState(_data.GetTransitionState());
             }
         }
 
@@ -66,7 +67,7 @@ namespace Game.Entities.AI
 
             _direction = direction;
 
-            yield return new WaitForSeconds(Random.Range(_turnTimeRange.x, _turnTimeRange.y));
+            yield return new WaitForSeconds(Random.Range(_data.TurnTimeRange.x, _data.TurnTimeRange.y));
 
             _idleCoroutine = _stateMachine.StartCoroutine(IdleCoroutine());
         }
