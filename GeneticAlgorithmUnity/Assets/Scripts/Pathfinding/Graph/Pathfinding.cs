@@ -123,7 +123,7 @@ namespace Game.Pathfinding
                         continue;
                     }
 
-                    int movementCostToConnectedVertex = currentVertex.gCost + DistanceBetweenVertices(currentVertex, connectedVertex) + connectedVertex.terrainPenalty;
+                    float movementCostToConnectedVertex = currentVertex.gCost + DistanceBetweenVertices(currentVertex, connectedVertex) + connectedVertex.terrainPenalty;
                     if (!openSet.Contains(connectedVertex) || movementCostToConnectedVertex < connectedVertex.gCost)
                     {
                         connectedVertex.gCost = movementCostToConnectedVertex;
@@ -191,12 +191,9 @@ namespace Game.Pathfinding
             return simplifiedSteps;
         }
 
-        private int DistanceBetweenVertices(Vertex a, Vertex b)
+        private float DistanceBetweenVertices(Vertex a, Vertex b)
         {
-            int xDistance = Mathf.Abs(a.ColumnIndex - b.ColumnIndex);
-            int yDistance = Mathf.Abs(a.RowIndex - b.RowIndex);
-
-            return 14 * Mathf.Min(xDistance, yDistance) + 10 * Mathf.Abs(xDistance - yDistance);
+            return Vector3.Distance(a.Position, b.Position);
         }
     }
 }

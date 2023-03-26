@@ -23,9 +23,9 @@ namespace Game.Pathfinding
         public TerrainType TerrainType => _terrainType;
 
         public Vertex parent;
-        public int gCost;
-        public int hCost;
-        public int fCost => gCost + hCost;
+        public float gCost;
+        public float hCost;
+        public float fCost => gCost + hCost;
         public int terrainPenalty;
 
         public int Index { get => _heapIndex; set => _heapIndex = value; }
