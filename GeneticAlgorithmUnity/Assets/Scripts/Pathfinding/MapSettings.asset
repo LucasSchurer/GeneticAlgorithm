@@ -17,7 +17,10 @@ MonoBehaviour:
   _obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  _offset: 0.55
+  _blockableClearanceLayerMask:
+    serializedVersion: 2
+    m_Bits: 4160
+  _offset: 0.8
   _terrainSettings:
   - layerMask:
       serializedVersion: 2

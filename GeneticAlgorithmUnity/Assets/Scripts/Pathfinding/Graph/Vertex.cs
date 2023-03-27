@@ -14,7 +14,6 @@ namespace Game.Pathfinding
         public float gCost;
         public float hCost;
         public float fCost => gCost + hCost;
-        public int terrainPenalty;
 
         public int Index { get => _heapIndex; set => _heapIndex = value; }
 
@@ -46,24 +45,6 @@ namespace Game.Pathfinding
             if (_edges.ContainsKey(vertex))
             {
                 _edges.Remove(vertex);
-            }
-        }
-
-        public static Color GetColorBasedOnTerrainType(TerrainType terrainType, int terrainPenalty = 0)
-        {
-            switch (terrainType)
-            {
-                case TerrainType.None:
-                    return new Color(1, 1, 1, 1);
-
-                case TerrainType.NonWalkable:
-                    return new Color(1, 0, 0, 0.4f);
-
-                case TerrainType.Walkable:
-                    return new Color(0, 1, 0, 1f / (terrainPenalty + 1));
-
-                default:
-                    return new Color(1, 1, 1, 1);
             }
         }
 

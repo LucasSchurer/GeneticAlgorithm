@@ -101,7 +101,7 @@ namespace Game.Pathfinding
                         continue;
                     }
 
-                    float movementCostToConnectedVertex = currentVertex.gCost + DistanceBetweenVertices(currentVertex, connectedVertex) + connectedVertex.terrainPenalty;
+                    float movementCostToConnectedVertex = currentVertex.gCost + DistanceBetweenVertices(currentVertex, connectedVertex);
                     if (!openSet.Contains(connectedVertex) || movementCostToConnectedVertex < connectedVertex.gCost)
                     {
                         connectedVertex.gCost = movementCostToConnectedVertex;
