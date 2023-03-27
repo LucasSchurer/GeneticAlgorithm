@@ -16,3 +16,4 @@ MonoBehaviour:
   _targetTag: Player
   _maxChaseRange: 20
   _requestPathTime: 1
+  _avoidanceForce: 1

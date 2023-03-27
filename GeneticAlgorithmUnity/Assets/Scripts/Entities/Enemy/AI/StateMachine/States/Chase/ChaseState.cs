@@ -70,6 +70,14 @@ namespace Game.Entities.AI
             {
                 _direction = Vector3.zero;
             }
+
+            if (_direction != Vector3.zero)
+            {
+                if (Physics.BoxCast(_stateMachine.transform.position, Vector3.one * 0.5f, _direction, out RaycastHit hitInfo, _stateMachine.transform.rotation, 2f, Managers.GameManager.Instance.avoidanceLayerMask))
+                {
+                    _direction = (_direction * 2f - hitInfo.collider.transform.position).normalized * _data.AvoidanceForce;
+                }
+            }
         }
 
         public override void StateFixedUpdate()

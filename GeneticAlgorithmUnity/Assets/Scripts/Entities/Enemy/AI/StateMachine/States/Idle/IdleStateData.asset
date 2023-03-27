@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transitions:
   - state: 2
-    probability: 0.5
+    probability: 0
   - state: 3
-    probability: 0.5
+    probability: 1
   _turnTimeRange: {x: 1, y: 6}
-  _detectionRange: 10
+  _detectionRange: 40

@@ -13,10 +13,14 @@ namespace Game.Entities.AI
         private float _maxChaseRange = 20f;
         [SerializeField]
         private float _requestPathTime = 1f;
+        [SerializeField]
+        private float _avoidanceForce = 1f;
 
         public string TargetTag => _targetTag;
         public float MaxChaseRange => _maxChaseRange;
         public float RequestPathTime => _requestPathTime;
+
+        public float AvoidanceForce => _avoidanceForce;
 
         public override State GetState(StateMachine stateMachine)
         {

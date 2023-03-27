@@ -16,4 +16,4 @@ MonoBehaviour:
   - state: 3
     probability: 1
   _turnTimeRange: {x: 1, y: 4}
-  _detectionRange: 10
+  _detectionRange: 35
