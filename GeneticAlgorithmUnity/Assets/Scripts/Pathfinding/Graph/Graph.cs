@@ -56,21 +56,30 @@ namespace Game.Pathfinding
                 {
                     Vector3[] corners = new Vector3[4];
                     Vector3 center = collider.center;
+                    Vector3 size = collider.size;
+                    Vector3 extents = size * 0.5f;
 
                     int index = 0;
                     for (int i = -1; i < 2; i+=2)
                     {
                         for (int j = -1; j < 2; j+=2)
                         {
-                            corners[index] = obstacle.transform.TransformPoint(center + new Vector3(collider.size.x * i, 0, collider.size.z * j) * _settings.Offset);
+                            float x = extents.x * i;
+                            float z = extents.z * j;
+
+                            Vector3 point = center + new Vector3(x, 0, z);
+                            corners[index] = collider.transform.TransformPoint(point);
+
+                            corners[index] += collider.transform.rotation * new Vector3(i, 0, j) * _settings.Offset;
                             corners[index].y = 0.5f;
+                            
                             index++;
                         }
                     }
 
                     foreach (Vector3 corner in corners)
                     {
-                        Collider[] c = Physics.OverlapSphere(corner, _settings.VertexSize, _settings.ObstacleLayerMask);
+                        Collider[] c = Physics.OverlapBox(corner, new Vector3(_settings.VertexSize, _settings.VertexSize, _settings.VertexSize)/2, collider.transform.rotation, _settings.ObstacleLayerMask);
 
                         if (c.Length > 0)
                         {
@@ -163,7 +172,7 @@ namespace Game.Pathfinding
                         foreach (Vertex vertex in _vertices.Values)
                         {
                             Gizmos.color = Color.green;
-                            Gizmos.DrawWireSphere(vertex.Position, _settings.VertexSize);
+                            Gizmos.DrawWireSphere(vertex.Position, 0.15f);
 
                             foreach (Vertex connectedVertex in vertex.GetConnectedVertices())
                             {
