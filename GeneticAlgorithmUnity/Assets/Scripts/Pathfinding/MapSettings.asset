@@ -13,8 +13,17 @@ MonoBehaviour:
   m_Name: MapSettings
   m_EditorClassIdentifier: 
   _gridSize: {x: 30, y: 30}
-  _vertexSize: 1
+  _vertexSize: 0.1
+  _obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _offset: 0.55
   _terrainSettings:
+  - layerMask:
+      serializedVersion: 2
+      m_Bits: 1
+    terrainType: 1
+    terrainPenalty: 0
   - layerMask:
       serializedVersion: 2
       m_Bits: 64

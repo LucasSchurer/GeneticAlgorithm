@@ -33,19 +33,9 @@ namespace Game.Pathfinding
         /// <param name="callback"></param>
         public void RequestPath(Vector3 startPosition, Vector3 goalPosition, Action<Vector3[], bool> callback)
         {
-            Vertex startVertex = _graph.GetVertexOnPosition(startPosition);
-            Vertex goalVertex = _graph.GetVertexOnPosition(goalPosition);
-
-            if (startVertex != null && goalVertex != null)
-            {
-                PathfindingRequest request = new PathfindingRequest(startVertex, goalVertex, callback);
-                _requests.Enqueue(request);
-                TryProcessNextPath();
-            }
-            else
-            {
-                callback(null, false);
-            }
+            PathfindingRequest request = new PathfindingRequest(startPosition, goalPosition, callback);
+            _requests.Enqueue(request);
+            TryProcessNextPath();
         }
 
         private void TryProcessNextPath()
@@ -54,7 +44,7 @@ namespace Game.Pathfinding
             {
                 _currentRequest = _requests.Dequeue();
                 _isProcessingPath = true;
-                StartCoroutine(FindPathCoroutine(_currentRequest.start.Identifier, _currentRequest.goal.Identifier));
+                StartCoroutine(FindPathCoroutine(_currentRequest.start, _currentRequest.goal));
             }
         }
 
@@ -70,28 +60,16 @@ namespace Game.Pathfinding
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
-        private IEnumerator FindPathCoroutine(int startIdentifier, int goalIdentifier)
+        private IEnumerator FindPathCoroutine(Vector3 startPosition, Vector3 goalPosition)
         {
-            FindPath(startIdentifier, goalIdentifier);
+            FindPath(startPosition, goalPosition);
             yield return null;
         }
 
-        private void FindPath(int startIdentifier, int goalIdentifier)
+        private void FindPath(Vector3 startPosition, Vector3 goalPosition)
         {
-            if (startIdentifier == goalIdentifier)
-            {
-                OnPathProcessed(null, false);
-                return;
-            }
-
-            Vertex start;
-            Vertex goal;
-
-            if (!_graph.Vertices.TryGetValue(startIdentifier, out start) || !_graph.Vertices.TryGetValue(goalIdentifier, out goal))
-            {
-                OnPathProcessed(null, false);
-                return;
-            }
+            Vertex start = _graph.CreateVertexAndEdges(startPosition);
+            Vertex goal = _graph.CreateVertexAndEdges(goalPosition);
 
             bool foundPath = false;
             HashSet<Vertex> closedSet = new HashSet<Vertex>();
@@ -141,6 +119,9 @@ namespace Game.Pathfinding
                     }
                 }
             }
+
+            _graph.RemoveVertexAndEdges(start);
+            _graph.RemoveVertexAndEdges(goal);
 
             OnPathProcessed(steps, foundPath);
         }

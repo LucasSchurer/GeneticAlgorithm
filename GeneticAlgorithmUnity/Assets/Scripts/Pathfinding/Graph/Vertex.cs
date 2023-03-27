@@ -6,22 +6,10 @@ namespace Game.Pathfinding
 {
     public class Vertex : IHeapNode<Vertex>
     {
-        private int _identifier;
-        private int _rowIndex;
-        private int _columnIndex;
         private Vector3 _position;
-        private float _size;
-        private Dictionary<int, Edge> _edges;
-        private TerrainType _terrainType;
+        private Dictionary<Vertex, Edge> _edges;
         public Vector3 Position => _position;
-        public float Size => _size;
-        public int Identifier => _identifier;
-        public int RowIndex => _rowIndex;
-        public int ColumnIndex => _columnIndex;
-
         private int _heapIndex;
-        public TerrainType TerrainType => _terrainType;
-
         public Vertex parent;
         public float gCost;
         public float hCost;
@@ -30,24 +18,15 @@ namespace Game.Pathfinding
 
         public int Index { get => _heapIndex; set => _heapIndex = value; }
 
-        public Vertex(int identifier, int rowIndex, int columnIndex, Vector3 position, float size, TerrainType terrainType, int terrainPenalty = 0)
+        public Vertex(Vector3 position)
         {
-            _edges = new Dictionary<int, Edge>();
-            _identifier = identifier;
-            _rowIndex = rowIndex;
-            _columnIndex = columnIndex;
+            _edges = new Dictionary<Vertex, Edge>();
             _position = position;
-            _size = size;
-            _terrainType = terrainType;
-            this.terrainPenalty = terrainPenalty;
         }
 
         public void ConnectTo(Vertex target)
         {
-            if (!_edges.ContainsKey(target.Identifier) && target.Identifier != Identifier)
-            {
-                _edges.Add(target.Identifier, new Edge(this, target));
-            }
+            _edges.TryAdd(target, new Edge(this, target));
         }
 
         public Vertex[] GetConnectedVertices()
@@ -64,9 +43,9 @@ namespace Game.Pathfinding
 
         public void RemoveConnectedVertex(Vertex vertex)
         {
-            if (_edges.ContainsKey(vertex.Identifier))
+            if (_edges.ContainsKey(vertex))
             {
-                _edges.Remove(vertex.Identifier);
+                _edges.Remove(vertex);
             }
         }
 
