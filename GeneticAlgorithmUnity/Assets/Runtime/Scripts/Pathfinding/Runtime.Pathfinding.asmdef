@@ -1,0 +1,16 @@
+{
+    "name": "Runtime.Pathfinding",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eff4936141bac0c41bec28ed2ec5b052"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

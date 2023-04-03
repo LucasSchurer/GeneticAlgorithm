@@ -1,0 +1,22 @@
+{
+    "name": "Runtime.GeneticAlgorithm",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eff4936141bac0c41bec28ed2ec5b052",
+        "GUID:9d1a4c034f0bd8f4883cb7b5ec7a61dd",
+        "GUID:66b737598c150034ea3da072e005a4ef",
+        "GUID:e44d0156f03bc39488fe0a4eb2eea7b1",
+        "GUID:b7297f8f8a080cc4f8fecf02f93cc866",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:c8a9b5471657972498988b6ada89fe65"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

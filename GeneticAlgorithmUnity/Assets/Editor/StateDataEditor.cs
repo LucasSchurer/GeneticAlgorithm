@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Game.Entities.AI
+namespace Game.AI
 {
     [CustomEditor(typeof(StateData), true)]
     public class StateDataEditor : Editor
