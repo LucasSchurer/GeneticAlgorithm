@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e79b90cb1a82b040bf55373d176c9ea, type: 3}
+  m_Name: RifleData
+  m_EditorClassIdentifier: 
+  cooldown: 0.2
+  damage: 1
+  baseProjectile: {fileID: 2524293719138724245, guid: ab91959d863ffe44b93ca9a5458abe76, type: 3}
+  projectileVariation: 1

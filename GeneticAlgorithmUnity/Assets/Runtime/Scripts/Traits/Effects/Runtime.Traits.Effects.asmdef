@@ -1,0 +1,16 @@
+{
+    "name": "Runtime.Traits.Effects",
+    "rootNamespace": "",
+    "references": [
+        "GUID:66b737598c150034ea3da072e005a4ef"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
