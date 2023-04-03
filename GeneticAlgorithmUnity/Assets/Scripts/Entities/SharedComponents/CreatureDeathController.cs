@@ -20,11 +20,6 @@ namespace Game.Entities
         protected override void OnDeath(ref EntityEventContext ctx)
         {
             PlayDeathPhysicAnimation(ctx.agent != null ? ctx.agent.transform.position : transform.position);
-
-            foreach (AI.AIBehaviour behaviour in GetComponents<Game.Entities.AI.AIBehaviour>())
-            {
-                behaviour.enabled = false;
-            }
         }
 
         private void PlayDeathPhysicAnimation(Vector3 impactPoint)
