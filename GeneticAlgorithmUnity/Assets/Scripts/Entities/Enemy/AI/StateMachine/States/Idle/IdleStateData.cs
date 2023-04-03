@@ -12,9 +12,12 @@ namespace Game.Entities.AI
         private Vector2 _turnTimeRange = new Vector2(1, 4);
         [SerializeField]
         private float _detectionRange = 10f;
+        [SerializeField]
+        private LayerMask _detectionLayer;
 
         public Vector2 TurnTimeRange => _turnTimeRange;
         public float DetectionRange => _detectionRange;
+        public LayerMask DetectionLayer => _detectionLayer;
 
         public override StateType GetStateType()
         {

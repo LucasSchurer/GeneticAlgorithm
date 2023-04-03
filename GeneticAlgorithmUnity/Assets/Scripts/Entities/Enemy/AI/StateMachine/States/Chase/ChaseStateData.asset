@@ -15,5 +15,12 @@ MonoBehaviour:
   _transitions: []
   _targetTag: Player
   _maxChaseRange: 20
-  _requestPathTime: 1
-  _avoidanceForce: 1
+  _requestPathTime: 0.3
+  _avoidanceData:
+    _detectionRange: 1.5
+    _boxCastAmount: 11
+    _detectionAngle: 150
+    _boxCastHalfExtents: {x: 0.45, y: 0, z: 0.45}
+    _avoidanceLayerMask:
+      serializedVersion: 2
+      m_Bits: 320

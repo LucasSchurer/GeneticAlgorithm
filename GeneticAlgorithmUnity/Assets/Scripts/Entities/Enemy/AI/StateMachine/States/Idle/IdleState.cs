@@ -30,7 +30,7 @@ namespace Game.Entities.AI
 
         public override void StateUpdate()
         {
-            Collider[] colliders = Physics.OverlapSphere(_stateMachine.transform.position, _data.DetectionRange, GameManager.Instance.playerLayerMask);
+            Collider[] colliders = Physics.OverlapSphere(_stateMachine.transform.position, _data.DetectionRange, _data.DetectionLayer);
 
             if (colliders.Length > 0)
             {

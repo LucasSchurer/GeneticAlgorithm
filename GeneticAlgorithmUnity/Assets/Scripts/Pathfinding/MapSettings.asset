@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593213ad58ba4e9478bcdbb00c3de9f7, type: 3}
   m_Name: MapSettings
   m_EditorClassIdentifier: 
-  _gridSize: {x: 30, y: 30}
+  _gridSize: {x: 100, y: 100}
   _vertexSize: 1
   _obstacleLayerMask:
     serializedVersion: 2
@@ -20,4 +20,4 @@ MonoBehaviour:
   _blockableClearanceLayerMask:
     serializedVersion: 2
     m_Bits: 4160
-  _offset: 0.6
+  _offset: 2

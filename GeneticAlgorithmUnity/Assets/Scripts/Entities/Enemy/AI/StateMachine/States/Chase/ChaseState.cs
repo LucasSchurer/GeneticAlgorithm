@@ -6,6 +6,7 @@ namespace Game.Entities.AI
     public class ChaseState : State
     {
         private ChaseStateData _data;
+        private AvoidanceData _avoidanceData;
         private MovementController _movementController;
 
         private Transform _target;
@@ -19,6 +20,7 @@ namespace Game.Entities.AI
         public ChaseState(StateMachine stateMachine, ChaseStateData data) : base(stateMachine, data)
         {
             _data = data;
+            _avoidanceData = _data.AvoidanceData;
             _movementController = stateMachine.GetComponent<MovementController>();
         }
 
@@ -66,17 +68,11 @@ namespace Game.Entities.AI
                 }
 
                 _direction = (_steps[_currentStep] - _stateMachine.transform.position).normalized;
+
+                _direction = _avoidanceData.GetUpdatedDirection(_stateMachine.transform, _direction);
             } else
             {
                 _direction = Vector3.zero;
-            }
-
-            if (_direction != Vector3.zero)
-            {
-                if (Physics.BoxCast(_stateMachine.transform.position, Vector3.one * 0.5f, _direction, out RaycastHit hitInfo, _stateMachine.transform.rotation, 2f, Managers.GameManager.Instance.avoidanceLayerMask))
-                {
-                    _direction = (_direction * 2f - hitInfo.collider.transform.position).normalized * _data.AvoidanceForce;
-                }
             }
         }
 
@@ -85,7 +81,7 @@ namespace Game.Entities.AI
             if (_direction != Vector3.zero)
             {
                 _movementController.Rotate(_direction);
-                _movementController.Move(_stateMachine.transform.forward);
+                _movementController.Move(_direction);
             }
         }
 
@@ -131,6 +127,8 @@ namespace Game.Entities.AI
                     lastPosition = _steps[i];
                 }
             }
+
+            Debug.DrawRay(_stateMachine.transform.position, _direction * 5f, Color.blue);
         }
     }
 }

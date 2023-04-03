@@ -19,3 +19,6 @@ MonoBehaviour:
     probability: 1
   _turnTimeRange: {x: 1, y: 6}
   _detectionRange: 40
+  _detectionLayer:
+    serializedVersion: 2
+    m_Bits: 128
