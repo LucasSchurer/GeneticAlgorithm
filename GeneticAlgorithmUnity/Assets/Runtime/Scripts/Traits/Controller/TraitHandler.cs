@@ -38,20 +38,29 @@ namespace Game.Traits
         {
             if (canAct)
             {
-                switch (_trait.executionType)
+                if (_trait.executionType == TraitExecutionType.EventBased)
                 {
-                    case TraitExecutionType.EventBased:
-                        _trait.TriggerEffects(ref ctx, _currentStacks);
+                    _trait.TriggerEffects(ref ctx, _currentStacks);
+
+                    if (_trait.cooldown > 0)
+                    {
                         canAct = false;
                         _traitController.StartCoroutine(CooldownCoroutine());
-                        break;
+                    }
+                }
+            }
+        }
 
-                    case TraitExecutionType.WhenAdded:
-                        _trait.TriggerEffects(ref ctx);
-                        break;
+        public void Trigger()
+        {
+            if (canAct)
+            {
+                _trait.TriggerEffects(_traitController.gameObject);
 
-                    default:
-                        break;
+                if (_trait.cooldown > 0)
+                {
+                    canAct = false;
+                    _traitController.StartCoroutine(CooldownCoroutine());
                 }
             }
         }

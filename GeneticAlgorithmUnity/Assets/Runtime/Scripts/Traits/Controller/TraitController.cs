@@ -45,8 +45,7 @@ namespace Game.Traits
             {
                 if (handler.TryAddStack() && trait.executionType == TraitExecutionType.WhenAdded)
                 {
-                    Context ctx = GetContextForWhenAddedTraits();
-                    handler.Trigger(ref ctx);
+                    handler.Trigger();
                 }
             } else
             {
@@ -58,8 +57,7 @@ namespace Game.Traits
                         traitHandler.StartListening(_eventController);
                         break;
                     case TraitExecutionType.WhenAdded:
-                        Context ctx = GetContextForWhenAddedTraits();
-                        traitHandler.Trigger(ref ctx);
+                        traitHandler.Trigger();
                         break;
                     case TraitExecutionType.Constant:
                         _constantTraits.Add(traitHandler);
@@ -84,8 +82,6 @@ namespace Game.Traits
                 }
             }
         }
-
-        protected abstract Context GetContextForWhenAddedTraits();
 
         public TraitIdentifier[] GetTraitsIdentifiers()
         {

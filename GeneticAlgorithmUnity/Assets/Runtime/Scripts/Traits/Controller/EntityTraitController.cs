@@ -7,14 +7,5 @@ namespace Game.Traits
 {
     public class EntityTraitController : TraitController<EntityEventType, EntityEventContext, EntityEventController>
     {
-        protected override EntityEventContext GetContextForWhenAddedTraits()
-        {
-            return new EntityEventContext()
-            {
-                Owner = gameObject,
-                Other = null,
-                EventController = _eventController
-            };
-        }
     } 
 }
