@@ -17,6 +17,22 @@ namespace Game.Traits
         [Range(1, 10)]
         public int maxStacks = 1;
 
+        public void WhenAdded(GameObject owner, int currentStacks = 1)
+        {
+            foreach (Effect<Context> effect in effects)
+            {
+                effect.WhenAdded(owner, currentStacks);
+            }
+        }
+
+        public void WhenRemoved(GameObject owner, int currentStacks = 1)
+        {
+            foreach (Effect<Context> effect in effects)
+            {
+                effect.WhenRemoved(owner, currentStacks);
+            }
+        }
+
         /// <summary>
         /// Method called to TriggerEffects dependant on events.
         /// </summary>

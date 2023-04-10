@@ -22,6 +22,16 @@ namespace Game.Traits
             _trait = trait;
         }
 
+        public void WhenAdded()
+        {
+            _trait.WhenAdded(_traitController.gameObject, _currentStacks);
+        }
+
+        public void WhenRemoved()
+        {
+            _trait.WhenRemoved(_traitController.gameObject, _currentStacks);
+        }
+
         public bool TryAddStack()
         {
             if (_currentStacks < _trait.maxStacks)

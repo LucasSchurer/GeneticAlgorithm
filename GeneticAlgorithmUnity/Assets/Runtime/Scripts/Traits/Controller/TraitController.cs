@@ -64,6 +64,7 @@ namespace Game.Traits
                         break;
                 }
 
+                handler.WhenAdded();
                 _traitHandlers.Add(trait.identifier, traitHandler);
             }
         }
@@ -72,6 +73,8 @@ namespace Game.Traits
         {
             if (_traitHandlers.TryGetValue(trait.identifier, out TraitHandler<Type, Context, Controller> handler))
             {
+                handler.WhenRemoved();
+
                 handler.StopListening(_eventController);
 
                 _traitHandlers.Remove(trait.identifier);
