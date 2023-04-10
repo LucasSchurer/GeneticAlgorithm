@@ -10,8 +10,6 @@ namespace Game.GA
     public class ColorGene : Gene
     {
         public Color color;
-        [DataMember(Name = "Teste")]
-        public float value;
 
         public ColorGene(Color color)
         {

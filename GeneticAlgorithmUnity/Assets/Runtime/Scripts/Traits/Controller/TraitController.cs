@@ -64,7 +64,7 @@ namespace Game.Traits
                         break;
                 }
 
-                handler.WhenAdded();
+                traitHandler.WhenAdded();
                 _traitHandlers.Add(trait.identifier, traitHandler);
             }
         }
