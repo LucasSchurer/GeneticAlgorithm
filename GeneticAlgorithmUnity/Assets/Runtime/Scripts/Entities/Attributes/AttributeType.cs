@@ -5,6 +5,8 @@ namespace Game.Entities
         None,
         Health,
         MovementSpeed,
-        RotationSpeed
+        RotationSpeed,
+        CollisionDamage,
+        InvulnerabilityTime,
     } 
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Game.Events;
+using System.Collections;
 
 namespace Game.Entities.Shared
 {
@@ -7,9 +8,12 @@ namespace Game.Entities.Shared
     {
         [SerializeField]
         private NonPersistentAttribute _health;
+        private NonPersistentAttribute _invulnerabilityTime;
 
         private EntityEventController _eventController;
         private AttributeController _attributeController;
+
+        private bool _isInvulnerable = false;
 
         private void Awake()
         {
@@ -22,20 +26,36 @@ namespace Game.Entities.Shared
             if (_attributeController)
             {
                 _health = _attributeController.GetNonPersistentAttribute(AttributeType.Health);
+                _invulnerabilityTime = _attributeController.GetNonPersistentAttribute(AttributeType.InvulnerabilityTime);
             } else
             {
                 _health = new NonPersistentAttribute();
+                _invulnerabilityTime = new NonPersistentAttribute();
             }
         }
 
         private void OnHitTaken(ref EntityEventContext ctx)
         {
-            _health.CurrentValue += ctx.HealthModifier;
-
-            if (_health.CurrentValue <= 0)
+            if (!_isInvulnerable)
             {
-                _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
+                _health.CurrentValue += ctx.HealthModifier;
+
+                if (_health.CurrentValue <= 0)
+                {
+                    _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
+                }
+
+                StartCoroutine(InvulnerabilityTimeCoroutine());
             }
+        }
+
+        private IEnumerator InvulnerabilityTimeCoroutine()
+        {
+            _isInvulnerable = true;
+
+            yield return new WaitForSeconds(_invulnerabilityTime.CurrentValue);
+
+            _isInvulnerable = false;
         }
 
         private void OnEnable()

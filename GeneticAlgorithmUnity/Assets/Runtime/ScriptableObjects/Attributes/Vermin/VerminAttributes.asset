@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36b405902fed46b40a0230ecdfefb69b, type: 3}
-  m_Name: TestEnemyAttributes
+  m_Name: VerminAttributes
   m_EditorClassIdentifier: 
   _persistentAttributes:
-  - {fileID: 11400000, guid: 8724bd67b77bf1147b68b8b6e27efe4c, type: 2}
-  - {fileID: 11400000, guid: 493c6b34c1c6e434b9b1e43e53d10214, type: 2}
-  - {fileID: 11400000, guid: 7a5c6cea568634e4ea572f89c1b0fdc7, type: 2}
-  - {fileID: 11400000, guid: b2c9fad0039dbb0419855f36dd64ce6f, type: 2}
-  - {fileID: 11400000, guid: f07ef1075dae7fb418975e99a588860c, type: 2}
+  - {fileID: 11400000, guid: 371b5cbcf7bfe124d87cab3ade6f11b4, type: 2}
+  - {fileID: 11400000, guid: 12eee7be65e7a574f8f3336cef4bdde0, type: 2}
+  - {fileID: 11400000, guid: a59ba89eb7799c24e89051584bda7261, type: 2}
+  - {fileID: 11400000, guid: a59ba89eb7799c24e89051584bda7261, type: 2}
+  - {fileID: 11400000, guid: 7ed00b8aa23b1fe4ab5080ba2de6a60e, type: 2}

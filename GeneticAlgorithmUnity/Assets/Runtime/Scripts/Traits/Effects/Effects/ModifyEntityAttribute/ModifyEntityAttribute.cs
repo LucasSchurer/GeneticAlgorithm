@@ -54,10 +54,5 @@ namespace Game.Traits.Effects
                 }
             }
         }
-
-        public override void Trigger(GameObject owner, int currentStacks = 1)
-        {
-            Debug.Log("Teste");
-        }
     }
 }
