@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityTraits: {fileID: 11400000, guid: be0db177f95e67f498bed62f4dee17fa, type: 2}
+  _traitWeights: {fileID: 11400000, guid: f2399b8be7c77e8498fb738df231e8d5, type: 2}

@@ -14,11 +14,13 @@ namespace Game.Traits
         [SerializeField]
         protected Trait<Type, Context>[] _traits;
         protected Dictionary<TraitIdentifier, TraitHandler<Type, Context, Controller>> _traitHandlers;
+        protected HashSet<TraitHandler<Type, Context, Controller>> _constantTraits;
 
         protected virtual void Awake()
         {
             _eventController = GetComponent<Controller>();
             _traitHandlers = new Dictionary<TraitIdentifier, TraitHandler<Type, Context, Controller>>();
+            _constantTraits = new HashSet<TraitHandler<Type, Context, Controller>>();
         }
 
         protected virtual void Start()
@@ -26,6 +28,14 @@ namespace Game.Traits
             foreach (Trait<Type, Context> trait in _traits)
             {
                 AddTrait(trait);
+            }
+        }
+        
+        protected virtual void Update()
+        {
+            foreach (TraitHandler<Type, Context, Controller> handler in _constantTraits)
+            {
+                handler.TriggerConstant();
             }
         }
 
@@ -51,6 +61,9 @@ namespace Game.Traits
                         Context ctx = GetContextForWhenAddedTraits();
                         traitHandler.Trigger(ref ctx);
                         break;
+                    case TraitExecutionType.Constant:
+                        _constantTraits.Add(traitHandler);
+                        break;
                 }
 
                 _traitHandlers.Add(trait.identifier, traitHandler);
@@ -64,6 +77,11 @@ namespace Game.Traits
                 handler.StopListening(_eventController);
 
                 _traitHandlers.Remove(trait.identifier);
+
+                if (trait.executionType == TraitExecutionType.Constant)
+                {
+                    _constantTraits.Remove(handler);
+                }
             }
         }
 

@@ -38,17 +38,27 @@ namespace Game.Traits
         {
             if (canAct)
             {
-                if (_trait.executionType == TraitExecutionType.WhenAdded)
+                switch (_trait.executionType)
                 {
-                    _trait.TriggerEffects(ref ctx);
-                }
-                else
-                {
-                    _trait.TriggerEffects(ref ctx, _currentStacks);
-                    canAct = false;
-                    _traitController.StartCoroutine(CooldownCoroutine());
+                    case TraitExecutionType.EventBased:
+                        _trait.TriggerEffects(ref ctx, _currentStacks);
+                        canAct = false;
+                        _traitController.StartCoroutine(CooldownCoroutine());
+                        break;
+
+                    case TraitExecutionType.WhenAdded:
+                        _trait.TriggerEffects(ref ctx);
+                        break;
+
+                    default:
+                        break;
                 }
             }
+        }
+
+        public void TriggerConstant()
+        {
+            _trait.TriggerEffects(_traitController.gameObject, _currentStacks);
         }
 
         public void StartListening(Controller eventController)
@@ -87,5 +97,5 @@ namespace Game.Traits
 
             return handlers;
         }
-    } 
+    }
 }
