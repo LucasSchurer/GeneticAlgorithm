@@ -22,7 +22,7 @@ namespace Game.Traits
             _trait = trait;
         }
 
-        public bool TryAddStack(int numberOfStacks = 1)
+        public bool TryAddStack()
         {
             if (_currentStacks < _trait.maxStacks)
             {

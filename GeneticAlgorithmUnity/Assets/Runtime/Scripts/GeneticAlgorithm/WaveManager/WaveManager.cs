@@ -63,13 +63,10 @@ namespace Game.Managers
         {
             while (true)
             {
-                GA.CreatureController creature = _populationController.RequestCreature();
+                CreatureController creature = _populationController.RequestCreature(GetSpawnPosition());
 
                 if (creature != null)
                 {
-                    creature.transform.position = GetSpawnPosition();
-                    creature.gameObject.SetActive(true);
-
                     yield return new WaitForSeconds(Random.Range(waveSettings.minSpawnInterval, waveSettings.maxSpawnInterval));
                 }
                 else

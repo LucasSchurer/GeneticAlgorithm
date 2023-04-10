@@ -11,9 +11,9 @@ namespace Game.Traits
         {
             return new EntityEventContext()
             {
-                owner = gameObject,
-                other = null,
-                eventController = _eventController
+                Owner = gameObject,
+                Other = null,
+                EventController = _eventController
             };
         }
     } 

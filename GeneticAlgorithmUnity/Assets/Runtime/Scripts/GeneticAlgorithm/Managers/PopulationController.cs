@@ -49,20 +49,23 @@ namespace Game.GA
                 }
 
                 _creatures[i] = Instantiate(_creaturePrefab);
-                _creatures[i].Initialize(creaturesData[i]);
-                _creatures[i].gameObject.SetActive(false);
+                _creatures[i].SetData(creaturesData[i]);
 
                 _creaturesRequest.Add(_creatures[i]);
             }
         }
 
-        public CreatureController RequestCreature()
+        public CreatureController RequestCreature(Vector3 position)
         {
             if (_creaturesRequest.Count > 0)
             {
                 int index = Random.Range(0, _creaturesRequest.Count);
 
                 CreatureController creature = _creaturesRequest[index];
+                creature.transform.position = position;
+                creature.gameObject.SetActive(true);
+                creature.Initialize();
+
                 _creaturesRequest.RemoveAt(index);
 
                 return creature;

@@ -32,6 +32,11 @@ namespace Game.AI
             return null;
         }
 
+        public BehaviourType GetRandomBehaviourType()
+        {
+            return _behavioursArray[Random.Range(0, _behavioursArray.Length - 1)].Type;
+        }
+
         [System.Serializable]
         private struct Behaviour
         {

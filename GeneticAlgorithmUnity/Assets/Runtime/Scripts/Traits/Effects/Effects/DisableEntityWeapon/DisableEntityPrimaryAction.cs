@@ -8,7 +8,7 @@ namespace Game.Traits.Effects
     {
         public override void Trigger(ref EntityEventContext ctx, int currentStacks = 1)
         {
-            Weapons.Rifle rifle = ctx.owner.GetComponent<Weapons.Rifle>();
+            Weapons.Rifle rifle = ctx.Owner.GetComponent<Weapons.Rifle>();
 
             if (rifle)
             {

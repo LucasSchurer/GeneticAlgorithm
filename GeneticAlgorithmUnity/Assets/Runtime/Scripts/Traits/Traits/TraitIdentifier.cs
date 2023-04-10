@@ -7,5 +7,8 @@ namespace Game.Traits
         None,
         UnstableCore,
         Pacifist,
+        Slow,
+        Fast,
+        Healthy
     } 
 }

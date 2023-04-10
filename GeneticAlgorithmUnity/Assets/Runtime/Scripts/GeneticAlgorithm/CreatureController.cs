@@ -17,10 +17,14 @@ namespace Game.GA
             _statisticsController = GetComponent<StatisticsController>();
         }
 
-        public void Initialize(CreatureData data)
+        public void SetData(CreatureData data)
         {
             this._data = data;
-            data.Chromosome.ApplyGenes(this);
+        }
+
+        public void Initialize()
+        {
+            _data.Chromosome.ApplyGenes(this);
         }
 
         private void UpdateCreatureDataOnWaveEnd(ref GameEventContext ctx)

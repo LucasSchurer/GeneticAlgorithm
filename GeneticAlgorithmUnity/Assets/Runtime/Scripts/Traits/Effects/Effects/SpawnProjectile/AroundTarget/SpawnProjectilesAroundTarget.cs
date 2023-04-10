@@ -8,7 +8,7 @@ namespace Game.Traits.Effects
     {
         public override void Trigger(ref Context ctx, int currentStacks = 1)
         {
-            if (ctx.owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
+            if (ctx.Owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
             {
                 int amount = _amount * currentStacks;
 
@@ -16,7 +16,7 @@ namespace Game.Traits.Effects
                 {
                     float rotationY = (360 / amount) * i;
 
-                    InstantiateProjectile(ctx.owner, target.transform.position, Quaternion.Euler(0, rotationY, 0));
+                    InstantiateProjectile(ctx.Owner, target.transform.position, Quaternion.Euler(0, rotationY, 0));
                 }
             }
         }

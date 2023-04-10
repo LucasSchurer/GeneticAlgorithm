@@ -8,6 +8,7 @@ namespace Game.Entities.Shared
     {
         private EntityEventController _eventController;
         private Dictionary<StatisticsType, float> _statistics;
+        private bool _isAlive = true;
 
         private void Awake()
         {
@@ -27,6 +28,14 @@ namespace Game.Entities.Shared
             return copy;
         }
 
+        private void Update()
+        {
+            if (_isAlive)
+            {
+                ModifyStatistic(StatisticsType.TimeAlive, Time.deltaTime);
+            }
+        }
+
         private void OnEnable()
         {
             StartListening();
@@ -43,6 +52,7 @@ namespace Game.Entities.Shared
             {
                 _eventController.AddListener(EntityEventType.OnHitTaken, OnHitTaken, EventExecutionOrder.After);
                 _eventController.AddListener(EntityEventType.OnHitDealt, OnHitDealt, EventExecutionOrder.After);
+                _eventController.AddListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.After);
             }
         }
 
@@ -52,6 +62,7 @@ namespace Game.Entities.Shared
             {
                 _eventController.RemoveListener(EntityEventType.OnHitTaken, OnHitTaken, EventExecutionOrder.After);
                 _eventController.RemoveListener(EntityEventType.OnHitDealt, OnHitDealt, EventExecutionOrder.After);
+                _eventController.RemoveListener(EntityEventType.OnDeath, OnHitDealt, EventExecutionOrder.After);
             }
         }
 
@@ -79,16 +90,21 @@ namespace Game.Entities.Shared
 
         #region LISTEN METHODS
 
+        private void OnDeath(ref EntityEventContext ctx)
+        {
+            _isAlive = false;
+        }
+
         private void OnHitTaken(ref EntityEventContext ctx)
         { 
             ModifyStatistic(StatisticsType.HitsTaken, 1f);
-            ModifyStatistic(StatisticsType.DamageTaken, -ctx.healthModifier);
+            ModifyStatistic(StatisticsType.DamageTaken, -ctx.HealthModifier);
         }
 
         private void OnHitDealt(ref EntityEventContext ctx)
         { 
             ModifyStatistic(StatisticsType.HitsDealt, 1f);
-            ModifyStatistic(StatisticsType.DamageDealt, -ctx.healthModifier);
+            ModifyStatistic(StatisticsType.DamageDealt, -ctx.HealthModifier);
         }
 
         #endregion

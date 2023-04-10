@@ -13,7 +13,7 @@ namespace Game.Events
     {
         protected override void AddEventControllerToContext(ref EntityEventContext ctx)
         {
-            ctx.eventController = this;
+            ctx.EventController = this;
         }
     }
 }

@@ -21,6 +21,17 @@ namespace Game.GA
         /// </summary>
         [SerializeField]
         private bool _mutateIndividually = false;
+        [SerializeField]
+        private int _traitSelectionAmount = 1;
+        [SerializeField]
+        [Range(0f, 1f)]
+        private float _traitSelectionDumbness = 0f;
+        [SerializeField]
+        private float _negativeTraitWeightChangeThreshold = 0.5f;
+        [SerializeField]
+        private float _positiveTraitWeightChangeThreshold = 0.5f;
+        [SerializeField]
+        private float _traitWeightChange = 0.01f;
 
         private GeneticAlgorithmData _geneticAlgorithmData;
         private PopulationController _populationController;
@@ -33,7 +44,12 @@ namespace Game.GA
         public float MutationRate => _mutationRate;
         public int ParentsAmount => _parentsAmount;
         public bool MutateIndividually => _mutateIndividually;
-        
+        public int TraitSelectionAmount => _traitSelectionAmount;
+        public float TraitSelectionDumbness => _traitSelectionDumbness;
+        public float NegativeTraitWeightChangeThreshold => _negativeTraitWeightChangeThreshold;
+        public float PositiveTraitWeightChangeThreshold => _positiveTraitWeightChangeThreshold;
+        public float TraitWeightChange => _traitWeightChange;
+
         protected override void SingletonAwake()
         {
             _geneticAlgorithmData = new GeneticAlgorithmData();
@@ -44,6 +60,8 @@ namespace Game.GA
         private void GenerateXMLOnWaveEnd(ref GameEventContext ctx)
         {
             _geneticAlgorithmData.generations = _generationController.Generations;
+            _geneticAlgorithmData.traitSelectionAmount = _traitSelectionAmount;
+            _geneticAlgorithmData.traitSelectionDumbness = _traitSelectionDumbness;
             _geneticAlgorithmData.ToXML();
         }
 

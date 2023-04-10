@@ -10,9 +10,9 @@ namespace Game.Traits.Effects
             switch (type)
             {
                 case TargetType.Self:
-                    if (ctx.owner)
+                    if (ctx.Owner)
                     {
-                        target = ctx.owner;
+                        target = ctx.Owner;
                         return true;
                     } else
                     {
@@ -20,9 +20,9 @@ namespace Game.Traits.Effects
                         return false;
                     }
                 case TargetType.Other:
-                    if (ctx.other)
+                    if (ctx.Other)
                     {
-                        target = ctx.other;
+                        target = ctx.Other;
                         return true;
                     }
                     else

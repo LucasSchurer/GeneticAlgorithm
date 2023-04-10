@@ -17,7 +17,7 @@ namespace Game.Entities.Shared
 
         protected override void OnDeath(ref EntityEventContext ctx)
         {
-            PlayDeathPhysicAnimation(ctx.agent != null ? ctx.agent.transform.position : transform.position);
+            PlayDeathPhysicAnimation(ctx.Owner != null ? ctx.Owner.transform.position : transform.position);
         }
 
         private void PlayDeathPhysicAnimation(Vector3 impactPoint)

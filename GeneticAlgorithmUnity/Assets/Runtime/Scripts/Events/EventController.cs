@@ -47,7 +47,7 @@ namespace Game.Events
             if (_events.ContainsKey(type))
             {
                 AddEventControllerToContext(ref ctx);
-                ctx.owner = gameObject;
+                ctx.Owner = gameObject;
                 _events[type]?.Invoke(ctx);
             }
         }

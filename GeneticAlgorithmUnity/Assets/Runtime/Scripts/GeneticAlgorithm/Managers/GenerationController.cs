@@ -59,6 +59,17 @@ namespace Game.GA
             }
         }
 
+        private void UpdateGenerationTraitWeights(int generation)
+        {
+            if (_generations.TryGetValue(generation, out GenerationData generationData))
+            {
+                foreach (CreatureData creatureData in generationData.Creatures.Values)
+                {
+                    creatureData.Chromosome.UpdateTraitsWeights(creatureData.Fitness.Value);
+                }
+            }
+        }
+
         private Dictionary<StatisticsType, float> GetMaxRawValues(GenerationData generation)
         {
             Dictionary<StatisticsType, float> maxRawValues = new Dictionary<StatisticsType, float>();
@@ -106,6 +117,11 @@ namespace Game.GA
                     CreatureData newCreature = CreateCreatureData(_currentGeneration, parents);
 
                     newCreature.Chromosome.Mutate();
+                    
+                    if (_currentGeneration > 1)
+                    {
+                        newCreature.Chromosome.AddRandomTrait();
+                    }
 
                     AddCreatureDataToGeneration(newCreature);
                 }
@@ -221,9 +237,10 @@ namespace Game.GA
             }
         }
 
-        private void UpdateCurrentGenerationFitnessOnWaveEnd(ref GameEventContext ctx)
+        private void OnWaveEnd(ref GameEventContext ctx)
         {
             UpdateGenerationFitness(_currentGeneration);
+            UpdateGenerationTraitWeights(_currentGeneration);
         }
 
         public void StartListening()
@@ -232,7 +249,7 @@ namespace Game.GA
 
             if (gameManager != null && gameManager.eventController != null)
             {
-                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, UpdateCurrentGenerationFitnessOnWaveEnd, EventExecutionOrder.Standard);
+                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, OnWaveEnd, EventExecutionOrder.Standard);
             }
         }
 
@@ -242,7 +259,7 @@ namespace Game.GA
 
             if (gameManager != null && gameManager.eventController != null)
             {
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, UpdateCurrentGenerationFitnessOnWaveEnd, EventExecutionOrder.Standard);
+                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, OnWaveEnd, EventExecutionOrder.Standard);
             }
         }
 

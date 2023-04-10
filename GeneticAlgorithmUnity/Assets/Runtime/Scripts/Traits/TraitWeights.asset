@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df77cbd96c8dad04ca9d27ea9bb39d8f, type: 3}
+  m_Name: TraitWeights
+  m_EditorClassIdentifier: 
+  _traitWeightsList:
+  - _trait: 3
+    _weight: 0.36435968
+  - _trait: 4
+    _weight: 0.22497061
+  - _trait: 5
+    _weight: 0.21624485
+  - _trait: 1
+    _weight: 0.97578925
+  - _trait: 2
+    _weight: 0.30833152
+  _defaultWeight: 0.5
+  _minimumWeight: 0

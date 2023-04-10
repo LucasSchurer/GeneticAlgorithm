@@ -19,8 +19,14 @@ namespace Game.GA
         [DataMember(Name = "Version")]
         private readonly int version = 1;
 
+        [DataMember(Name = "TraitSelectionAmount")]
+        public int traitSelectionAmount;
+
+        [DataMember(Name = "TraitSelectionDumbness")]
+        public float traitSelectionDumbness;
+
         [DataMember(Name = "Generations")]
-        public GenerationData[] generations;    
+        public GenerationData[] generations;
 
         public void ToXML()
         {

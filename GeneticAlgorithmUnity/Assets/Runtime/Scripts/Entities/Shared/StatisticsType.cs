@@ -5,6 +5,7 @@ namespace Game.Entities.Shared
         HitsTaken,
         HitsDealt,
         DamageDealt,
-        DamageTaken
+        DamageTaken,
+        TimeAlive
     }    
 }

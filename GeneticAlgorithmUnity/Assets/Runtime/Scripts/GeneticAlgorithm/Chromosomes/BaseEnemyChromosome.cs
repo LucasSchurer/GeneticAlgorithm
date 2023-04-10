@@ -41,5 +41,15 @@ namespace Game.GA
 
             return copy;
         }
+        
+        public void AddRandomTrait()
+        {
+            ((TraitsGene)_genes[(int)Genes.Traits]).AddRandomTrait();
+        }
+
+        public void UpdateTraitsWeights(float fitness)
+        {
+            ((TraitsGene)_genes[(int)Genes.Traits]).UpdateTraitsWeights(fitness);
+        }
     }
 }

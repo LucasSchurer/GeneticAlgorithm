@@ -14,7 +14,7 @@ namespace Game.Traits.Effects
 
         public override void Trigger(ref Context ctx, int currentStacks = 1)
         {
-            if (ctx.owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
+            if (ctx.Owner && EffectsHelper.TryGetTarget(_targetType, ctx, out GameObject target))
             {
                 for (int i = 0; i < _amount; i++)
                 {
@@ -25,11 +25,11 @@ namespace Game.Traits.Effects
                         direction = Vector3.forward;
                     }
 
-                    Vector3 position = new Vector3(target.transform.position.x + direction.x * _distance, target.transform.position.y, ctx.other.transform.position.z + direction.z * _distance);
+                    Vector3 position = new Vector3(target.transform.position.x + direction.x * _distance, target.transform.position.y, ctx.Other.transform.position.z + direction.z * _distance);
 
 
                     Projectile projectile = Instantiate(_projectile, position, Quaternion.LookRotation(-direction, Vector3.up));
-                    projectile.Instantiate(ctx.owner, _damage, false);
+                    projectile.Instantiate(ctx.Owner, _damage, false);
                 }
             }
         }

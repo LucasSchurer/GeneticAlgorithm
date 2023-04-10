@@ -30,7 +30,7 @@ namespace Game.Entities.Shared
 
         private void OnHitTaken(ref EntityEventContext ctx)
         {
-            _health.CurrentValue += ctx.healthModifier;
+            _health.CurrentValue += ctx.HealthModifier;
 
             if (_health.CurrentValue <= 0)
             {

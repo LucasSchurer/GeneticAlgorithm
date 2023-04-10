@@ -35,7 +35,7 @@ namespace Game.GA
 
         public override void Randomize()
         {
-            type = (BehaviourType)Random.Range(0, (int)BehaviourType.Count);
+            type = BehaviourManager.Instance.GetRandomBehaviourType();
         }
     } 
 }

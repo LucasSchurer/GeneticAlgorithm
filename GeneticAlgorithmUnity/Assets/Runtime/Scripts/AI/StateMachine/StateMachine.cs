@@ -21,6 +21,8 @@ namespace Game.AI
 
         private void Awake()
         {
+            _eventController = GetComponent<EntityEventController>();
+
             if (_initializeOnAwake)
             {
                 Initialize(_data);
@@ -30,13 +32,15 @@ namespace Game.AI
         public void Initialize(StateMachineData data)
         {
             _data = data;
-
-            _eventController = GetComponent<EntityEventController>();
             _initialState = _data.GetInitialState(this);
             _defaultState = _data.GetDefaultState(this);
             _states = _data.GetStates(this);
 
             _currentState = _initialState;
+        }
+
+        private void Start()
+        {
             _currentState.StateStart();
         }
 

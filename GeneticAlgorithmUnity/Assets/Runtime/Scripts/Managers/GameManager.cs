@@ -17,5 +17,10 @@ namespace Game.Managers
         {
             eventController.TriggerEvent(GameEventType.OnWaveStart, new GameEventContext());
         }
+
+        private void OnApplicationQuit()
+        {
+            eventController.TriggerEvent(GameEventType.OnApplicationQuit, new GameEventContext());
+        }
     } 
 }
