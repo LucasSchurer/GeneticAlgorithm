@@ -44,8 +44,8 @@ namespace Game.AI
             {
                 try
                 {
-                    _movementController.Rotate(_direction);
-                    _movementController.Move(_stateMachine.transform.forward);
+                    /*_movementController.Rotate(_direction);*/
+                    _movementController.Move(_direction);
                 } catch (System.NullReferenceException e)
                 {
                     Debug.Log(e.Message);

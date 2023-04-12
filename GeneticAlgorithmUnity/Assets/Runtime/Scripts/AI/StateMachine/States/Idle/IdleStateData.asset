@@ -17,7 +17,7 @@ MonoBehaviour:
     probability: 0
   - state: 3
     probability: 1
-  _turnTimeRange: {x: 1, y: 6}
+  _turnTimeRange: {x: 0.8, y: 2}
   _detectionRange: 40
   _detectionLayer:
     serializedVersion: 2

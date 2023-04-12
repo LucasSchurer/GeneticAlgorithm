@@ -37,13 +37,13 @@ namespace Game.AI
                 _target = GameObject.FindGameObjectWithTag(_data.TargetTag).transform;
             }
 
-            _requestPathCoroutine = _stateMachine.StartCoroutine(RequestPathCoroutine());
+            /*_requestPathCoroutine = _stateMachine.StartCoroutine(RequestPathCoroutine());*/
         }
 
         public override void StateUpdate()
         {
             // Transition condition
-            if (Vector3.Distance(_stateMachine.transform.position, _target.position) > _data.MaxChaseRange)
+            if (!_target.gameObject.activeInHierarchy || Vector3.Distance(_stateMachine.transform.position, _target.position) > _data.MaxChaseRange)
             {
                 _stateMachine.ChangeCurrentState(StateType.Idle);
                 return;
@@ -55,26 +55,28 @@ namespace Game.AI
 
         private void UpdateDirection()
         {
-            if (_steps != null && _currentStep >= 0 && _currentStep < _steps.Length)
-            {
-                if (Vector3.Distance(_stateMachine.transform.position, _steps[_currentStep]) <= 0.5f)
-                {
-                    _currentStep++;
+            /*            if (_steps != null && _currentStep >= 0 && _currentStep < _steps.Length)
+                        {
+                            if (Vector3.Distance(_stateMachine.transform.position, _steps[_currentStep]) <= 0.5f)
+                            {
+                                _currentStep++;
 
-                    if (_currentStep >= _steps.Length)
-                    {
-                        _direction = Vector3.zero;
-                        return;
-                    }
-                }
+                                if (_currentStep >= _steps.Length)
+                                {
+                                    _direction = Vector3.zero;
+                                    return;
+                                }
+                            }
 
-                _direction = (_steps[_currentStep] - _stateMachine.transform.position).normalized;
+                            _direction = (_steps[_currentStep] - _stateMachine.transform.position).normalized;
 
-                _direction = _avoidanceData.GetUpdatedDirection(_stateMachine.transform, _direction);
-            } else
-            {
-                _direction = Vector3.zero;
-            }
+                            _direction = _avoidanceData.GetUpdatedDirection(_stateMachine.transform, _direction);
+                        } else
+                        {
+                            _direction = Vector3.zero;
+                        }*/
+
+            _direction = (_target.transform.position - _stateMachine.transform.position).normalized;
         }
 
         public override void StateFixedUpdate()

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   _maxValue: 5
-  _minValue: 5
-  _startingValue: 5
+  _minValue: 0
+  _startingValue: 1
