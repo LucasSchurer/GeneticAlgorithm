@@ -21,4 +21,4 @@ MonoBehaviour:
   _detectionRange: 40
   _detectionLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0

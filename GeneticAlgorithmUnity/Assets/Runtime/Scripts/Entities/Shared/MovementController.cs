@@ -46,5 +46,10 @@ namespace Game.Entities.Shared
 
             transform.rotation = Quaternion.Euler(new Vector3(0, smoothRotation.eulerAngles.y));
         }
+
+        public void Jump(float force, Vector3 direction)
+        {
+            _rb.AddForce(direction * force, ForceMode.Impulse);
+        }
     } 
 }

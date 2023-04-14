@@ -9,6 +9,13 @@ namespace Game.Entities.Player
 {
     public class InputController : MonoBehaviour
     {
+        [SerializeField]
+        private Transform _cameraTransform;
+        [SerializeField]
+        private Transform _weaponBulletSocket;
+        [SerializeField]
+        private float _jumpForce;
+
         public struct InputData
         {
             public Vector3 movementDirection;
@@ -38,14 +45,32 @@ namespace Game.Entities.Player
 
             if (_inputData.isPressingPrimaryAction)
             {
-                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext());
+                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { Origin = _weaponBulletSocket.position, Direction = _cameraTransform.forward});
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump();
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (_cameraTransform != null)
+            {
+                Gizmos.DrawRay(transform.position, _cameraTransform.forward * 2f);
             }
         }
 
         private void FixedUpdate()
         {
-            _movementController.Move(_inputData.movementDirection);
             _movementController.Rotate(_inputData.lookDirection);
+            _movementController.Move(transform.rotation * _inputData.movementDirection);
+        }
+
+        private void Jump()
+        {
+            _movementController.Jump(_jumpForce, Vector3.up);
         }
 
         private void UpdateInputData()
@@ -66,16 +91,7 @@ namespace Game.Entities.Player
             }
             else
             {
-                Ray ray = Camera.main.ScreenPointToRay(_playerInput.Gameplay.MousePosition.ReadValue<Vector2>());
-
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    _inputData.lookDirection = (hit.point - transform.position).normalized;
-                }
-                else
-                {
-                    _inputData.lookDirection = Vector3.zero;
-                }
+                _inputData.lookDirection = _cameraTransform.forward;
             }
         }
 
