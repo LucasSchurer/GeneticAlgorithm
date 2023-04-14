@@ -22,6 +22,8 @@ namespace Game.ProceduralAnimation
         private float _heightAdjustmentTime;
         [SerializeField]
         private float _heightAdjusmentThreshold;
+        [SerializeField]
+        private float _rotationThreshold;
 
         [SerializeField]
         private float _heightOffset;
@@ -33,7 +35,7 @@ namespace Game.ProceduralAnimation
         [SerializeField]
         private bool _adjustHeight;
 
-        private Coroutine _heightAdjusmentCoroutine;
+        private Coroutine _ajdustHeightCoroutine;
 
         private void Update()
         {
@@ -50,11 +52,11 @@ namespace Game.ProceduralAnimation
             
             if (_adjustHeight)
             {
-                AdjustVerticalPosition();
+                AdjustHeight();
             }
         }
 
-        private void AdjustVerticalPosition()
+        private void AdjustHeight()
         {
             Vector3 v1Median = (_v1LegsTargets[0].position + _v1LegsTargets[1].position) / 2f;
             Vector3 v2Median = (_v2LegsTargets[0].position + _v2LegsTargets[1].position) / 2f;
@@ -63,16 +65,16 @@ namespace Game.ProceduralAnimation
 
             if (Vector3.Distance(averagePosition, transform.position) >= _heightAdjusmentThreshold)
             {
-                if (_heightAdjusmentCoroutine != null)
+                if (_ajdustHeightCoroutine != null)
                 {
-                    StopCoroutine(_heightAdjusmentCoroutine);
+                    StopCoroutine(_ajdustHeightCoroutine);
                 }
 
-                _heightAdjusmentCoroutine = StartCoroutine(AdjustVerticalPositionCoroutine(averagePosition));
+                _ajdustHeightCoroutine = StartCoroutine(AdjustHeightCoroutine(averagePosition));
             }
         }
 
-        private IEnumerator AdjustVerticalPositionCoroutine(Vector3 desiredPosition)
+        private IEnumerator AdjustHeightCoroutine(Vector3 desiredPosition)
         {
             Vector3 currentPosition = transform.position;
             float elapsedTime = 0f;
@@ -92,7 +94,10 @@ namespace Game.ProceduralAnimation
 
         private void Rotate()
         {
-            transform.up = Vector3.Lerp(transform.up, _normal, 1f / (_rotationSmoothness + 1f));
+            if (Vector3.Distance(transform.position, _normal) > _rotationThreshold)
+            {
+                transform.up = Vector3.Lerp(transform.up, _normal, 1f / (_rotationSmoothness + 1f));
+            }
         }
 
         private void CalculateVectors()

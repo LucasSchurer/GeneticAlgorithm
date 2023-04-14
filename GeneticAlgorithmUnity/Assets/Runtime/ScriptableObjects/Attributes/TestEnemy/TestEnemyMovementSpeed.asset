@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestEnemyMovementSpeed
   m_EditorClassIdentifier: 
   _type: 2
-  _maxValue: 5
+  _maxValue: 90
   _minValue: 0
   _startingValue: 1

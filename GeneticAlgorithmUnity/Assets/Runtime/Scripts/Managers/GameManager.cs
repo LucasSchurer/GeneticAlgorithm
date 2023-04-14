@@ -7,10 +7,13 @@ namespace Game.Managers
     {
         [HideInInspector]
         public GameEventController eventController;
+        [SerializeField]
+        private CursorLockMode _cursorLockMode = CursorLockMode.None;
         
         protected override void SingletonAwake()
         {
             eventController = GetComponent<GameEventController>();
+            Cursor.lockState = _cursorLockMode;
         }
 
         private void Start()

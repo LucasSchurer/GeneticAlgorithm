@@ -36,6 +36,8 @@ namespace Game.AI
             {
                 _stateMachine.ChangeCurrentState(_data.GetTransitionState());
             }
+
+            Debug.DrawRay(_stateMachine.transform.position, _direction * 2f, Color.blue);
         }
 
         public override void StateFixedUpdate()
