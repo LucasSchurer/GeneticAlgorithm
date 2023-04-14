@@ -18,17 +18,22 @@ namespace Game.ProceduralAnimation
 
         [SerializeField]
         private float _rotationSmoothness;
+        [SerializeField]
+        private float _heightAdjustmentTime;
+        [SerializeField]
+        private float _heightAdjusmentThreshold;
+
+        [SerializeField]
+        private float _heightOffset;
 
         private Vector3 _normal = Vector3.zero;
-        private Vector3 _lastUp;
 
-        private Rigidbody _rb;
+        [SerializeField]
+        private bool _rotate;
+        [SerializeField]
+        private bool _adjustHeight;
 
-        private void Awake()
-        {
-            _rb = GetComponent<Rigidbody>();
-            _lastUp = transform.up;
-        }
+        private Coroutine _heightAdjusmentCoroutine;
 
         private void Update()
         {
@@ -38,8 +43,56 @@ namespace Game.ProceduralAnimation
 
         private void FixedUpdate()
         {
-            transform.up = Vector3.Lerp(_lastUp, _normal, 1f / (_rotationSmoothness + 1f));
-            _lastUp = transform.up;
+            if (_rotate)
+            {
+                Rotate();
+            }
+            
+            if (_adjustHeight)
+            {
+                AdjustVerticalPosition();
+            }
+        }
+
+        private void AdjustVerticalPosition()
+        {
+            Vector3 v1Median = (_v1LegsTargets[0].position + _v1LegsTargets[1].position) / 2f;
+            Vector3 v2Median = (_v2LegsTargets[0].position + _v2LegsTargets[1].position) / 2f;
+
+            Vector3 averagePosition = new Vector3(transform.position.x, ((v1Median.y + v2Median.y) / 2f) + _heightOffset, transform.position.z);
+
+            if (Vector3.Distance(averagePosition, transform.position) >= _heightAdjusmentThreshold)
+            {
+                if (_heightAdjusmentCoroutine != null)
+                {
+                    StopCoroutine(_heightAdjusmentCoroutine);
+                }
+
+                _heightAdjusmentCoroutine = StartCoroutine(AdjustVerticalPositionCoroutine(averagePosition));
+            }
+        }
+
+        private IEnumerator AdjustVerticalPositionCoroutine(Vector3 desiredPosition)
+        {
+            Vector3 currentPosition = transform.position;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < _heightAdjustmentTime)
+            {
+                Vector3 newPosition = Vector3.Lerp(currentPosition, desiredPosition, elapsedTime / _heightAdjustmentTime);
+                newPosition.x = transform.position.x;
+                newPosition.z = transform.position.z;
+                transform.position = newPosition;
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = desiredPosition;
+        }
+
+        private void Rotate()
+        {
+            transform.up = Vector3.Lerp(transform.up, _normal, 1f / (_rotationSmoothness + 1f));
         }
 
         private void CalculateVectors()
