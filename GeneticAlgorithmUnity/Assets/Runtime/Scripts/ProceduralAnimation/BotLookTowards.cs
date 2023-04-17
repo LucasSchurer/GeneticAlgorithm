@@ -1,3 +1,5 @@
+using Game.AI;
+using Game.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +11,11 @@ namespace Game.ProceduralAnimation
         [SerializeField]
         private string _targetTag;
         private Transform _target;
+        [SerializeField]
+        private StateMachine _stateMachine;
+        [SerializeField]
+        private AttributeController _attributeController;
+        private NonPersistentAttribute _rotationSpeed;
 
         private Vector3 DirectionToTarget => (_target.position - transform.position).normalized;
 
@@ -17,12 +24,28 @@ namespace Game.ProceduralAnimation
             _target = GameObject.FindGameObjectWithTag(_targetTag).transform;
         }
 
-        private void Update()
+        private void Start()
         {
-            Quaternion newRotation = Quaternion.LookRotation(DirectionToTarget);
-            newRotation.eulerAngles = new Vector3(0f, newRotation.eulerAngles.y, 0f);
+            if (_attributeController)
+            {
+                _rotationSpeed = _attributeController.GetNonPersistentAttribute(AttributeType.RotationSpeed);
+            }
+            else
+            {
+                _rotationSpeed = new NonPersistentAttribute();
+            }
+        }
 
-            transform.rotation = newRotation;
+        private void FixedUpdate()
+        {
+            if (_stateMachine.CanMove())
+            {
+                Quaternion smoothRotation = Quaternion.LookRotation(DirectionToTarget);
+
+                smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * _rotationSpeed.CurrentValue);
+
+                transform.rotation = Quaternion.Euler(new Vector3(0, smoothRotation.eulerAngles.y));
+            }
         }
     } 
 }
