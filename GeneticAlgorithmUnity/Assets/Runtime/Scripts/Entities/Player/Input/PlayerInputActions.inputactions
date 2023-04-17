@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MousePosition",
+                    "name": "Look",
                     "type": "Value",
                     "id": "1293f93e-2c24-445c-aced-7e8d2c1ccdfd",
                     "expectedControlType": "Vector2",
@@ -142,17 +142,6 @@
                 },
                 {
                     "name": "",
-                    "id": "ae77c8c8-8fde-4699-bd0a-24b43805c597",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "MousePosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d26c2fd8-6f43-4a25-ab91-15502c4fc07a",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -181,6 +170,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "SecondaryButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7af56c1e-9f4f-4796-bd66-e9e808fd5474",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

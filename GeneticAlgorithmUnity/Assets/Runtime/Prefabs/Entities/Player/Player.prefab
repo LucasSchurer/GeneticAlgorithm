@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8596116012654226092, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
+      propertyPath: _shootingParticleSystem
+      value: 
+      objectReference: {fileID: 1684512553857877860}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
 --- !u!4 &151439839 stripped
@@ -213,5 +217,10 @@ Transform:
 --- !u!4 &1275178081264998609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5221639806768747048, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
+  m_PrefabInstance: {fileID: 6468481917428140793}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1684512553857877860 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5666721534957653405, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
   m_PrefabInstance: {fileID: 6468481917428140793}
   m_PrefabAsset: {fileID: 0}

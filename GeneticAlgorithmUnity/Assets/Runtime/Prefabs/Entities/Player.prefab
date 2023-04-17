@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 462319194876056888}
   - component: {fileID: 7915875188070422670}
   - component: {fileID: 7915875188070422671}
-  - component: {fileID: 1275178080111758204}
+  - component: {fileID: 8596116012654226092}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb8f669a2c0c8d4c983f8c9c605ec24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1275178080111758204
+--- !u!114 &8596116012654226092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,7 +214,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7915875188070422704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c986154de58d554088aa9f9e0cfc5d8, type: 3}
+  m_Script: {fileID: 11500000, guid: b68b1225c12c1a240b6438190cc2e016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settings: {fileID: 11400000, guid: de1db428c558ece4c8a59f7658e14cc5, type: 2}
+  _settings: {fileID: 11400000, guid: 4ef62dd63146a92479daf3c06b5c5805, type: 2}
+  _hitLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _shootingParticleSystem: {fileID: 0}
+  _hitParticleSystem: {fileID: 0}
+  _bulletTrail: {fileID: 8768135442198563105, guid: aa666cc84c7b05346bbfcc52b03b02f9, type: 3}
+  _bulletTrailSpeed: 0.05
