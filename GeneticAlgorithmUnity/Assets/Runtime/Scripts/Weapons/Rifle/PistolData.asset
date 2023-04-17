@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821db98fd013e764283d3a56fa0ab187, type: 3}
   m_Name: PistolData
   m_EditorClassIdentifier: 
-  cooldown: 0.1
+  cooldown: 0.5
   damage: 1
-  _hitRange: 15
+  _hitRange: 30

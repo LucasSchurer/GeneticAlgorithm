@@ -105,6 +105,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8596116012654226092, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
+      propertyPath: _hitParticleSystem
+      value: 
+      objectReference: {fileID: 198234346748616026, guid: 5c186d1aa9199744496a7a0b39a0eaea, type: 3}
+    - target: {fileID: 8596116012654226092, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
       propertyPath: _shootingParticleSystem
       value: 
       objectReference: {fileID: 1684512553857877860}
@@ -227,6 +231,10 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 151439839}
+    - target: {fileID: 5221639807650372010, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
+      propertyPath: m_Lens.m_SensorSize.x
+      value: 1.7733333
+      objectReference: {fileID: 0}
     - target: {fileID: 6682212990364526717, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: _playerEventController
       value: 

@@ -43,6 +43,8 @@ namespace Game.Weapons
                         other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, HealthModifier = -_settings.damage });
                         _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, HealthModifier = -_settings.damage });
                     }
+
+                    Instantiate(_hitParticleSystem, hit.point, Quaternion.identity).Play();
                 } else
                 {
                     trailEndPosition = ctx.Origin + ctx.Direction * _settings.HitRange;
