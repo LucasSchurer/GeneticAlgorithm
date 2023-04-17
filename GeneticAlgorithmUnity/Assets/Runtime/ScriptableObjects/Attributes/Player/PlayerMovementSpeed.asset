@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerMovementSpeed
   m_EditorClassIdentifier: 
   _type: 2
-  _maxValue: 10
-  _minValue: 10
-  _startingValue: 10
+  _maxValue: 30
+  _minValue: 5
+  _startingValue: 15

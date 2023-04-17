@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 7915875188070422706}
   - component: {fileID: 7915875188070422705}
   - component: {fileID: 3609069992172362705}
-  - component: {fileID: 7915875188070422707}
+  - component: {fileID: 8220468841533209978}
   - component: {fileID: 1088243130739427885}
   - component: {fileID: 462319194876056888}
   - component: {fileID: 7915875188070422670}
@@ -129,14 +129,14 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7915875188070422704}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c6d1a542a7a947b4aa8a10dde5dbe6ed, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7915875188070422707
+--- !u!54 &8220468841533209978
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,11 +145,11 @@ Rigidbody:
   m_GameObject: {fileID: 7915875188070422704}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 10
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1088243130739427885
@@ -205,6 +205,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb8f669a2c0c8d4c983f8c9c605ec24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  _groundDrag: 8
+  _airDrag: 3
+  _alterDrag: 1
+  _movementSpeedMultiplier: 10
+  _airMovementMultiplier: 0.2
+  _entityHeight: 2
+  _groundSphereRadius: 0.4
+  _groundCheckOffset: {x: 0, y: -1, z: 0}
+  _fallMultiplier: 2.5
+  _isGrounded: 0
 --- !u!114 &8596116012654226092
 MonoBehaviour:
   m_ObjectHideFlags: 0

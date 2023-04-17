@@ -14,7 +14,7 @@ namespace Game.Entities.Player
         [SerializeField]
         private Transform _weaponBulletSocket;
         [SerializeField]
-        private float _jumpForce;
+        private float _jumpForce;        
 
         public struct InputData
         {
@@ -28,9 +28,12 @@ namespace Game.Entities.Player
         private bool _usingGamepad = false;
 
         private EntityEventController _eventController;
+
         private MovementController _movementController;
+
         private PlayerInputActions _playerInput;
         private InputData _inputData;
+        
 
         private void Awake()
         {
@@ -51,14 +54,6 @@ namespace Game.Entities.Player
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Jump();
-            }
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_cameraTransform != null)
-            {
-                Gizmos.DrawRay(transform.position, _cameraTransform.forward * 2f);
             }
         }
 
