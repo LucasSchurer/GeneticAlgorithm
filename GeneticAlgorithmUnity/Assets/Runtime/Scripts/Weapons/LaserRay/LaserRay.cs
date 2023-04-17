@@ -58,9 +58,6 @@ namespace Game.Weapons
 
         private void Fire(Vector3 direction)
         {
-            // Play Animation
-            Debug.Log("Shoot");
-
             if (Raycast(direction, out RaycastHit hit))
             {
                 EntityEventController other = hit.transform.GetComponent<EntityEventController>();

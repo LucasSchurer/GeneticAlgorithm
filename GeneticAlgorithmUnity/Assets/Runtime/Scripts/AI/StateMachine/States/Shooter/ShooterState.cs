@@ -23,7 +23,7 @@ namespace Game.AI
 
         public override StateType GetStateType()
         {
-            return StateType.Idle;
+            return StateType.Chase;
         }
 
         public override void StateFinish()
@@ -42,7 +42,7 @@ namespace Game.AI
                     direction *= -1;
                 }
 
-                if (_stateMachine.CanMove())
+                if (_stateMachine.CanMove() && _movementController != null)
                 {
                     _movementController.Move(direction);
                 }

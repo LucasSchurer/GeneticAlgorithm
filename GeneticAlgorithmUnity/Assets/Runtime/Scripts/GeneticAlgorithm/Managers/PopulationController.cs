@@ -13,7 +13,7 @@ namespace Game.GA
     {
         [Header("References")]
         [SerializeField]
-        private CreatureController _creaturePrefab;
+        private CreatureControllerReference _creaturePrefab;
 
         private CreatureController[] _creatures;
         private List<CreatureController> _creaturesRequest;
@@ -45,10 +45,10 @@ namespace Game.GA
             {
                 if (_creatures[i] != null)
                 {
-                    Destroy(_creatures[i].gameObject);
+                    Destroy(_creatures[i].transform.parent.gameObject);
                 }
 
-                _creatures[i] = Instantiate(_creaturePrefab);
+                _creatures[i] = Instantiate(_creaturePrefab).CreatureController;
                 _creatures[i].SetData(creaturesData[i]);
 
                 _creaturesRequest.Add(_creatures[i]);
@@ -94,7 +94,10 @@ namespace Game.GA
         {
             foreach (CreatureController creature in _creatures)
             {
-                creature.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnDeath, new EntityEventContext());
+                if (creature != null)
+                {
+                    creature.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnDeath, new EntityEventContext());
+                }
             }
         }
 

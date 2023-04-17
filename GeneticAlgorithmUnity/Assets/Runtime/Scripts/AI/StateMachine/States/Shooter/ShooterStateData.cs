@@ -19,7 +19,7 @@ namespace Game.AI
 
         public override StateType GetStateType()
         {
-            return StateType.Idle;
+            return StateType.Chase;
         }
     } 
 }

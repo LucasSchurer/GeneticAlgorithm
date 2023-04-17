@@ -40,6 +40,8 @@ namespace Game.ProceduralAnimation
         {
             if (_stateMachine.CanMove())
             {
+                if (DirectionToTarget == Vector3.zero) return;
+
                 Quaternion smoothRotation = Quaternion.LookRotation(DirectionToTarget);
 
                 smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * _rotationSpeed.CurrentValue);

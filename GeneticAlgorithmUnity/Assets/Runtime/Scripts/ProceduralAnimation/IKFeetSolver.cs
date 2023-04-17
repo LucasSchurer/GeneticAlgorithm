@@ -38,12 +38,12 @@ namespace Game.ProceduralAnimation
 
         private void Update()
         {
-            foreach (IKTarget target in _targets)
+/*            foreach (IKTarget target in _targets)
             {
                 Debug.DrawRay(target.RaycastOrigin.position, (target.RaycastOrigin.transform.up * -1) * _maxRayDistance, Color.green);
                 Debug.DrawLine(target.PossiblePosition, target.IkTarget.position, Color.cyan);
             }
-
+*/
             foreach (IKTarget target in _targets)
             {
                 if (GroundRaycast(target.RaycastOrigin.position, target.RaycastOrigin.transform.up * -1, out Vector3 hitPosition))

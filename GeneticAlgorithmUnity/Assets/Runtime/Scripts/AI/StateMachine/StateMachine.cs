@@ -21,6 +21,7 @@ namespace Game.AI
         private Dictionary<StateType, State> _states;
 
         private bool _canMove = true;
+        private bool _hasStarted = false;
 
         private void Awake()
         {
@@ -40,11 +41,17 @@ namespace Game.AI
             _states = _data.GetStates(this);
 
             _currentState = _initialState;
+
+            Start();
         }
 
         private void Start()
-        {
-            _currentState.StateStart();
+        {   
+            if (_currentState != null && !_hasStarted)
+            {
+                _currentState.StateStart();
+                _hasStarted = true;
+            }
         }
 
         private void Update()

@@ -14,7 +14,13 @@ namespace Game.Entities.Shared
 
         protected virtual void OnDeath(ref EntityEventContext ctx)
         {
-            Destroy(gameObject);
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            } else
+            {
+                Destroy(gameObject);
+            }
         }
 
         private void OnEnable()
