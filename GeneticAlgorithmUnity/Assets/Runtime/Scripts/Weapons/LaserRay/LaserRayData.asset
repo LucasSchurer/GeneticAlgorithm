@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c40dd5ef8f4e67548937775b23e23493, type: 3}
-  m_Name: TestEnemyCollisionDamage
+  m_Script: {fileID: 11500000, guid: 591d720a291cb364886ae4f01c658452, type: 3}
+  m_Name: LaserRayData
   m_EditorClassIdentifier: 
-  _type: 4
-  _maxValue: 10
-  _minValue: 0
-  _startingValue: 0
+  cooldown: 3
+  damage: 1
+  _hitRange: 30
+  _firePreparingTime: 1
+  _delayBetweenPreparingAndFire: 0.5

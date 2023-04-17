@@ -7,14 +7,16 @@ using Game.Entities.Shared;
 /// </summary>
 namespace Game.Entities.Player
 {
-    public class InputController : MonoBehaviour
+    public class InputController : MonoBehaviour, IEntityController
     {
         [SerializeField]
         private Transform _cameraTransform;
         [SerializeField]
         private Transform _weaponBulletSocket;
         [SerializeField]
-        private float _jumpForce;        
+        private float _jumpForce;
+
+        private bool _canMove = true;
 
         public struct InputData
         {
@@ -33,7 +35,20 @@ namespace Game.Entities.Player
 
         private PlayerInputActions _playerInput;
         private InputData _inputData;
-        
+
+        public Vector3 GetLookDirection()
+        {
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                return (hit.point - _weaponBulletSocket.position).normalized;
+            }
+            else
+            {
+                return ray.direction;
+            }
+        }
 
         private void Awake()
         {
@@ -48,7 +63,7 @@ namespace Game.Entities.Player
 
             if (_inputData.isPressingPrimaryAction)
             {
-                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { Origin = _weaponBulletSocket.position, Direction = _cameraTransform.forward});
+                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { Origin = _weaponBulletSocket.position, Direction = GetLookDirection()});
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -60,7 +75,11 @@ namespace Game.Entities.Player
         private void FixedUpdate()
         {
             _movementController.Rotate(_inputData.lookDirection);
-            _movementController.Move(transform.rotation * _inputData.movementDirection);
+            
+            if (_canMove)
+            {
+                _movementController.Move(transform.rotation * _inputData.movementDirection);
+            }
         }
 
         private void Jump()
@@ -109,6 +128,16 @@ namespace Game.Entities.Player
         {
             _playerInput.Gameplay.PrimaryButton.Dispose();
             _playerInput.Gameplay.Disable();
+        }
+
+        public void SetCanMove(bool canMove)
+        {
+            _canMove = canMove;
+        }
+
+        public bool CanMove()
+        {
+            return _canMove;
         }
     } 
 }

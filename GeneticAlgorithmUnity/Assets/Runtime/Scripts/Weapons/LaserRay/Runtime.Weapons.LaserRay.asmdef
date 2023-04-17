@@ -1,0 +1,19 @@
+{
+    "name": "Runtime.Weapons.LaserRay",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a0ad7fd28dd275e4aa99b341c5ba41cd",
+        "GUID:b7297f8f8a080cc4f8fecf02f93cc866",
+        "GUID:66b737598c150034ea3da072e005a4ef",
+        "GUID:eff4936141bac0c41bec28ed2ec5b052"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

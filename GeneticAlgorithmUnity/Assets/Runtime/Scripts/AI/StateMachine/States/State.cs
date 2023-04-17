@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Game.AI
 {
     public abstract class State
@@ -15,5 +17,6 @@ namespace Game.AI
         public abstract void StateUpdate();
         public abstract void StateFixedUpdate();
         public abstract void StateFinish();
+        public abstract Vector3 GetLookDirection();
     } 
 }

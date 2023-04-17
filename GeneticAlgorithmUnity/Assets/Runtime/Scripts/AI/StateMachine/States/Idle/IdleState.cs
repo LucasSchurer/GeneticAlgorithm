@@ -73,5 +73,10 @@ namespace Game.AI
 
             _idleCoroutine = _stateMachine.StartCoroutine(IdleCoroutine());
         }
+
+        public override Vector3 GetLookDirection()
+        {
+            return Vector3.zero;
+        }
     }
 }

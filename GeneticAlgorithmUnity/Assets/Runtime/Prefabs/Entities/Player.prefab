@@ -216,7 +216,7 @@ MonoBehaviour:
   _entityHeight: 2
   _groundSphereRadius: 0.4
   _groundCheckOffset: {x: 0, y: -1, z: 0}
-  _fallMultiplier: 2.5
+  _fallMultiplier: -5
   _isGrounded: 0
 --- !u!114 &8596116012654226092
 MonoBehaviour:

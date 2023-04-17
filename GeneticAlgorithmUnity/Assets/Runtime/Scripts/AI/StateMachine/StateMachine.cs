@@ -1,10 +1,11 @@
+using Game.Entities.Shared;
 using Game.Events;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.AI
 {
-    public class StateMachine : MonoBehaviour, IEventListener
+    public class StateMachine : MonoBehaviour, IEventListener, IEntityController
     {
         [Tooltip("If initialized on awake, it will need a StateMachineData assigned")]
         [SerializeField]
@@ -18,6 +19,8 @@ namespace Game.AI
         private State _currentState;
 
         private Dictionary<StateType, State> _states;
+
+        private bool _canMove = true;
 
         private void Awake()
         {
@@ -108,6 +111,27 @@ namespace Game.AI
         private void OnDisable()
         {
             StopListening();
+        }
+
+        public Vector3 GetLookDirection()
+        {
+            if (_currentState != null)
+            {
+                return _currentState.GetLookDirection();
+            } else
+            {
+                return Vector3.zero;
+            }
+        }
+
+        public void SetCanMove(bool canMove)
+        {
+            _canMove = canMove;
+        }
+
+        public bool CanMove()
+        {
+            return _canMove;   
         }
     }
 }

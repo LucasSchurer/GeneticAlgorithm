@@ -133,5 +133,10 @@ namespace Game.AI
 
             Debug.DrawRay(_stateMachine.transform.position, _direction * 5f, Color.blue);
         }
+
+        public override Vector3 GetLookDirection()
+        {
+            return Vector3.zero;
+        }
     }
 }

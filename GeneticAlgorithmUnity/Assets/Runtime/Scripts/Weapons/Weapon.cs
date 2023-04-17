@@ -9,7 +9,7 @@ namespace Game.Weapons
         [SerializeField]
         protected T _settings;
         protected EntityEventController _eventController;
-        protected bool _canUse;
+        protected bool _canUse = true;
 
         public virtual void Initialize(T settings)
         {
