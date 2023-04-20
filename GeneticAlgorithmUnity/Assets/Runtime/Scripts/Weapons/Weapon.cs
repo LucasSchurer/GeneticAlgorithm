@@ -11,11 +11,6 @@ namespace Game.Weapons
         protected EntityEventController _eventController;
         protected bool _canUse = true;
 
-        public virtual void Initialize(Data settings)
-        {
-            _data = settings;
-        }
-
         protected virtual void Awake()
         {
             _eventController = GetComponent<EntityEventController>();

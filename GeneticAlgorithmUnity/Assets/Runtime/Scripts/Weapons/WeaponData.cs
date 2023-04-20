@@ -7,10 +7,15 @@ namespace Game.Weapons
     [CreateAssetMenu]
     public class WeaponData : ScriptableObject
     {
-        [Header("Weapon")]
+        [Header("General Settings")]
         [Tooltip("Time between weapon uses")]
-        public float cooldown;
-        public float damage;
+        [SerializeField]
+        protected float _cooldown;
+        [SerializeField]
+        protected float _damage;
+
+        public float Cooldown => _cooldown;
+        public float Damage => _damage;
     }
 }
 

@@ -40,8 +40,8 @@ namespace Game.Weapons
 
                     if (other != null) 
                     {
-                        other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, HealthModifier = -_data.damage });
-                        _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, HealthModifier = -_data.damage });
+                        other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, HealthModifier = -_data.Damage });
+                        _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, HealthModifier = -_data.Damage });
                     }
 
                     Instantiate(_hitParticleSystem, hit.point, Quaternion.identity).Play();
@@ -78,7 +78,7 @@ namespace Game.Weapons
         {
             _canUse = false;
 
-            yield return new WaitForSeconds(_data.cooldown);
+            yield return new WaitForSeconds(_data.Cooldown);
 
             _canUse = true;
         }

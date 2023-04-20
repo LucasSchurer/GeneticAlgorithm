@@ -25,11 +25,11 @@ namespace Game.Weapons
                     float yAngle = Random.Range(transform.rotation.eulerAngles.y - _data.projectileVariation, transform.rotation.eulerAngles.y + _data.projectileVariation);
                     Quaternion projectileDirection = Quaternion.Euler(transform.rotation.eulerAngles.x, yAngle, transform.rotation.eulerAngles.z);
                     Projectile projectile = Instantiate(_projectile, transform.position, projectileDirection);
-                    projectile.Instantiate(gameObject, _data.damage);
+                    projectile.Instantiate(gameObject, _data.Damage);
                 } else
                 {
                     Projectile projectile = Instantiate(_projectile, ctx.Origin, Quaternion.LookRotation(ctx.Direction, Vector3.up));
-                    projectile.Instantiate(gameObject, _data.damage);
+                    projectile.Instantiate(gameObject, _data.Damage);
                 }
                 
                 StartCoroutine(Recharge());
@@ -40,7 +40,7 @@ namespace Game.Weapons
         {
             _canUse = false;
 
-            yield return new WaitForSeconds(_data.cooldown);
+            yield return new WaitForSeconds(_data.Cooldown);
 
             _canUse = true;
         }
