@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: _weaponBulletSocket
       value: 
       objectReference: {fileID: 1275178079636200420}
+    - target: {fileID: 7915875188070422671, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
+      propertyPath: _groundDrag
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7915875188070422704, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
       propertyPath: m_Name
       value: Body
@@ -197,7 +201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5221639806768747048, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0.6999998
       objectReference: {fileID: 0}
     - target: {fileID: 5221639806768747048, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_LocalPosition.z
@@ -221,7 +225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5221639807650372009, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0.6999998
       objectReference: {fileID: 0}
     - target: {fileID: 5221639807650372010, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_Follow
@@ -233,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 151439839}
     - target: {fileID: 5221639807650372010, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7733333
+      value: 1.7772021
       objectReference: {fileID: 0}
     - target: {fileID: 6682212990364526717, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: _playerEventController
