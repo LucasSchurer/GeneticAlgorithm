@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Game.Weapons
 {
-    [CreateAssetMenu]
-    public class HitscanRangedWeaponData : WeaponData
+    [CreateAssetMenu(menuName = Constants.WeaponDataMenuName + "/HitscanWeaponData")]
+    public class HitscanWeaponData : WeaponData
     {
         [SerializeField]
         private float _hitRange;

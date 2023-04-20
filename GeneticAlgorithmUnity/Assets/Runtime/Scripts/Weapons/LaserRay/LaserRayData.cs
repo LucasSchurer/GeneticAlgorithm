@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Weapons
 {
-    [CreateAssetMenu(fileName = "LaserRayData")]
-    public class LaserRayData : HitscanRangedWeaponData
+    [CreateAssetMenu(menuName = Constants.WeaponDataMenuName + "/LaserRayData")]
+    public class LaserRayData : HitscanWeaponData
     {
         [SerializeField]
         private float _firePreparingTime;

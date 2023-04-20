@@ -1,0 +1,45 @@
+using UnityEngine;
+
+namespace Game.AI
+{
+    public class #SCRIPTNAME# : State
+    {
+        private StateData _data;
+
+
+        public #SCRIPTNAME#(StateMachine stateMachine, StateData data) : base(stateMachine, data)
+        {
+            _data = data;
+        }
+
+        public override StateType GetStateType()
+        {
+            return StateType.None;
+        }
+
+        public override void StateStart()
+        {
+            #NOTRIM#
+        }
+
+        public override void StateUpdate()
+        {
+            #NOTRIM#
+        }
+
+        public override void StateFixedUpdate()
+        {
+            #NOTRIM#
+        }
+
+        public override void StateFinish()
+        {
+            #NOTRIM#
+        }
+
+        public override Vector3 GetLookDirection()
+        {
+            return Vector3.zero;
+        }
+    } 
+}

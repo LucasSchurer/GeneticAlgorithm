@@ -1,0 +1,12 @@
+using UnityEngine;
+
+namespace Game
+{
+    public class #SCRIPTNAME# : Singleton<#SCRIPTNAME#>
+    {
+        protected override void SingletonAwake()
+        {
+            #NOTRIM#
+        }
+    } 
+}

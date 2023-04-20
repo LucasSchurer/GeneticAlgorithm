@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Weapons
 {
-    public class Pistol : Weapon<HitscanRangedWeaponData>
+    public class Pistol : Weapon<HitscanWeaponData>
     {
         [SerializeField]
         private LayerMask _hitLayer;

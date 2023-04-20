@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Weapons
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = Constants.WeaponDataMenuName + "/BaseData")]
     public class WeaponData : ScriptableObject
     {
         [Header("General Settings")]
