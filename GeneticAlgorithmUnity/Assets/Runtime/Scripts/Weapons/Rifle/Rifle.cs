@@ -12,7 +12,7 @@ namespace Game.Weapons
         protected override void Awake()
         {
             base.Awake();
-            _projectile = _settings.baseProjectile;
+            _projectile = _data.baseProjectile;
             _canUse = true;
         }
 
@@ -20,16 +20,16 @@ namespace Game.Weapons
         {
             if (_canUse)
             {
-                if (_settings.projectileVariation > 0)
+                if (_data.projectileVariation > 0)
                 {
-                    float yAngle = Random.Range(transform.rotation.eulerAngles.y - _settings.projectileVariation, transform.rotation.eulerAngles.y + _settings.projectileVariation);
+                    float yAngle = Random.Range(transform.rotation.eulerAngles.y - _data.projectileVariation, transform.rotation.eulerAngles.y + _data.projectileVariation);
                     Quaternion projectileDirection = Quaternion.Euler(transform.rotation.eulerAngles.x, yAngle, transform.rotation.eulerAngles.z);
                     Projectile projectile = Instantiate(_projectile, transform.position, projectileDirection);
-                    projectile.Instantiate(gameObject, _settings.damage);
+                    projectile.Instantiate(gameObject, _data.damage);
                 } else
                 {
                     Projectile projectile = Instantiate(_projectile, ctx.Origin, Quaternion.LookRotation(ctx.Direction, Vector3.up));
-                    projectile.Instantiate(gameObject, _settings.damage);
+                    projectile.Instantiate(gameObject, _data.damage);
                 }
                 
                 StartCoroutine(Recharge());
@@ -40,7 +40,7 @@ namespace Game.Weapons
         {
             _canUse = false;
 
-            yield return new WaitForSeconds(_settings.cooldown);
+            yield return new WaitForSeconds(_data.cooldown);
 
             _canUse = true;
         }

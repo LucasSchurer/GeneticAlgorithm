@@ -3,17 +3,17 @@ using Game.Events;
 
 namespace Game.Weapons
 {
-    public abstract class Weapon<T> : MonoBehaviour, IEventListener
-        where T: WeaponData
+    public abstract class Weapon<Data> : MonoBehaviour, IEventListener
+        where Data: WeaponData
     {
         [SerializeField]
-        protected T _settings;
+        protected Data _data;
         protected EntityEventController _eventController;
         protected bool _canUse = true;
 
-        public virtual void Initialize(T settings)
+        public virtual void Initialize(Data settings)
         {
-            _settings = settings;
+            _data = settings;
         }
 
         protected virtual void Awake()

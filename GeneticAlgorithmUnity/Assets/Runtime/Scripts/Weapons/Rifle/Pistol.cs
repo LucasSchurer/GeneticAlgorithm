@@ -32,7 +32,7 @@ namespace Game.Weapons
 
                 Vector3 trailEndPosition;
 
-                if (Physics.Raycast(ctx.Origin, ctx.Direction, out RaycastHit hit, _settings.HitRange, _hitLayer))
+                if (Physics.Raycast(ctx.Origin, ctx.Direction, out RaycastHit hit, _data.HitRange, _hitLayer))
                 {
                     trailEndPosition = hit.point;
 
@@ -40,14 +40,14 @@ namespace Game.Weapons
 
                     if (other != null) 
                     {
-                        other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, HealthModifier = -_settings.damage });
-                        _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, HealthModifier = -_settings.damage });
+                        other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, HealthModifier = -_data.damage });
+                        _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, HealthModifier = -_data.damage });
                     }
 
                     Instantiate(_hitParticleSystem, hit.point, Quaternion.identity).Play();
                 } else
                 {
-                    trailEndPosition = ctx.Origin + ctx.Direction * _settings.HitRange;
+                    trailEndPosition = ctx.Origin + ctx.Direction * _data.HitRange;
                 }
 
                 TrailRenderer trail = Instantiate(_bulletTrail, ctx.Origin, Quaternion.identity);
@@ -78,7 +78,7 @@ namespace Game.Weapons
         {
             _canUse = false;
 
-            yield return new WaitForSeconds(_settings.cooldown);
+            yield return new WaitForSeconds(_data.cooldown);
 
             _canUse = true;
         }
