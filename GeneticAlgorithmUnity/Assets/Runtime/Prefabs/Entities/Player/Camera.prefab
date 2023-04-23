@@ -97,7 +97,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hitIndicatorTime: 0.2
+  _defaultScale: {x: 0.01, y: 0.01, z: 0.01}
+  _runningScale: {x: 0.03, y: 0.03, z: 0.03}
+  _standingScale: {x: 0.01, y: 0.01, z: 0.01}
+  _scaleSpeed: 2
   _playerEventController: {fileID: 0}
+  _playerRb: {fileID: 0}
 --- !u!1 &5221639806749894929
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +590,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7785016, y: 1}
+    m_SensorSize: {x: 1.7791741, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

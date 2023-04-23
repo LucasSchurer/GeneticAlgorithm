@@ -12,6 +12,8 @@ namespace Game.Entities.Player
         [SerializeField]
         private Transform _cameraTransform;
         [SerializeField]
+        private Crosshair _crosshair;
+        [SerializeField]
         private Transform _weaponBulletSocket;
         [SerializeField]
         private float _jumpForce;
@@ -76,9 +78,13 @@ namespace Game.Entities.Player
         {
             _movementController.Rotate(_inputData.lookDirection);
             
-            if (_canMove)
+            if (_canMove && _inputData.movementDirection != Vector3.zero)
             {
                 _movementController.Move(transform.rotation * _inputData.movementDirection);
+                _crosshair.SetState(Crosshair.CrosshairState.Running);
+            } else
+            {
+                _crosshair.SetState(Crosshair.CrosshairState.Standing);
             }
         }
 
