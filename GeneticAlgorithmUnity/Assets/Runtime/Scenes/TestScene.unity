@@ -1906,6 +1906,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bot
       objectReference: {fileID: 0}
+    - target: {fileID: 5577781455476284755, guid: d521e357a3f3a394a895fcd5cd4a140e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6628409610092081181, guid: d521e357a3f3a394a895fcd5cd4a140e, type: 3}
       propertyPath: _initializeOnAwake
       value: 1
@@ -1918,7 +1922,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26308
+  m_Name: pb_Mesh26324
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4120,6 +4124,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1275178079741645648, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275178079741645651, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
+      propertyPath: m_Lens.m_SensorSize.x
+      value: 1.7785016
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275178081264998609, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275178081264998609, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275178081264998609, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1275178081443993404, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -4167,6 +4191,14 @@ PrefabInstance:
     - target: {fileID: 1275178081443993405, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420206285012300938, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
+      propertyPath: _data
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ef62dd63146a92479daf3c06b5c5805, type: 2}
+    - target: {fileID: 7420206285012300938, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
+      propertyPath: _bulletTrailSpeed
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}

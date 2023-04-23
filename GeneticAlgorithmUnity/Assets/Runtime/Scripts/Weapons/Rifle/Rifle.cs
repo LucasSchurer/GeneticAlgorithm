@@ -16,6 +16,10 @@ namespace Game.Weapons
             _canUse = true;
         }
 
+        protected override void SetSocketsAndVFXs()
+        {
+        }
+
         private void Fire(ref EntityEventContext ctx)
         {
             if (_canUse)

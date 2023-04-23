@@ -40,6 +40,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1275178081443993404}
     m_Modifications:
+    - target: {fileID: 5329705591458898508, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
+      propertyPath: _socketList.Array.data[0]._transform
+      value: 
+      objectReference: {fileID: 1275178079636200420}
     - target: {fileID: 7915875188070422670, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
       propertyPath: _gravity
       value: 1
@@ -115,7 +119,7 @@ PrefabInstance:
     - target: {fileID: 8596116012654226092, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
       propertyPath: _shootingParticleSystem
       value: 
-      objectReference: {fileID: 1684512553857877860}
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7915875188070422707, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5411f27712cf2324cbd864efc2e926bb, type: 3}
@@ -201,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5221639806768747048, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6999998
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5221639806768747048, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_LocalPosition.z
@@ -225,7 +229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5221639807650372009, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6999998
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5221639807650372010, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_Follow
@@ -237,7 +241,7 @@ PrefabInstance:
       objectReference: {fileID: 151439839}
     - target: {fileID: 5221639807650372010, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7772021
+      value: 1.7785016
       objectReference: {fileID: 0}
     - target: {fileID: 6682212990364526717, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
       propertyPath: _playerEventController
@@ -258,10 +262,5 @@ Transform:
 --- !u!4 &1275178081264998609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5221639806768747048, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
-  m_PrefabInstance: {fileID: 6468481917428140793}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1684512553857877860 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5666721534957653405, guid: fff3716295d6d5747af16e570a2f6d73, type: 3}
   m_PrefabInstance: {fileID: 6468481917428140793}
   m_PrefabAsset: {fileID: 0}

@@ -153,5 +153,9 @@ namespace Game.Weapons
 
             _eventController?.RemoveListener(EntityEventType.OnPrimaryActionPerformed, TryFire);
         }
+
+        protected override void SetSocketsAndVFXs()
+        {            
+        }
     } 
 }

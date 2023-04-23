@@ -9,14 +9,9 @@ namespace Game.Weapons
     {
         [SerializeField]
         private LayerMask _hitLayer;
-        [SerializeField]
+       
+        private Transform _weaponFireSocket;
         private ParticleSystem _shootingParticleSystem;
-        [SerializeField]
-        private ParticleSystem _hitParticleSystem;
-        [SerializeField]
-        private TrailRenderer _bulletTrail;
-        [SerializeField]
-        private float _bulletTrailSpeed;
 
         protected override void Awake()
         {
@@ -24,15 +19,25 @@ namespace Game.Weapons
             _canUse = true;
         }
 
+        protected override void SetSocketsAndVFXs()
+        {
+            _weaponFireSocket = _socketController.GetSocket(Entities.Shared.EntitySocketType.WeaponFire);
+
+            if (_weaponFireSocket)
+            {
+                _shootingParticleSystem = Instantiate(_data.AttackParticle, _weaponFireSocket);
+            }
+        }
+
         private void Fire(ref EntityEventContext ctx)
         {
             if (_canUse)
             {
-                _shootingParticleSystem.Play();
+                _shootingParticleSystem?.Play();
 
                 Vector3 trailEndPosition;
 
-                if (Physics.Raycast(ctx.Origin, ctx.Direction, out RaycastHit hit, _data.HitRange, _hitLayer))
+                if (Physics.Raycast(_weaponFireSocket.position, ctx.Direction, out RaycastHit hit, _data.HitRange, _hitLayer))
                 {
                     trailEndPosition = hit.point;
 
@@ -44,13 +49,13 @@ namespace Game.Weapons
                         _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, HealthModifier = -_data.Damage });
                     }
 
-                    Instantiate(_hitParticleSystem, hit.point, Quaternion.identity).Play();
+                    Instantiate(_data.OnHitParticle, hit.point, Quaternion.identity)?.Play();
                 } else
                 {
-                    trailEndPosition = ctx.Origin + ctx.Direction * _data.HitRange;
+                    trailEndPosition = _weaponFireSocket.position + ctx.Direction * _data.HitRange;
                 }
 
-                TrailRenderer trail = Instantiate(_bulletTrail, ctx.Origin, Quaternion.identity);
+                TrailRenderer trail = Instantiate(_data.AttackTrail, _weaponFireSocket.position, Quaternion.identity);
                 StartCoroutine(SpawnBulletTrail(trail, trailEndPosition));
 
                 StartCoroutine(Recharge());
@@ -62,10 +67,10 @@ namespace Game.Weapons
             Vector3 startPosition = trail.transform.position;
             float elapsedTime = 0f;
 
-            while (elapsedTime <= _bulletTrailSpeed)
+            while (elapsedTime <= _data.TrailSpeed)
             {
                 elapsedTime += Time.deltaTime;
-                trail.transform.position = Vector3.Lerp(startPosition, hitPoint, elapsedTime / _bulletTrailSpeed);
+                trail.transform.position = Vector3.Lerp(startPosition, hitPoint, elapsedTime / _data.TrailSpeed);
                 yield return null;
             }
 

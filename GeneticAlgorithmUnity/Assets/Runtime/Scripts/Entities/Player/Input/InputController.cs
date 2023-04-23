@@ -63,7 +63,7 @@ namespace Game.Entities.Player
 
             if (_inputData.isPressingPrimaryAction)
             {
-                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { Origin = _weaponBulletSocket.position, Direction = GetLookDirection()});
+                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() {Direction = GetLookDirection()});
             }
 
             if (Input.GetKeyDown(KeyCode.Space))

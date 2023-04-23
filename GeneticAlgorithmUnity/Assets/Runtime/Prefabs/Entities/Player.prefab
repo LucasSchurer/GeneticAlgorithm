@@ -44,8 +44,9 @@ GameObject:
   - component: {fileID: 7915875188070422705}
   - component: {fileID: 3609069992172362705}
   - component: {fileID: 8220468841533209978}
-  - component: {fileID: 1088243130739427885}
   - component: {fileID: 462319194876056888}
+  - component: {fileID: 1088243130739427885}
+  - component: {fileID: 5329705591458898508}
   - component: {fileID: 7915875188070422670}
   - component: {fileID: 7915875188070422671}
   - component: {fileID: 8596116012654226092}
@@ -152,18 +153,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1088243130739427885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7915875188070422704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81199fe8a0d18e2468ed18d5ce2b2fff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &462319194876056888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +166,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attributes: {fileID: 11400000, guid: a268d02b96c451249a8fb2fb8aa0d2c2, type: 2}
+--- !u!114 &1088243130739427885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7915875188070422704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81199fe8a0d18e2468ed18d5ce2b2fff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5329705591458898508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7915875188070422704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90f640b54e7f2894b85e050cccb5df34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _socketList:
+  - _transform: {fileID: 0}
+    _type: 1
 --- !u!114 &7915875188070422670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,11 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b68b1225c12c1a240b6438190cc2e016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settings: {fileID: 11400000, guid: 4ef62dd63146a92479daf3c06b5c5805, type: 2}
+  _data: {fileID: 0}
   _hitLayer:
     serializedVersion: 2
     m_Bits: 256
-  _shootingParticleSystem: {fileID: 0}
-  _hitParticleSystem: {fileID: 0}
   _bulletTrail: {fileID: 8768135442198563105, guid: aa666cc84c7b05346bbfcc52b03b02f9, type: 3}
   _bulletTrailSpeed: 0.05
