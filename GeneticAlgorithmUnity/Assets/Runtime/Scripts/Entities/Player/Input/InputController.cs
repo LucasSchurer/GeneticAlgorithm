@@ -63,9 +63,16 @@ namespace Game.Entities.Player
         {
             UpdateInputData();
 
-            if (_inputData.isPressingPrimaryAction)
+            if (_inputData.isPressingPrimaryAction && _eventController)
             {
-                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() {Direction = GetLookDirection()});
+                EntityEventContext context = new EntityEventContext();
+                context.Movement = new EntityEventContext.MovementPacket() {
+                    IsMoving = _inputData.movementDirection != Vector3.zero,
+                    MovingDirection = _inputData.movementDirection,
+                    LookDirection = GetLookDirection()
+                };
+
+                _eventController.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, context);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
