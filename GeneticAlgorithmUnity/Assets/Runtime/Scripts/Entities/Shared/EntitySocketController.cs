@@ -8,25 +8,25 @@ namespace Game.Entities.Shared
     {
         [Tooltip("Duplicated socket type will be ignored. Will only be used if assigned before Awake()")]
         [SerializeField]
-        private List<Socket> _socketList;
-        private Dictionary<EntitySocketType, Transform> _sockets;
+        private Socket[] _sockets;
+        private Dictionary<EntitySocketType, Transform> _socketsDict;
 
         private void Awake()
         {
-            _sockets = new Dictionary<EntitySocketType, Transform>();
+            _socketsDict = new Dictionary<EntitySocketType, Transform>();
 
-            if (_socketList != null)
+            if (_sockets != null)
             {
-                foreach (Socket socket in _socketList)
+                foreach (Socket socket in _sockets)
                 {
-                    _sockets.TryAdd(socket.Type, socket.Transform);
+                    _socketsDict.TryAdd(socket.Type, socket.Transform);
                 }
             }
         }
 
         public Transform GetSocket(EntitySocketType type)
         {
-            if (_sockets.TryGetValue(type, out Transform socketTransform))
+            if (_socketsDict.TryGetValue(type, out Transform socketTransform))
             {
                 return socketTransform;
             } else
