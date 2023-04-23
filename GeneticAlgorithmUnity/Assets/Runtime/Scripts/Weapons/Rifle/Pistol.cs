@@ -36,6 +36,9 @@ namespace Game.Weapons
         {
             if (_canUse)
             {
+                ctx.Weapon = new EntityEventContext.WeaponPacket() { RecoilStrength = _data.RecoilStrength };
+                ctx.EventController.TriggerEvent(EntityEventType.OnWeaponAttack, ctx);
+
                 _shootingParticleSystem?.Play();
 
                 Vector3 trailEndPosition;

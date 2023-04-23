@@ -6,5 +6,6 @@ namespace Game.Events
         OnHitDealt,
         OnDeath,
         OnPrimaryActionPerformed,
+        OnWeaponAttack
     } 
 }
