@@ -62,5 +62,9 @@ namespace Game.Weapons
 
             _eventController?.RemoveListener(EntityEventType.OnPrimaryActionPerformed, Fire);
         }
+
+        protected override void SetLayers()
+        {
+        }
     } 
 }

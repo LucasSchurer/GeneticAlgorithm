@@ -157,5 +157,10 @@ namespace Game.Weapons
         protected override void SetSocketsAndVFXs()
         {            
         }
+
+        protected override void SetLayers()
+        {
+
+        }
     } 
 }

@@ -4128,21 +4128,9 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.6999998
       objectReference: {fileID: 0}
-    - target: {fileID: 1275178079741645651, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
-      propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7785016
-      objectReference: {fileID: 0}
-    - target: {fileID: 1275178081264998609, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1275178081264998609, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.6999998
-      objectReference: {fileID: 0}
-    - target: {fileID: 1275178081264998609, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1275178081443993404, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
       propertyPath: m_RootOrder
@@ -4191,14 +4179,6 @@ PrefabInstance:
     - target: {fileID: 1275178081443993405, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420206285012300938, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
-      propertyPath: _data
-      value: 
-      objectReference: {fileID: 11400000, guid: 4ef62dd63146a92479daf3c06b5c5805, type: 2}
-    - target: {fileID: 7420206285012300938, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}
-      propertyPath: _bulletTrailSpeed
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d0c698bc64f9c94d8e0de97af19d02d, type: 3}

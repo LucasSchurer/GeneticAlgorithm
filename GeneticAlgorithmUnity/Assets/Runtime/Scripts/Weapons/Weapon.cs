@@ -11,19 +11,24 @@ namespace Game.Weapons
         protected Data _data;
         protected EntityEventController _eventController;
         protected EntitySocketController _socketController;
+        protected Entity _entity;
         protected bool _canUse = true;
 
         protected virtual void Awake()
         {
             _eventController = GetComponent<EntityEventController>();
             _socketController = GetComponent<EntitySocketController>();
+            _entity = GetComponent<Entity>();
         }
+
         protected virtual void Start()
         {
             SetSocketsAndVFXs();
+            SetLayers();
         }
 
         protected abstract void SetSocketsAndVFXs();
+        protected abstract void SetLayers();
 
         protected virtual void OnEnable()
         {

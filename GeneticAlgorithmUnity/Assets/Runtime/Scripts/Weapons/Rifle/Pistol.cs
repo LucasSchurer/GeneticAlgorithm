@@ -7,9 +7,7 @@ namespace Game.Weapons
 {
     public class Pistol : Weapon<HitscanWeaponData>
     {
-        [SerializeField]
         private LayerMask _hitLayer;
-       
         private Transform _weaponFireSocket;
         private ParticleSystem _shootingParticleSystem;
 
@@ -27,6 +25,11 @@ namespace Game.Weapons
             {
                 _shootingParticleSystem = Instantiate(_data.AttackParticle, _weaponFireSocket);
             }
+        }
+
+        protected override void SetLayers()
+        {
+            _hitLayer = _entity.EnemyLayer | (1 << Constants.GroundLayer);
         }
 
         private void Fire(ref EntityEventContext ctx)
