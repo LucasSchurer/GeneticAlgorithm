@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Forcefield_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: a59a2861a6fd17940bf39b5626ff7963, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: f6890ed31658196499dd252f5baab6ef, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -20,6 +20,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _fillTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _scanlineTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -36,8 +44,31 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _enableFillTexture: 1
+    - _enableIntersection: 1
+    - _enableRimGlow: 1
+    - _enableRipple: 1
+    - _enableScanLine: 0
+    - _fill: 0.01
+    - _impactRippleAmplitude: 0
+    - _impactRippleMaxRadius: 0.1
+    - _impactRippleSpeed: 0
+    - _intersectionMultiplier: 1
+    - _intersectionOffset: 0.9
+    - _rimGlowNoiseDensity: 10
+    - _rimGlowNoiseSpeed: 0
+    - _rimPulseSpeed: 1
+    - _scanSize: 0.8
+    - _scanSpeed: 1
     m_Colors:
     - _Color: {r: 0, g: 0.1490196, b: 0.9882353, a: 0}
+    - _baseColor: {r: 0, g: 0.6196079, b: 0.9882354, a: 1}
+    - _fillOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _fillTiling: {r: 10, g: 10, b: 0, a: 0}
+    - _impactPoint: {r: 0, g: 0, b: 0, a: 0}
+    - _impactRippleDirection: {r: 0, g: 0, b: 1, a: 0}
+    - _rimColor: {r: 1.5706805, g: 1.5078533, b: 5.2565436, a: 0}
+    - _rimPower: {r: 1, g: 15, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4769596259451356801
 MonoBehaviour:
