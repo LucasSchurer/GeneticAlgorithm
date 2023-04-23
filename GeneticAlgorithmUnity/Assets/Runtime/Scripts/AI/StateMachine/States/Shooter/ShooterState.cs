@@ -62,7 +62,8 @@ namespace Game.AI
             if (_target)
             {
                 _lookDirection = (_target.position - _stateMachine.transform.position).normalized;
-                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { Direction = _lookDirection });
+
+                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { Movement = new EntityEventContext.MovementPacket() { LookDirection = _lookDirection }});
             }
         }
 

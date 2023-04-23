@@ -32,7 +32,7 @@ namespace Game.Weapons
                     projectile.Instantiate(gameObject, _data.Damage);
                 } else
                 {
-                    Projectile projectile = Instantiate(_projectile, ctx.Origin, Quaternion.LookRotation(ctx.Direction, Vector3.up));
+                    Projectile projectile = Instantiate(_projectile, transform.position, Quaternion.LookRotation(ctx.Movement.LookDirection, Vector3.up));
                     projectile.Instantiate(gameObject, _data.Damage);
                 }
                 

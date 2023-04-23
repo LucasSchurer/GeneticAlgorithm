@@ -40,7 +40,7 @@ namespace Game.Weapons
 
                 Vector3 trailEndPosition;
 
-                if (Physics.Raycast(_weaponFireSocket.position, ctx.Direction, out RaycastHit hit, _data.HitRange, _hitLayer))
+                if (Physics.Raycast(_weaponFireSocket.position, ctx.Movement.LookDirection, out RaycastHit hit, _data.HitRange, _hitLayer))
                 {
                     trailEndPosition = hit.point;
 
@@ -55,7 +55,7 @@ namespace Game.Weapons
                     Instantiate(_data.OnHitParticle, hit.point, Quaternion.identity)?.Play();
                 } else
                 {
-                    trailEndPosition = _weaponFireSocket.position + ctx.Direction * _data.HitRange;
+                    trailEndPosition = _weaponFireSocket.position + ctx.Movement.LookDirection * _data.HitRange;
                 }
 
                 TrailRenderer trail = Instantiate(_data.AttackTrail, _weaponFireSocket.position, Quaternion.identity);
