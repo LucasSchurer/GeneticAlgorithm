@@ -1,10 +1,11 @@
+using Game.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.ProceduralAnimation
 {
-    public class IKFeetSolver : MonoBehaviour
+    public class IKFeetSolver : MonoBehaviour, IEventListener
     {
         [SerializeField]
         private LayerMask _raycastLayer;
@@ -20,6 +21,9 @@ namespace Game.ProceduralAnimation
         private float _curveMultiplier;
         private Queue<IKTarget> _movingQueue;
         private bool _isProcessingMovement = false;
+
+        [SerializeField]
+        private EntityEventController _eventController;
 
         private void Awake()
         {
@@ -124,6 +128,37 @@ namespace Game.ProceduralAnimation
             p += tt * p2;
 
             return p;
+        }
+
+        private void OnEnable()
+        {
+            StartListening();
+        }
+
+        private void OnDisable()
+        {
+            StopListening();
+        }
+
+        public void StartListening()
+        {
+            if (_eventController)
+            {
+                _eventController.AddListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.Before);
+            }
+        }
+
+        private void OnDeath(ref EntityEventContext ctx)
+        {
+            gameObject.SetActive(false);
+        }
+
+        public void StopListening()
+        {
+            if (_eventController)
+            {
+                _eventController.RemoveListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.Before);
+            }
         }
 
         [System.Serializable]

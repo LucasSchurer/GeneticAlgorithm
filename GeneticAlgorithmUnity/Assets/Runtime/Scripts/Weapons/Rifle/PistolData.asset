@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PistolData
   m_EditorClassIdentifier: 
   _cooldown: 0.6
-  _damage: 0
+  _damage: 1
   _recoilStrength: 4
   _hitRange: 30
   _attackParticle: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}

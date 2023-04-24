@@ -39,6 +39,12 @@ namespace Game.TerrainGenerator
         private float _minHeight;
         private float _maxHeight;
 
+        [Header("Debug")]
+        [SerializeField]
+        private bool _generateAtStart = true;
+        [SerializeField]
+        private bool _autoUpdate = false;
+
         private Mesh _mesh;
         private Vector3[] _vertices;
         private int[] _triangles;
@@ -52,7 +58,10 @@ namespace Game.TerrainGenerator
                 _seed = Random.Range(-1000, 1000);
             }
 
-            GenerateTerrain();
+            if (_generateAtStart)
+            {
+                GenerateTerrain();
+            }
         }
 
         private float GetHeight(int x, int z)
@@ -216,7 +225,10 @@ namespace Game.TerrainGenerator
 
         private void OnValidate()
         {
-            GenerateTerrain();
+            if (_autoUpdate)
+            {
+                GenerateTerrain();
+            }
         }
     } 
 }

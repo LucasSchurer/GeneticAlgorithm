@@ -28,18 +28,16 @@ namespace Game.Entities.Shared
             explosionForce = _explosionForce;
             explosionRadius = Random.Range(_explosionRadiusInterval.x, _explosionRadiusInterval.y);
 
-            GetComponent<Collider>().enabled = false;
-            GetComponent<Rigidbody>().isKinematic = true;
-
             foreach (Rigidbody rb in _bodyParts)
             {
+                rb.transform.SetParent(null);
                 rb.isKinematic = false;
                 rb.GetComponent<Collider>().enabled = true;
-                rb.AddExplosionForce(explosionForce, impactPoint, explosionRadius);
-                rb.gameObject.layer = LayerMask.NameToLayer("Nothing");
+                rb.AddExplosionForce(explosionForce, transform.position + new Vector3(Random.Range(-1f, 1f), 0f, (Random.Range(-1f, 1f))), explosionRadius);
+                rb.gameObject.layer = LayerMask.NameToLayer("BodyPart");
             }
 
-            gameObject.layer = LayerMask.NameToLayer("Nothing");
+            gameObject.layer = LayerMask.NameToLayer("BodyPart");
         }
     } 
 }

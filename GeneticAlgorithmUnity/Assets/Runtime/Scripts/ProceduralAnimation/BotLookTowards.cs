@@ -1,12 +1,13 @@
 using Game.AI;
 using Game.Entities;
+using Game.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.ProceduralAnimation
 {
-    public class BotLookTowards : MonoBehaviour
+    public class BotLookTowards : MonoBehaviour, IEventListener
     {
         [SerializeField]
         private string _targetTag;
@@ -16,6 +17,9 @@ namespace Game.ProceduralAnimation
         [SerializeField]
         private AttributeController _attributeController;
         private NonPersistentAttribute _rotationSpeed;
+
+        [SerializeField]
+        private EntityEventController _eventController;
 
         private Vector3 DirectionToTarget => (_target.position - transform.position).normalized;
 
@@ -47,6 +51,36 @@ namespace Game.ProceduralAnimation
                 smoothRotation = Quaternion.Slerp(transform.rotation, smoothRotation, Time.fixedDeltaTime * _rotationSpeed.CurrentValue);
 
                 transform.rotation = Quaternion.Euler(new Vector3(0, smoothRotation.eulerAngles.y));
+            }
+        }
+        private void OnEnable()
+        {
+            StartListening();
+        }
+
+        private void OnDisable()
+        {
+            StopListening();
+        }
+
+        public void StartListening()
+        {
+            if (_eventController)
+            {
+                _eventController.AddListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.Before);
+            }
+        }
+
+        private void OnDeath(ref EntityEventContext ctx)
+        {
+            enabled = false;
+        }
+
+        public void StopListening()
+        {
+            if (_eventController)
+            {
+                _eventController.AddListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.Before);
             }
         }
     } 
