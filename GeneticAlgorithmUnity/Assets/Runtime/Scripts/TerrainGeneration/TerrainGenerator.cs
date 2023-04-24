@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.TerrainGenerator
@@ -15,6 +16,8 @@ namespace Game.TerrainGenerator
         private int _xSize = 20;
         [SerializeField]
         private int _zSize = 20;
+        [SerializeField]
+        private Gradient _gradient;
 
         [Header("Height")]
         [SerializeField]
@@ -33,30 +36,28 @@ namespace Game.TerrainGenerator
         private AnimationCurve _heightCurve;
         [SerializeField]
         private float _heightMultiplier = 2f;
+        private float _minHeight;
+        private float _maxHeight;
 
         private Mesh _mesh;
         private Vector3[] _vertices;
         private int[] _triangles;
         private Vector2[] _uv;
-        private float[,] _noiseMap;
-
+        private Color[] _colors;
 
         private void Start()
         {
-            GenerateTerrain();
-
             if (_generateRandomSeed)
             {
                 _seed = Random.Range(-1000, 1000);
             }
+
+            GenerateTerrain();
         }
 
         private float GetHeight(int x, int z)
         {
             Vector2[] octaveOffsets = GetOctaveOffsets();
-
-            float halfXSize = _xSize * 0.5f;
-            float halfZSize = _zSize * 0.5f;
 
             float amplitude = 1;
             float frequency = 1;
@@ -64,8 +65,8 @@ namespace Game.TerrainGenerator
 
             for (int i = 0; i < _octaves; i++)
             {
-                float sampleX = (x - halfXSize) / _scale * frequency + octaveOffsets[i].x;
-                float sampleZ = (z - halfZSize) / _scale * frequency + octaveOffsets[i].y;
+                float sampleX = x / _scale * frequency + octaveOffsets[i].x;
+                float sampleZ = z / _scale * frequency + octaveOffsets[i].y;
 
                 float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ) * 2 - 1;
 
@@ -114,11 +115,16 @@ namespace Game.TerrainGenerator
             CreateVertices();
             CreateTriangles();
 
+            CreateColorMap();
+
             UpdateMesh();
         }
 
         private void CreateVertices()
         {
+            _minHeight = float.MaxValue;
+            _maxHeight = float.MinValue;
+
             _vertices = new Vector3[(_xSize + 1) * (_zSize + 1)];
             _uv = new Vector2[(_xSize + 1) * (_zSize + 1)];
 
@@ -126,10 +132,36 @@ namespace Game.TerrainGenerator
             {
                 for (int x = 0; x <= _xSize; x++)
                 {
-                    _vertices[i] = new Vector3(x, GetHeight(x, z), z);
+                    float y = GetHeight(x, z);
+
+                    _vertices[i] = new Vector3(x, y, z);
                     _uv[i] = new Vector2(x / (float)_xSize, z / (float)_zSize);
+                    SetMinAndMaxHeight(y);
+
                     i++;
                 }
+            }
+        }
+
+        private void SetMinAndMaxHeight(float height)
+        {
+            if (height > _maxHeight)
+            {
+                _maxHeight = height;
+            } else if (height < _minHeight)
+            {
+                _minHeight = height;
+            }
+        }
+
+        private void CreateColorMap()
+        {
+            _colors = new Color[_vertices.Length];
+
+            for (int i = 0; i < _vertices.Length; i++)
+            {
+                float height = Mathf.InverseLerp(_minHeight, _maxHeight, _vertices[i].y);
+                _colors[i] = _gradient.Evaluate(height);
             }
         }
 
@@ -158,27 +190,6 @@ namespace Game.TerrainGenerator
 
                 vIndex++;
             }
-
-            /*int vert = 0;
-            int tris = 0;
-
-            for (int z = 0; z < _terrainSize.x; z++)
-            {
-                for (int x = 0; x < _terrainSize.x; x++)
-                {
-                    _triangles[tris + 0] = vert + 0;
-                    _triangles[tris + 1] = vert + _terrainSize.x + 1;
-                    _triangles[tris + 2] = vert + +1;
-                    _triangles[tris + 3] = vert + +1;
-                    _triangles[tris + 4] = vert + _terrainSize.x + 1;
-                    _triangles[tris + 5] = vert + _terrainSize.x + 2;
-
-                    tris++;
-                    vert += 6;
-                }
-
-                vert++;
-            }*/
         }
 
         private void UpdateMesh()
@@ -191,8 +202,11 @@ namespace Game.TerrainGenerator
             _mesh.name = "Terrain";
 
             _mesh.vertices = _vertices;
-            _mesh.triangles = _triangles;
+
             _mesh.uv = _uv;
+            _mesh.colors = _colors;
+
+            _mesh.triangles = _triangles;
 
             _mesh.RecalculateNormals();
             _mesh.RecalculateTangents();
