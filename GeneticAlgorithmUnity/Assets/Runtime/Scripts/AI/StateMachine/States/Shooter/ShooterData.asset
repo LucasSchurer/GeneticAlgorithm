@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ShooterData
   m_EditorClassIdentifier: 
   _transitions: []
-  _keepDistanceRange: {x: 5, y: 15}
+  _keepDistanceRange: {x: 0, y: 30}
