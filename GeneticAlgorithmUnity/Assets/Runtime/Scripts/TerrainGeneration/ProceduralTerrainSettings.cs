@@ -9,14 +9,13 @@ namespace Game.ProceduralTerrainGeneration
     {
         [Header("General")]
         [SerializeField]
-        private int _seed;
-        [SerializeField]
         private int _xSize = 20;
         [SerializeField]
         private int _zSize = 20;
         [SerializeField]
         private Gradient _gradient;
-        public Gradient Gradient => _gradient;
+        [SerializeField]
+        private Material _material;
 
         [Header("Height")]
         [SerializeField]
@@ -38,9 +37,10 @@ namespace Game.ProceduralTerrainGeneration
         private float _heightMultiplier = 2f;
 
         #region Getters and Setters
-        private int Seed { get => _seed; set => _seed = value; }
         public int XSize { get => _xSize; set => _xSize = value; }
         public int ZSize { get => _zSize; set => _zSize = value; }
+        public Gradient Gradient => _gradient;
+        public Material Material => _material;
         public float Scale { get => _scale; set => _scale = value; }
         public int Octaves { get => _octaves; set => _octaves = value; }
         public float Persistance { get => _persistance; set => _persistance = value; }

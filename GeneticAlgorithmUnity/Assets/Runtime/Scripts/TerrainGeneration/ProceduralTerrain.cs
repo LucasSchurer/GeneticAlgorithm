@@ -4,12 +4,14 @@ using UnityEngine;
 
 namespace Game.ProceduralTerrainGeneration
 {
+    [System.Serializable]
     public class ProceduralTerrain
     {
         [SerializeField]
-        private ProceduralTerrainSettings _settings;
-        [SerializeField]
         private int _seed;
+
+        private ProceduralTerrainSettings _settings;
+        
         private Mesh _mesh;
         private Vector3[] _vertices;
         private int[] _triangles;
@@ -19,9 +21,15 @@ namespace Game.ProceduralTerrainGeneration
         private float _maxHeight;
         private float _minHeight;
 
-        public ProceduralTerrain(int seed)
+        private int _xIndex;
+        private int _zIndex;
+
+        public ProceduralTerrain(int seed, ProceduralTerrainSettings settings, int xIndex, int zIndex)
         {
             _seed = seed;
+            _settings = settings;
+            _xIndex = xIndex;
+            _zIndex = zIndex;
         }
 
         public Mesh GenerateMesh()
@@ -41,7 +49,7 @@ namespace Game.ProceduralTerrainGeneration
         private void CreateVertices()
         {
             int xSize = _settings.XSize;
-            int zSize = _settings.ZSize; 
+            int zSize = _settings.ZSize;
 
             _minHeight = float.MaxValue;
             _maxHeight = float.MinValue;
@@ -74,9 +82,9 @@ namespace Game.ProceduralTerrainGeneration
             int tIndex = 0;
             int vIndex = 0;
 
-            for (int i = 0; i < _settings.XSize; i++)
+            for (int i = 0; i < zSize; i++)
             {
-                for (int j = 0; j < _settings.XSize; j++)
+                for (int j = 0; j < xSize; j++)
                 {
                     _triangles[tIndex + 0] = vIndex;
                     _triangles[tIndex + 1] = vIndex + xSize + 1;
@@ -134,8 +142,8 @@ namespace Game.ProceduralTerrainGeneration
 
             for (int i = 0; i < _settings.Octaves; i++)
             {
-                float sampleX = x / _settings.Scale * frequency + octaveOffsets[i].x;
-                float sampleZ = z / _settings.Scale * frequency + octaveOffsets[i].y;
+                float sampleX = (x + (_settings.XSize * _xIndex)) / _settings.Scale * frequency + octaveOffsets[i].x;
+                float sampleZ = (z + (_settings.ZSize * _zIndex)) / _settings.Scale * frequency + octaveOffsets[i].y;
 
                 float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ) * 2 - 1;
 

@@ -7,37 +7,21 @@ namespace Game.ProceduralTerrainGeneration
 {
     public class ProceduralTerrainGenerator : MonoBehaviour
     {
+        [Header("Settings")]
+        [SerializeField]
+        private ProceduralTerrainSettings _settings = new ProceduralTerrainSettings();
+
         [Header("General")]
         [SerializeField]
         private int _seed;
         [SerializeField]
         private bool _generateRandomSeed = true;
         [SerializeField]
-        private int _xSize = 20;
+        [Range(1, 10)]
+        private int _xSize = 1;
         [SerializeField]
-        private int _zSize = 20;
-        [SerializeField]
-        private Gradient _gradient;
-
-        [Header("Height")]
-        [SerializeField]
-        private float _scale = 1;
-        [SerializeField]
-        [Range(1, 15)]
-        private int _octaves = 1;
-        [SerializeField]
-        [Range(0f, 1f)]
-        private float _persistance = 1;
-        [SerializeField]
-        private float _lacunarity = 1;
-        [SerializeField]
-        private Vector2 _offset;
-        [SerializeField]
-        private AnimationCurve _heightCurve;
-        [SerializeField]
-        private float _heightMultiplier = 2f;
-        private float _minHeight;
-        private float _maxHeight;
+        [Range(1, 10)]
+        private int _zSize = 1;
 
         [Header("Debug")]
         [SerializeField]
@@ -45,11 +29,8 @@ namespace Game.ProceduralTerrainGeneration
         [SerializeField]
         private bool _autoUpdate = false;
 
-        private Mesh _mesh;
-        private Vector3[] _vertices;
-        private int[] _triangles;
-        private Vector2[] _uv;
-        private Color[] _colors;
+        private ProceduralTerrain[,] _terrains;
+        private Queue<GameObject> _childrenQueue;
 
         private void Start()
         {
@@ -60,174 +41,96 @@ namespace Game.ProceduralTerrainGeneration
 
             if (_generateAtStart)
             {
-                GenerateTerrain();
+                GenerateTerrains();
             }
         }
 
-        private float GetHeight(int x, int z)
+        private void GenerateTerrains()
         {
-            Vector2[] octaveOffsets = GetOctaveOffsets();
+            BuildChildrenQueue();
 
-            float amplitude = 1;
-            float frequency = 1;
-            float noiseHeight = 0;
+            _terrains = new ProceduralTerrain[_xSize, _zSize];
 
-            for (int i = 0; i < _octaves; i++)
+            for (int z = 0; z < _zSize; z++)
             {
-                float sampleX = x / _scale * frequency + octaveOffsets[i].x;
-                float sampleZ = z / _scale * frequency + octaveOffsets[i].y;
-
-                float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ) * 2 - 1;
-
-                noiseHeight += _heightCurve.Evaluate(perlinValue) * amplitude * _heightMultiplier;
-
-                amplitude *= _persistance;
-                frequency *= _lacunarity;
-            }
-
-            return noiseHeight;
-        }
-
-        private void ClampParameters()
-        {
-            if (_scale <= 0)
-            {
-                _scale = 0.0001f;
-            }
-
-            if (_octaves < 0)
-            {
-                _octaves = 0;
-            }
-        }
-
-        private Vector2[] GetOctaveOffsets()
-        {
-            System.Random pnrg = new System.Random(_seed);
-            Vector2[] octaveOffsets = new Vector2[_octaves];
-
-            for (int i = 0; i < _octaves; i++)
-            {
-                float offsetX = pnrg.Next(-100000, 100000) + _offset.x;
-                float offsetY = pnrg.Next(-100000, 100000) + _offset.y;
-
-                octaveOffsets[i] = new Vector2(offsetX, offsetY);
-            }
-
-            return octaveOffsets;
-        }
-
-        private void GenerateTerrain()
-        {
-            ClampParameters();
-
-            CreateVertices();
-            CreateTriangles();
-
-            CreateColorMap();
-
-            UpdateMesh();
-        }
-
-        private void CreateVertices()
-        {
-            _minHeight = float.MaxValue;
-            _maxHeight = float.MinValue;
-
-            _vertices = new Vector3[(_xSize + 1) * (_zSize + 1)];
-            _uv = new Vector2[(_xSize + 1) * (_zSize + 1)];
-
-            for (int i = 0, z = 0; z <= _zSize; z++)
-            {
-                for (int x = 0; x <= _xSize; x++)
+                for (int x = 0; x < _xSize; x++)
                 {
-                    float y = GetHeight(x, z);
-
-                    _vertices[i] = new Vector3(x, y, z);
-                    _uv[i] = new Vector2(x / (float)_xSize, z / (float)_zSize);
-                    SetMinAndMaxHeight(y);
-
-                    i++;
+                    GenerateTerrain(x, z);
                 }
             }
         }
 
-        private void SetMinAndMaxHeight(float height)
+        private void GenerateTerrain(int x, int z)
         {
-            if (height > _maxHeight)
+            GameObject go = RequestChild(x, z);
+
+            _terrains[x, z] = new ProceduralTerrain(_seed, _settings, x, z);
+
+            Mesh mesh = _terrains[x, z].GenerateMesh();
+
+            go.GetComponent<MeshFilter>().mesh = mesh;
+            go.GetComponent<MeshCollider>().sharedMesh = mesh;
+            go.GetComponent<MeshRenderer>().material = _settings.Material;
+        }
+
+        private void BuildChildrenQueue()
+        {
+            if (_childrenQueue != null)
             {
-                _maxHeight = height;
-            } else if (height < _minHeight)
+                _childrenQueue.Clear();
+            }
+            else
             {
-                _minHeight = height;
+                _childrenQueue = new Queue<GameObject>();
+            }
+
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+                _childrenQueue.Enqueue(child.gameObject);
             }
         }
 
-        private void CreateColorMap()
+        private GameObject RequestChild(int x, int z)
         {
-            _colors = new Color[_vertices.Length];
+            GameObject child;
 
-            for (int i = 0; i < _vertices.Length; i++)
+            if (_childrenQueue.Count > 0)
             {
-                float height = Mathf.InverseLerp(_minHeight, _maxHeight, _vertices[i].y);
-                _colors[i] = _gradient.Evaluate(height);
+                child = _childrenQueue.Dequeue();
+            } else
+            {
+                child = CreateTerrainGameObject();
             }
+
+            child.name = "Terrain" + x.ToString() + z.ToString();
+
+            child.SetActive(true);
+
+            Vector3 position = Vector3.zero;
+
+            position.x = _settings.XSize * x;
+            position.z = _settings.ZSize * z;
+
+            child.transform.localPosition = position;
+
+            return child;
         }
 
-        private void CreateTriangles()
+        private GameObject CreateTerrainGameObject()
         {
-            _triangles = new int[_xSize * _zSize * 6];
+            GameObject go = new GameObject("Terrain", typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider));
+            go.transform.SetParent(transform);
+            go.transform.position = Vector3.zero;
 
-            int tIndex = 0;
-            int vIndex = 0;
-
-            for (int i = 0; i < _xSize; i++)
-            {
-                for (int j = 0; j < _xSize; j++)
-                {
-                    _triangles[tIndex + 0] = vIndex;
-                    _triangles[tIndex + 1] = vIndex + _xSize + 1;
-                    _triangles[tIndex + 2] = vIndex + 1;
-
-                    _triangles[tIndex + 3] = vIndex + 1;
-                    _triangles[tIndex + 4] = vIndex + _xSize + 1;
-                    _triangles[tIndex + 5] = vIndex + _xSize + 2;
-
-                    tIndex += 6;
-                    vIndex++;
-                }
-
-                vIndex++;
-            }
-        }
-
-        private void UpdateMesh()
-        {
-            _mesh = new Mesh();
-            GetComponent<MeshFilter>().mesh = _mesh;
-            
-            _mesh.Clear();
-            
-            _mesh.name = "Terrain";
-
-            _mesh.vertices = _vertices;
-
-            _mesh.uv = _uv;
-            _mesh.colors = _colors;
-
-            _mesh.triangles = _triangles;
-
-            _mesh.RecalculateNormals();
-            _mesh.RecalculateTangents();
-
-            GetComponent<MeshCollider>().sharedMesh = _mesh;
+            return go;
         }
 
         private void OnValidate()
         {
             if (_autoUpdate)
             {
-                GenerateTerrain();
+                GenerateTerrains();
             }
         }
     } 
