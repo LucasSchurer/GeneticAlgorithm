@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Game.TerrainGenerator
+namespace Game.ProceduralTerrainGeneration
 {
-    public class TerrainGenerator : MonoBehaviour
+    public class ProceduralTerrainGenerator : MonoBehaviour
     {
         [Header("General")]
         [SerializeField]
