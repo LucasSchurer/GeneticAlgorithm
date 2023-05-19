@@ -114,6 +114,8 @@ namespace Game.ProceduralTerrainGeneration
 
             child.transform.localPosition = position;
 
+            child.gameObject.layer = gameObject.layer;
+
             return child;
         }
 

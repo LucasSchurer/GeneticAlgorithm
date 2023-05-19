@@ -51,14 +51,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FresnelPower: -0.42
+    - _FresnelPower: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _VertexFrequency: 1
     m_Colors:
-    - _BackColor: {r: 2.6734254, g: 3.0613673, b: 4.0196185, a: 1}
-    - _FresnelColor: {r: 0.051619805, g: 0.05363514, b: 0.3773585, a: 0}
+    - _BackColor: {r: 0.8100387, g: 0.12272653, b: 0.103165306, a: 1}
+    - _FresnelColor: {r: 0.6792453, g: 0.009611949, b: 0.009611944, a: 0}
     - _FronColor: {r: 1, g: 0.5518868, b: 0.5518868, a: 1}
-    - _FrontColor: {r: 2.4487627, g: 1.4207443, b: 1.4207443, a: 1}
+    - _FrontColor: {r: 2.4673893, g: 0.6866791, b: 0.6866791, a: 1}
     - _VertexAmount: {r: -1, g: -1, b: -1, a: 0}
   m_BuildTextureStacks: []

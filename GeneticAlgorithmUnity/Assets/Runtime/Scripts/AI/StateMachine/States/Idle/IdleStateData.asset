@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transitions:
   - state: 2
-    probability: 0
+    probability: 0.5
   - state: 3
-    probability: 1
+    probability: 0.5
   _turnTimeRange: {x: 0.8, y: 2}
   _detectionRange: 40
   _detectionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128

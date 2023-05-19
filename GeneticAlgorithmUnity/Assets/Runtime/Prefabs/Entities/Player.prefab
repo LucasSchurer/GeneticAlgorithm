@@ -50,6 +50,8 @@ GameObject:
   - component: {fileID: 5329705591458898508}
   - component: {fileID: 7915875188070422670}
   - component: {fileID: 7915875188070422671}
+  - component: {fileID: 8610675199159822521}
+  - component: {fileID: 5194863710281804544}
   - component: {fileID: 8596116012654226092}
   m_Layer: 7
   m_Name: Player
@@ -209,9 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f640b54e7f2894b85e050cccb5df34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _socketList:
-  - _type: 1
-    _transform: {fileID: 0}
+  _sockets: []
 --- !u!114 &7915875188070422670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraTransform: {fileID: 0}
+  _crosshair: {fileID: 0}
   _weaponBulletSocket: {fileID: 0}
   _jumpForce: 0
   _usingGamepad: 0
@@ -253,6 +254,35 @@ MonoBehaviour:
   _groundCheckOffset: {x: 0, y: -1, z: 0}
   _fallMultiplier: -5
   _isGrounded: 0
+--- !u!114 &8610675199159822521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7915875188070422704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4a3bcd8f336f34cac6292dbf0f3d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health:
+    _type: 0
+    _maxValue: 0
+    _minValue: 0
+    _currentValue: 0
+--- !u!114 &5194863710281804544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7915875188070422704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ad329e2fb59d247ac369db059bbfab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8596116012654226092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +296,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 4ef62dd63146a92479daf3c06b5c5805, type: 2}
-  _hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
