@@ -26,6 +26,7 @@ namespace Game.Entities.Player
             public Vector3 lookDirection;
 
             public bool isPressingPrimaryAction;
+            public bool isPressingSecondaryAction;
         }
 
         [SerializeField]
@@ -63,7 +64,7 @@ namespace Game.Entities.Player
         {
             UpdateInputData();
 
-            if (_inputData.isPressingPrimaryAction && _eventController)
+            if ((_inputData.isPressingPrimaryAction || _inputData.isPressingSecondaryAction) && _eventController)
             {
                 EntityEventContext context = new EntityEventContext();
                 context.Movement = new EntityEventContext.MovementPacket() {
@@ -72,7 +73,15 @@ namespace Game.Entities.Player
                     LookDirection = GetLookDirection()
                 };
 
-                _eventController.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, context);
+                if (_inputData.isPressingPrimaryAction)
+                {
+                    _eventController.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, context);
+                }
+
+                if (_inputData.isPressingSecondaryAction)
+                {
+                    _eventController.TriggerEvent(EntityEventType.OnSecondaryActionPerformed, context);
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -108,6 +117,7 @@ namespace Game.Entities.Player
             _inputData.movementDirection.x = axis.x;
             _inputData.movementDirection.z = axis.y;
             _inputData.isPressingPrimaryAction = _playerInput.Gameplay.PrimaryButton.IsPressed();
+            _inputData.isPressingSecondaryAction = _playerInput.Gameplay.SecondaryButton.IsPressed();
         }
 
         private void SetLookDirection()

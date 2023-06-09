@@ -23,6 +23,8 @@ namespace Game.AI
         private bool _canMove = true;
         private bool _hasStarted = false;
 
+        public EntityEventController EventController => _eventController;
+
         private void Awake()
         {
             _eventController = GetComponent<EntityEventController>();

@@ -1,3 +1,4 @@
+using Game.Events;
 using UnityEngine;
 
 namespace Game.AI

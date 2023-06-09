@@ -1,13 +1,14 @@
 using Game.Events;
 using Game.Projectiles;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Weapons
 {
-    public class PhysicalProjectileLauncher : Weapon<PhysicalProjectileLauncherData>
+    public class GrenadeLauncher : Weapon<GrenadeLauncherData>
     {
+        public UnityEngine.Events.UnityAction explodeAll;
+
         private LayerMask _hitLayer;
         private Transform _weaponFireSocket;
 
@@ -22,7 +23,6 @@ namespace Game.Weapons
             _hitLayer = _entity.EnemyLayer | (1 << Constants.GroundLayer);
         }
 
-
         protected override void SetSocketsAndVFXs()
         {
             _weaponFireSocket = _socketController.GetSocket(Entities.Shared.EntitySocketType.WeaponFire);
@@ -35,10 +35,10 @@ namespace Game.Weapons
                 ctx.Weapon = new EntityEventContext.WeaponPacket() { RecoilStrength = _data.RecoilStrength };
                 ctx.EventController.TriggerEvent(EntityEventType.OnWeaponAttack, ctx);
 
-                PhysicalProjectile physicalProjectile = Instantiate(_data.PhysicalProjectile, _weaponFireSocket.position, transform.rotation);
-                physicalProjectile.Initialize(_data.Damage, _hitLayer, _entity.EnemyLayer, ctx.Owner);
+                Grenade grenade = Instantiate(_data.Grenade, _weaponFireSocket.position, transform.rotation);
+                grenade.Initialize(this, _data.BaseColor, _data.Damage, _data.ExplosionRadius, _data.ExplosionTimer, _hitLayer, _entity.EnemyLayer, ctx.Owner);
 
-                physicalProjectile.Rigidbody.AddForce(ctx.Movement.LookDirection * _data.LaunchStrength, ForceMode.Impulse);
+                grenade.Rigidbody.AddForce(ctx.Movement.LookDirection * _data.LaunchStrength, ForceMode.Impulse);
 
                 StartCoroutine(Recharge());
             }
@@ -53,18 +53,31 @@ namespace Game.Weapons
             _canUse = true;
         }
 
+        private void ExplodeAllGrenades(ref EntityEventContext ctx)
+        {
+            explodeAll?.Invoke();
+        }
+
         public override void StartListening()
         {
             base.StartListening();
 
-            _eventController?.AddListener(EntityEventType.OnPrimaryActionPerformed, Fire);
+            if (_eventController)
+            {
+                _eventController.AddListener(EntityEventType.OnPrimaryActionPerformed, Fire);
+                _eventController.AddListener(EntityEventType.OnSecondaryActionPerformed, ExplodeAllGrenades);
+            }
         }
 
         public override void StopListening()
         {
             base.StopListening();
 
-            _eventController?.RemoveListener(EntityEventType.OnPrimaryActionPerformed, Fire);
+            if (_eventController)
+            {
+                _eventController.RemoveListener(EntityEventType.OnPrimaryActionPerformed, Fire);
+                _eventController.RemoveListener(EntityEventType.OnSecondaryActionPerformed, ExplodeAllGrenades);
+            }
         }
     } 
 }

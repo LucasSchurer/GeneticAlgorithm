@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d00370297755c404fadf7c2876e346d3, type: 3}
-  m_Name: GrenadeLauncherData
+  m_Script: {fileID: 11500000, guid: cc55d11d63041aa40a47f577936f01b6, type: 3}
+  m_Name: ShooterStateData
   m_EditorClassIdentifier: 
-  _cooldown: 1
-  _damage: 15
-  _recoilStrength: 15
-  _physicalProjectile: {fileID: -2514374106538567625, guid: a4f8e4edd00985c4682bc5a2964aa4bb, type: 3}
-  _launchStrength: 15
+  _transitions: []
+  _keepDistanceRange: {x: 5, y: 30}

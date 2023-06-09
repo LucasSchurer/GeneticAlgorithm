@@ -9,7 +9,6 @@ namespace Game.AI
     public class ShooterState : State
     {
         private ShooterStateData _data;
-        private EntityEventController _eventController;
         private MovementController _movementController;
         private Transform _target;
         private Vector3 _lookDirection;
@@ -52,7 +51,6 @@ namespace Game.AI
         public override void StateStart()
         {
             _target = GameObject.FindGameObjectWithTag("Player").transform;
-            _eventController = _stateMachine.GetComponent<EntityEventController>();
             _keepDistance = Random.Range(_data.KeepDistanceRange.x, _data.KeepDistanceRange.y);
             _movementController = _stateMachine.GetComponent<MovementController>();
         }
@@ -63,7 +61,7 @@ namespace Game.AI
             {
                 _lookDirection = (_target.position - _stateMachine.transform.position).normalized;
 
-                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { Movement = new EntityEventContext.MovementPacket() { LookDirection = _lookDirection }});
+                _stateMachine.EventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { Movement = new EntityEventContext.MovementPacket() { LookDirection = _lookDirection }});
             }
         }
 
