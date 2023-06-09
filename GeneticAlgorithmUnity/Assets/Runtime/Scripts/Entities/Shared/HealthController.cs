@@ -38,7 +38,7 @@ namespace Game.Entities.Shared
         {
             if (!_isInvulnerable)
             {
-                _health.CurrentValue += ctx.HealthModifier;
+                _health.CurrentValue -= ctx.Damage.Damage;
 
                 if (_health.CurrentValue <= 0)
                 {

@@ -8,6 +8,7 @@ namespace Game
 
         #region Layers
         public const int GroundLayer = 12;
+        public const int BodyPartLayer = 13;
         #endregion
     }
 }

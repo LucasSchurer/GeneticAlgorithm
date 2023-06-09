@@ -37,7 +37,7 @@ namespace Game.Entities.Shared
         {
             if (_eventController != null)
             {
-                _eventController.AddListener(EntityEventType.OnDeath, OnDeath);
+                _eventController.AddListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.After);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Game.Entities.Shared
         {
             if (_eventController != null)
             {
-                _eventController.RemoveListener(EntityEventType.OnDeath, OnDeath);
+                _eventController.RemoveListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.After);
             }
         }
     } 

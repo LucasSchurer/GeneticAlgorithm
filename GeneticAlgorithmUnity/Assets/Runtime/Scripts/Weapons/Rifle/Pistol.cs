@@ -51,8 +51,15 @@ namespace Game.Weapons
 
                     if (other != null) 
                     {
-                        other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, HealthModifier = -_data.Damage });
-                        _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, HealthModifier = -_data.Damage });
+                        EntityEventContext.DamagePacket damagePacket = new EntityEventContext.DamagePacket()
+                        {
+                            Damage = _data.Damage,
+                            ImpactPoint = hit.point,
+                            HitDirection = ctx.Movement.LookDirection
+                        };
+
+                        other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, Damage = damagePacket });
+                        _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, Damage = damagePacket });
                     }
 
                     Instantiate(_data.OnHitParticle, hit.point, Quaternion.identity)?.Play();

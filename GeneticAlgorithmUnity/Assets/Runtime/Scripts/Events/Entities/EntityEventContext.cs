@@ -8,12 +8,14 @@ namespace Game.Events
 
         private MovementPacket _movementPacket;
         private WeaponPacket _weaponPacket;
+        private DamagePacket _damagePacket;
 
         private float _healthModifier;
 
         public EntityEventController EventController { get => _eventController; set => _eventController = value; }
         public MovementPacket Movement { get => _movementPacket; set => _movementPacket = value; }
         public WeaponPacket Weapon { get => _weaponPacket; set => _weaponPacket = value; }
+        public DamagePacket Damage { get => _damagePacket; set => _damagePacket = value; }
 
         public float HealthModifier { get => _healthModifier; set => _healthModifier = value; }
 
@@ -35,6 +37,18 @@ namespace Game.Events
             private float _recoilStrength = 0f;
 
             public float RecoilStrength { get => _recoilStrength; set => _recoilStrength = value; }
+        }
+
+        public class DamagePacket
+        {
+            private float _damage = 0f;
+            private Vector3 _impactPoint = Vector3.zero;
+            private Vector3 _hitDirection = Vector3.zero;
+
+            public float Damage { get => _damage; set => _damage = value; }
+            public Vector3 ImpactPoint { get => _impactPoint; set => _impactPoint = value; }
+            public Vector3 HitDirection { get => _hitDirection; set => _hitDirection = value; }
+
         }
     }
 }
