@@ -268,6 +268,10 @@ PrefabInstance:
       propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198856239026640498, guid: 4a7228474c4668343a1dac7da5177771, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 199756426985724656, guid: 4a7228474c4668343a1dac7da5177771, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

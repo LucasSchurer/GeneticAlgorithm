@@ -112,7 +112,7 @@ namespace Game.Entities.Shared
 
         public void Move(Vector3 direction)
         {
-            if (direction != Vector3.zero && _rb != null)
+            if (direction != Vector3.zero && _rb != null && enabled)
             {
                 bool isOnSlope = IsOnSlope();
 
