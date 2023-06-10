@@ -42,12 +42,6 @@ namespace Game.ProceduralAnimation
 
         private void Update()
         {
-/*            foreach (IKTarget target in _targets)
-            {
-                Debug.DrawRay(target.RaycastOrigin.position, (target.RaycastOrigin.transform.up * -1) * _maxRayDistance, Color.green);
-                Debug.DrawLine(target.PossiblePosition, target.IkTarget.position, Color.cyan);
-            }
-*/
             foreach (IKTarget target in _targets)
             {
                 if (GroundRaycast(target.RaycastOrigin.position, target.RaycastOrigin.transform.up * -1, out Vector3 hitPosition))
@@ -88,7 +82,7 @@ namespace Game.ProceduralAnimation
 
             while (timeElapsed < _interpolationTime)
             {
-                target.IkTarget.position = CalculateQuadraticBezierPoint(currentPosition, medianPosition, target.PossiblePosition, timeElapsed / _interpolationTime);
+                target.IkTarget.position = MathFunctions.QuadraticBezierCurve(currentPosition, medianPosition, target.PossiblePosition, timeElapsed / _interpolationTime);
                 timeElapsed += Time.deltaTime;
                 yield return null;
             }
@@ -116,19 +110,6 @@ namespace Game.ProceduralAnimation
                 return false;
             }
         }       
-
-        private Vector3 CalculateQuadraticBezierPoint(Vector3 p0, Vector3 p1, Vector3 p2, float t)
-        {
-            float u = 1f - t;
-            float tt = t * t;
-            float uu = u * u;
-
-            Vector3 p = uu * p0;
-            p += 2 * u * t * p1;
-            p += tt * p2;
-
-            return p;
-        }
 
         private void OnEnable()
         {
