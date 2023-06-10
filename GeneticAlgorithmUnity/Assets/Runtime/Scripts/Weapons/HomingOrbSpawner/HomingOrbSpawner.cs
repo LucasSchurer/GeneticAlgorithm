@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace Game.Weapons
 {
-    public abstract class HomingOrbSpawner<Data> : Weapon<Data> 
-        where Data : HomingOrbSpawnerData
+    public class HomingOrbSpawner : Weapon<HomingOrbSpawnerData> 
     {
         protected LayerMask _hitLayer;
         protected Transform _weaponFireSocket;
@@ -23,21 +22,27 @@ namespace Game.Weapons
             _weaponFireSocket = _socketController.GetSocket(Entities.Shared.EntitySocketType.WeaponFire);
         }
 
-        protected abstract void Fire(ref EntityEventContext ctx);
-
-        protected virtual HomingOrb InstantiateAndInitializeHomingOrb(HomingOrb orbPrefab, LayerMask entityLayer, Vector3 spawnPosition, Quaternion rotation)
+        protected virtual void Fire(ref EntityEventContext ctx)
         {
-            HomingOrb orb = Instantiate(orbPrefab, spawnPosition, rotation);
+            if (_canUse)
+            {
+                ctx.Weapon = new EntityEventContext.WeaponPacket() { RecoilStrength = _data.RecoilStrength };
+                ctx.EventController.TriggerEvent(EntityEventType.OnWeaponAttack, ctx);
 
-            orb.Initialize(gameObject, _data, _hitLayer, entityLayer);
+                _canUse = false;
+                StartCoroutine(SpawnCoroutine());
+            }
+        }
 
-            return orb;
+        protected IEnumerator SpawnCoroutine()
+        {
+            yield return StartCoroutine(_data.OrbSpawn.Spawn(this, _data));
+
+            StartCoroutine(Recharge());
         }
 
         protected virtual IEnumerator Recharge()
         {
-            _canUse = false;
-
             yield return new WaitForSeconds(_data.Cooldown);
 
             _canUse = true;
@@ -67,5 +72,7 @@ namespace Game.Weapons
         {
             StopAllCoroutines();
         }
+
+        protected override void SetLayers() { }
     }
 }

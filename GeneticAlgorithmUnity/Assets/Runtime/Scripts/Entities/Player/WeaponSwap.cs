@@ -8,7 +8,7 @@ namespace Game.Entities.Player
     public class WeaponSwap : MonoBehaviour
     {
         [SerializeField]
-        private DamageHomingOrbSpawner _damageHomingOrbSpawner;
+        private HomingOrbSpawner _damageHomingOrbSpawner;
         [SerializeField]
         private GrenadeLauncher _grenadeLauncher;
         [SerializeField]

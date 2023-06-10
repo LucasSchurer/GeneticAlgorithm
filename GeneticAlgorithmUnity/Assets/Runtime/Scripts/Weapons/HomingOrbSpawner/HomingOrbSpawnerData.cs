@@ -6,9 +6,19 @@ namespace Game.Weapons
     [CreateAssetMenu(menuName = Constants.WeaponDataMenuName + "/HomingOrbSpawnerData")]
     public class HomingOrbSpawnerData : WeaponData
     {
+        [Header("Layers")]
+        [SerializeField]
+        private LayerMask _hitLayer;
+        [SerializeField]
+        private LayerMask _targetLayer;
+
         [Header("Orb Settings")]
         [SerializeField]
         private HomingOrb _orb;
+        [SerializeField]
+        private int _orbAmount;
+        [SerializeField]
+        private float _spawnInterval;
         [SerializeField]
         private float _orbSpeed;
         [SerializeField]
@@ -29,7 +39,17 @@ namespace Game.Weapons
         [SerializeField]
         private Material _hitMaterial;
 
+        [Header("Orb Custom Actions")]
+        [SerializeField]
+        private HomingOrbOnHit _orbOnHit;
+        [SerializeField]
+        private HomingOrbSpawn _orbSpawn;
+
+        public LayerMask HitLayer => _hitLayer;
+        public LayerMask TargetLayer => _targetLayer;
         public HomingOrb Orb => _orb;
+        public int OrbAmount => _orbAmount;
+        public float SpawnInterval => _spawnInterval;
         public float OrbSpeed => _orbSpeed;
         public bool HardLock => _hardLock;
         public float FindTargetRadius => _findTargetRadius;
@@ -38,6 +58,8 @@ namespace Game.Weapons
         public Material OrbMaterial => _orbMaterial;
         public Material TrailMaterial => _trailMaterial;
         public Material HitMaterial => _hitMaterial;
+        public HomingOrbOnHit OrbOnHit => _orbOnHit;
+        public HomingOrbSpawn OrbSpawn => _orbSpawn;
     }
 }
 

@@ -40,12 +40,11 @@ namespace Game.Entities.Shared
             {
                 EntityEventContext otherCtx = new EntityEventContext()
                 {
-                    Owner = ctx.Other,
                     Other = ctx.Owner,
                     Healing = ctx.Healing
                 };
 
-                ctx.Other.GetComponent<EntityEventController>().TriggerEvent(EntityEventType.OnHealtChange, otherCtx);
+                ctx.Other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHealtChange, otherCtx);
             }
         }
 

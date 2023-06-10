@@ -6,13 +6,21 @@ using UnityEngine;
 
 namespace Game.Projectiles
 {
-    public class HomingOrb : PhysicalProjectile
+    public class HomingOrb : MonoBehaviour
     {
+        [Header("Settings")]
         [SerializeField]
         private float _collisionRadius;
+        [Header("References")]
+        [SerializeField]
+        private ParticleSystem _hitParticles;
+        [SerializeField]
+        private ParticleSystemRenderer _hitParticlesRenderer;
+
+        private GameObject _owner;
+        private LayerMask _collisionLayer;
 
         private HomingOrbSpawnerData _data;
-        private DamageHomingOrbSpawner _weapon;
         private LayerMask _entityLayer;
 
         private bool _isSeeking = false;
@@ -24,18 +32,12 @@ namespace Game.Projectiles
         private TrailRenderer _trailRenderer;
         private Renderer _renderer;
 
-        [SerializeField]
-        private ParticleSystem _hitParticles;
-        [SerializeField]
-        private ParticleSystemRenderer _hitParticlesRenderer;
-
         public void Initialize(GameObject owner, HomingOrbSpawnerData data, LayerMask collisionLayer, LayerMask entityLayer)
         {
             _data = data;
             _entityLayer = entityLayer;
             _collisionLayer = collisionLayer;
             _owner = owner;
-            _damage = _data.Damage;
 
             _hitParticlesRenderer.material = _data.HitMaterial;
 
@@ -110,27 +112,10 @@ namespace Game.Projectiles
         private void CheckCollisions()
         {
             bool hasHit = false;
+
             foreach (Collider hit in Physics.OverlapSphere(transform.position, _collisionRadius, _collisionLayer))
             {
-                EntityEventController other = hit.transform.GetComponent<EntityEventController>();
-
-                if (other != null)
-                {
-                    EntityEventContext.DamagePacket damagePacket = new EntityEventContext.DamagePacket()
-                    {
-                        DamageType = Events.DamageType.Default,
-                        Damage = _damage,
-                        ImpactPoint = hit.transform.position,
-                        HitDirection = (hit.transform.position - transform.position).normalized
-                    };
-
-                    other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, Damage = damagePacket });
-                    
-                    if (_owner)
-                    {
-                        _owner.GetComponent<EntityEventController>().TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, Damage = damagePacket });
-                    }
-                }
+                _data.OrbOnHit.OnOrbHit(_owner, hit.transform.gameObject, hit, gameObject);
 
                 hasHit = true;
             }

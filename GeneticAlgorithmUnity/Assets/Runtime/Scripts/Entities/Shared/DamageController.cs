@@ -39,7 +39,7 @@ namespace Game.Entities.Shared
 
         private void OnHitDealt(ref EntityEventContext ctx)
         {
-            if (ctx.Other != null && ctx.Damage.DamageType != Events.DamageType.None)
+            if (ctx.Other != null && ctx.Damage != null && ctx.Damage.DamageType != Events.DamageType.None)
             {
                 EntityEventContext otherCtx = new EntityEventContext()
                 {
