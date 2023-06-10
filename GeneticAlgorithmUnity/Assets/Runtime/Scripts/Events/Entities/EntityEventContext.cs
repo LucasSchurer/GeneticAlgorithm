@@ -9,6 +9,7 @@ namespace Game.Events
         private MovementPacket _movementPacket;
         private WeaponPacket _weaponPacket;
         private DamagePacket _damagePacket;
+        private HealingPacket _healingPacket;
 
         private float _healthModifier;
 
@@ -16,6 +17,7 @@ namespace Game.Events
         public MovementPacket Movement { get => _movementPacket; set => _movementPacket = value; }
         public WeaponPacket Weapon { get => _weaponPacket; set => _weaponPacket = value; }
         public DamagePacket Damage { get => _damagePacket; set => _damagePacket = value; }
+        public HealingPacket Healing { get => _healingPacket; set => _healingPacket = value; }
 
         public float HealthModifier { get => _healthModifier; set => _healthModifier = value; }
 
@@ -42,13 +44,23 @@ namespace Game.Events
         public class DamagePacket
         {
             private float _damage = 0f;
+            private DamageType _damageType = DamageType.None;
             private Vector3 _impactPoint = Vector3.zero;
             private Vector3 _hitDirection = Vector3.zero;
 
             public float Damage { get => _damage; set => _damage = value; }
+            public DamageType DamageType { get => _damageType; set => _damageType = value; }
             public Vector3 ImpactPoint { get => _impactPoint; set => _impactPoint = value; }
             public Vector3 HitDirection { get => _hitDirection; set => _hitDirection = value; }
+        }
 
+        public class HealingPacket
+        {
+            private float _healing = 0f;
+            private HealingType _healingType = HealingType.None;
+
+            public float Healing { get => _healing; set => _healing = value; }
+            public HealingType HealingType { get => _healingType; set => _healingType = value; }
         }
     }
 }

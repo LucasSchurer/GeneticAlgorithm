@@ -37,7 +37,32 @@ namespace Game.Entities.Shared
             }
         }
 
-        private void OnHitTaken(ref EntityEventContext ctx)
+        private void OnHealthChange(ref EntityEventContext ctx)
+        {
+            if (ctx.Healing != null && ctx.Healing.HealingType != HealingType.None)
+            {
+                Heal(ref ctx);
+            }
+
+            if (ctx.Damage != null && ctx.Damage.DamageType != Events.DamageType.None)
+            {
+                Damage(ref ctx);
+            }
+        }
+
+        private void Heal(ref EntityEventContext ctx)
+        {
+            _health.CurrentValue += ctx.Healing.Healing;
+
+            if (_healthBar)
+            {
+                Vector3 scale = _healthBar.localScale;
+                scale.x = _health.CurrentValue / _health.MaxValue;
+                _healthBar.localScale = scale;
+            }
+        }
+
+        private void Damage(ref EntityEventContext ctx)
         {
             if (!_isInvulnerable)
             {
@@ -82,7 +107,7 @@ namespace Game.Entities.Shared
         {
             if (_eventController != null)
             {
-                _eventController.AddListener(EntityEventType.OnHitTaken, OnHitTaken);
+                _eventController.AddListener(EntityEventType.OnHealtChange, OnHealthChange);
             }
         }
 
@@ -90,7 +115,7 @@ namespace Game.Entities.Shared
         {
             if (_eventController != null)
             {
-                _eventController.RemoveListener(EntityEventType.OnHitTaken, OnHitTaken);
+                _eventController.RemoveListener(EntityEventType.OnHealtChange, OnHealthChange);
             }
         }
     } 

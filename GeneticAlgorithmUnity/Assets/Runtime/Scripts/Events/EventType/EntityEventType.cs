@@ -7,6 +7,7 @@ namespace Game.Events
         OnDeath,
         OnPrimaryActionPerformed,
         OnWeaponAttack,
-        OnSecondaryActionPerformed
+        OnSecondaryActionPerformed,
+        OnHealtChange
     } 
 }

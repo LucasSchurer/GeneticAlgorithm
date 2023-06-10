@@ -118,6 +118,7 @@ namespace Game.Projectiles
                 {
                     EntityEventContext.DamagePacket damagePacket = new EntityEventContext.DamagePacket()
                     {
+                        DamageType = Events.DamageType.Default,
                         Damage = _damage,
                         ImpactPoint = hit.transform.position,
                         HitDirection = (hit.transform.position - transform.position).normalized
