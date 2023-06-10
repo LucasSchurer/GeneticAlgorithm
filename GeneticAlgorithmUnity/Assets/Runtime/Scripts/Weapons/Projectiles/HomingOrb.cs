@@ -68,13 +68,18 @@ namespace Game.Projectiles
                     validObjects.Add(hits[i].transform);
                 }
 
-                _target = validObjects[Random.Range(0, validObjects.Count - 1)];
-                _directionToTarget = (_target.position - transform.position).normalized;
+                if (validObjects.Count > 0)
+                {
+                    _target = validObjects[Random.Range(0, validObjects.Count - 1)];
+                    _directionToTarget = (_target.position - transform.position).normalized;
 
-                yield return new WaitForSeconds(_data.StartSeekingTime);
+                    yield return new WaitForSeconds(_data.StartSeekingTime);
 
-                _isSeeking = true;
-
+                    _isSeeking = true;
+                } else
+                {
+                    DestroyOrb();
+                }
             } else
             {
                 DestroyOrb();
