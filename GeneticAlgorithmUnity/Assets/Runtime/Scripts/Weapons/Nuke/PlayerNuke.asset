@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerNuke
   m_EditorClassIdentifier: 
   _cooldown: 5
-  _damage: 10
+  _damage: 5
   _recoilStrength: 0
   _maxDistance: 90
   _radius: 10
@@ -22,4 +22,3 @@ MonoBehaviour:
   _baseColor: {r: 0, g: 0.02745098, b: 1, a: 0}
   _lineRendererMaterial: {fileID: 2100000, guid: 3751b8f445c70ce40a9158ac2a0c8cc7, type: 2}
   _explosionTime: 5
-  _spawnTime: 0.5

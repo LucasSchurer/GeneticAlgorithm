@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00370297755c404fadf7c2876e346d3, type: 3}
   m_Name: EnemyGrenadeLauncher
   m_EditorClassIdentifier: 
-  _cooldown: 3
+  _cooldown: 2
   _damage: 3
   _recoilStrength: 0
   _grenade: {fileID: -2514374106538567625, guid: a4f8e4edd00985c4682bc5a2964aa4bb, type: 3}
   _launchStrength: 20
-  _explosionRadius: 2
+  _explosionRadius: 3
   _explosionTimer: 5
   _baseColor: {r: 1, g: 0, b: 0, a: 0}

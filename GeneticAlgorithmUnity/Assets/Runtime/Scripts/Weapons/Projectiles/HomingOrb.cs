@@ -1,6 +1,7 @@
 using Game.Events;
 using Game.Weapons;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Projectiles
@@ -53,23 +54,21 @@ namespace Game.Projectiles
 
             Collider[] hits = Physics.OverlapSphere(transform.position, _data.FindTargetRadius, _entityLayer);
 
-            if (hits.Length > 1)
+            if (hits.Length > 0)
             {
-                Transform[] validObjects = new Transform[hits.Length - 1];
-                int currentIndex = 0;
+                List<Transform> validObjects = new List<Transform>();
 
-                for (int i = 0; i < hits.Length && currentIndex < validObjects.Length; i++)
+                for (int i = 0; i < hits.Length; i++)
                 {
-                    if (hits[i].transform == transform)
+                    if (_owner != null && hits[i].transform == _owner.transform)
                     {
                         continue;
                     }
 
-                    validObjects[currentIndex] = hits[i].transform;
-                    currentIndex++;
+                    validObjects.Add(hits[i].transform);
                 }
 
-                _target = validObjects[Random.Range(0, validObjects.Length - 1)];
+                _target = validObjects[Random.Range(0, validObjects.Count - 1)];
                 _directionToTarget = (_target.position - transform.position).normalized;
 
                 yield return new WaitForSeconds(_data.StartSeekingTime);
@@ -145,6 +144,11 @@ namespace Game.Projectiles
 
             _canUpdate = false;
             Destroy(gameObject, _hitParticles.main.duration);
+        }
+
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
         }
     } 
 }

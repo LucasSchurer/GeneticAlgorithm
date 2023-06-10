@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerGrenadeLauncher
   m_EditorClassIdentifier: 
   _cooldown: 1
-  _damage: 15
+  _damage: 2
   _recoilStrength: 15
   _grenade: {fileID: -2514374106538567625, guid: a4f8e4edd00985c4682bc5a2964aa4bb, type: 3}
   _launchStrength: 23

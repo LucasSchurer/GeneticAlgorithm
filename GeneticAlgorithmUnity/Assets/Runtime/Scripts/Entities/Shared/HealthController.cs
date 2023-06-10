@@ -13,6 +13,9 @@ namespace Game.Entities.Shared
         private EntityEventController _eventController;
         private AttributeController _attributeController;
 
+        [SerializeField]
+        private Transform _healthBar;
+
         private bool _isInvulnerable = false;
 
         private void Awake()
@@ -39,6 +42,13 @@ namespace Game.Entities.Shared
             if (!_isInvulnerable)
             {
                 _health.CurrentValue -= ctx.Damage.Damage;
+
+                if (_healthBar)
+                {
+                    Vector3 scale = _healthBar.localScale;
+                    scale.x = _health.CurrentValue / _health.MaxValue;
+                    _healthBar.localScale = scale;
+                }
 
                 if (_health.CurrentValue <= 0)
                 {

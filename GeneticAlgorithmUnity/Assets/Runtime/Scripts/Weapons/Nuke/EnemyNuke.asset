@@ -16,10 +16,9 @@ MonoBehaviour:
   _damage: 5
   _recoilStrength: 0
   _maxDistance: 90
-  _radius: 5
+  _radius: 10
   _beacon: {fileID: 324734715273941630, guid: 66ef8631fddb4874dae817d92f63f203, type: 3}
   _npcDetectionRange: 50
   _baseColor: {r: 1, g: 0, b: 0, a: 0}
   _lineRendererMaterial: {fileID: 2100000, guid: c88291d91cea01a43933924869cbabba, type: 2}
   _explosionTime: 7
-  _spawnTime: 0.5
