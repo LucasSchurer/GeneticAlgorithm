@@ -54,12 +54,7 @@ namespace Game.Entities.Shared
         {
             _health.CurrentValue += ctx.Healing.Healing;
 
-            if (_healthBar)
-            {
-                Vector3 scale = _healthBar.localScale;
-                scale.x = _health.CurrentValue / _health.MaxValue;
-                _healthBar.localScale = scale;
-            }
+            ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
         }
 
         private void Damage(ref EntityEventContext ctx)
@@ -68,17 +63,12 @@ namespace Game.Entities.Shared
             {
                 _health.CurrentValue -= ctx.Damage.Damage;
 
-                if (_healthBar)
-                {
-                    Vector3 scale = _healthBar.localScale;
-                    scale.x = _health.CurrentValue / _health.MaxValue;
-                    _healthBar.localScale = scale;
-                }
-
                 if (_health.CurrentValue <= 0)
                 {
                     _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
                 }
+
+                ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
 
                 StartCoroutine(InvulnerabilityTimeCoroutine());
             }
@@ -107,7 +97,7 @@ namespace Game.Entities.Shared
         {
             if (_eventController != null)
             {
-                _eventController.AddListener(EntityEventType.OnHealtChange, OnHealthChange);
+                _eventController.AddListener(EntityEventType.OnHealthChange, OnHealthChange);
             }
         }
 
@@ -115,7 +105,7 @@ namespace Game.Entities.Shared
         {
             if (_eventController != null)
             {
-                _eventController.RemoveListener(EntityEventType.OnHealtChange, OnHealthChange);
+                _eventController.RemoveListener(EntityEventType.OnHealthChange, OnHealthChange);
             }
         }
     } 

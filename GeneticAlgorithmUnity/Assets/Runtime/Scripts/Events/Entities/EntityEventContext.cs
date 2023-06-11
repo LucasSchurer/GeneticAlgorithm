@@ -10,6 +10,7 @@ namespace Game.Events
         private WeaponPacket _weaponPacket;
         private DamagePacket _damagePacket;
         private HealingPacket _healingPacket;
+        private HealthChangePacket _healthChangePacket;
 
         private float _healthModifier;
 
@@ -18,6 +19,7 @@ namespace Game.Events
         public WeaponPacket Weapon { get => _weaponPacket; set => _weaponPacket = value; }
         public DamagePacket Damage { get => _damagePacket; set => _damagePacket = value; }
         public HealingPacket Healing { get => _healingPacket; set => _healingPacket = value; }
+        public HealthChangePacket HealthChange { get => _healthChangePacket; set => _healthChangePacket = value; }
 
         public float HealthModifier { get => _healthModifier; set => _healthModifier = value; }
 
@@ -62,5 +64,14 @@ namespace Game.Events
             public float Healing { get => _healing; set => _healing = value; }
             public HealingType HealingType { get => _healingType; set => _healingType = value; }
         }
+        public class HealthChangePacket
+        {
+            private float _maxHealth = -1f;
+            private float _currentHealth = -1f;
+
+            public float MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+            public float CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
+        }
+
     }
 }

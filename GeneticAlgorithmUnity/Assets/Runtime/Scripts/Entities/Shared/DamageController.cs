@@ -48,7 +48,7 @@ namespace Game.Entities.Shared
                     Damage = ctx.Damage
                 };
 
-                ctx.Other.GetComponent<EntityEventController>().TriggerEvent(EntityEventType.OnHealtChange, otherCtx);
+                ctx.Other.GetComponent<EntityEventController>().TriggerEvent(EntityEventType.OnHealthChange, otherCtx);
             }
         }
 

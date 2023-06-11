@@ -9,6 +9,11 @@ namespace Game.Managers
         public GameEventController eventController;
         [SerializeField]
         private CursorLockMode _cursorLockMode = CursorLockMode.None;
+        [SerializeField]
+        private string _playerTag = "Player";
+        private Transform _player;
+        [HideInInspector]
+        public Transform Player => _player == null ? GameObject.FindGameObjectWithTag(_playerTag).transform : _player; 
         
         protected override void SingletonAwake()
         {

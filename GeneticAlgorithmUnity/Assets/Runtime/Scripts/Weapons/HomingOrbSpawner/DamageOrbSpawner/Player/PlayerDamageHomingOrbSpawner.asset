@@ -17,7 +17,7 @@ MonoBehaviour:
   _recoilStrength: 0
   _hitLayer:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 33536
   _targetLayer:
     serializedVersion: 2
     m_Bits: 256

@@ -44,7 +44,7 @@ namespace Game.Entities.Shared
                     Healing = ctx.Healing
                 };
 
-                ctx.Other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHealtChange, otherCtx);
+                ctx.Other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHealthChange, otherCtx);
             }
         }
 

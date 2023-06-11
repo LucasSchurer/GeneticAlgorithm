@@ -8,6 +8,6 @@ namespace Game.Events
         OnPrimaryActionPerformed,
         OnWeaponAttack,
         OnSecondaryActionPerformed,
-        OnHealtChange
+        OnHealthChange
     } 
 }

@@ -20,3 +20,4 @@ MonoBehaviour:
   _explosionRadius: 3
   _explosionTimer: 5
   _baseColor: {r: 1, g: 0, b: 0, a: 0}
+  _grenadeLayer: 17

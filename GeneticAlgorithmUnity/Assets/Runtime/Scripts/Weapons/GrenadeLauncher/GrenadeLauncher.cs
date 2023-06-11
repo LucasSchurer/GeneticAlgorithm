@@ -37,6 +37,7 @@ namespace Game.Weapons
 
                 Grenade grenade = Instantiate(_data.Grenade, _weaponFireSocket.position, transform.rotation);
                 grenade.Initialize(this, _data.BaseColor, _data.Damage, _data.ExplosionRadius, _data.ExplosionTimer, _hitLayer, _entity.EnemyLayer, ctx.Owner);
+                grenade.gameObject.layer = _data.GrenadeLayer;
 
                 grenade.Rigidbody.AddForce(ctx.Movement.LookDirection * _data.LaunchStrength, ForceMode.Impulse);
 
