@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.AI.States
@@ -6,12 +7,22 @@ namespace Game.AI.States
     {
         public abstract State GetState(StateMachine stateMachine);
 
-        protected StateData GetTransitionStateData<A>(A action, StateTransition<A>[] transitions)
+        protected StateData GetTransitionStateData<A>(A action, HashSet<A> blockedActions, StateTransition<A>[] transitions)
         {
+            if (blockedActions.Contains(action))
+            {
+                return null;
+            }
+
             for (int i = 0; i < transitions.Length; i++)
             {
                 if (transitions[i].Action.Equals(action))
                 {
+                    if (transitions[i].TransitionType == StateTransitionType.OneOpportunity)
+                    {
+                        blockedActions.Add(action);
+                    }
+
                     return transitions[i].Transition();
                 }
             }

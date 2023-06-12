@@ -1,15 +1,18 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Game.AI.States
 {
     public class #SCRIPTNAME# : State
     {
         private StateData _data;
+        private HashSet<#SCRIPTNAME#Data.Action> _blockedActions;
 
 
         public #SCRIPTNAME#(StateMachine stateMachine, StateData data) : base(stateMachine, data)
         {
             _data = data;
+            _blockedActions = new HashSet<#SCRIPTNAME#Data.Action>();
         }
 
         public override StateType GetStateType()

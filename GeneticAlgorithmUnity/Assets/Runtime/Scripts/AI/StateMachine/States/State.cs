@@ -1,4 +1,5 @@
 using Game.Events;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.AI.States
@@ -7,9 +8,13 @@ namespace Game.AI.States
     {
         protected StateMachine _stateMachine;
 
+        private StateData _stateDataDebug;
+        public StateData StateDataDebug => _stateDataDebug;
+
         public State(StateMachine stateMachine, StateData data)
         {
             _stateMachine = stateMachine;
+            _stateDataDebug = data;
         }
 
         public abstract void StateStart();

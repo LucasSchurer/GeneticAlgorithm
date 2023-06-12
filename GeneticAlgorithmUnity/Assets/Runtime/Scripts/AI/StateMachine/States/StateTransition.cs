@@ -10,8 +10,11 @@ namespace Game.AI.States
         private Actions _action;
         [SerializeField]
         private StateProbability[] _states;
+        [SerializeField]
+        private StateTransitionType _transitionType;
 
         public Actions Action => _action;
+        public StateTransitionType TransitionType => _transitionType;
 
         [System.Serializable]
         private struct StateProbability

@@ -17,9 +17,12 @@ namespace Game.AI
         [SerializeField]
         private string _currentStateName;
         [SerializeField]
+        private StateData _currentStateData;
+        [SerializeField]
         private StateMachineData _data;
         private EntityEventController _eventController;
         private AttributeController _attributeController;
+        private NonPersistentAttribute _health;
 
         private State _initialState;
         private State _currentState;
@@ -27,8 +30,15 @@ namespace Game.AI
         private bool _canMove = true;
         private bool _hasStarted = false;
 
+        private StateContext _pastContext;
+        private StateContext _currentContext;
+
         public EntityEventController EventController => _eventController;
         public AttributeController AttributeController => _attributeController;
+        public NonPersistentAttribute Health => _health != null ? _health : _health = AttributeController.GetNonPersistentAttribute(AttributeType.Health);
+
+        public StateContext PastContext => _pastContext != null ? _pastContext : new StateContext();
+        public StateContext CurrentContext => _currentContext != null ? _currentContext : new StateContext();
 
         private void Awake()
         {
@@ -58,6 +68,7 @@ namespace Game.AI
                 if (_debug)
                 {
                     _currentStateName = _currentState.ToString();
+                    _currentStateData = _currentState.StateDataDebug;
                     Debug.Log("Started " + _currentStateName);
                 }
 
@@ -68,6 +79,8 @@ namespace Game.AI
 
         private void Update()
         {
+            Debug.DrawRay(transform.position, transform.rotation * Vector3.forward);
+
             if (_currentState != null)
             {
                 _currentState.StateUpdate();
@@ -91,6 +104,9 @@ namespace Game.AI
 
             _currentState.StateFinish();
 
+            _pastContext = _currentContext;
+            _currentContext = new StateContext();
+
             if (state != null)
             {
                 _currentState = state;
@@ -109,6 +125,7 @@ namespace Game.AI
             if (_debug)
             {
                 _currentStateName = _currentState.ToString();
+                _currentStateData = _currentState.StateDataDebug;
                 Debug.Log("Started " + _currentStateName);
             }
 

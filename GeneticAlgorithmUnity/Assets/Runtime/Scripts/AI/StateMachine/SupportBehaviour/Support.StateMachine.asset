@@ -13,5 +13,3 @@ MonoBehaviour:
   m_Name: Support.StateMachine
   m_EditorClassIdentifier: 
   _initialState: {fileID: 11400000, guid: 57514e49d9890f546b061ddc7e048732, type: 2}
-  _defaultState: {fileID: 11400000, guid: 57514e49d9890f546b061ddc7e048732, type: 2}
-  _states: []
