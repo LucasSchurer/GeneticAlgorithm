@@ -10,6 +10,7 @@ namespace Game.AI.States
     {
         private MoveBasedOnTargetData _data;
         private HashSet<MoveBasedOnTargetData.Action> _blockedActions;
+        private Dictionary<MoveBasedOnTargetData.Action, ActionCallback> _validActions;
 
         private Transform _target;
         private bool _isTargetDead = false;
@@ -29,6 +30,7 @@ namespace Game.AI.States
             _data = data;
             _blockedActions = new HashSet<MoveBasedOnTargetData.Action>();
             _movementController = stateMachine.GetComponent<MovementController>();
+            _validActions = BuildActionCallbackDictionary(_data.ValidActions, GetCallback);
         }
 
         public override void StateStart()
@@ -38,25 +40,30 @@ namespace Game.AI.States
                 _target = _stateMachine.PastContext.Target.Target;
                 RandomizeOffset();
 
-                if (_data.RandomizeOffsetMultipleTimes)
-                {
-                    _randomizeOffsetCoroutine = _stateMachine.StartCoroutine(RandomizeOffsetCoroutine());
-                }
-
-                if (_data.NewPositionInterval > 0)
-                {
-                    _updatePositionCoroutine = _stateMachine.StartCoroutine(UpdatePositionCoroutine());
-                }
-
-                if (_data.CheckActionsInterval > 0)
-                {
-                    _checkActionsCoroutine = _stateMachine.StartCoroutine(CheckActionsCoroutine());
-                }
+                StartCoroutines();
 
                 _targetAttributeController = _target.GetComponent<AttributeController>();
             } else
             {
                 _isTargetDead = true;
+            }
+        }
+
+        private void StartCoroutines()
+        {
+            if (_data.RandomizeOffsetMultipleTimes)
+            {
+                _randomizeOffsetCoroutine = _stateMachine.StartCoroutine(RandomizeOffsetCoroutine());
+            }
+
+            if (_data.NewPositionInterval > 0)
+            {
+                _updatePositionCoroutine = _stateMachine.StartCoroutine(UpdatePositionCoroutine());
+            }
+
+            if (_data.CheckActionsInterval > 0)
+            {
+                _checkActionsCoroutine = _stateMachine.StartCoroutine(CheckActionsCoroutine());
             }
         }
 
@@ -73,7 +80,7 @@ namespace Game.AI.States
 
             if (_data.CheckActionsInterval <= 0)
             {
-                CheckActions();
+                CheckActions(_validActions, _blockedActions);
             }
         }
 
@@ -186,49 +193,25 @@ namespace Game.AI.States
         {
             yield return new WaitForSeconds(_data.CheckActionsInterval);
 
-            CheckActions();
-
-            _checkActionsCoroutine = _stateMachine.StartCoroutine(CheckActionsCoroutine());
-        }
-
-        protected virtual void CheckActions()
-        {
-            State nextState;
-
-            MoveBasedOnTargetData.Action[] validActions = _data.ValidActions;
-
-            for (int i = 0; i < validActions.Length; i++)
+            if (!CheckActions(_validActions, _blockedActions))
             {
-                if (!_blockedActions.Contains(validActions[i]))
-                {
-                    if (TryRunAction(validActions[i], out nextState))
-                    {
-                        _stateMachine.ChangeCurrentState(nextState);
-                        return;
-                    }
-                }
+                _checkActionsCoroutine = _stateMachine.StartCoroutine(CheckActionsCoroutine());
             }
         }
 
-        protected virtual bool TryRunAction(MoveBasedOnTargetData.Action action, out State nextState)
+        protected virtual ActionCallback GetCallback(MoveBasedOnTargetData.Action action)
         {
             switch (action)
             {
                 case MoveBasedOnTargetData.Action.TargetDead:
-                    nextState = TargetDeadAction();
-                    break;
+                    return TargetDeadAction;
                 case MoveBasedOnTargetData.Action.TargetCloseToDeath:
-                    nextState = TargetCloseToDeathAction();
-                    break;
+                    return TargetCloseToDeathAction;
                 case MoveBasedOnTargetData.Action.CloseToDeath:
-                    nextState = CloseToDeathAction();
-                    break;
-                default:
-                    nextState = null;
-                    break;
+                    return CloseToDeathAction;
             }
 
-            return nextState != null;
+            return null;
         }
 
         private State TargetDeadAction()

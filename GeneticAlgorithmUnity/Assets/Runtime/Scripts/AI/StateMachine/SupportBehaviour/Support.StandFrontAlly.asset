@@ -19,7 +19,7 @@ MonoBehaviour:
   _randomizeOffsetInterval: 15
   _minimumDistanceToNewPosition: 0.3
   _newPositionInterval: 0.2
-  _checkActionsInterval: 0
+  _checkActionsInterval: 0.1
   _closeToDeathHealthThreshold: 0.25
   _targetCloseToDeathThreshold: 0
   _validActions: 0000000002000000
