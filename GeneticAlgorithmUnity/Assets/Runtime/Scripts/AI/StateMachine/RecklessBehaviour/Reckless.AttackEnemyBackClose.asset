@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc2a54d20a7ff84f80e8b3441349047, type: 3}
   m_Name: Reckless.AttackEnemyBackClose
   m_EditorClassIdentifier: 
-  _minPositionOffset: {x: -1, y: 0, z: 1.5}
-  _maxPositionOffset: {x: 1, y: 0, z: 7}
+  _minPositionOffset: {x: -1, y: 0, z: -7}
+  _maxPositionOffset: {x: 1, y: 0, z: -1.5}
   _useTargetViewDirection: 1
   _randomizeOffsetMultipleTimes: 1
   _randomizeOffsetInterval: 1
