@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     [Serializable]
     public class StateTransition<Actions>

@@ -1,16 +1,16 @@
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
-    [CreateAssetMenu(menuName = Constants.StateDataMenuName + "/RunAwayStateData")]
-    public class RunAwayStateData : StateData
+    [CreateAssetMenu(menuName = Constants.StateDataMenuName + "/RunAwayData")]
+    public class RunAwayData : StateData
     {
         private StateData _data;
 
 
         public override State GetState(StateMachine stateMachine)
         {
-            return new RunAwayState(stateMachine, this);
+            return new RunAway(stateMachine, this);
         }
 
         public override StateType GetStateType()

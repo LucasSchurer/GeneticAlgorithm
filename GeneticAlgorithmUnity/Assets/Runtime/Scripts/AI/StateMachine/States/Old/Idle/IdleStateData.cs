@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     [CreateAssetMenu(fileName = "IdleStateData", menuName = "AI/StateMachine/States/IdleStateData")]
     public class IdleStateData : StateData

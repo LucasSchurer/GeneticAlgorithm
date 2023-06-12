@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Game.Entities.Shared;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     public class ChaseState : State
     {

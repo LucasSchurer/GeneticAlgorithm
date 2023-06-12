@@ -1,7 +1,7 @@
 using Game.Events;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     public abstract class State
     {

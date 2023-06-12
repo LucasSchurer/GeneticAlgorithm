@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     public abstract class StateData : ScriptableObject
     {

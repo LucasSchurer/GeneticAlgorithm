@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     [CreateAssetMenu(menuName = Constants.StateDataMenuName + "/InterceptEnemyAttacksStateData")]
     public class InterceptEnemyAttacksStateData : StateData

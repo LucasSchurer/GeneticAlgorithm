@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     [CreateAssetMenu(menuName = Constants.StateDataMenuName + "/DefaultSupportStateData")]
     public class DefaultSupportStateData : StateData

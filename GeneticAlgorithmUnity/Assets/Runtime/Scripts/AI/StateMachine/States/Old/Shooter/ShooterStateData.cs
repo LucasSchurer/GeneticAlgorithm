@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     [CreateAssetMenu(fileName = "ShooterData", menuName = "AI/StateMachine/States/ShooterStateData")]
     public class ShooterStateData : StateData

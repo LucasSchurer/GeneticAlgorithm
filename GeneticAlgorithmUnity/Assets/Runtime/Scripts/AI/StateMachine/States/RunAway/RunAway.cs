@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
-    public class RunAwayState : State
+    public class RunAway : State
     {
         private StateData _data;
 
 
-        public RunAwayState(StateMachine stateMachine, StateData data) : base(stateMachine, data)
+        public RunAway(StateMachine stateMachine, StateData data) : base(stateMachine, data)
         {
             _data = data;
         }

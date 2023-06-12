@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     [CreateAssetMenu(fileName = "RunStateData", menuName = "AI/StateMachine/States/RunStateData")]
     public class RunStateData : StateData
