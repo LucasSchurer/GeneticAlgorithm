@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace Game.AI.States
 {
-    public class FindAllyState : State
+    public class InterceptEnemyAttacks : State
     {
         private StateData _data;
 
 
-        public FindAllyState(StateMachine stateMachine, StateData data) : base(stateMachine, data)
+        public InterceptEnemyAttacks(StateMachine stateMachine, StateData data) : base(stateMachine, data)
         {
             _data = data;
         }

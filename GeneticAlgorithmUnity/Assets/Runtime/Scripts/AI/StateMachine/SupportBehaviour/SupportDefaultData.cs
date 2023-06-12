@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Game.AI.States
 {
-    [CreateAssetMenu(menuName = Constants.StateDataMenuName + "/DefaultSupportStateData")]
-    public class DefaultSupportStateData : StateData
+    [CreateAssetMenu(menuName = Constants.StateDataMenuName + "/SupportDefault")]
+    public class SupportDefaultData : StateData
     {
         public enum Action { Start, CloseToDeath }        
 
@@ -13,7 +13,7 @@ namespace Game.AI.States
 
         public override State GetState(StateMachine stateMachine)
         {
-            return new DefaultSupportState(stateMachine, this);
+            return new SupportDefault(stateMachine, this);
         }
 
         public override StateType GetStateType()

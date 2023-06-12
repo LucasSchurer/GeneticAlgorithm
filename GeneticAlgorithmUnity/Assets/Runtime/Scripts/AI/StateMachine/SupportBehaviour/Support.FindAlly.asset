@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f698f2e54f6da46488f3ae64b52f0546, type: 3}
-  m_Name: SupportBehaviour
+  m_Script: {fileID: 11500000, guid: 6a448628a4c6ea2419a2b758cb3d1f9d, type: 3}
+  m_Name: Support.FindAlly
   m_EditorClassIdentifier: 
-  _initialState: {fileID: 11400000, guid: 57514e49d9890f546b061ddc7e048732, type: 2}
-  _defaultState: {fileID: 11400000, guid: 57514e49d9890f546b061ddc7e048732, type: 2}
-  _states: []

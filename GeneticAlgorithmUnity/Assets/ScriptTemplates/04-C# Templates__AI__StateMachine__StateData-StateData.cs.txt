@@ -5,9 +5,6 @@ namespace Game.AI
     [CreateAssetMenu(menuName = Constants.StateDataMenuName + "/#SCRIPTNAME#")]
     public class #SCRIPTNAME# : StateData
     {
-        private StateData _data;
-
-
         public override State GetState(StateMachine stateMachine)
         {
             return new #SCRIPTNAME#(stateMachine, this);

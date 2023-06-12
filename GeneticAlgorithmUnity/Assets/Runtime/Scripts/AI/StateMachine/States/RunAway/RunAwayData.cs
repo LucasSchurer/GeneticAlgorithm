@@ -2,12 +2,9 @@ using UnityEngine;
 
 namespace Game.AI.States
 {
-    [CreateAssetMenu(menuName = Constants.StateDataMenuName + "/RunAwayData")]
+    [CreateAssetMenu(menuName = Constants.StateDataMenuName + "/RunAway")]
     public class RunAwayData : StateData
     {
-        private StateData _data;
-
-
         public override State GetState(StateMachine stateMachine)
         {
             return new RunAway(stateMachine, this);

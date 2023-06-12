@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace Game.AI.States
 {
-    public class DefaultSupportState : State
+    public class SupportDefault : State
     {
-        private DefaultSupportStateData _data;
+        private SupportDefaultData _data;
 
-        public DefaultSupportState(StateMachine stateMachine, DefaultSupportStateData data) : base(stateMachine, data)
+        public SupportDefault(StateMachine stateMachine, SupportDefaultData data) : base(stateMachine, data)
         {
             _data = data;
         }
@@ -18,7 +18,7 @@ namespace Game.AI.States
 
         public override void StateStart()
         {
-            _stateMachine.ChangeCurrentState(_data.GetTransitionState(_stateMachine, DefaultSupportStateData.Action.Start));
+            _stateMachine.ChangeCurrentState(_data.GetTransitionState(_stateMachine, SupportDefaultData.Action.Start));
         }
 
         public override void StateUpdate()
