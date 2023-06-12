@@ -33,6 +33,10 @@ namespace Game.AI.States
         private float _radiusToStopMoving;
         [SerializeField]
         private float _radiusToStartMoving;
+        [SerializeField]
+        private bool _canFire = true;
+        [SerializeField]
+        private bool _lookToPlayer = true;
 
         [Header("Action Related Settings")]
         [SerializeField]
@@ -58,6 +62,8 @@ namespace Game.AI.States
         public virtual Action[] ValidActions => _validActions;
         public float RadiusToStopMoving => _radiusToStopMoving;
         public float RadiusToStartMoving => _radiusToStartMoving;
+        public bool CanFire => _canFire;
+        public bool LookToPlayer => _lookToPlayer;
 
         [SerializeField]
         private StateTransition<Action>[] _transitions;

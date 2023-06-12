@@ -22,6 +22,8 @@ MonoBehaviour:
   _checkActionsInterval: 0.5
   _radiusToStopMoving: 1
   _radiusToStartMoving: 2
+  _canFire: 0
+  _lookToPlayer: 1
   _closeToDeathHealthThreshold: 0.9
   _targetCloseToDeathThreshold: 0
   _validActions: 02000000

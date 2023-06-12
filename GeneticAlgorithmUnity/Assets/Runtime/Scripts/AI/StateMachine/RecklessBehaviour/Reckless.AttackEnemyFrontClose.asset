@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efc2a54d20a7ff84f80e8b3441349047, type: 3}
-  m_Name: Tactical.RunAway
+  m_Name: Reckless.AttackEnemyFrontClose
   m_EditorClassIdentifier: 
-  _minPositionOffset: {x: -10, y: 0, z: -10}
-  _maxPositionOffset: {x: -10, y: 0, z: 10}
-  _useTargetViewDirection: 0
-  _randomizeOffsetMultipleTimes: 0
-  _randomizeOffsetInterval: 15
-  _minimumDistanceToNewPosition: 2
-  _newPositionInterval: 0.5
-  _checkActionsInterval: 1
-  _radiusToStopMoving: 1
-  _radiusToStartMoving: 1.5
-  _canFire: 0
+  _minPositionOffset: {x: -1, y: 0, z: 1.5}
+  _maxPositionOffset: {x: 1, y: 0, z: 7}
+  _useTargetViewDirection: 1
+  _randomizeOffsetMultipleTimes: 1
+  _randomizeOffsetInterval: 1
+  _minimumDistanceToNewPosition: 0.1
+  _newPositionInterval: 0.2
+  _checkActionsInterval: 0.5
+  _radiusToStopMoving: 0.1
+  _radiusToStartMoving: 0.3
+  _canFire: 1
   _lookToPlayer: 1
   _closeToDeathHealthThreshold: 0
   _targetCloseToDeathThreshold: 0

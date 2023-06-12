@@ -26,7 +26,7 @@ MonoBehaviour:
   - _action: 1
     _states:
     - _state: {fileID: 11400000, guid: acd4ada4129b1cd47b22345c5ee9d6b7, type: 2}
-      _probability: 0
+      _probability: 0.36
     _transitionType: 1
   - _action: 0
     _states:

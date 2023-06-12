@@ -37,6 +37,11 @@ namespace Game.Entities.Enemy
             }
         }
 
+        public void SetTarget(Transform target)
+        {
+            _target = target;
+        }
+
         private void FixedUpdate()
         {
             if (DirectionToTarget == Vector3.zero) return;

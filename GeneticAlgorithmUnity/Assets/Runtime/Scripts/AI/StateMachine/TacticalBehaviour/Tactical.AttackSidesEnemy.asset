@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: Tactical.AttackSidesEnemy
   m_EditorClassIdentifier: 
   _minPositionOffset: {x: -10, y: 0, z: 0}
-  _maxPositionOffset: {x: -10, y: 0, z: 0}
+  _maxPositionOffset: {x: 10, y: 0, z: 0}
   _useTargetViewDirection: 1
   _randomizeOffsetMultipleTimes: 1
-  _randomizeOffsetInterval: 0
-  _minimumDistanceToNewPosition: 0
-  _newPositionInterval: 0
-  _checkActionsInterval: 0
-  _radiusToStopMoving: 0
-  _radiusToStartMoving: 0
+  _randomizeOffsetInterval: 2
+  _minimumDistanceToNewPosition: 0.2
+  _newPositionInterval: 0.5
+  _checkActionsInterval: 0.5
+  _radiusToStopMoving: 1
+  _radiusToStartMoving: 1.5
+  _canFire: 1
+  _lookToPlayer: 0
   _closeToDeathHealthThreshold: 0.6
   _targetCloseToDeathThreshold: 0
   _validActions: 0000000002000000

@@ -29,6 +29,7 @@ namespace Game.AI.States
         private bool _hasReachedTarget = false;
 
         private Transform _faceTransform;
+        private BotLookTowards _lookTowards;
 
         private AttributeController _targetAttributeController;
 
@@ -49,7 +50,14 @@ namespace Game.AI.States
                 RandomizeOffset();
                 _targetAttributeController = _targetRoot.GetComponent<AttributeController>();
 
-                _faceTransform = _stateMachine.GetComponentInChildren<BotLookTowards>().transform;
+                _lookTowards = _stateMachine.GetComponentInChildren<BotLookTowards>();
+                
+                if (!_data.LookToPlayer)
+                {
+                    _lookTowards.SetTarget(_target);
+                }
+
+                _faceTransform = _lookTowards.transform;
 
                 StartCoroutines();
             } else
@@ -134,7 +142,7 @@ namespace Game.AI.States
 
         private void Fire()
         {
-            if (_stateMachine.EventController)
+            if (_stateMachine.EventController && _data.CanFire)
             {
                 Vector3 lookDirection = GetLookDirection();
 
