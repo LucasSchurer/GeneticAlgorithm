@@ -19,5 +19,5 @@ namespace Game.AI
         public abstract void StateFixedUpdate();
         public abstract void StateFinish();
         public abstract Vector3 GetLookDirection();
-    } 
+    }
 }

@@ -1,3 +1,4 @@
+using Game.Entities;
 using Game.Entities.Shared;
 using Game.Events;
 using System.Collections.Generic;
@@ -11,23 +12,27 @@ namespace Game.AI
         [SerializeField]
         private bool _initializeOnAwake = false;
         [SerializeField]
+        private bool _debug = false;
+        [SerializeField]
+        private string _currentStateName;
+        [SerializeField]
         private StateMachineData _data;
         private EntityEventController _eventController;
+        private AttributeController _attributeController;
 
         private State _initialState;
-        private State _defaultState;
         private State _currentState;
-
-        private Dictionary<StateType, State> _states;
 
         private bool _canMove = true;
         private bool _hasStarted = false;
 
         public EntityEventController EventController => _eventController;
+        public AttributeController AttributeController => _attributeController;
 
         private void Awake()
         {
             _eventController = GetComponent<EntityEventController>();
+            _attributeController = GetComponent<AttributeController>();
 
             if (_initializeOnAwake)
             {
@@ -39,8 +44,6 @@ namespace Game.AI
         {
             _data = data;
             _initialState = _data.GetInitialState(this);
-            _defaultState = _data.GetDefaultState(this);
-            _states = _data.GetStates(this);
 
             _currentState = _initialState;
 
@@ -51,6 +54,12 @@ namespace Game.AI
         {   
             if (_currentState != null && !_hasStarted)
             {
+                if (_debug)
+                {
+                    _currentStateName = _currentState.ToString();
+                    Debug.Log("Started " + _currentStateName);
+                }
+
                 _currentState.StateStart();
                 _hasStarted = true;
             }
@@ -72,18 +81,36 @@ namespace Game.AI
             }
         }
 
-        public void ChangeCurrentState(StateType type)
+        public void ChangeCurrentState(State state)
         {
+            if (_debug)
+            {
+                Debug.Log("Finished " + _currentStateName);
+            }
+
             _currentState.StateFinish();
 
-            if (_states.TryGetValue(type, out State state))
+            if (state != null)
             {
                 _currentState = state;
             } else
             {
-                _currentState = _defaultState;
+                if (_debug)
+                {
+                    _currentStateName = "null";
+                }
+
+                _currentState = null;
+
+                return;
             }
-            
+
+            if (_debug)
+            {
+                _currentStateName = _currentState.ToString();
+                Debug.Log("Started " + _currentStateName);
+            }
+
             _currentState.StateStart();
         }
 

@@ -4,40 +4,25 @@ namespace Game.AI
 {
     public abstract class StateData : ScriptableObject
     {
-        [SerializeField]
-        protected StateTransition[] _transitions;
         public abstract State GetState(StateMachine stateMachine);
         public abstract StateType GetStateType();
 
-        public StateType GetTransitionState()
+        protected StateData GetTransitionStateData<A>(A action, StateTransition<A>[] transitions)
         {
-            float p = Random.Range(0f, 1f);
-            float pSum = 0f;
-
-            foreach (StateTransition t in _transitions)
+            for (int i = 0; i < transitions.Length; i++)
             {
-                pSum += t.probability;
-
-                if (p <= pSum)
+                if (transitions[i].Action.Equals(action))
                 {
-                    return t.state;
+                    return transitions[i].Transition();
                 }
             }
 
-            return StateType.None;
-        }
-
-        [System.Serializable]
-        public struct StateTransition
-        {
-            public StateType state;
-            [Range(0f, 1f)]
-            public float probability;
+            return null;
         }
 
         #region DEBUG
 
-        public void BalanceProbabilities()
+        /*public void BalanceProbabilities()
         {
             float probabilitySum = GetProbabilitiesSum();
 
@@ -81,7 +66,7 @@ namespace Game.AI
             }
 
             return false;
-        }
+        }*/
 
         #endregion
     } 

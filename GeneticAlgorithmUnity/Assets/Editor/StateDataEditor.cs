@@ -6,7 +6,7 @@ namespace Game.AI
     [CustomEditor(typeof(StateData), true)]
     public class StateDataEditor : Editor
     {
-        public override void OnInspectorGUI()
+/*        public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
 
@@ -25,6 +25,6 @@ namespace Game.AI
             {
                 EditorGUILayout.HelpBox("More than one transition leads to the same state!", MessageType.Error);
             }
-        }
+        }*/
     } 
 }

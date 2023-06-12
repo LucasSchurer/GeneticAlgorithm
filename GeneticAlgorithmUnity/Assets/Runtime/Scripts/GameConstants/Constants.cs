@@ -4,6 +4,7 @@ namespace Game
     {
         #region Scriptable Objects
         public const string WeaponDataMenuName = "Weapons/Data";
+        public const string StateDataMenuName = "AI/StateMachine/States";
         #endregion
 
         #region Layers
