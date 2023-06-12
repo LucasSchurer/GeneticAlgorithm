@@ -17,8 +17,10 @@ namespace Game.AI.States
         public class TargetPacket
         {
             private Transform _target;
+            private Transform _targetRoot;
 
             public Transform Target { get => _target; set => _target = value; }
+            public Transform TargetRoot { get => _targetRoot; set => _targetRoot = value; }
         }
     }
 }

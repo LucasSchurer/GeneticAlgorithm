@@ -12,17 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c055c74623060442b009804e5928316, type: 3}
   m_Name: Support.Default
   m_EditorClassIdentifier: 
-  _closeToDeathHealthThreshold: 0.25
+  _closeToDeathHealthThreshold: 0.3
   _transitions:
   - _action: 0
     _states:
     - _state: {fileID: 11400000, guid: f646ceedbc8d0534ba92855c2e19a52a, type: 2}
       _probability: 1
-    - _state: {fileID: 11400000, guid: 1ff7d32190cab784fb39fc5fcec1d960, type: 2}
-      _probability: 0
     _transitionType: 0
   - _action: 1
     _states:
-    - _state: {fileID: 11400000, guid: 402e2455460ffc3479d54060fa22f600, type: 2}
-      _probability: 0.3
+    - _state: {fileID: 11400000, guid: 1b5c734df3f14464ebffbe154df82597, type: 2}
+      _probability: 0.2
     _transitionType: 1

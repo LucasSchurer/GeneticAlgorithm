@@ -12,13 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc2a54d20a7ff84f80e8b3441349047, type: 3}
   m_Name: Support.StandSideAlly
   m_EditorClassIdentifier: 
-  _closeToDeathHealthThreshold: 0
-  _targetCloseToDeathThreshold: 0
   _minPositionOffset: {x: -3, y: 0, z: 0}
   _maxPositionOffset: {x: 3, y: 0, z: 0}
   _useTargetViewDirection: 1
   _randomizeOffsetMultipleTimes: 1
-  _randomizeOffsetInterval: 15
+  _randomizeOffsetInterval: 5
   _minimumDistanceToNewPosition: 1
   _newPositionInterval: 0.5
-  _transitions: []
+  _checkActionsInterval: 0.1
+  _radiusToStopMoving: 0.7
+  _radiusToStartMoving: 1.5
+  _closeToDeathHealthThreshold: 0
+  _targetCloseToDeathThreshold: 0
+  _validActions: 000000000200000001000000
+  _transitions:
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: 57514e49d9890f546b061ddc7e048732, type: 2}
+      _probability: 1
+    _transitionType: 0
+  - _action: 1
+    _states:
+    - _state: {fileID: 11400000, guid: f646ceedbc8d0534ba92855c2e19a52a, type: 2}
+      _probability: 0.3
+    - _state: {fileID: 11400000, guid: 4729205c62317444b899c4d0c5e5f682, type: 2}
+      _probability: 0.3
+    _transitionType: 1
+  - _action: 2
+    _states:
+    - _state: {fileID: 11400000, guid: a28a3227e19176b4a8152c7864bef2f5, type: 2}
+      _probability: 0.4
+    _transitionType: 1

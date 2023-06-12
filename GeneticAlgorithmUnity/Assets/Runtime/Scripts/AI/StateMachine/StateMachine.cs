@@ -11,7 +11,7 @@ namespace Game.AI
     {
         [Tooltip("If initialized on awake, it will need a StateMachineData assigned")]
         [SerializeField]
-        private bool _initializeOnAwake = false;
+        private bool _initializeOnStart = false;
         [SerializeField]
         private bool _debug = false;
         [SerializeField]
@@ -40,30 +40,17 @@ namespace Game.AI
         public StateContext PastContext => _pastContext != null ? _pastContext : new StateContext();
         public StateContext CurrentContext => _currentContext != null ? _currentContext : new StateContext();
 
-        private void Awake()
+        public void Initialize(StateMachineData data)
         {
             _eventController = GetComponent<EntityEventController>();
             _attributeController = GetComponent<AttributeController>();
 
-            if (_initializeOnAwake)
-            {
-                Initialize(_data);
-            }
-        }
-
-        public void Initialize(StateMachineData data)
-        {
             _data = data;
             _initialState = _data.GetInitialState(this);
 
             _currentState = _initialState;
 
-            Start();
-        }
-
-        private void Start()
-        {   
-            if (_currentState != null && !_hasStarted)
+            if (_currentState != null)
             {
                 if (_debug)
                 {
@@ -73,7 +60,16 @@ namespace Game.AI
                 }
 
                 _currentState.StateStart();
-                _hasStarted = true;
+            }
+
+            _hasStarted = true;
+        }
+
+        private void Start()
+        {
+            if (!_hasStarted && _initializeOnStart)
+            {
+                Initialize(_data);
             }
         }
 

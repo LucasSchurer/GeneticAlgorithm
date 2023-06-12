@@ -29,6 +29,10 @@ namespace Game.AI.States
         [SerializeField]
         [Tooltip("If set to > 0 will update the position inside a coroutine. If set to 0 will update every frame.")]
         private float _checkActionsInterval;
+        [SerializeField]
+        private float _radiusToStopMoving;
+        [SerializeField]
+        private float _radiusToStartMoving;
 
         [Header("Action Related Settings")]
         [SerializeField]
@@ -52,6 +56,8 @@ namespace Game.AI.States
         public float NewPositionInterval => _newPositionInterval;
         public float CheckActionsInterval => _checkActionsInterval;
         public virtual Action[] ValidActions => _validActions;
+        public float RadiusToStopMoving => _radiusToStopMoving;
+        public float RadiusToStartMoving => _radiusToStartMoving;
 
         [SerializeField]
         private StateTransition<Action>[] _transitions;

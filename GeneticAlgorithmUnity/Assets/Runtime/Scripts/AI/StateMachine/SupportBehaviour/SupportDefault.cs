@@ -1,3 +1,4 @@
+using Game.Entities;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,10 +19,15 @@ namespace Game.AI.States
         {
             State nextState = null;
 
-            if (!_blockedActions.Contains(SupportDefaultData.Action.CloseToDeath) && _stateMachine.Health.CurrentValue / _stateMachine.Health.MaxValue <= _data.CloseToDeathHealthThreshold)
+            NonPersistentAttribute health = _stateMachine.Health;
+
+            if (health != null && health.CurrentValue > 0)
             {
-                nextState = _data.GetTransitionState(_stateMachine, _blockedActions, SupportDefaultData.Action.CloseToDeath);
-            } 
+                if (!_blockedActions.Contains(SupportDefaultData.Action.CloseToDeath) && health.CurrentValue / health.MaxValue <= _data.CloseToDeathHealthThreshold)
+                {
+                    nextState = _data.GetTransitionState(_stateMachine, _blockedActions, SupportDefaultData.Action.CloseToDeath);
+                }
+            }
 
             if (nextState != null)
             {

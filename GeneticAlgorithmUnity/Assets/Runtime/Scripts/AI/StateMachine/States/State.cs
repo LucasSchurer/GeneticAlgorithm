@@ -30,6 +30,7 @@ namespace Game.AI.States
         protected virtual bool CheckActions<A>(Dictionary<A, ActionCallback> actions, HashSet<A> blockedActions)
         {
             State nextState = null;
+            List<A> removedActions = new List<A>();
 
             foreach (KeyValuePair<A, ActionCallback> validAction in actions)
             {
@@ -44,8 +45,13 @@ namespace Game.AI.States
                     }
                 } else
                 {
-                    actions.Remove(validAction.Key);
+                    removedActions.Add(validAction.Key);
                 }
+            }
+
+            foreach (A action in removedActions)
+            {
+                actions.Remove(action);
             }
 
             return false;

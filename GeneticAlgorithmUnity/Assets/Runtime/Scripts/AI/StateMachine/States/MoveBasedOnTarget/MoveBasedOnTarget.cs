@@ -1,5 +1,7 @@
 using Game.Entities;
+using Game.Entities.Enemy;
 using Game.Entities.Shared;
+using Game.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +15,7 @@ namespace Game.AI.States
         private Dictionary<MoveBasedOnTargetData.Action, ActionCallback> _validActions;
 
         private Transform _target;
+        private Transform _targetRoot;
         private bool _isTargetDead = false;
         private Vector3 _targetPosition = Vector3.zero;
         private Vector3 _direction;
@@ -22,6 +25,10 @@ namespace Game.AI.States
         private Coroutine _randomizeOffsetCoroutine;
         private Coroutine _updatePositionCoroutine;
         private Coroutine _checkActionsCoroutine;
+
+        private bool _hasReachedTarget = false;
+
+        private Transform _faceTransform;
 
         private AttributeController _targetAttributeController;
 
@@ -38,11 +45,13 @@ namespace Game.AI.States
             if (_stateMachine.PastContext.Target != null)
             {
                 _target = _stateMachine.PastContext.Target.Target;
+                _targetRoot = _stateMachine.PastContext.Target.TargetRoot;
                 RandomizeOffset();
+                _targetAttributeController = _targetRoot.GetComponent<AttributeController>();
+
+                _faceTransform = _stateMachine.GetComponentInChildren<BotLookTowards>().transform;
 
                 StartCoroutines();
-
-                _targetAttributeController = _target.GetComponent<AttributeController>();
             } else
             {
                 _isTargetDead = true;
@@ -69,6 +78,8 @@ namespace Game.AI.States
 
         public override void StateUpdate()
         {
+            Fire();
+
             if (_data.NewPositionInterval <= 0)
             {
                 UpdatePosition();
@@ -112,14 +123,50 @@ namespace Game.AI.States
 
         public override Vector3 GetLookDirection()
         {
-            return Vector3.zero;
+            if ( _faceTransform != null)
+            {
+                return _faceTransform.forward;
+            } else
+            {
+                return Vector3.zero;
+            }
+        }
+
+        private void Fire()
+        {
+            if (_stateMachine.EventController)
+            {
+                Vector3 lookDirection = GetLookDirection();
+
+                if (lookDirection != Vector3.zero)
+                {
+                    EntityEventContext ctx = new EntityEventContext();
+                    ctx.Movement = new EntityEventContext.MovementPacket() { LookDirection = lookDirection };
+
+                    _stateMachine.EventController.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, ctx);
+                }
+            }
         }
 
         private void UpdateDirection()
         {
             if (_targetPosition != Vector3.zero)
             {
-                _direction = (_targetPosition - _stateMachine.transform.position).normalized;
+                float distanceToTarget = Vector3.Distance(_targetPosition, _stateMachine.transform.position);
+
+                if (distanceToTarget < _data.RadiusToStopMoving)
+                {
+                    return;
+                }
+
+                if (distanceToTarget > _data.RadiusToStartMoving)
+                {
+                    _direction = (_targetPosition - _stateMachine.transform.position).normalized;
+                } else
+                {
+                    _direction = Vector3.zero;
+                }
+                
             } else
             {
                 _direction = Vector3.zero;
@@ -228,7 +275,7 @@ namespace Game.AI.States
         {
             if (_targetAttributeController == null)
             {
-                _blockedActions.Add(MoveBasedOnTargetData.Action.CloseToDeath);
+                _blockedActions.Add(MoveBasedOnTargetData.Action.TargetCloseToDeath);
                 return null;
             }
 
