@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a448628a4c6ea2419a2b758cb3d1f9d, type: 3}
+  m_Name: Tactical.FindEnemy
+  m_EditorClassIdentifier: 
+  _targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _secondaryTargetLayerMask:
+    serializedVersion: 2
+    m_Bits: 16384
+  _detectionRadius: 200
+  _choiceType: 2
+  _tryToGetFace: 0
+  _validActions: 0100000000000000
+  _transitions:
+  - _action: 1
+    _states:
+    - _state: {fileID: 11400000, guid: acd4ada4129b1cd47b22345c5ee9d6b7, type: 2}
+      _probability: 0
+    _transitionType: 1
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: acd4ada4129b1cd47b22345c5ee9d6b7, type: 2}
+      _probability: 0.1
+    - _state: {fileID: 11400000, guid: 39a3e704659781f4e8e69d80676677db, type: 2}
+      _probability: 0.45
+    - _state: {fileID: 11400000, guid: e6fe467952a0f164887038cea9033794, type: 2}
+      _probability: 0.45
+    _transitionType: 0
