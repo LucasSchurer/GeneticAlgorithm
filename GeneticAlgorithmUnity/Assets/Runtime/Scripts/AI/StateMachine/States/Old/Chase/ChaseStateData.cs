@@ -23,10 +23,5 @@ namespace Game.AI.States
         {
             return new ChaseState(stateMachine, this);
         }
-
-        public override StateType GetStateType()
-        {
-            return StateType.Chase;
-        }
     }
 }

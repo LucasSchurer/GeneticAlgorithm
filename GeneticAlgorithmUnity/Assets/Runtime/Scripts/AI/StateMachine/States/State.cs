@@ -7,8 +7,6 @@ namespace Game.AI.States
     {
         protected StateMachine _stateMachine;
 
-        public abstract StateType GetStateType();
-
         public State(StateMachine stateMachine, StateData data)
         {
             _stateMachine = stateMachine;

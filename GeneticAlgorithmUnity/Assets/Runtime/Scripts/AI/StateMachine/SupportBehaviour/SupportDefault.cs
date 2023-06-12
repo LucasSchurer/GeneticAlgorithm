@@ -11,11 +11,6 @@ namespace Game.AI.States
             _data = data;
         }
 
-        public override StateType GetStateType()
-        {
-            return StateType.None;
-        }
-
         public override void StateStart()
         {
             _stateMachine.ChangeCurrentState(_data.GetTransitionState(_stateMachine, SupportDefaultData.Action.Start));

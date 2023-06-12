@@ -17,11 +17,6 @@ namespace Game.AI.States
             _movementController = stateMachine.GetComponent<MovementController>();
         }
 
-        public override StateType GetStateType()
-        {
-            return StateType.Run;
-        }
-
         public override void StateStart()
         {
             _target = GameObject.FindGameObjectWithTag(_data.TargetTag).transform;

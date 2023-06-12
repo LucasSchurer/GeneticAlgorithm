@@ -17,10 +17,5 @@ namespace Game.AI.States
         {
             return new RunState(stateMachine, this);
         }
-
-        public override StateType GetStateType()
-        {
-            return StateType.Run;
-        }
     } 
 }

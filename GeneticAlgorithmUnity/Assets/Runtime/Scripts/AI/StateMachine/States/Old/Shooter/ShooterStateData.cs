@@ -16,10 +16,5 @@ namespace Game.AI.States
         {
             return new ShooterState(stateMachine, this);
         }
-
-        public override StateType GetStateType()
-        {
-            return StateType.Chase;
-        }
     } 
 }

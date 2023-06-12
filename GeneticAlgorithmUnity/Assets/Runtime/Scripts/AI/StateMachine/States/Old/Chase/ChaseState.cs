@@ -25,11 +25,6 @@ namespace Game.AI.States
             _movementController = stateMachine.GetComponent<MovementController>();
         }
 
-        public override StateType GetStateType()
-        {
-            return StateType.Chase;
-        }
-
         public override void StateStart()
         {
             if (_target == null)

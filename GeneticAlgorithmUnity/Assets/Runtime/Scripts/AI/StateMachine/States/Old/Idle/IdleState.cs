@@ -18,11 +18,6 @@ namespace Game.AI.States
             _movementController = _stateMachine.GetComponent<MovementController>();
         }
 
-        public override StateType GetStateType()
-        {
-            return StateType.Idle;
-        }
-
         public override void StateStart()
         {
             _idleCoroutine = _stateMachine.StartCoroutine(IdleCoroutine());

@@ -16,11 +16,6 @@ namespace Game.AI.States
             return new SupportDefault(stateMachine, this);
         }
 
-        public override StateType GetStateType()
-        {
-            return StateType.None;
-        }
-
         public State GetTransitionState(StateMachine stateMachine, Action action)
         {
             StateData stateData = GetTransitionStateData(action, _transitions);

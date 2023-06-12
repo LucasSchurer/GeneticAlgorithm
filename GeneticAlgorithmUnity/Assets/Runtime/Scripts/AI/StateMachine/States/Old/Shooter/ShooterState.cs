@@ -20,11 +20,6 @@ namespace Game.AI.States
             _stateMachine = stateMachine;
         }
 
-        public override StateType GetStateType()
-        {
-            return StateType.Chase;
-        }
-
         public override void StateFinish()
         {
             

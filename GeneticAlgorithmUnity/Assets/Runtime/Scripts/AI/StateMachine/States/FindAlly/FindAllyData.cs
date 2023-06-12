@@ -9,10 +9,5 @@ namespace Game.AI.States
         {
             return new FindAlly(stateMachine, this);
         }
-
-        public override StateType GetStateType()
-        {
-            return StateType.None;
-        }
     } 
 }

@@ -5,7 +5,6 @@ namespace Game.AI.States
     public abstract class StateData : ScriptableObject
     {
         public abstract State GetState(StateMachine stateMachine);
-        public abstract StateType GetStateType();
 
         protected StateData GetTransitionStateData<A>(A action, StateTransition<A>[] transitions)
         {

@@ -17,11 +17,6 @@ namespace Game.AI.States
         public float DetectionRange => _detectionRange;
         public LayerMask DetectionLayer => _detectionLayer;
 
-        public override StateType GetStateType()
-        {
-            return StateType.Idle;
-        }
-
         public override State GetState(StateMachine stateMachine)
         {
             return new IdleState(stateMachine, this);
