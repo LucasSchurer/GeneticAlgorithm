@@ -1,3 +1,4 @@
+using Game.Weapons;
 using UnityEngine;
 
 namespace Game.Events
@@ -38,9 +39,14 @@ namespace Game.Events
 
         public class WeaponPacket
         {
+            private WeaponType _currentWeapon = WeaponType.None;
+            private float _swapCooldown = 0f;
+
             private float _recoilStrength = 0f;
 
             public float RecoilStrength { get => _recoilStrength; set => _recoilStrength = value; }
+            public WeaponType CurrentWeapon { get => _currentWeapon; set => _currentWeapon = value; }
+            public float SwapCooldown { get => _swapCooldown; set => _swapCooldown = value; }
         }
 
         public class DamagePacket

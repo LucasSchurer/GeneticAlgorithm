@@ -4,7 +4,7 @@ using Game.Entities.Shared;
 
 namespace Game.Weapons
 {
-    public abstract class Weapon<Data> : MonoBehaviour, IEventListener
+    public abstract class Weapon<Data> : MonoBehaviour, IEventListener, IComponent
         where Data: WeaponData
     {
         [SerializeField]
@@ -48,5 +48,15 @@ namespace Game.Weapons
         public virtual void StartListening() { }
 
         public virtual void StopListening() { }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
     }
 }

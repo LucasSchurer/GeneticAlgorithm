@@ -34,7 +34,7 @@ namespace Game.Weapons
             }
         }
 
-        public void AddWeaponComponent(GameObject go, WeaponType type, WeaponHolder holder)
+        public IComponent AddWeaponComponent(GameObject go, WeaponType type, WeaponHolder holder)
         {
             Dictionary<WeaponType, WeaponData> weaponsDict = holder == WeaponHolder.Player ? _playerWeaponsDict : _enemyWeaponsDict;
 
@@ -45,25 +45,33 @@ namespace Game.Weapons
                     case WeaponType.None:
                         break;
                     case WeaponType.Pistol:
-                        go.AddComponent<Pistol>().SetData((HitscanWeaponData)data);
-                        break;
+                        Pistol pistol = go.AddComponent<Pistol>();
+                        pistol.SetData((HitscanWeaponData)data);
+                        return pistol;
                     case WeaponType.GrenadeLauncher:
-                        go.AddComponent<GrenadeLauncher>().SetData((GrenadeLauncherData)data);
-                        break;
+                        GrenadeLauncher grenadeLauncher = go.AddComponent<GrenadeLauncher>();
+                        grenadeLauncher.SetData((GrenadeLauncherData)data);
+                        return grenadeLauncher;
                     case WeaponType.DamageOrbs:
-                        go.AddComponent<HomingOrbSpawner>().SetData((HomingOrbSpawnerData)data);
-                        break;
+                        HomingOrbSpawner damageOrbs = go.AddComponent<HomingOrbSpawner>();
+                        damageOrbs.SetData((HomingOrbSpawnerData)data);
+                        return damageOrbs;
                     case WeaponType.HealingOrbs:
-                        go.AddComponent<HomingOrbSpawner>().SetData((HomingOrbSpawnerData)data);
-                        break;
+                        HomingOrbSpawner healingOrbs = go.AddComponent<HomingOrbSpawner>();
+                        healingOrbs.SetData((HomingOrbSpawnerData)data);
+                        return healingOrbs;
                     case WeaponType.ShieldDeployer:
-                        go.AddComponent<ShieldDeployer>().SetData((ShieldDeployerData)data);
-                        break;
+                        ShieldDeployer shieldDeployer = go.AddComponent<ShieldDeployer>();
+                        shieldDeployer.SetData((ShieldDeployerData)data);
+                        return shieldDeployer;
                     case WeaponType.Nuke:
-                        go.AddComponent<Nuke>().SetData((NukeData)data);
-                        break;
+                        Nuke nuke = go.AddComponent<Nuke>();
+                        nuke.SetData((NukeData)data);
+                        return nuke;
                 }
             }
+
+            return null;
         }
 
         public WeaponType GetRandomWeaponType(WeaponHolder holder)

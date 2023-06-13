@@ -1,6 +1,8 @@
 using UnityEngine;
 using Game.Events;
 using Game.Entities.Shared;
+using UnityEngine.InputSystem;
+using System;
 
 /// <summary>
 /// Handles player input
@@ -145,11 +147,33 @@ namespace Game.Entities.Player
         private void EnableInputActions()
         {
             _playerInput.Gameplay.Enable();
+
+            _playerInput.Gameplay.Swap1.performed += OnSwap1Performed;
+            _playerInput.Gameplay.Swap2.performed += OnSwap2Performed;
+            _playerInput.Gameplay.Swap3.performed += OnSwap3Performed;
+        }
+
+        private void OnSwap1Performed(InputAction.CallbackContext obj)
+        {
+            _eventController.TriggerEvent(EntityEventType.OnSwap1Performed, new EntityEventContext());
+        }
+
+        private void OnSwap2Performed(InputAction.CallbackContext obj)
+        {
+            _eventController.TriggerEvent(EntityEventType.OnSwap2Performed, new EntityEventContext());
+        }
+
+        private void OnSwap3Performed(InputAction.CallbackContext obj)
+        {
+            _eventController.TriggerEvent(EntityEventType.OnSwap3Performed, new EntityEventContext());
         }
 
         private void DisposeInputActions()
         {
             _playerInput.Gameplay.PrimaryButton.Dispose();
+            _playerInput.Gameplay.Swap1.Dispose();
+            _playerInput.Gameplay.Swap2.Dispose();
+            _playerInput.Gameplay.Swap3.Dispose();
             _playerInput.Gameplay.Disable();
         }
 
