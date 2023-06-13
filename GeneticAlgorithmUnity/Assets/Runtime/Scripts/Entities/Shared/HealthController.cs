@@ -13,18 +13,15 @@ namespace Game.Entities.Shared
         private EntityEventController _eventController;
         private AttributeController _attributeController;
 
-        [SerializeField]
-        private Transform _healthBar;
-
         private bool _isInvulnerable = false;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _eventController = GetComponent<EntityEventController>();
             _attributeController = GetComponent<AttributeController>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             if (_attributeController)
             {
@@ -52,27 +49,41 @@ namespace Game.Entities.Shared
 
         private void Heal(ref EntityEventContext ctx)
         {
-            _health.CurrentValue += ctx.Healing.Healing;
+            if (ctx.Healing.Healing > 0f)
+            {
+                _health.CurrentValue += ctx.Healing.Healing;
 
-            ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
+                ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
+
+                Healed();
+            }
         }
+
+        protected virtual void Healed() { }
 
         private void Damage(ref EntityEventContext ctx)
         {
             if (!_isInvulnerable)
             {
-                _health.CurrentValue -= ctx.Damage.Damage;
-
-                if (_health.CurrentValue <= 0)
+                if (ctx.Damage.Damage > 0f)
                 {
-                    _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
+                    _health.CurrentValue -= ctx.Damage.Damage;
+
+                    if (_health.CurrentValue <= 0)
+                    {
+                        _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
+                    }
+
+                    ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
+
+                    Damaged();
+
+                    StartCoroutine(InvulnerabilityTimeCoroutine());
                 }
-
-                ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
-
-                StartCoroutine(InvulnerabilityTimeCoroutine());
             }
         }
+
+        protected virtual void Damaged() { }
 
         private IEnumerator InvulnerabilityTimeCoroutine()
         {

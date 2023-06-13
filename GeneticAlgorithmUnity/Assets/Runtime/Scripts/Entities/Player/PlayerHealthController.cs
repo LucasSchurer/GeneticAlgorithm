@@ -1,3 +1,4 @@
+using Game.Entities.Shared;
 using Game.Events;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,12 +8,15 @@ using UnityEngine.Rendering.Universal;
 
 namespace Game.Entities.Player
 {
-    public class DamageOverlay : MonoBehaviour
+    public class PlayerHealthController : HealthController
     {
+        [Header("Damage and Healing Overlay Settings")]
         [SerializeField]
-        private EntityEventController _playerEventController;
+        private Volume _volume;
         [SerializeField]
-        private Volume _damageVolume;
+        private Color _damageColor;
+        [SerializeField]
+        private Color _healingColor;
         [SerializeField]
         [Range(0f, 1f)]
         private float _intensity;
@@ -23,33 +27,41 @@ namespace Game.Entities.Player
 
         private Vignette _vignetteEffect;
 
-        private Coroutine _showDamageCoroutine;
+        private Coroutine _showingVignetteEffect;
 
-        private void Start()
+        protected override void Start()
         {
-            VolumeProfile profile = _damageVolume.profile;
+            base.Start();
+
+            VolumeProfile profile = _volume.profile;
 
             profile.TryGet(out _vignetteEffect);
         }
 
-        private void Update()
+        protected override void Healed()
         {
-            if (Input.GetKeyDown(KeyCode.L))
+            base.Healed();
+
+            if (_showingVignetteEffect == null)
             {
-                if (_showDamageCoroutine == null)
-                {
-                    _showDamageCoroutine = StartCoroutine(ShowDamageCoroutine());
-                }   
+                _showingVignetteEffect = StartCoroutine(ShowVignetteEffect(_healingColor));
             }
         }
 
-        private void OnPlayerHealthChange(ref EntityEventContext ctx)
+        protected override void Damaged()
         {
-            
+            base.Damaged();
+
+            if (_showingVignetteEffect == null)
+            {
+                _showingVignetteEffect = StartCoroutine(ShowVignetteEffect(_damageColor));
+            }
         }
 
-        private IEnumerator ShowDamageCoroutine()
+        private IEnumerator ShowVignetteEffect(Color color)
         {
+            _vignetteEffect.color.Override(color);
+
             float elapsedTime = 0f;
 
             while (elapsedTime < _durationToReachIntensity)
@@ -78,33 +90,7 @@ namespace Game.Entities.Player
 
             _vignetteEffect.intensity.Override(0f);
 
-            _showDamageCoroutine = null;
-        }
-
-        private void OnEnable()
-        {
-            StartListening();
-        }
-
-        private void OnDisable()
-        {
-            StopListening();
-        }
-
-        public void StartListening()
-        {
-            if (_playerEventController)
-            {
-                _playerEventController.AddListener(EntityEventType.OnHealthChange, OnPlayerHealthChange, EventExecutionOrder.After);
-            }
-        }
-
-        public void StopListening()
-        {
-            if (_playerEventController)
-            {
-                _playerEventController.RemoveListener(EntityEventType.OnHealthChange, OnPlayerHealthChange, EventExecutionOrder.After);
-            }
+            _showingVignetteEffect = null;
         }
     } 
 }
