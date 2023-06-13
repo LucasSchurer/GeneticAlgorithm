@@ -1,29 +1,42 @@
-/*using System.Collections;
+using Game.Weapons;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
-public class WeaponGene : Gene
+namespace Game.GA
 {
-    public WeaponOld.Type type;
-
-    public WeaponGene(WeaponOld.Type type)
+    [DataContract(Name = "BehaviourGene", Namespace = "")]
+    [KnownType(typeof(BehaviourGene))]
+    public class WeaponGene : Gene
     {
-        this.type = type;
-    }
+        [DataMember(Name = "BehaviourType")]
+        public WeaponType type;
 
-    public override Gene Copy()
-    {
-        return new WeaponGene(type);
-    }
+        public WeaponGene(WeaponType type)
+        {
+            this.type = type;
+        }
 
-    public override void Mutate()
-    {
-        Randomize();
-    }
+        public override void Apply(CreatureController creature)
+        {
+            WeaponManager.Instance.AddWeaponComponent(creature.gameObject, type, WeaponManager.WeaponHolder.Enemy);
+        }
 
-    public override void Randomize()
-    {
-        type = (WeaponOld.Type)Random.Range(0, (int)WeaponOld.Type.Count);
+        public override Gene Copy()
+        {
+            return new WeaponGene(type);
+        }
+
+        public override void Mutate()
+        {
+            Randomize();
+        }
+
+        public override void Randomize()
+        {
+            type = WeaponManager.Instance.GetRandomWeaponType(WeaponManager.WeaponHolder.Enemy);
+        }
     }
 }
-*/

@@ -16,6 +16,7 @@ namespace Game.GA
             Behaviour,
             Color,
             Traits,
+            Weapon,
             Size
         }
 
@@ -23,8 +24,9 @@ namespace Game.GA
         {
             _genes = new Gene[(int)Genes.Size];
             _genes[(int)Genes.Color] = new ColorGene(new Color(1, 1, 1, 1));
-            _genes[(int)Genes.Behaviour] = new BehaviourGene(BehaviourType.Aggressive);
+            _genes[(int)Genes.Behaviour] = new BehaviourGene(BehaviourType.Reckless);
             _genes[(int)Genes.Traits] = new TraitsGene(1);
+            _genes[(int)Genes.Weapon] = new WeaponGene(Weapons.WeaponType.None);
         }
 
         protected override void SetGenes(Gene[] genes)

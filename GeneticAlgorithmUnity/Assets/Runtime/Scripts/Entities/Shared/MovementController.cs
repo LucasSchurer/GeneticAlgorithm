@@ -4,6 +4,14 @@ namespace Game.Entities.Shared
 {
     public class MovementController : MonoBehaviour
     {
+        public enum Status
+        {
+            Standing,
+            Walking,
+            Running,
+            Air,
+        }
+
         [Header("Settings")]
         [SerializeField]
         private LayerMask _groundLayerMask;
@@ -36,6 +44,10 @@ namespace Game.Entities.Shared
         private RaycastHit _slopeHit;
         private Vector3 _slopeMovementDirection;
 
+        private Status _currentStatus = Status.Standing;
+
+        public Status CurrentStatus => _currentStatus;
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
@@ -65,6 +77,26 @@ namespace Game.Entities.Shared
             if (_rb.velocity.y < 0)
             {
                 _rb.velocity += Vector3.up * Physics.gravity.y * (_fallMultiplier * -1) * Time.deltaTime;
+            }
+
+            UpdateStatus();
+        }
+
+        private void UpdateStatus()
+        {
+            if (_isGrounded)
+            {
+                if (_rb.velocity.x <= 0.1f && _rb.velocity.z <= 0.1f)
+                {
+                    _currentStatus = Status.Standing;
+                }
+                else
+                {
+                    _currentStatus = Status.Running;
+                }
+            } else
+            {
+                _currentStatus = Status.Air;
             }
         }
 

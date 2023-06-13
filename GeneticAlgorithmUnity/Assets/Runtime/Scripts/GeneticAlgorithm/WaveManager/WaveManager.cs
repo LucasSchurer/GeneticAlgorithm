@@ -9,7 +9,12 @@ namespace Game.Managers
     {
         [Header("References")]
         [SerializeField]
-        private Transform _spawnPosition;
+        private float _spawnRadius;
+        [SerializeField]
+        private float _minimumDistanceToSpawn;
+        [SerializeField]
+        private int _maximumSpawnRetry = 15;
+
         private PopulationController _populationController;
 
         [Header("Settings")]
@@ -18,19 +23,43 @@ namespace Game.Managers
         private bool _isSpawningEnemies = false;
         private bool _isWaveActive = false;
 
+        private Transform _player;
+
         public float TimeRemaining => _timeRemaining;
         public bool IsWaveActive => _isWaveActive;
 
         protected override void SingletonAwake()
         {
             _populationController = FindObjectOfType<PopulationController>();
+            _player = GameManager.Instance.Player;
         }
 
         private Vector3 GetSpawnPosition()
         {
-            Vector3 position = _spawnPosition.position;
-            position.x += Random.Range(-10f, 10f);
-            position.z += Random.Range(-10f, 10f);
+            Vector3 position = Vector3.zero;
+            Vector3 playerPosition = _player.position;
+            playerPosition.y = 0f;
+
+            for (int i = 0; i < _maximumSpawnRetry; i++)
+            {
+                position = Random.insideUnitCircle * Random.Range(_minimumDistanceToSpawn, _spawnRadius);
+
+                position.z = position.y;
+                position.y = 0f;
+
+                if (Vector3.Distance(position, playerPosition) > _minimumDistanceToSpawn)
+                {                    
+                    position.y = 5f;
+
+                    if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, Constants.GroundLayer))
+                    {
+                        position = hit.point;
+                        position.y += 1.5f;
+                    }
+
+                    break;
+                }
+            }
 
             return position;
         }
@@ -124,6 +153,19 @@ namespace Game.Managers
         private void OnDisable()
         {
             StopListening();
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Color color = Gizmos.color;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _spawnRadius);
+
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireSphere(transform.position, _minimumDistanceToSpawn);
+
+            Gizmos.color = color;
         }
     }
 }

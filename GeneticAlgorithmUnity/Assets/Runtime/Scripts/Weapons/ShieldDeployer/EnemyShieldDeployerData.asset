@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e006e55fc7a964746b7856e8ff47b85e, type: 3}
   m_Name: EnemyShieldDeployerData
   m_EditorClassIdentifier: 
-  _cooldown: 5
+  _cooldown: 10
   _damage: 0
   _recoilStrength: 0
   _shield: {fileID: 2277962202464313479, guid: 9d76992b0e919e148a8321b5240907b8, type: 3}
@@ -20,6 +20,6 @@ MonoBehaviour:
   _durability: 20
   _launchStrength: 5
   _canExpire: 1
-  _expirationTime: 5
+  _expirationTime: 15
   _shieldMaterial: {fileID: 2100000, guid: 829d1ecf5fee7d2428c9e52dccc246fa, type: 2}
   _shieldLayer: 15

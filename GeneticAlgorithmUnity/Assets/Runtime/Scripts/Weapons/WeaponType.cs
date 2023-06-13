@@ -3,6 +3,11 @@ namespace Game.Weapons
     public enum WeaponType
     {
         None,
-        Pistol
+        Pistol,
+        GrenadeLauncher,
+        DamageOrbs,
+        HealingOrbs,
+        ShieldDeployer,
+        Nuke
     } 
 }

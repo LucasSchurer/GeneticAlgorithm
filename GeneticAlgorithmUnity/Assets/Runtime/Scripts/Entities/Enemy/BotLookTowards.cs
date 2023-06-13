@@ -18,7 +18,7 @@ namespace Game.Entities.Enemy
         [SerializeField]
         private EntityEventController _eventController;
 
-        private Vector3 DirectionToTarget => (_target.position - transform.position).normalized;
+        private Vector3 DirectionToTarget => (_target == null || transform == null) ? Vector3.zero : (_target.position - transform.position).normalized;
 
         private void Awake()
         {

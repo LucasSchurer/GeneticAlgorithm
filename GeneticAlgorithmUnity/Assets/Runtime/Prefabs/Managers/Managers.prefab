@@ -1,64 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4945772674801834459
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4945772674801834458}
-  - component: {fileID: 4945772674801834452}
-  - component: {fileID: 4945772674801834455}
-  m_Layer: 0
-  m_Name: Pathfinding
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4945772674801834458
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4945772674801834459}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4945772675181959135}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4945772674801834452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4945772674801834459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b12940730b256ea45b411c178f18929e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4945772674801834455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4945772674801834459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66eb8c2c428375848a64d54e5c4c0bb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _settings: {fileID: 11400000, guid: 76b198399071fa843929926f22eeca48, type: 2}
-  _centerTransform: {fileID: 0}
 --- !u!1 &4945772675181959132
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +33,6 @@ Transform:
   - {fileID: 4945772675784970882}
   - {fileID: 4945772675450705202}
   - {fileID: 629125396963631766}
-  - {fileID: 4945772674801834458}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -109,15 +49,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6748287852477543868, guid: 580346ee3c0c515498688e3e95d9f63d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 510.4602
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6748287852477543868, guid: 580346ee3c0c515498688e3e95d9f63d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 330.20966
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6748287852477543868, guid: 580346ee3c0c515498688e3e95d9f63d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.3072734
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6748287852477543868, guid: 580346ee3c0c515498688e3e95d9f63d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -146,6 +86,14 @@ PrefabInstance:
     - target: {fileID: 6748287852477543868, guid: 580346ee3c0c515498688e3e95d9f63d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6748287852477543869, guid: 580346ee3c0c515498688e3e95d9f63d, type: 3}
+      propertyPath: _spawnRadius
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6748287852477543869, guid: 580346ee3c0c515498688e3e95d9f63d, type: 3}
+      propertyPath: _minimumDistanceToSpawn
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6748287852477543870, guid: 580346ee3c0c515498688e3e95d9f63d, type: 3}
       propertyPath: m_Name
@@ -351,6 +299,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4945772675181959135}
     m_Modifications:
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[0]._data
+      value: 
+      objectReference: {fileID: 11400000, guid: 083b7e97139b47044a10649de607c88a, type: 2}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[0]._type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[1]._data
+      value: 
+      objectReference: {fileID: 11400000, guid: 37e89c994fe44e648ac6eca61b9a5268, type: 2}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[1]._type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[2]._data
+      value: 
+      objectReference: {fileID: 11400000, guid: dadf14fe59e5b6e4fbd07349444147a7, type: 2}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[2]._type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[3]._data
+      value: 
+      objectReference: {fileID: 11400000, guid: f2eb4ade249c1ca409f7c0f80ddebf31, type: 2}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[3]._type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[4]._data
+      value: 
+      objectReference: {fileID: 11400000, guid: 4a5703c2f355db24d981db04da2a90a9, type: 2}
+    - target: {fileID: 2140629258, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
+      propertyPath: _enemyWeapons.Array.data[4]._type
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4927719757706473346, guid: af2ffbf5673937348aa81462e4a47334, type: 3}
       propertyPath: m_Name
       value: WeaponManager

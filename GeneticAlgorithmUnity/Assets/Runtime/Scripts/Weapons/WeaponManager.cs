@@ -47,8 +47,28 @@ namespace Game.Weapons
                     case WeaponType.Pistol:
                         go.AddComponent<Pistol>().SetData((HitscanWeaponData)data);
                         break;
+                    case WeaponType.GrenadeLauncher:
+                        go.AddComponent<GrenadeLauncher>().SetData((GrenadeLauncherData)data);
+                        break;
+                    case WeaponType.DamageOrbs:
+                        go.AddComponent<HomingOrbSpawner>().SetData((HomingOrbSpawnerData)data);
+                        break;
+                    case WeaponType.HealingOrbs:
+                        go.AddComponent<HomingOrbSpawner>().SetData((HomingOrbSpawnerData)data);
+                        break;
+                    case WeaponType.ShieldDeployer:
+                        go.AddComponent<ShieldDeployer>().SetData((ShieldDeployerData)data);
+                        break;
+                    case WeaponType.Nuke:
+                        go.AddComponent<Nuke>().SetData((NukeData)data);
+                        break;
                 }
             }
+        }
+
+        public WeaponType GetRandomWeaponType(WeaponHolder holder)
+        {
+            return _enemyWeapons[Random.Range(0, _enemyWeapons.Length - 1)].Type;
         }
 
         [System.Serializable]

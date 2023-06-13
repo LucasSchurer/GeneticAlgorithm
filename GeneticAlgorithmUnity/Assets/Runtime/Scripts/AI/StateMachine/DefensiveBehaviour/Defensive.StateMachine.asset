@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f698f2e54f6da46488f3ae64b52f0546, type: 3}
   m_Name: Defensive.StateMachine
   m_EditorClassIdentifier: 
-  _initialState: {fileID: 0}
+  _initialState: {fileID: 11400000, guid: 89b4b5e11cf037549b05158fe716b3e0, type: 2}
