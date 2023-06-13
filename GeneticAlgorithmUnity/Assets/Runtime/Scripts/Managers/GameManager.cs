@@ -24,6 +24,8 @@ namespace Game.Managers
         private void Start()
         {
             eventController.TriggerEvent(GameEventType.OnWaveStart, new GameEventContext());
+
+            QualitySettings.vSyncCount = GameSettings.Instance.VSyncCount;
         }
 
         private void OnApplicationQuit()

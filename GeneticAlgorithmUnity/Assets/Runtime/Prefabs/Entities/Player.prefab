@@ -282,6 +282,7 @@ MonoBehaviour:
   _intensity: 0.2
   _durationToReachIntensity: 0.2
   _durationToReach0Intensity: 0.3
+  _impulseSource: {fileID: 0}
 --- !u!114 &5194863710281804544
 MonoBehaviour:
   m_ObjectHideFlags: 0

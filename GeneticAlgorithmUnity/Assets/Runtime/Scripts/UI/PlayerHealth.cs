@@ -52,7 +52,7 @@ namespace Game.UI
                 _bar.maxValue = _maxHealth;
                 _bar.value = _currentHealth;
 
-                _value.text = $"{_currentHealth} / {_maxHealth}";
+                _value.text = $"{_currentHealth.ToString("#.##")} / {_maxHealth.ToString("#.##")}";
             }
 
             private void OnEnable()

@@ -1,3 +1,4 @@
+using Cinemachine;
 using Game.Entities.Shared;
 using Game.Events;
 using System.Collections;
@@ -24,6 +25,10 @@ namespace Game.Entities.Player
         private float _durationToReachIntensity;
         [SerializeField]
         private float _durationToReach0Intensity;
+        
+        [Header("Damage Camera Shake")]
+        [SerializeField]
+        private CinemachineImpulseSource _impulseSource;
 
         private Vignette _vignetteEffect;
 
@@ -56,6 +61,8 @@ namespace Game.Entities.Player
             {
                 _showingVignetteEffect = StartCoroutine(ShowVignetteEffect(_damageColor));
             }
+
+            _impulseSource.GenerateImpulse();
         }
 
         private IEnumerator ShowVignetteEffect(Color color)
