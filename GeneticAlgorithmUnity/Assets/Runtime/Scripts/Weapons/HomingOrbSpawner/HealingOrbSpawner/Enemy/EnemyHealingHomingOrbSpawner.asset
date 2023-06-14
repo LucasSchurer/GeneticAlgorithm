@@ -34,6 +34,8 @@ MonoBehaviour:
   _findTargetRadius: 50
   _startLockingTime: 0.6
   _startSeekingTime: 0
+  _canHitSelf: 0
+  _maxDistance: 0
   _orbMaterial: {fileID: 2100000, guid: 1fd14079dc9117447bdb1c66740d12e1, type: 2}
   _trailMaterial: {fileID: 2100000, guid: 7b337f2c9b531f447880fffa660502b6, type: 2}
   _hitMaterial: {fileID: 2100000, guid: 764c85f123b14de46882ce10e75e2837, type: 2}
