@@ -66,7 +66,7 @@ namespace Game.UI
 
             if (gameManager)
             {
-                gameManager.eventController.AddListener(GameEventType.OnWaveStart, StartTimer, EventExecutionOrder.After);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveStart, StartTimer, EventExecutionOrder.After);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Game.UI
 
             if (gameManager)
             {
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveStart, StartTimer, EventExecutionOrder.After);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveStart, StartTimer, EventExecutionOrder.After);
             }
         }
 

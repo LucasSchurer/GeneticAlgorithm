@@ -67,12 +67,12 @@ namespace Game.GA
 
         public void StartListening()
         {
-            Managers.GameManager.Instance.eventController?.AddListener(GameEventType.OnWaveEnd, GenerateXMLOnWaveEnd, EventExecutionOrder.After);
+            Managers.GameManager.Instance.GetEventController()?.AddListener(GameEventType.OnWaveEnd, GenerateXMLOnWaveEnd, EventExecutionOrder.After);
         }
 
         public void StopListening()
         {
-            Managers.GameManager.Instance.eventController?.RemoveListener(GameEventType.OnWaveEnd, GenerateXMLOnWaveEnd, EventExecutionOrder.After);
+            Managers.GameManager.Instance.GetEventController()?.RemoveListener(GameEventType.OnWaveEnd, GenerateXMLOnWaveEnd, EventExecutionOrder.After);
         }
 
         private void OnEnable()

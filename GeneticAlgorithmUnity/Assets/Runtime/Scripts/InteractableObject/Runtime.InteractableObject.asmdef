@@ -1,3 +1,18 @@
 {
-	"name": "Runtime.InteractableObject"
+    "name": "Runtime.InteractableObject",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eff4936141bac0c41bec28ed2ec5b052",
+        "GUID:c8a9b5471657972498988b6ada89fe65",
+        "GUID:66b737598c150034ea3da072e005a4ef"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

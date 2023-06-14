@@ -5,6 +5,7 @@ namespace Game.Traits
     public enum TraitIdentifier
     {
         None,
+        Default,
         UnstableCore,
         Pacifist,
         Slow,

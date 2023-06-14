@@ -1,3 +1,4 @@
+using Game.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace Game.InteractableObjects
     {
         public void Interact()
         {
-            Debug.Log("Teste");
+            GameManager.Instance.GetEventController().TriggerEvent(Events.GameEventType.OnGivePlayerTraits, new Events.GameEventContext());
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Game.Events
     {
         OnWaveEnd,
         OnWaveStart,
-        OnApplicationQuit
+        OnApplicationQuit,
+        OnGivePlayerTraits,
     }
 }

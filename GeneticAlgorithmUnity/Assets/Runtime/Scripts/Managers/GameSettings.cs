@@ -11,9 +11,12 @@ namespace Game.Managers
         private int _vSyncCount = 1;
         [SerializeField]
         private WeaponType[] _selectedWeapons = new WeaponType[3] { WeaponType.Pistol, WeaponType.GrenadeLauncher, WeaponType.DamageOrbs };
+        [SerializeField]
+        private int _traitSelectionAmount = 3;
 
         public int VSyncCount => Mathf.Clamp(_vSyncCount, 0, 4);
         public WeaponType[] SelectedWeapons => _selectedWeapons;
+        public int TraitSelectionAmount => _traitSelectionAmount;
 
         protected override void SingletonAwake()
         {

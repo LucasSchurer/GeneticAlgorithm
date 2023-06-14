@@ -247,9 +247,9 @@ namespace Game.GA
         {
             Managers.GameManager gameManager = Managers.GameManager.Instance;
 
-            if (gameManager != null && gameManager.eventController != null)
+            if (gameManager != null && gameManager.GetEventController() != null)
             {
-                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, OnWaveEnd, EventExecutionOrder.Standard);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveEnd, OnWaveEnd, EventExecutionOrder.Standard);
             }
         }
 
@@ -257,9 +257,9 @@ namespace Game.GA
         {
             Managers.GameManager gameManager = Managers.GameManager.Instance;
 
-            if (gameManager != null && gameManager.eventController != null)
+            if (gameManager != null && gameManager.GetEventController() != null)
             {
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, OnWaveEnd, EventExecutionOrder.Standard);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveEnd, OnWaveEnd, EventExecutionOrder.Standard);
             }
         }
 

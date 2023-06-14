@@ -39,9 +39,9 @@ namespace Game.GA
         {
             Managers.GameManager gameManager = Managers.GameManager.Instance;
             
-            if (gameManager != null && gameManager.eventController != null)
+            if (gameManager != null && gameManager.GetEventController() != null)
             {
-                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, UpdateCreatureDataOnWaveEnd, EventExecutionOrder.Before);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveEnd, UpdateCreatureDataOnWaveEnd, EventExecutionOrder.Before);
             }
         }
 
@@ -49,9 +49,9 @@ namespace Game.GA
         {
             Managers.GameManager gameManager = Managers.GameManager.Instance;
 
-            if (gameManager != null && gameManager.eventController != null)
+            if (gameManager != null && gameManager.GetEventController() != null)
             {
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, UpdateCreatureDataOnWaveEnd, EventExecutionOrder.Before);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveEnd, UpdateCreatureDataOnWaveEnd, EventExecutionOrder.Before);
             }
         }
 

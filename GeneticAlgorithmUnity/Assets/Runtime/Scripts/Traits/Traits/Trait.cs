@@ -7,6 +7,7 @@ namespace Game.Traits
     public abstract class Trait<Type, Context> : ScriptableObject
         where Context : EventContext
     {
+        [Header("Settings")]
         public TraitIdentifier identifier = TraitIdentifier.None;
         public TraitExecutionType executionType;
         public float cooldown;
@@ -16,6 +17,18 @@ namespace Game.Traits
         [Tooltip("Max stacks allowed for the trait. 1 = only one copy of the trait is possible")]
         [Range(1, 10)]
         public int maxStacks = 1;
+
+        [Header("Display Settings")]
+        [SerializeField]
+        private string _name;
+        [SerializeField]
+        private string _description;
+        [SerializeField]
+        private Sprite _icon;
+
+        public string Name => _name;
+        public string Description => _description;
+        public Sprite Icon => _icon;
 
         public void WhenAdded(GameObject owner, int currentStacks = 1)
         {

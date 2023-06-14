@@ -85,8 +85,8 @@ namespace Game.GA
 
             if (gameManager)
             {
-                gameManager.eventController.AddListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
-                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
             }
         }
 
@@ -107,8 +107,8 @@ namespace Game.GA
 
             if (gameManager)
             {
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
             }
         }
 

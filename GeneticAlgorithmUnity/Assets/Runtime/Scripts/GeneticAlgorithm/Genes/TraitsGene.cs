@@ -38,7 +38,7 @@ namespace Game.GA
                 {
                     if (TraitManager.Instance)
                     {
-                        AddTrait(TraitManager.Instance.GetRandomTraitIdentifier());
+                        AddTrait(TraitManager.Instance.GetRandomTraitIdentifier(TraitManager.TraitHolder.Enemy));
                     }
                 }
             }
@@ -74,7 +74,7 @@ namespace Game.GA
 
             RemoveTrait(removedTrait);
 
-            TraitIdentifier addedTrait = TraitManager.Instance.GetRandomTraitIdentifier();
+            TraitIdentifier addedTrait = TraitManager.Instance.GetRandomTraitIdentifier(TraitManager.TraitHolder.Enemy);
 
             AddTrait(addedTrait);
 
@@ -89,7 +89,7 @@ namespace Game.GA
 
         private void AddTraitToController(TraitIdentifier identifier, int amount, EntityTraitController controller)
         {
-            Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(identifier);
+            Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(identifier, TraitManager.TraitHolder.Enemy);
 
             if (trait)
             {
@@ -102,7 +102,7 @@ namespace Game.GA
 
         private void AddTrait(TraitIdentifier trait, int amount = 1)
         {
-            int maxStacks = TraitManager.Instance.GetTraitMaxStacks(trait);
+            int maxStacks = TraitManager.Instance.GetTraitMaxStacks(trait, TraitManager.TraitHolder.Enemy);
 
             if (_traits.ContainsKey(trait))
             {

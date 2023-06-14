@@ -7,5 +7,5 @@ namespace Game.Events
     public class GameEventContext : EventContext
     {
         public GameEventController eventController;
-    } 
+    }
 }
