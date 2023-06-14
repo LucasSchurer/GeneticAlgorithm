@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30dc3cc2ad55c4041a6f85ca70d8bc32, type: 3}
   m_Name: PlayerDamageHomingOrbOnHit
   m_EditorClassIdentifier: 
-  _healthInteractionValue: 0.1
+  _healthInteractionValue: 0.3
   _type: 0
+  _canHitAllies: 0
+  _friendlyFireDamage: 0

@@ -12,5 +12,6 @@ namespace Game.Events
         OnGivePlayerTraits,
         OnPause,
         OnResume,
+        OnGameOver,
     }
 }

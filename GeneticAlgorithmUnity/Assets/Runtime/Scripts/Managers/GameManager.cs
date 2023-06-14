@@ -17,6 +17,8 @@ namespace Game.Managers
 
         public bool IsPaused => _isPaused;
 
+        private bool _gameOver = false;
+
         public GameEventController GetEventController()
         {
             if (_eventController == null)
@@ -49,7 +51,7 @@ namespace Game.Managers
 
         public void PauseGame(bool triggerEvent = true)
         {
-            if (!_isPaused)
+            if (!_isPaused && !_gameOver)
             {
                 _isPaused = true;
 
@@ -75,7 +77,7 @@ namespace Game.Managers
 
         public void ResumeGame(bool triggerEvent = true)
         {
-            if (_isPaused)
+            if (_isPaused && !_gameOver)
             {
                 _isPaused = false;
 
@@ -97,6 +99,15 @@ namespace Game.Managers
                     _eventController.TriggerEvent(GameEventType.OnResume, new GameEventContext() { });
                 }
             }
+        }
+
+        public void GameOver()
+        {
+            PauseGame(false);
+
+            _gameOver = true;
+
+            _eventController.TriggerEvent(GameEventType.OnGameOver, new GameEventContext() { });
         }
     } 
 }
