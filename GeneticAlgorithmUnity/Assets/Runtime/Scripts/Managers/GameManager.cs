@@ -15,6 +15,8 @@ namespace Game.Managers
         private Transform _player;
         private bool _isPaused = false;
 
+        public bool IsPaused => _isPaused;
+
         public GameEventController GetEventController()
         {
             if (_eventController == null)
@@ -27,8 +29,6 @@ namespace Game.Managers
 
         [HideInInspector]
         public Transform Player => _player == null ? GameObject.FindGameObjectWithTag(_playerTag).transform : _player;
-
-        public bool IsPaused => _isPaused;
         
         protected override void SingletonAwake()
         {
@@ -47,7 +47,7 @@ namespace Game.Managers
             _eventController.TriggerEvent(GameEventType.OnApplicationQuit, new GameEventContext());
         }
 
-        public void PauseGame()
+        public void PauseGame(bool triggerEvent = true)
         {
             if (!_isPaused)
             {
@@ -65,10 +65,15 @@ namespace Game.Managers
                 _cursorLockMode = CursorLockMode.Confined;
                 Cursor.lockState = _cursorLockMode;
                 Cursor.visible = true;
+
+                if (triggerEvent)
+                {
+                    _eventController.TriggerEvent(GameEventType.OnPause, new GameEventContext() { });
+                }
             }
         }
 
-        public void ResumeGame()
+        public void ResumeGame(bool triggerEvent = true)
         {
             if (_isPaused)
             {
@@ -86,6 +91,11 @@ namespace Game.Managers
                 _cursorLockMode = CursorLockMode.Locked;
                 Cursor.lockState = _cursorLockMode;
                 Cursor.visible = false;
+
+                if (triggerEvent)
+                {
+                    _eventController.TriggerEvent(GameEventType.OnResume, new GameEventContext() { });
+                }
             }
         }
     } 

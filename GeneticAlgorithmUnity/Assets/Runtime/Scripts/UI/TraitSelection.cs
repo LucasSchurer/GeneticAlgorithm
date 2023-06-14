@@ -27,7 +27,7 @@ namespace Game.UI
         private void OpenTraitSelection(List<Trait<EntityEventType, EntityEventContext>> traits)
         {
             _background.enabled = true;
-            GameManager.Instance.PauseGame();
+            GameManager.Instance.PauseGame(false);
 
             for (int i = 0; i < traits.Count; i++)
             {
@@ -50,7 +50,7 @@ namespace Game.UI
         private void CloseTraitSelection()
         {
             _background.enabled = false;
-            GameManager.Instance.ResumeGame();
+            GameManager.Instance.ResumeGame(false);
 
             foreach (TraitCard traitCard in _traitCards)
             {

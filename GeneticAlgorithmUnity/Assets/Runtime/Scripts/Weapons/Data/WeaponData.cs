@@ -15,9 +15,17 @@ namespace Game.Weapons
         [SerializeField]
         protected float _recoilStrength = 0f;
 
+        [Header("Display Setings")]
+        [SerializeField]
+        private string _name;
+        [SerializeField]
+        private string _description;
+
         public float Cooldown => _cooldown;
         public float Damage => _damage;
         public float RecoilStrength => _recoilStrength;
+        public string Name => _name;
+        public string Description => _description;
     }
 }
 

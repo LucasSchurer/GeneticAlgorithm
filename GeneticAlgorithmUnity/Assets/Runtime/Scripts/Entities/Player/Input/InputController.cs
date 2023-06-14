@@ -4,6 +4,7 @@ using Game.Entities.Shared;
 using UnityEngine.InputSystem;
 using System;
 using System.Collections;
+using Game.Managers;
 
 /// <summary>
 /// Handles player input
@@ -168,6 +169,7 @@ namespace Game.Entities.Player
             _playerInput.Gameplay.Swap2.performed += OnSwap2Performed;
             _playerInput.Gameplay.Swap3.performed += OnSwap3Performed;
             _playerInput.Gameplay.Interact.performed += OnInteractPerformed;
+            _playerInput.Gameplay.Pause.performed += OnPausePerformed;
         }
 
         private void OnSwap1Performed(InputAction.CallbackContext obj)
@@ -190,6 +192,18 @@ namespace Game.Entities.Player
             _eventController.TriggerEvent(EntityEventType.OnInteractActionPerformed, new EntityEventContext());
         }
 
+        private void OnPausePerformed(InputAction.CallbackContext obj)
+        {
+            if (GameManager.Instance.IsPaused)
+            {
+                GameManager.Instance.ResumeGame();
+            }
+            else
+            {
+                GameManager.Instance.PauseGame();
+            }
+        }
+
         private void DisposeInputActions()
         {
             _playerInput.Gameplay.PrimaryButton.Dispose();
@@ -199,6 +213,7 @@ namespace Game.Entities.Player
             _playerInput.Gameplay.Swap2.Dispose();
             _playerInput.Gameplay.Swap3.Dispose();
             _playerInput.Gameplay.Interact.Dispose();
+            _playerInput.Gameplay.Pause.Dispose();
             _playerInput.Gameplay.Disable();
         }
 

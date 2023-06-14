@@ -2,6 +2,7 @@ using UnityEngine;
 using Game.Events;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Game.Traits
 {
@@ -89,6 +90,18 @@ namespace Game.Traits
         public TraitIdentifier[] GetTraitsIdentifiers()
         {
             return _traitHandlers.Keys.ToArray();
+        }
+
+        public List<Tuple<int, Trait<Type, Context>>> GetStacksAndTraits()
+        {
+            List<Tuple<int, Trait<Type, Context>>> stacksTraits = new List<Tuple<int, Trait<Type, Context>>>();
+
+            foreach (TraitHandler<Type, Context, Controller> handler in _traitHandlers.Values)
+            {
+                stacksTraits.Add(new Tuple<int, Trait<Type, Context>>(handler.Stacks, handler.Trait));
+            }
+
+            return stacksTraits;
         }
 
         public virtual void StartListening()

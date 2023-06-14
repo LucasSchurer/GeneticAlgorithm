@@ -10,5 +10,7 @@ namespace Game.Events
         OnWaveStart,
         OnApplicationQuit,
         OnGivePlayerTraits,
+        OnPause,
+        OnResume,
     }
 }

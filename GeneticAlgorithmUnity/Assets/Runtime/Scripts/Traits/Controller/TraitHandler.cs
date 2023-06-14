@@ -14,6 +14,9 @@ namespace Game.Traits
         private bool canAct = true;
         private bool isListeningToEvent = false;
 
+        public int Stacks => _currentStacks;
+        public Trait<Type, Context> Trait => _trait;
+
         public TraitIdentifier GetTraitIdentifier => _trait.identifier;
 
         public TraitHandler(TraitController<Type, Context, Controller> traitController, Trait<Type, Context> trait)

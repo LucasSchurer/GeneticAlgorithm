@@ -32,7 +32,7 @@ namespace Game.Entities.Player
 
         private void Update()
         {
-            if (_gameSettings._headBobActive)
+            if (_gameSettings.HeadBobActive)
             {
                 UpdateFrequencyAmplitude();
             }
