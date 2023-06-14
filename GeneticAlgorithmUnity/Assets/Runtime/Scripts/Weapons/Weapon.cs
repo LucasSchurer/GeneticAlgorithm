@@ -9,6 +9,8 @@ namespace Game.Weapons
     {
         [SerializeField]
         protected Data _data;
+        [SerializeField]
+        protected int _currentAmmunition;
         protected EntityEventController _eventController;
         protected EntitySocketController _socketController;
         protected Entity _entity;
@@ -17,6 +19,7 @@ namespace Game.Weapons
         public void SetData(Data data)
         {
             _data = data;
+            _currentAmmunition = _data.Ammunition;
         }
 
         protected virtual void Awake()

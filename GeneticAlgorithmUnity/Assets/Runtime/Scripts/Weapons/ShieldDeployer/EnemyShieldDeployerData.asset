@@ -15,6 +15,11 @@ MonoBehaviour:
   _cooldown: 10
   _damage: 0
   _recoilStrength: 0
+  _ammunition: 0
+  _useAmmunition: 0
+  _weaponType: 5
+  _name: 
+  _description: 
   _shield: {fileID: 2277962202464313479, guid: 9d76992b0e919e148a8321b5240907b8, type: 3}
   _canBreak: 1
   _durability: 20

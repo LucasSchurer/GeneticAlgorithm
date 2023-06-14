@@ -15,6 +15,11 @@ MonoBehaviour:
   _cooldown: 1
   _damage: 2
   _recoilStrength: 15
+  _ammunition: 10
+  _useAmmunition: 1
+  _weaponType: 2
+  _name: 
+  _description: 
   _grenade: {fileID: -2514374106538567625, guid: a4f8e4edd00985c4682bc5a2964aa4bb, type: 3}
   _launchStrength: 23
   _explosionRadius: 5

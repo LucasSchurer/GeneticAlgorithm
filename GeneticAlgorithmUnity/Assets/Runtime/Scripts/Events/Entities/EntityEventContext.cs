@@ -42,13 +42,17 @@ namespace Game.Events
         public class WeaponPacket
         {
             private WeaponType _currentWeapon = WeaponType.None;
+            private int _currentAmmunition = 0;
             private float _swapCooldown = 0f;
+            private float _cooldown = 0f;
 
             private float _recoilStrength = 0f;
 
             public float RecoilStrength { get => _recoilStrength; set => _recoilStrength = value; }
             public WeaponType CurrentWeapon { get => _currentWeapon; set => _currentWeapon = value; }
             public float SwapCooldown { get => _swapCooldown; set => _swapCooldown = value; }
+            public int CurrentAmmunition { get => _currentAmmunition; set => _currentAmmunition = value; }
+            public float Cooldown { get => _cooldown; set => _cooldown = value; }
         }
 
         public class DamagePacket

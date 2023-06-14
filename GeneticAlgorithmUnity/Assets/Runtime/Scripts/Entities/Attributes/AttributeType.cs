@@ -13,5 +13,8 @@ namespace Game.Entities
         StaminaLoss,
         StaminaRecoveryDelay,
         StaminaRecoveryPercentage,
+        AmmunitionMultiplier,
+        ExplosiveDamageMultiplier,
+        AllDamageMultiplier,
     } 
 }

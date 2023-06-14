@@ -1,6 +1,7 @@
 using Game.Entities.Player;
 using Game.Events;
 using Game.Weapons;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,8 @@ namespace Game.UI
                 {
                     _weapons.TryAdd(_selectedWeapons[i], _weaponSlots[i]);
                     _weaponSlots[i].ChangeIconColor(_notSelectedColor);
+
+                    _weaponSlots[i].ChangeAmmunition(WeaponManager.Instance.GetWeaponData(_selectedWeapons[i], WeaponManager.WeaponHolder.Player).Ammunition);
                 }
             }
 
@@ -125,7 +128,34 @@ namespace Game.UI
             if (_eventController)
             {
                 _eventController.AddListener(EntityEventType.OnWeaponSwap, OnWeaponSwap);
+                _eventController.AddListener(EntityEventType.OnWeaponAttack, OnWeaponAttack);
             }
+        }
+
+        private void OnWeaponAttack(ref EntityEventContext ctx)
+        {
+            if (ctx.Weapon != null && ctx.Weapon.CurrentWeapon != WeaponType.None)
+            {
+                if (ctx.Weapon.CurrentWeapon != WeaponType.Pistol)
+                {
+                    UpdateAmmunition(ctx.Weapon.CurrentAmmunition);
+                } 
+
+                if (ctx.Weapon.Cooldown > 0)
+                {
+                    ShowWeaponCooldown();
+                }
+            }
+        }
+
+        private void UpdateAmmunition(int newValue)
+        {
+            _selectedWeapon.ChangeAmmunition(newValue);
+        }
+
+        private void ShowWeaponCooldown()
+        {
+
         }
 
         public void StopListening()
@@ -133,6 +163,7 @@ namespace Game.UI
             if (_eventController)
             {
                 _eventController.RemoveListener(EntityEventType.OnWeaponSwap, OnWeaponSwap);
+                _eventController.RemoveListener(EntityEventType.OnWeaponAttack, OnWeaponAttack);
             }
         }
     } 

@@ -15,6 +15,11 @@ MonoBehaviour:
   _cooldown: 0.3
   _damage: 0
   _recoilStrength: 0
+  _ammunition: 90
+  _useAmmunition: 1
+  _weaponType: 3
+  _name: 
+  _description: 
   _hitLayer:
     serializedVersion: 2
     m_Bits: 33536

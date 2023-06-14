@@ -15,6 +15,11 @@ MonoBehaviour:
   _cooldown: 5
   _damage: 5
   _recoilStrength: 0
+  _ammunition: 5
+  _useAmmunition: 1
+  _weaponType: 6
+  _name: 
+  _description: 
   _maxDistance: 90
   _radius: 10
   _beacon: {fileID: 324734715273941630, guid: 66ef8631fddb4874dae817d92f63f203, type: 3}

@@ -30,9 +30,18 @@ namespace Game.Weapons
 
         private void Fire(ref EntityEventContext ctx)
         {
-            if (_canUse)
+            if (_canUse && (!_data.UseAmmunition || _currentAmmunition > 0))
             {
-                ctx.Weapon = new EntityEventContext.WeaponPacket() { RecoilStrength = _data.RecoilStrength };
+                _currentAmmunition--;
+
+                ctx.Weapon = new EntityEventContext.WeaponPacket()
+                {
+                    CurrentWeapon = _data.weaponType,
+                    Cooldown = _data.Cooldown,
+                    CurrentAmmunition = _currentAmmunition,
+                    RecoilStrength = _data.RecoilStrength
+                };
+
                 ctx.EventController.TriggerEvent(EntityEventType.OnWeaponAttack, ctx);
 
                 Grenade grenade = Instantiate(_data.Grenade, _weaponFireSocket.position, transform.rotation);

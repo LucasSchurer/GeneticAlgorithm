@@ -55,14 +55,20 @@ namespace Game.UI
 
         public void StartListening()
         {
-            GameManager.Instance.GetEventController()?.AddListener(GameEventType.OnPause, OnPause);
-            GameManager.Instance.GetEventController()?.AddListener(GameEventType.OnResume, OnResume);
+            if (GameManager.Instance)
+            {
+                GameManager.Instance.GetEventController()?.AddListener(GameEventType.OnPause, OnPause);
+                GameManager.Instance.GetEventController()?.AddListener(GameEventType.OnResume, OnResume);
+            }
         }
 
         public void StopListening()
         {
-            GameManager.Instance.GetEventController()?.RemoveListener(GameEventType.OnPause, OnPause);
-            GameManager.Instance.GetEventController()?.RemoveListener(GameEventType.OnResume, OnResume);
+            if (GameManager.Instance)
+            {
+                GameManager.Instance.GetEventController()?.RemoveListener(GameEventType.OnPause, OnPause);
+                GameManager.Instance.GetEventController()?.RemoveListener(GameEventType.OnResume, OnResume);
+            }
         }
 
         private void OnEnable()

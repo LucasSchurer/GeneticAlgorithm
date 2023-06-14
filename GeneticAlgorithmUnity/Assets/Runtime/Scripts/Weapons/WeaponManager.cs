@@ -34,6 +34,19 @@ namespace Game.Weapons
             }
         }
 
+        public WeaponData GetWeaponData(WeaponType type, WeaponHolder holder)
+        {
+            Dictionary<WeaponType, WeaponData> weaponsDict = holder == WeaponHolder.Player ? _playerWeaponsDict : _enemyWeaponsDict;
+
+            if (weaponsDict.TryGetValue(type, out WeaponData data))
+            {
+                return data;
+            } else
+            {
+                return null;
+            }
+        }
+
         public IComponent AddWeaponComponent(GameObject go, WeaponType type, WeaponHolder holder)
         {
             Dictionary<WeaponType, WeaponData> weaponsDict = holder == WeaponHolder.Player ? _playerWeaponsDict : _enemyWeaponsDict;
