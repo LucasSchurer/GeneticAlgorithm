@@ -167,6 +167,7 @@ namespace Game.Entities.Player
             _playerInput.Gameplay.Swap1.performed += OnSwap1Performed;
             _playerInput.Gameplay.Swap2.performed += OnSwap2Performed;
             _playerInput.Gameplay.Swap3.performed += OnSwap3Performed;
+            _playerInput.Gameplay.Interact.performed += OnInteractPerformed;
         }
 
         private void OnSwap1Performed(InputAction.CallbackContext obj)
@@ -184,6 +185,11 @@ namespace Game.Entities.Player
             _eventController.TriggerEvent(EntityEventType.OnSwap3Performed, new EntityEventContext());
         }
 
+        private void OnInteractPerformed(InputAction.CallbackContext obj)
+        {
+            _eventController.TriggerEvent(EntityEventType.OnInteractActionPerformed, new EntityEventContext());
+        }
+
         private void DisposeInputActions()
         {
             _playerInput.Gameplay.PrimaryButton.Dispose();
@@ -192,6 +198,7 @@ namespace Game.Entities.Player
             _playerInput.Gameplay.Swap1.Dispose();
             _playerInput.Gameplay.Swap2.Dispose();
             _playerInput.Gameplay.Swap3.Dispose();
+            _playerInput.Gameplay.Interact.Dispose();
             _playerInput.Gameplay.Disable();
         }
 

@@ -91,7 +91,7 @@ namespace Game.Traits
             return _traitHandlers.Keys.ToArray();
         }
 
-        public void StartListening()
+        public virtual void StartListening()
         {
             if (_eventController)
             {
@@ -102,7 +102,7 @@ namespace Game.Traits
             }
         }
 
-        public void StopListening()
+        public virtual void StopListening()
         {
             if (_eventController)
             {

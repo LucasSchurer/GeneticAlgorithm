@@ -16,5 +16,6 @@ namespace Game.Events
         OnSprintButtonStarted,
         OnSprintButtonEnded,
         OnStaminaChange,
+        OnInteractActionPerformed,
     } 
 }
