@@ -23,6 +23,6 @@ MonoBehaviour:
   _grenade: {fileID: -2514374106538567625, guid: a4f8e4edd00985c4682bc5a2964aa4bb, type: 3}
   _launchStrength: 20
   _explosionRadius: 3
-  _explosionTimer: 3
+  _explosionTimer: 2
   _baseColor: {r: 1, g: 0, b: 0, a: 0}
   _grenadeLayer: 17

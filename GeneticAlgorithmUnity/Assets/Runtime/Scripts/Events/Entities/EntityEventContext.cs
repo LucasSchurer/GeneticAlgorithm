@@ -5,6 +5,12 @@ namespace Game.Events
 {
     public class EntityEventContext : EventContext
     {
+        public enum TypeOfDeath
+        { 
+            WaveEnd,
+            Damage
+        }
+
         private EntityEventController _eventController;
 
         private MovementPacket _movementPacket;
@@ -23,6 +29,8 @@ namespace Game.Events
         public HealingPacket Healing { get => _healingPacket; set => _healingPacket = value; }
         public HealthChangePacket HealthChange { get => _healthChangePacket; set => _healthChangePacket = value; }
         public StaminaChangePacket StaminaChange { get => _staminaChangePacket; set => _staminaChangePacket = value; }
+
+        public TypeOfDeath typeOfDeath => TypeOfDeath.Damage;
 
         public float HealthModifier { get => _healthModifier; set => _healthModifier = value; }
 

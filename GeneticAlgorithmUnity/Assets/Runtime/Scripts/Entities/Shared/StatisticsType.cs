@@ -2,10 +2,14 @@ namespace Game.Entities.Shared
 {
     public enum StatisticsType
     {
-        HitsTaken,
-        HitsDealt,
+        PositiveHitsTaken,
+        PositiveHitsDealt,
+        NegativeHitsTaken,
+        NegativeHitsDealt,
         DamageDealt,
         DamageTaken,
-        TimeAlive
+        HealingDealt,
+        HealingTaken,
+        FriendlyFire,
     }    
 }

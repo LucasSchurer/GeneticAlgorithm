@@ -17,5 +17,9 @@ namespace Game.Events
         OnSprintButtonEnded,
         OnStaminaChange,
         OnInteractActionPerformed,
+        OnDamageDealt,
+        OnDamageTaken,
+        OnHealingDealt,
+        OnHealingTaken,
     } 
 }

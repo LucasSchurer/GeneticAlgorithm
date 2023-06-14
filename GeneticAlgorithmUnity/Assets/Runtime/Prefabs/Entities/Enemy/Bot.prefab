@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initializeOnStart: 0
-  _debug: 1
+  _debug: 0
   _currentStateName: 
   _currentStateData: {fileID: 0}
   _data: {fileID: 0}

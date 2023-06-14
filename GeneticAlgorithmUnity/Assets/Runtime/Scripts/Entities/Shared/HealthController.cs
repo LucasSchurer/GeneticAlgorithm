@@ -55,6 +55,13 @@ namespace Game.Entities.Shared
 
                 ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
 
+                _eventController.TriggerEvent(EntityEventType.OnHealingTaken, ctx);
+                
+                if (ctx.Other != null)
+                {
+                    ctx.Other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHealingDealt, ctx);
+                }
+
                 Healed();
             }
         }
@@ -75,6 +82,13 @@ namespace Game.Entities.Shared
                     }
 
                     ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
+
+                    _eventController.TriggerEvent(EntityEventType.OnDamageTaken, ctx);
+
+                    if (ctx.Other != null)
+                    {
+                        ctx.Other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnDamageDealt, ctx);
+                    }
 
                     Damaged();
 

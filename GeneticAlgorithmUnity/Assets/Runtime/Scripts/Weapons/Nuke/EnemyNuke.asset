@@ -26,4 +26,4 @@ MonoBehaviour:
   _npcDetectionRange: 50
   _baseColor: {r: 1, g: 0, b: 0, a: 0}
   _lineRendererMaterial: {fileID: 2100000, guid: c88291d91cea01a43933924869cbabba, type: 2}
-  _explosionTime: 7
+  _explosionTime: 4
