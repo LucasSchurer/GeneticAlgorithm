@@ -39,7 +39,7 @@ namespace Game.Entities.Shared
             explosionForce = _explosionForce;
             explosionRadius = Random.Range(_explosionRadiusInterval.x, _explosionRadiusInterval.y);
             
-            if (damagePacket.ImpactPoint != Vector3.zero)
+            if (damagePacket != null && damagePacket.ImpactPoint != Vector3.zero)
             {
                 explosionPoint = damagePacket.ImpactPoint;
             } else

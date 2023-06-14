@@ -8,5 +8,10 @@ namespace Game.Entities
         RotationSpeed,
         CollisionDamage,
         InvulnerabilityTime,
+        Stamina,
+        SprintMultiplier,
+        StaminaLoss,
+        StaminaRecoveryDelay,
+        StaminaRecoveryPercentage,
     } 
 }

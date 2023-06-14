@@ -18,7 +18,7 @@ MonoBehaviour:
   _secondaryTargetLayerMask:
     serializedVersion: 2
     m_Bits: 32768
-  _detectionRadius: 50
+  _detectionRadius: 500
   _choiceType: 2
   _tryToGetFace: 1
   _validActions: 0100000000000000
@@ -28,7 +28,7 @@ MonoBehaviour:
     - _state: {fileID: 11400000, guid: b4819bd2cc7e7e846b5cb55c0f21c724, type: 2}
       _probability: 0.36
     _transitionType: 1
-  - _action: 1
+  - _action: 0
     _states:
     - _state: {fileID: 11400000, guid: b4819bd2cc7e7e846b5cb55c0f21c724, type: 2}
       _probability: 1

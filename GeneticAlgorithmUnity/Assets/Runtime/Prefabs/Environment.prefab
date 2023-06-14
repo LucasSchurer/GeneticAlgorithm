@@ -395,8 +395,8 @@ MonoBehaviour:
     _material: {fileID: 2100000, guid: 993ae1bd59e84014a9c0ac0cb952b923, type: 2}
     _scale: 1
     _octaves: 6
-    _persistance: 0.671
-    _lacunarity: 0.15
+    _persistance: 0.5
+    _lacunarity: 0.13
     _offset: {x: 0, y: 0}
     _heightCurve:
       serializedVersion: 2
@@ -449,7 +449,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    _heightMultiplier: 1.46
+    _heightMultiplier: 1
   _seed: 576
   _generateRandomSeed: 0
   _xSize: 1

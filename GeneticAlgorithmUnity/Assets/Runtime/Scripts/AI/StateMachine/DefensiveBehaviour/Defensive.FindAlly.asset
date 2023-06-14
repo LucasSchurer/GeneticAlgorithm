@@ -18,7 +18,7 @@ MonoBehaviour:
   _secondaryTargetLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  _detectionRadius: 100
+  _detectionRadius: 500
   _choiceType: 1
   _tryToGetFace: 1
   _validActions: 00000000

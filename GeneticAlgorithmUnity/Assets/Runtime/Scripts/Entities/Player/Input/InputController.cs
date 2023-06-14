@@ -3,6 +3,7 @@ using Game.Events;
 using Game.Entities.Shared;
 using UnityEngine.InputSystem;
 using System;
+using System.Collections;
 
 /// <summary>
 /// Handles player input
@@ -22,6 +23,7 @@ namespace Game.Entities.Player
 
         private bool _canMove = true;
 
+        [System.Serializable]
         public struct InputData
         {
             public Vector3 movementDirection;
@@ -29,6 +31,7 @@ namespace Game.Entities.Player
 
             public bool isPressingPrimaryAction;
             public bool isPressingSecondaryAction;
+            public bool isPressingSprint;
         }
 
         [SerializeField]
@@ -39,6 +42,7 @@ namespace Game.Entities.Player
         private MovementController _movementController;
 
         private PlayerInputActions _playerInput;
+        [SerializeField]
         private InputData _inputData;
 
         public Vector3 GetLookDirection()
@@ -84,7 +88,7 @@ namespace Game.Entities.Player
                 {
                     _eventController.TriggerEvent(EntityEventType.OnSecondaryActionPerformed, context);
                 }
-            }
+            }            
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -120,6 +124,18 @@ namespace Game.Entities.Player
             _inputData.movementDirection.z = axis.y;
             _inputData.isPressingPrimaryAction = _playerInput.Gameplay.PrimaryButton.IsPressed();
             _inputData.isPressingSecondaryAction = _playerInput.Gameplay.SecondaryButton.IsPressed();
+
+            bool isPressingSprint = _playerInput.Gameplay.Sprint.IsPressed();
+
+            if (isPressingSprint && !_inputData.isPressingSprint)
+            {
+                _eventController.TriggerEvent(EntityEventType.OnSprintButtonStarted, new EntityEventContext() { });
+            } else if (!isPressingSprint && _inputData.isPressingSprint)
+            {
+                _eventController.TriggerEvent(EntityEventType.OnSprintButtonEnded, new EntityEventContext() { });
+            }
+
+            _inputData.isPressingSprint = isPressingSprint;
         }
 
         private void SetLookDirection()
@@ -171,6 +187,8 @@ namespace Game.Entities.Player
         private void DisposeInputActions()
         {
             _playerInput.Gameplay.PrimaryButton.Dispose();
+            _playerInput.Gameplay.SecondaryButton.Dispose();
+            _playerInput.Gameplay.Sprint.Dispose();
             _playerInput.Gameplay.Swap1.Dispose();
             _playerInput.Gameplay.Swap2.Dispose();
             _playerInput.Gameplay.Swap3.Dispose();

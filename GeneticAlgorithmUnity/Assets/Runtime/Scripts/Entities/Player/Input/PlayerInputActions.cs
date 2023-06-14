@@ -98,6 +98,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""f0317a60-48e5-4c2d-95cd-eb81dfa2e0cf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -265,6 +274,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Swap3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1d47acb-d521-46b7-946b-09af4d66bbae"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -309,6 +329,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Gameplay_Swap1 = m_Gameplay.FindAction("Swap1", throwIfNotFound: true);
         m_Gameplay_Swap2 = m_Gameplay.FindAction("Swap2", throwIfNotFound: true);
         m_Gameplay_Swap3 = m_Gameplay.FindAction("Swap3", throwIfNotFound: true);
+        m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -376,6 +397,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Swap1;
     private readonly InputAction m_Gameplay_Swap2;
     private readonly InputAction m_Gameplay_Swap3;
+    private readonly InputAction m_Gameplay_Sprint;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -388,6 +410,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Swap1 => m_Wrapper.m_Gameplay_Swap1;
         public InputAction @Swap2 => m_Wrapper.m_Gameplay_Swap2;
         public InputAction @Swap3 => m_Wrapper.m_Gameplay_Swap3;
+        public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -421,6 +444,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Swap3.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwap3;
                 @Swap3.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwap3;
                 @Swap3.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwap3;
+                @Sprint.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
+                @Sprint.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
+                @Sprint.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSprint;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -449,6 +475,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Swap3.started += instance.OnSwap3;
                 @Swap3.performed += instance.OnSwap3;
                 @Swap3.canceled += instance.OnSwap3;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
             }
         }
     }
@@ -481,5 +510,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnSwap1(InputAction.CallbackContext context);
         void OnSwap2(InputAction.CallbackContext context);
         void OnSwap3(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
 }

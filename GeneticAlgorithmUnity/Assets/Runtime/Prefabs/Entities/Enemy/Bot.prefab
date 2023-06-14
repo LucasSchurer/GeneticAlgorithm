@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initializeOnStart: 0
-  _debug: 0
+  _debug: 1
   _currentStateName: 
   _currentStateData: {fileID: 0}
   _data: {fileID: 0}
@@ -915,7 +915,6 @@ MonoBehaviour:
     _maxValue: 0
     _minValue: 0
     _currentValue: 0
-  _healthBar: {fileID: 1215234598}
 --- !u!1 &5045291268313782286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2398,10 +2397,5 @@ PrefabInstance:
 --- !u!4 &560347940 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2749206080973095250, guid: 68e44d7754a8feb4f99678cdf922ff40, type: 3}
-  m_PrefabInstance: {fileID: 2749206081528461942}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1215234598 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2749206080318339152, guid: 68e44d7754a8feb4f99678cdf922ff40, type: 3}
   m_PrefabInstance: {fileID: 2749206081528461942}
   m_PrefabAsset: {fileID: 0}

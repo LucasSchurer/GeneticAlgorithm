@@ -15,4 +15,4 @@ MonoBehaviour:
   _type: 2
   _maxValue: 30
   _minValue: 5
-  _startingValue: 15
+  _startingValue: 10

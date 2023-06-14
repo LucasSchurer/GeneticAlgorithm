@@ -13,5 +13,8 @@ namespace Game.Events
         OnSwap2Performed,
         OnSwap3Performed,
         OnWeaponSwap,
+        OnSprintButtonStarted,
+        OnSprintButtonEnded,
+        OnStaminaChange,
     } 
 }
