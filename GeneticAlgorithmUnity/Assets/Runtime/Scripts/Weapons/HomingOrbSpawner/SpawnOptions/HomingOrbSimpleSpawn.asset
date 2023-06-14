@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10fe364990541fc4caa477fe8a90944d, type: 3}
   m_Name: HomingOrbSimpleSpawn
   m_EditorClassIdentifier: 
-  _ySpawnRange: {x: 2, y: 3}
-  _zSpawnRange: {x: -1.5, y: 1.5}
-  _xSpawnRange: {x: -1.5, y: 1.5}
+  _ySpawnRange: {x: 0, y: 0}
+  _zSpawnRange: {x: 1.5, y: 1.5}
+  _xSpawnRange: {x: -0.2, y: 0.2}

@@ -30,6 +30,10 @@ namespace Game.Weapons
         private float _startLockingTime;
         [SerializeField]
         private float _startSeekingTime;
+        [SerializeField]
+        private bool _canHitSelf = false;
+        [SerializeField]
+        private float _maxDistance = 0f;
 
         [Header("Orb Material References")]
         [SerializeField]
@@ -60,6 +64,8 @@ namespace Game.Weapons
         public Material HitMaterial => _hitMaterial;
         public HomingOrbOnHit OrbOnHit => _orbOnHit;
         public HomingOrbSpawn OrbSpawn => _orbSpawn;
+        public bool CanHitSelf => _canHitSelf;
+        public float MaxDistance => _maxDistance;
     }
 }
 

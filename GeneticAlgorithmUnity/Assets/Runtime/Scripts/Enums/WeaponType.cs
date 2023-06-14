@@ -8,6 +8,7 @@ namespace Game.Weapons
         DamageOrbs,
         HealingOrbs,
         ShieldDeployer,
-        Nuke
+        Nuke,
+        OrbLauncher,
     } 
 }

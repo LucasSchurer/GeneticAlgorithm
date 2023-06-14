@@ -81,6 +81,10 @@ namespace Game.Weapons
                         Nuke nuke = go.AddComponent<Nuke>();
                         nuke.SetData((NukeData)data);
                         return nuke;
+                    case WeaponType.OrbLauncher:
+                        HomingOrbSpawner orbLauncher = go.AddComponent<HomingOrbSpawner>();
+                        orbLauncher.SetData((HomingOrbSpawnerData)data);
+                        return orbLauncher;
                 }
             }
 

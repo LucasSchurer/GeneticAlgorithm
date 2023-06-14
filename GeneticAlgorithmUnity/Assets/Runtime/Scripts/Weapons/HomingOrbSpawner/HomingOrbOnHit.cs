@@ -21,6 +21,11 @@ namespace Game.Weapons
         [SerializeField]
         private InteractionType _type;
 
+        [SerializeField]
+        private bool _canHitAllies;
+        [SerializeField]
+        private float _friendlyFireDamage;
+
         public void OnOrbHit(GameObject owner, GameObject other, Collider hit, GameObject orb)
         {
             EntityEventController otherController = other.GetComponent<EntityEventController>();
@@ -40,6 +45,12 @@ namespace Game.Weapons
                             ImpactPoint = hit.transform.position,
                             HitDirection = (hit.transform.position - orb.transform.position).normalized
                         };
+
+                        if (_canHitAllies && (other.gameObject.layer == owner.gameObject.layer))
+                        {
+                            damagePacket.Damage *= _friendlyFireDamage;
+                        }
+
                         break;
                     case InteractionType.Heal:
                         healingPacket = new EntityEventContext.HealingPacket

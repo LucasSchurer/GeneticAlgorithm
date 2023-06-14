@@ -2,6 +2,7 @@ using Game.Events;
 using System.Collections;
 using UnityEngine;
 using Game.GA;
+using Game.InteractableObjects;
 
 namespace Game.Managers
 {
@@ -14,6 +15,8 @@ namespace Game.Managers
         private float _minimumDistanceToSpawn;
         [SerializeField]
         private int _maximumSpawnRetry = 15;
+        [SerializeField]
+        private InteractableTraitObject _interactableTraitObjectPrefab;
 
         private PopulationController _populationController;
 
@@ -113,7 +116,22 @@ namespace Game.Managers
         }
         private void RespawnWave(ref GameEventContext ctx)
         {
+            SpawnTraitObjects();
+
             StartCoroutine(RespawnWaveCoroutine());
+        }
+
+        private void SpawnTraitObjects()
+        {
+            Vector3 position = _player.position;
+
+            for (int i = 0; i < waveSettings.traitsGivenOnWaveEnd; i++)
+            {
+                position.x = Random.Range(-3, 3) * 2f;
+                position.z = Random.Range(-3, 3) * 2f;
+
+                Instantiate(_interactableTraitObjectPrefab, position, Quaternion.identity);
+            }
         }
 
         private IEnumerator RespawnWaveCoroutine()

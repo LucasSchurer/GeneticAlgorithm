@@ -32,6 +32,8 @@ namespace Game.Projectiles
         private TrailRenderer _trailRenderer;
         private Renderer _renderer;
 
+        private Vector3 _startPosition;
+
         public void Initialize(GameObject owner, HomingOrbSpawnerData data, LayerMask collisionLayer, LayerMask entityLayer)
         {
             _data = data;
@@ -46,6 +48,8 @@ namespace Game.Projectiles
 
             _renderer = GetComponent<Renderer>();
             _renderer.material = _data.OrbMaterial;
+
+            _startPosition = transform.position;
 
             StartCoroutine(LockTargetCoroutine());
         }
@@ -102,6 +106,12 @@ namespace Game.Projectiles
                         }
                     }
 
+                    if (_data.MaxDistance > 0 && Vector3.Distance(_startPosition, transform.position) > _data.MaxDistance)
+                    {
+                        DestroyOrb();
+                        return;
+                    }
+
                     transform.position += _directionToTarget * _data.OrbSpeed * Time.deltaTime;
                 }
 
@@ -115,6 +125,11 @@ namespace Game.Projectiles
 
             foreach (Collider hit in Physics.OverlapSphere(transform.position, _collisionRadius, _collisionLayer))
             {
+                if (!_data.CanHitSelf && _owner != null && _owner.transform == hit.transform)
+                {
+                    return;
+                }
+
                 _data.OrbOnHit.OnOrbHit(_owner, hit.transform.gameObject, hit, gameObject);
 
                 hasHit = true;

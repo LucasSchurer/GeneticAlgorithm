@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385e8d82cba7fd04397a8afcb4aeaf52, type: 3}
   m_Name: PlayerDamageHomingOrbSpawner
   m_EditorClassIdentifier: 
-  _cooldown: 0.3
+  _cooldown: 0.05
   _damage: 0
   _recoilStrength: 0
-  _ammunition: 90
+  _ammunition: 30
   _useAmmunition: 1
   _weaponType: 3
   _name: 
@@ -27,7 +27,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _orb: {fileID: 5194124991278356529, guid: c1fb136f4ecca124bb10ecf5a7791999, type: 3}
-  _orbAmount: 1
+  _orbAmount: 5
   _spawnInterval: 0
   _orbSpeed: 40
   _hardLock: 1

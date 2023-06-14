@@ -27,13 +27,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _orb: {fileID: 5194124991278356529, guid: c1fb136f4ecca124bb10ecf5a7791999, type: 3}
-  _orbAmount: 1
+  _orbAmount: 3
   _spawnInterval: 0.1
   _orbSpeed: 25
   _hardLock: 0
   _findTargetRadius: 50
   _startLockingTime: 0.8
   _startSeekingTime: 0.35
+  _canHitSelf: 0
+  _maxDistance: 0
   _orbMaterial: {fileID: 2100000, guid: d361d8b2dab8dcf4f8b5a3c607f50eb2, type: 2}
   _trailMaterial: {fileID: 2100000, guid: c88291d91cea01a43933924869cbabba, type: 2}
   _hitMaterial: {fileID: 2100000, guid: 43554f91ad786f74e9a5a79ae3b1205d, type: 2}

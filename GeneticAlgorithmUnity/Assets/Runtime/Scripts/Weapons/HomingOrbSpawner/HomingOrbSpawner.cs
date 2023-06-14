@@ -11,6 +11,8 @@ namespace Game.Weapons
         protected LayerMask _hitLayer;
         protected Transform _weaponFireSocket;
 
+        public Transform WeaponFireSocket => _weaponFireSocket;
+
         protected override void Awake()
         {
             base.Awake();

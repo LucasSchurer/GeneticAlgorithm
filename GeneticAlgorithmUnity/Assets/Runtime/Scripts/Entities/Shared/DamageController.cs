@@ -41,6 +41,11 @@ namespace Game.Entities.Shared
         {
             if (ctx.Other != null && ctx.Damage != null && ctx.Damage.DamageType != Events.DamageType.None)
             {
+                if (ctx.Damage.FriendlyFire)
+                {
+                    ctx.Damage.Damage *= 0.1f;
+                }
+
                 EntityEventContext otherCtx = new EntityEventContext()
                 {
                     Owner = ctx.Other,

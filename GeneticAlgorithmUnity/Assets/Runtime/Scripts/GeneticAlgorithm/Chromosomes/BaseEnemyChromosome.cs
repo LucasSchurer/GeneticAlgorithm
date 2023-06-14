@@ -14,7 +14,6 @@ namespace Game.GA
         public enum Genes
         {
             Behaviour,
-            Color,
             Traits,
             Weapon,
             Size
@@ -23,7 +22,6 @@ namespace Game.GA
         protected override void SetGenes()
         {
             _genes = new Gene[(int)Genes.Size];
-            _genes[(int)Genes.Color] = new ColorGene(new Color(1, 1, 1, 1));
             _genes[(int)Genes.Behaviour] = new BehaviourGene(BehaviourType.Reckless);
             _genes[(int)Genes.Traits] = new TraitsGene(1);
             _genes[(int)Genes.Weapon] = new WeaponGene(Weapons.WeaponType.None);
@@ -31,10 +29,10 @@ namespace Game.GA
 
         protected override void SetGenes(Gene[] genes)
         {
-            _genes = new Gene[(int)Genes.Size];
-            _genes[(int)Genes.Color] = genes[(int)Genes.Color].Copy();
+            _genes = new Gene[(int)Genes.Size];            
             _genes[(int)Genes.Behaviour] = genes[(int)Genes.Behaviour].Copy();
             _genes[(int)Genes.Traits] = genes[(int)Genes.Traits].Copy();
+            _genes[(int)Genes.Weapon] = genes[(int)Genes.Weapon].Copy();
         }
 
         public override Chromosome Copy()

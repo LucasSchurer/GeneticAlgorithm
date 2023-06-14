@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Game.GA
 {
     [DataContract(Name = "BehaviourGene", Namespace = "")]
-    [KnownType(typeof(BehaviourGene))]
+    [KnownType(typeof(WeaponGene))]
     public class WeaponGene : Gene
     {
         [DataMember(Name = "BehaviourType")]

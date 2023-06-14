@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821db98fd013e764283d3a56fa0ab187, type: 3}
   m_Name: PistolData
   m_EditorClassIdentifier: 
-  _cooldown: 0.6
-  _damage: 0
-  _recoilStrength: 4
+  _cooldown: 0.08
+  _damage: 0.5
+  _recoilStrength: 0.8
   _ammunition: -1
   _useAmmunition: 0
   _weaponType: 1

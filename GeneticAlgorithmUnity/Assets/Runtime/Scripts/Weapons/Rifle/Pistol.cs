@@ -29,7 +29,7 @@ namespace Game.Weapons
 
         protected override void SetLayers()
         {
-            _hitLayer = _entity.EnemyLayer | (1 << Constants.GroundLayer);
+            _hitLayer = (_entity.EnemyLayer | (1 << Constants.GroundLayer));
         }
 
         private void Fire(ref EntityEventContext ctx)

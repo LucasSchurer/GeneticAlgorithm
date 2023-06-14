@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthInteractionValue: 0.3
   _type: 0
+  _canHitAllies: 1
+  _friendlyFireDamage: 1

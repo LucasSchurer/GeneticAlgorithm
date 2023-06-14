@@ -61,11 +61,13 @@ namespace Game.Events
             private DamageType _damageType = DamageType.None;
             private Vector3 _impactPoint = Vector3.zero;
             private Vector3 _hitDirection = Vector3.zero;
+            private bool _friendlyFire = false;
 
             public float Damage { get => _damage; set => _damage = value; }
             public DamageType DamageType { get => _damageType; set => _damageType = value; }
             public Vector3 ImpactPoint { get => _impactPoint; set => _impactPoint = value; }
             public Vector3 HitDirection { get => _hitDirection; set => _hitDirection = value; }
+            public bool FriendlyFire { get => _friendlyFire; set => _friendlyFire = value; }
         }
 
         public class HealingPacket
