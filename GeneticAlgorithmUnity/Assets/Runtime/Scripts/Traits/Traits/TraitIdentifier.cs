@@ -6,10 +6,15 @@ namespace Game.Traits
     {
         None,
         Default,
-        UnstableCore,
-        Pacifist,
-        Slow,
-        Fast,
-        Healthy
+        MoreExplosiveDamageLessOverallDamage,
+        MoreOverallDamageLessExplosiveDamage,
+        MoreRateOfFireLessMovementSpeed,
+        MoreHealth,
+        MoreRateOfFire,
+        MoreDamageMultiplier,
+        MoreProjectileAmount,
+        MoreDamageReductionLessOverallDamage,
+        LessDamageReductionMoreDamage,
+        LessDamageReductionMoreHealth,
     } 
 }

@@ -15,9 +15,9 @@ namespace Game.Weapons
         [SerializeField]
         private Vector2 _xSpawnRange;
 
-        public override IEnumerator Spawn(HomingOrbSpawner spawner, HomingOrbSpawnerData data)
+        public override IEnumerator Spawn(HomingOrbSpawner spawner, HomingOrbSpawnerData data, int bonusProjectiles)
         {
-            for (int i = 0; i < data.OrbAmount; i++)
+            for (int i = 0; i < data.OrbAmount + bonusProjectiles; i++)
             {
                 Vector3 spawnPosition = spawner.transform.position;
 

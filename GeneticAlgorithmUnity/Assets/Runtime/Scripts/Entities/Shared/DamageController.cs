@@ -12,8 +12,8 @@ namespace Game.Entities.Shared
     {
         private EntityEventController _eventController;
         
-        private NonPersistentAttribute _attribute1;
-        private NonPersistentAttribute _attribute2;
+        private NonPersistentAttribute _allDamageMultiplier;
+        private NonPersistentAttribute _explosiveDamageMultiplier;
 
         private AttributeController _attributeController;
 
@@ -27,13 +27,13 @@ namespace Game.Entities.Shared
         {
             if (_attributeController)
             {
-                _attribute1 = _attributeController.GetNonPersistentAttribute(AttributeType.Health);
-                _attribute2 = _attributeController.GetNonPersistentAttribute(AttributeType.InvulnerabilityTime);
+                _allDamageMultiplier = _attributeController.GetNonPersistentAttribute(AttributeType.AllDamageMultiplier);
+                _explosiveDamageMultiplier = _attributeController.GetNonPersistentAttribute(AttributeType.ExplosiveDamageMultiplier);
             }
             else
             {
-                _attribute1 = new NonPersistentAttribute();
-                _attribute2 = new NonPersistentAttribute();
+                _allDamageMultiplier = new NonPersistentAttribute();
+                _explosiveDamageMultiplier = new NonPersistentAttribute();
             }
         }
 
@@ -41,6 +41,8 @@ namespace Game.Entities.Shared
         {
             if (ctx.Other != null && ctx.Damage != null && ctx.Damage.DamageType != Events.DamageType.None)
             {
+                ctx.Damage.Damage += ctx.Damage.Damage * _allDamageMultiplier.CurrentValue + ctx.Damage.Damage * _explosiveDamageMultiplier.CurrentValue;
+
                 if (ctx.Damage.FriendlyFire)
                 {
                     ctx.Damage.Damage *= 0.1f;

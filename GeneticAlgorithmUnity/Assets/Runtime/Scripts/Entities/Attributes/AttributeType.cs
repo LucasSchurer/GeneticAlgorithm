@@ -16,5 +16,9 @@ namespace Game.Entities
         AmmunitionMultiplier,
         ExplosiveDamageMultiplier,
         AllDamageMultiplier,
+        HealingMultiplier,
+        DamageReduction,
+        ProjectileAmount,
+        RateOfFireMultiplier,
     } 
 }

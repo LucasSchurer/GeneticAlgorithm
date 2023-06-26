@@ -1,6 +1,7 @@
 using UnityEngine;
 using Game.Events;
 using Game.Entities.Shared;
+using Game.Entities;
 
 namespace Game.Weapons
 {
@@ -13,6 +14,8 @@ namespace Game.Weapons
         protected int _currentAmmunition;
         protected EntityEventController _eventController;
         protected EntitySocketController _socketController;
+        protected AttributeController _attributeController;
+        protected NonPersistentAttribute _rateOfFireMultiplier;
         protected Entity _entity;
         protected bool _canUse = true;
 
@@ -26,6 +29,7 @@ namespace Game.Weapons
         {
             _eventController = GetComponent<EntityEventController>();
             _socketController = GetComponent<EntitySocketController>();
+            _attributeController = GetComponent<AttributeController>();
             _entity = GetComponent<Entity>();
         }
 
@@ -33,6 +37,18 @@ namespace Game.Weapons
         {
             SetSocketsAndVFXs();
             SetLayers();
+            SetNonPersistentAttributes();
+        }
+
+        protected virtual void SetNonPersistentAttributes() 
+        {
+            if (_attributeController)
+            {
+                _rateOfFireMultiplier = _attributeController.GetNonPersistentAttribute(AttributeType.RateOfFireMultiplier);
+            } else
+            {
+                _rateOfFireMultiplier = new NonPersistentAttribute();
+            }
         }
 
         protected abstract void SetSocketsAndVFXs();

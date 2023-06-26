@@ -7,7 +7,7 @@ namespace Game.Weapons
 {
     public abstract class HomingOrbSpawn : ScriptableObject
     {
-        public abstract IEnumerator Spawn(HomingOrbSpawner spawner, HomingOrbSpawnerData data);
+        public abstract IEnumerator Spawn(HomingOrbSpawner spawner, HomingOrbSpawnerData data, int bonusProjectiles);
 
         protected virtual HomingOrb InstantiateAndInitializeHomingOrb(HomingOrbSpawner spawner, HomingOrbSpawnerData data, Vector3 spawnPosition, Quaternion rotation)
         {

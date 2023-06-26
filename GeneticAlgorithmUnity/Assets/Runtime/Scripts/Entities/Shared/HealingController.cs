@@ -9,7 +9,7 @@ namespace Game.Entities.Shared
     {
         private EntityEventController _eventController;
 
-        private NonPersistentAttribute _attribute1;
+        private NonPersistentAttribute _healingMultiplier;
         private NonPersistentAttribute _attribute2;
 
         private AttributeController _attributeController;
@@ -24,13 +24,11 @@ namespace Game.Entities.Shared
         {
             if (_attributeController)
             {
-                _attribute1 = _attributeController.GetNonPersistentAttribute(AttributeType.Health);
-                _attribute2 = _attributeController.GetNonPersistentAttribute(AttributeType.InvulnerabilityTime);
+                _healingMultiplier = _attributeController.GetNonPersistentAttribute(AttributeType.HealingMultiplier);
             }
             else
             {
-                _attribute1 = new NonPersistentAttribute();
-                _attribute2 = new NonPersistentAttribute();
+                _healingMultiplier = new NonPersistentAttribute();
             }
         }
 
@@ -38,6 +36,8 @@ namespace Game.Entities.Shared
         {
             if (ctx.Other != null && ctx.Healing != null && ctx.Healing.HealingType != HealingType.None)
             {
+                ctx.Healing.Healing += ctx.Healing.Healing * _healingMultiplier.CurrentValue;
+
                 EntityEventContext otherCtx = new EntityEventContext()
                 {
                     Other = ctx.Owner,

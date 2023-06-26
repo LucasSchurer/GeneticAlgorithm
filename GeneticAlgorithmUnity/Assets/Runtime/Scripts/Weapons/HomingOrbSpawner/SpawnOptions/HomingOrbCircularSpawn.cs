@@ -12,12 +12,12 @@ namespace Game.Weapons
         [SerializeField]
         private float _orbSpawnRadius;
 
-        public override IEnumerator Spawn(HomingOrbSpawner spawner, HomingOrbSpawnerData data)
+        public override IEnumerator Spawn(HomingOrbSpawner spawner, HomingOrbSpawnerData data, int bonusProjectiles)
         {
             Vector3 spawnPosition = spawner.transform.position;
             spawnPosition.y += _spawnOffset.y;
 
-            for (int i = 0; i < data.OrbAmount; i++)
+            for (int i = 0; i < data.OrbAmount + bonusProjectiles; i++)
             {
                 float radians = 2 * Mathf.PI / data.OrbAmount * i;
 

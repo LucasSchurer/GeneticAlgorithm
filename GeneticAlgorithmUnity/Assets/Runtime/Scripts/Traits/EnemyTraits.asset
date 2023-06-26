@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: EnemyTraits
   m_EditorClassIdentifier: 
   _traits:
-  - {fileID: 11400000, guid: 5bacfe2dd83e48147a78473d8a415446, type: 2}
-  - {fileID: 11400000, guid: 404521faa58c160469d7cece953699b7, type: 2}
-  - {fileID: 11400000, guid: 54cc23d8bb2d1524db56ded52b927817, type: 2}
-  - {fileID: 11400000, guid: 0a8baab33e92f3745b15a14f4f019944, type: 2}
-  - {fileID: 11400000, guid: e53ec197f58423145ab82831b6d9974d, type: 2}
+  - {fileID: 11400000, guid: 5b5e8b70c47594d44b448b8781c8e83d, type: 2}
+  - {fileID: 11400000, guid: ecea5358f96e6bb4ba4878f615967fc6, type: 2}
+  - {fileID: 11400000, guid: d55e1214954136a4db34fd78da5503ca, type: 2}
+  - {fileID: 11400000, guid: bbd8d66c207ca284da06a2e52923fae6, type: 2}
+  - {fileID: 11400000, guid: ee3981b9730b3214ba7b3fbd89aed9d3, type: 2}
+  - {fileID: 11400000, guid: aa2fab8b38f588348b872feac3223eb8, type: 2}
+  - {fileID: 11400000, guid: fb5b284b1a733b346aa968378689a1b5, type: 2}

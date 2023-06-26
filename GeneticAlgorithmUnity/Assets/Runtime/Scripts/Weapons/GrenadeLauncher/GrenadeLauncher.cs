@@ -1,3 +1,4 @@
+using Game.Entities;
 using Game.Events;
 using Game.Projectiles;
 using System.Collections;
@@ -12,10 +13,25 @@ namespace Game.Weapons
         private LayerMask _hitLayer;
         private Transform _weaponFireSocket;
 
+        private NonPersistentAttribute _projectileAmount;
+
         protected override void Awake()
         {
             base.Awake();
             _canUse = true;
+        }
+
+        protected override void SetNonPersistentAttributes()
+        {
+            base.SetNonPersistentAttributes();
+
+            if (_attributeController)
+            {
+                _projectileAmount = _attributeController.GetNonPersistentAttribute(AttributeType.ProjectileAmount);
+            } else
+            {
+                _projectileAmount = _attributeController.GetNonPersistentAttribute(AttributeType.ProjectileAmount);
+            }
         }
 
         protected override void SetLayers()
@@ -42,13 +58,16 @@ namespace Game.Weapons
                     RecoilStrength = _data.RecoilStrength
                 };
 
-                ctx.EventController.TriggerEvent(EntityEventType.OnWeaponAttack, ctx);
+                for (int i = 0; i < 1 + _projectileAmount.CurrentValue; i++)
+                {
+                    ctx.EventController.TriggerEvent(EntityEventType.OnWeaponAttack, ctx);
 
-                Grenade grenade = Instantiate(_data.Grenade, _weaponFireSocket.position, transform.rotation);
-                grenade.Initialize(this, _data.BaseColor, _data.Damage, _data.ExplosionRadius, _data.ExplosionTimer, _hitLayer, _entity.EnemyLayer, ctx.Owner);
-                grenade.gameObject.layer = _data.GrenadeLayer;
+                    Grenade grenade = Instantiate(_data.Grenade, _weaponFireSocket.position, transform.rotation);
+                    grenade.Initialize(this, _data.BaseColor, _data.Damage, _data.ExplosionRadius, _data.ExplosionTimer, _hitLayer, _entity.EnemyLayer, ctx.Owner);
+                    grenade.gameObject.layer = _data.GrenadeLayer;
 
-                grenade.Rigidbody.AddForce(ctx.Movement.LookDirection * _data.LaunchStrength, ForceMode.Impulse);
+                    grenade.Rigidbody.AddForce(ctx.Movement.LookDirection * _data.LaunchStrength, ForceMode.Impulse);
+                }
 
                 StartCoroutine(Recharge());
             }
@@ -58,7 +77,7 @@ namespace Game.Weapons
         {
             _canUse = false;
 
-            yield return new WaitForSeconds(_data.Cooldown);
+            yield return new WaitForSeconds(_data.Cooldown - (_data.Cooldown * _rateOfFireMultiplier.CurrentValue));
 
             _canUse = true;
         }

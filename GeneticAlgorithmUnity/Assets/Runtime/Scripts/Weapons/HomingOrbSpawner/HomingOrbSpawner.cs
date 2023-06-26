@@ -1,3 +1,4 @@
+using Game.Entities;
 using Game.Events;
 using Game.Projectiles;
 using System.Collections;
@@ -11,7 +12,23 @@ namespace Game.Weapons
         protected LayerMask _hitLayer;
         protected Transform _weaponFireSocket;
 
+        private NonPersistentAttribute _projectileAmount;
+
         public Transform WeaponFireSocket => _weaponFireSocket;
+
+        protected override void SetNonPersistentAttributes()
+        {
+            base.SetNonPersistentAttributes();
+
+            if (_attributeController)
+            {
+                _projectileAmount = _attributeController.GetNonPersistentAttribute(AttributeType.ProjectileAmount);
+            }
+            else
+            {
+                _projectileAmount = _attributeController.GetNonPersistentAttribute(AttributeType.ProjectileAmount);
+            }
+        }
 
         protected override void Awake()
         {
@@ -47,14 +64,14 @@ namespace Game.Weapons
 
         protected IEnumerator SpawnCoroutine()
         {
-            yield return StartCoroutine(_data.OrbSpawn.Spawn(this, _data));
+            yield return StartCoroutine(_data.OrbSpawn.Spawn(this, _data, Mathf.FloorToInt(_projectileAmount.CurrentValue)));
 
             StartCoroutine(Recharge());
         }
 
         protected virtual IEnumerator Recharge()
         {
-            yield return new WaitForSeconds(_data.Cooldown);
+            yield return new WaitForSeconds((_data.Cooldown * _rateOfFireMultiplier.CurrentValue));
 
             _canUse = true;
         }

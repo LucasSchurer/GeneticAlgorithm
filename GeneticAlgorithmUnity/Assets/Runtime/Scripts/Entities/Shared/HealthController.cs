@@ -9,6 +9,7 @@ namespace Game.Entities.Shared
         [SerializeField]
         private NonPersistentAttribute _health;
         private NonPersistentAttribute _invulnerabilityTime;
+        private NonPersistentAttribute _damageReduction;
 
         private EntityEventController _eventController;
         private AttributeController _attributeController;
@@ -27,10 +28,12 @@ namespace Game.Entities.Shared
             {
                 _health = _attributeController.GetNonPersistentAttribute(AttributeType.Health);
                 _invulnerabilityTime = _attributeController.GetNonPersistentAttribute(AttributeType.InvulnerabilityTime);
+                _damageReduction = _attributeController.GetNonPersistentAttribute(AttributeType.DamageReduction);
             } else
             {
                 _health = new NonPersistentAttribute();
                 _invulnerabilityTime = new NonPersistentAttribute();
+                _damageReduction = new NonPersistentAttribute();
             }
         }
 
@@ -74,7 +77,7 @@ namespace Game.Entities.Shared
             {
                 if (ctx.Damage.Damage > 0f)
                 {
-                    _health.CurrentValue -= ctx.Damage.Damage;
+                    _health.CurrentValue -= ctx.Damage.Damage - (ctx.Damage.Damage * _damageReduction.CurrentValue);
 
                     if (_health.CurrentValue <= 0)
                     {
