@@ -25,8 +25,10 @@ namespace Game.GA
         [DataMember(Name = "MutationAddedGene")]
         private TraitIdentifier _addedTrait = TraitIdentifier.None;
 
-        public TraitsGene(int startingSize = 0, Dictionary<TraitIdentifier, int> traits = null)
+        public TraitsGene(GeneticAlgorithmController gaController, int startingSize = 0, Dictionary<TraitIdentifier, int> traits = null)
         {
+            _gaController = gaController;
+
             if (traits != null)
             {
                 _traits = new Dictionary<TraitIdentifier, int>(traits);
@@ -62,7 +64,7 @@ namespace Game.GA
 
         public override Gene Copy()
         {
-            return new TraitsGene(0, _traits);
+            return new TraitsGene(_gaController, 0, _traits);
         }
 
         /// <summary>
@@ -130,12 +132,12 @@ namespace Game.GA
         {
             bool useWeights = true;
 
-            if (Random.Range(0f, 1f) < GeneticAlgorithmManager.Instance.TraitSelectionDumbness)
+            if (Random.Range(0f, 1f) < _gaController.TraitSelectionDumbness)
             {
                 useWeights = false;
             }
 
-            TraitIdentifier chosenTrait = TraitManager.Instance.SelectTraitAmongTraits(GeneticAlgorithmManager.Instance.TraitSelectionAmount, useWeights);
+            TraitIdentifier chosenTrait = TraitManager.Instance.SelectTraitAmongTraits(_gaController.TraitSelectionAmount, useWeights);
             _chosenTrait = chosenTrait;
 
             AddTrait(chosenTrait);
@@ -145,10 +147,10 @@ namespace Game.GA
         {
             float weightSign = 0;
 
-            if (fitness < GeneticAlgorithmManager.Instance.NegativeTraitWeightChangeThreshold)
+            if (fitness < _gaController.NegativeTraitWeightChangeThreshold)
             {
                 weightSign = -1;
-            } else if (fitness > GeneticAlgorithmManager.Instance.PositiveTraitWeightChangeThreshold)
+            } else if (fitness > _gaController.PositiveTraitWeightChangeThreshold)
             {
                 weightSign = 1;
             } else
@@ -159,7 +161,7 @@ namespace Game.GA
             foreach (KeyValuePair<TraitIdentifier, int> trait in _traits)
             {
                 float newWeight = TraitManager.Instance.GetTraitWeight(trait.Key);
-                newWeight += (fitness * GeneticAlgorithmManager.Instance.TraitWeightChange) * weightSign;
+                newWeight += (fitness * _gaController.TraitWeightChange) * weightSign;
 
                 for (int i = 0; i < trait.Value; i++)
                 {

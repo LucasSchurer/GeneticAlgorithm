@@ -13,7 +13,7 @@ namespace Game.Traits
         protected Controller _eventController;
 
         [SerializeField]
-        protected Trait<Type, Context>[] _traits;
+        protected List<Trait<Type, Context>> _traits;
         protected Dictionary<TraitIdentifier, TraitHandler<Type, Context, Controller>> _traitHandlers;
         protected HashSet<TraitHandler<Type, Context, Controller>> _constantTraits;
 
@@ -67,6 +67,8 @@ namespace Game.Traits
 
                 traitHandler.WhenAdded();
                 _traitHandlers.Add(trait.identifier, traitHandler);
+
+                _traits.Add(trait);
             }
         }
 

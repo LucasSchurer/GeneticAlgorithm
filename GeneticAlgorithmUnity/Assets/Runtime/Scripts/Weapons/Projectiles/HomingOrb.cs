@@ -130,7 +130,10 @@ namespace Game.Projectiles
                     return;
                 }
 
-                _data.OrbOnHit.OnOrbHit(_owner, hit.transform.gameObject, hit, gameObject);
+                if (_owner != null)
+                {
+                    _data.OrbOnHit.OnOrbHit(_owner, hit.transform.gameObject, hit, gameObject);
+                }
 
                 hasHit = true;
             }

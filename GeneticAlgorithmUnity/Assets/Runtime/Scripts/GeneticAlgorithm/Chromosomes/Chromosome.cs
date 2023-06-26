@@ -8,13 +8,17 @@ namespace Game.GA
     [DataContract(Name = "Chromosome", Namespace = "")]
     public abstract class Chromosome
     {
+        protected GeneticAlgorithmController _gaController;
+
         [DataMember(Name = "Genes")]
         protected Gene[] _genes;
 
         public Gene GetGene(int i) => _genes.Length > i ? _genes[i] : null;
 
-        public Chromosome(Gene[] genes = null)
+        public Chromosome(GeneticAlgorithmController gaController, Gene[] genes = null)
         {
+            _gaController = gaController;
+
             if (genes != null)
             {
                 SetGenes(genes);
@@ -46,7 +50,7 @@ namespace Game.GA
 
         public void Mutate()
         {
-            if (GeneticAlgorithmManager.Instance.MutateIndividually)
+            if (_gaController.MutateIndividually)
             {
                 MutateIndividually();
             }
@@ -62,7 +66,7 @@ namespace Game.GA
             {
                 float random = Random.Range(0f, 1f);
 
-                if (random <= GeneticAlgorithmManager.Instance.MutationRate)
+                if (random <= _gaController.MutationRate)
                 {
                     gene.Mutate();
                 }
@@ -73,7 +77,7 @@ namespace Game.GA
         {
             float random = Random.Range(0f, 1f);
 
-            if (random <= GeneticAlgorithmManager.Instance.MutationRate)
+            if (random <= _gaController.MutationRate)
             {
                 foreach (Gene gene in _genes)
                 {

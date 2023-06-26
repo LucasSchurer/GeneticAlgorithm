@@ -15,9 +15,9 @@ namespace Game.GA
         [DataMember(Name = "PartialValues", Order = 1)]
         public PartialValue[] PartialValues => _partialValues.Values.ToArray();
         
-        public Fitness()
+        public Fitness(GeneticAlgorithmController controller)
         {
-            FitnessProperty[] properties = GeneticAlgorithmManager.Instance.FitnessProperties.Properties;
+            FitnessProperty[] properties = controller.FitnessProperties.Properties;
 
             _partialValues = new Dictionary<StatisticsType, PartialValue>();
 

@@ -15,10 +15,17 @@ namespace Game.GA
         public int CurrentGeneration => _currentGeneration;
         public GenerationData[] Generations => _generations.Values.ToArray();
         public GenerationData CurrentGenerationData => _generations[_currentGeneration];
-        
+
+        private GeneticAlgorithmController _gaController;
+
         public GenerationController()
         {
             _generations = new Dictionary<int, GenerationData>();
+        }
+
+        private void Awake()
+        {
+            _gaController = GetComponent<GeneticAlgorithmController>();
         }
 
         public void CreateGeneration()
@@ -112,7 +119,7 @@ namespace Game.GA
 
                 for (int i = 0; i < numberOfCreatures; i++)
                 {
-                    CreatureData[] parents = RouletteWheelSelection(parentsGeneration, GeneticAlgorithmManager.Instance.ParentsAmount);
+                    CreatureData[] parents = RouletteWheelSelection(parentsGeneration, _gaController.ParentsAmount);
 
                     CreatureData newCreature = CreateCreatureData(_currentGeneration, parents);
 
@@ -146,7 +153,7 @@ namespace Game.GA
 
         private CreatureData CreateCreatureData(int generation, CreatureData[] parents = null)
         {
-            CreatureData data = new CreatureData();
+            CreatureData data = new CreatureData(_gaController);
             data.Id = _currentCreatureId;
             data.Generation = generation;
             data.Parents = parents;
@@ -161,7 +168,7 @@ namespace Game.GA
                 data.Chromosome = Chromosome.Crossover(parents.Select(c => c.Chromosome).ToArray());
             } else
             {
-                data.Chromosome = new BaseEnemyChromosome();
+                data.Chromosome = new BaseEnemyChromosome(_gaController);
                 data.Chromosome.RandomizeGenes();
             }
 

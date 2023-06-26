@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy.MoreHealth
   m_EditorClassIdentifier: 
   identifier: 5
-  executionType: 0
+  executionType: 1
   cooldown: 0
   eventType: 0
   executionOrder: 1

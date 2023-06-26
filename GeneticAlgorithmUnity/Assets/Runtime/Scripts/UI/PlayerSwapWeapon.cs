@@ -37,7 +37,7 @@ namespace Game.UI
                     _weapons.TryAdd(_selectedWeapons[i], _weaponSlots[i]);
                     _weaponSlots[i].ChangeIconColor(_notSelectedColor);
 
-                    _weaponSlots[i].ChangeAmmunition(WeaponManager.Instance.GetWeaponData(_selectedWeapons[i], WeaponManager.WeaponHolder.Player).Ammunition);
+                    _weaponSlots[i].ChangeAmmunition(WeaponManager.Instance.GetWeaponData(_selectedWeapons[i], WeaponManager.WeaponHolder.Team1).Ammunition);
                 }
             }
 

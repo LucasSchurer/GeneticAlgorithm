@@ -31,10 +31,10 @@ namespace Game.GA
         [DataMember(Name = "Children", Order = 99)]
         private List<int> ChildrenID => _children.Select(c => c.Id).ToList();
 
-        public CreatureData()
+        public CreatureData(GeneticAlgorithmController controller)
         {
             _children = new List<CreatureData>();
-            _fitness = new Fitness();
+            _fitness = new Fitness(controller);
         }
     }
 }

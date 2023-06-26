@@ -18,24 +18,31 @@ namespace Game.GA
         private CreatureController[] _creatures;
         private List<CreatureController> _creaturesRequest;
 
-        private GeneticAlgorithmManager _gaManager;
+        private GeneticAlgorithmController _gaController;
+
+        private bool _startedListening = false;
 
         private void Awake()
         {
             WaveManager waveManager = WaveManager.Instance;
-            GeneticAlgorithmManager gaManager = GeneticAlgorithmManager.Instance;
+            GeneticAlgorithmController gaController = GetComponent<GeneticAlgorithmController>();
 
-            if (waveManager != null && gaManager != null)
+            if (waveManager != null && gaController != null)
             {
                 _creatures = new CreatureController[waveManager.waveSettings.enemiesPerWave];
                 _creaturesRequest = new List<CreatureController>();
-                _gaManager = gaManager;
+                _gaController = gaController;
+            }
+
+            if (!_startedListening)
+            {
+                StartListening();
             }
         }
 
         private void GetNewPopulation()
         {
-            GenerationController generationController = _gaManager.GenerationController;
+            GenerationController generationController = _gaController.GenerationController;
 
             generationController.CreateGeneration();
 
@@ -88,6 +95,8 @@ namespace Game.GA
                 gameManager.GetEventController().AddListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
                 gameManager.GetEventController().AddListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
             }
+
+            _startedListening = true;
         }
 
         private void KillPopulation(ref GameEventContext ctx)
@@ -110,11 +119,16 @@ namespace Game.GA
                 gameManager.GetEventController().RemoveListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
                 gameManager.GetEventController().RemoveListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
             }
+
+            _startedListening = false;
         }
 
         private void OnEnable()
         {
-            StartListening();
+            if (!_startedListening)
+            {
+                StartListening();
+            }
         }
 
         private void OnDisable()

@@ -8,6 +8,8 @@ namespace Game.GA
     [DataContract(Name = "Gene", Namespace = "")]
     public abstract class Gene
     {
+        protected GeneticAlgorithmController _gaController;
+
         /// <summary>
         /// Method called when the creature suffers a mutation.
         /// </summary>

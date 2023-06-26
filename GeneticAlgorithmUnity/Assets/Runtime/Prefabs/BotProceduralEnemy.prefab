@@ -1192,7 +1192,7 @@ MonoBehaviour:
     m_Bits: 128
   _enemyShieldLayer:
     serializedVersion: 2
-    m_Bits: 49152
+    m_Bits: 16384
   _isPlayer: 0
 --- !u!114 &5549414548307720635
 MonoBehaviour:

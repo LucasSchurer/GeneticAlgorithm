@@ -110,11 +110,12 @@ namespace Game.Weapons
                     EntityEventContext.DamagePacket damagePacket = new EntityEventContext.DamagePacket()
                     {
                         Damage = _data.Damage,
+                        DamageType = Events.DamageType.Explosive,
                         ImpactPoint = hit.transform.position,
                         HitDirection = (hit.transform.position - transform.position).normalized
                     };
 
-                    other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, Damage = damagePacket });
+                    other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = _owner, Damage = damagePacket });
 
                     if (_owner)
                     {

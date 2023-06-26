@@ -14,19 +14,20 @@ namespace Game.GA
         [DataMember(Name = "BehaviourType")]
         public WeaponType type;
 
-        public WeaponGene(WeaponType type)
+        public WeaponGene(GeneticAlgorithmController gaController, WeaponType type)
         {
+            _gaController = gaController;
             this.type = type;
         }
 
         public override void Apply(CreatureController creature)
         {
-            WeaponManager.Instance.AddWeaponComponent(creature.gameObject, type, WeaponManager.WeaponHolder.Enemy);
+            WeaponManager.Instance.AddWeaponComponent(creature.gameObject, type, _gaController.WeaponTeam);
         }
 
         public override Gene Copy()
         {
-            return new WeaponGene(type);
+            return new WeaponGene(_gaController, type);
         }
 
         public override void Mutate()
@@ -36,7 +37,7 @@ namespace Game.GA
 
         public override void Randomize()
         {
-            type = WeaponManager.Instance.GetRandomWeaponType(WeaponManager.WeaponHolder.Enemy);
+            type = WeaponManager.Instance.GetRandomWeaponType(_gaController.WeaponTeam);
         }
     }
 }

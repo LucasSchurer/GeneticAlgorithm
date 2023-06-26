@@ -6,37 +6,37 @@ namespace Game.Weapons
     public class WeaponManager : Singleton<WeaponManager>
     {
         [SerializeField]
-        private WeaponTypeData[] _playerWeapons;
-        private Dictionary<WeaponType, WeaponData> _playerWeaponsDict;
+        private WeaponTypeData[] _team1Weapons;
+        private Dictionary<WeaponType, WeaponData> _team1WeaponsDict;
         [SerializeField]
-        private WeaponTypeData[] _enemyWeapons;
-        private Dictionary<WeaponType, WeaponData> _enemyWeaponsDict;
+        private WeaponTypeData[] _team2Weapons;
+        private Dictionary<WeaponType, WeaponData> _team2WeaponsDict;
 
         public enum WeaponHolder
         {
-            Player,
-            Enemy
+            Team1,
+            Team2
         }
 
         protected override void SingletonAwake()
         {
-            _playerWeaponsDict = new Dictionary<WeaponType, WeaponData>();
-            _enemyWeaponsDict = new Dictionary<WeaponType, WeaponData>();
+            _team1WeaponsDict = new Dictionary<WeaponType, WeaponData>();
+            _team2WeaponsDict = new Dictionary<WeaponType, WeaponData>();
 
-            foreach (WeaponTypeData weapon in _playerWeapons)
+            foreach (WeaponTypeData weapon in _team1Weapons)
             {
-                _playerWeaponsDict.TryAdd(weapon.Type, weapon.Data);
+                _team1WeaponsDict.TryAdd(weapon.Type, weapon.Data);
             }
 
-            foreach (WeaponTypeData weapon in _enemyWeapons)
+            foreach (WeaponTypeData weapon in _team2Weapons)
             {
-                _enemyWeaponsDict.TryAdd(weapon.Type, weapon.Data);
+                _team2WeaponsDict.TryAdd(weapon.Type, weapon.Data);
             }
         }
 
         public WeaponData GetWeaponData(WeaponType type, WeaponHolder holder)
         {
-            Dictionary<WeaponType, WeaponData> weaponsDict = holder == WeaponHolder.Player ? _playerWeaponsDict : _enemyWeaponsDict;
+            Dictionary<WeaponType, WeaponData> weaponsDict = holder == WeaponHolder.Team1 ? _team1WeaponsDict : _team2WeaponsDict;
 
             if (weaponsDict.TryGetValue(type, out WeaponData data))
             {
@@ -49,7 +49,7 @@ namespace Game.Weapons
 
         public IComponent AddWeaponComponent(GameObject go, WeaponType type, WeaponHolder holder)
         {
-            Dictionary<WeaponType, WeaponData> weaponsDict = holder == WeaponHolder.Player ? _playerWeaponsDict : _enemyWeaponsDict;
+            Dictionary<WeaponType, WeaponData> weaponsDict = holder == WeaponHolder.Team1 ? _team1WeaponsDict : _team2WeaponsDict;
 
             if (weaponsDict.TryGetValue(type, out WeaponData data))
             {
@@ -93,7 +93,7 @@ namespace Game.Weapons
 
         public WeaponType GetRandomWeaponType(WeaponHolder holder)
         {
-            return _enemyWeapons[Random.Range(0, _enemyWeapons.Length - 1)].Type;
+            return _team2Weapons[Random.Range(0, _team2Weapons.Length - 1)].Type;
         }
 
         [System.Serializable]

@@ -71,7 +71,7 @@ namespace Game.Weapons
 
         protected virtual IEnumerator Recharge()
         {
-            yield return new WaitForSeconds((_data.Cooldown * _rateOfFireMultiplier.CurrentValue));
+            yield return new WaitForSeconds(_data.Cooldown - (_data.Cooldown * _rateOfFireMultiplier.CurrentValue));
 
             _canUse = true;
         }

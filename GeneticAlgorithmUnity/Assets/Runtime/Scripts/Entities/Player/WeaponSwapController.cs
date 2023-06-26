@@ -43,7 +43,7 @@ namespace Game.Entities.Player
 
             for (int i = 0; i < selectedWeapons.Length && i < 3; i++)
             {
-                IComponent component = WeaponManager.Instance.AddWeaponComponent(gameObject, selectedWeapons[i], WeaponManager.WeaponHolder.Player);
+                IComponent component = WeaponManager.Instance.AddWeaponComponent(gameObject, selectedWeapons[i], WeaponManager.WeaponHolder.Team1);
 
                 if (component != null)
                 {

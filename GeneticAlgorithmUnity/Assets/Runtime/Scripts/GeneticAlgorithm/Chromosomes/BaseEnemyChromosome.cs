@@ -7,7 +7,7 @@ namespace Game.GA
     [DataContract(Name = "BaseEnemyChromosome", Namespace = "")]
     public class BaseEnemyChromosome : Chromosome
     {
-        public BaseEnemyChromosome(Gene[] genes = null) : base(genes)
+        public BaseEnemyChromosome(GeneticAlgorithmController gaController, Gene[] genes = null) : base(gaController, genes)
         {
         }
 
@@ -22,9 +22,9 @@ namespace Game.GA
         protected override void SetGenes()
         {
             _genes = new Gene[(int)Genes.Size];
-            _genes[(int)Genes.Behaviour] = new BehaviourGene(BehaviourType.Reckless);
-            _genes[(int)Genes.Traits] = new TraitsGene(1);
-            _genes[(int)Genes.Weapon] = new WeaponGene(Weapons.WeaponType.None);
+            _genes[(int)Genes.Behaviour] = new BehaviourGene(_gaController, BehaviourType.Reckless);
+            _genes[(int)Genes.Traits] = new TraitsGene(_gaController, 1);
+            _genes[(int)Genes.Weapon] = new WeaponGene(_gaController, Weapons.WeaponType.None);
         }
 
         protected override void SetGenes(Gene[] genes)
@@ -37,7 +37,7 @@ namespace Game.GA
 
         public override Chromosome Copy()
         {
-            BaseEnemyChromosome copy = new BaseEnemyChromosome(_genes);
+            BaseEnemyChromosome copy = new BaseEnemyChromosome(_gaController, _genes);
 
             return copy;
         }
