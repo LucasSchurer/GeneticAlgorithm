@@ -9,10 +9,12 @@ namespace Game.AI.States
         public enum Action { FindTarget, FindSecondaryTarget };
         public enum ChoiceType { First, Random, Nearest, Furthest }
 
+        public enum TargetType { AllAllies, AllyCreature, AllyShield, AllEnemies, EnemyCreature, EnemyShield, AllCreature, AllShield }
+
         [SerializeField]
-        private LayerMask _targetLayerMask;
+        private TargetType _target;
         [SerializeField]
-        private LayerMask _secondaryTargetLayerMask;
+        private TargetType _secondaryTarget;
         [SerializeField]
         private float _detectionRadius;
         [SerializeField]
@@ -27,12 +29,12 @@ namespace Game.AI.States
         [SerializeField]
         private StateTransition<Action>[] _transitions;
 
-        public LayerMask TargetLayerMask => _targetLayerMask;
         public float DetectionRadius => _detectionRadius;
         public ChoiceType Choice => _choiceType;
         public bool TryToGetFace => _tryToGetFace;
-        public LayerMask SecondaryTargetLayerMask => _secondaryTargetLayerMask;
         public virtual Action[] ValidActions => _validActions;
+        public TargetType Target => _target;
+        public TargetType SecondaryTarget => _secondaryTarget;
 
         public override State GetState(StateMachine stateMachine)
         {
@@ -50,5 +52,30 @@ namespace Game.AI.States
 
             return stateData.GetState(stateMachine);
         }
-    } 
+
+        public LayerMask GetTargetLayerMask(TargetType target, Events.Entity entity)
+        {
+            switch (target)
+            {
+                case TargetType.AllAllies:
+                    return entity.AllyLayer | entity.AllyShieldLayer;
+                case TargetType.AllyCreature:
+                    return entity.AllyLayer;
+                case TargetType.AllyShield:
+                    return entity.AllyShieldLayer;
+                case TargetType.AllEnemies:
+                    return entity.EnemyLayer | entity.EnemyShieldLayer;
+                case TargetType.EnemyCreature:
+                    return entity.EnemyLayer;
+                case TargetType.EnemyShield:
+                    return entity.EnemyShieldLayer;
+                case TargetType.AllCreature:
+                    return entity.AllyLayer | entity.EnemyLayer;
+                case TargetType.AllShield:
+                    return entity.AllyShieldLayer | entity.EnemyShieldLayer;
+                default:
+                    return entity.AllyLayer;
+            }
+        }
+    }
 }

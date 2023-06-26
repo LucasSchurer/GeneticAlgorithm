@@ -37,6 +37,13 @@ namespace Game.AI.States
         private bool _canFire = true;
         [SerializeField]
         private bool _lookToPlayer = true;
+        public enum FacingType { Target, Ally, Enemy }
+        [SerializeField]
+        private FacingType _facingType;
+        public FacingType Facing => _facingType;
+        [SerializeField]
+        private float _newTargetDetectionTime = 1f;
+        public float NewTargetDetectionTime => _newTargetDetectionTime;
 
         [Header("Action Related Settings")]
         [SerializeField]

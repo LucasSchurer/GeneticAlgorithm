@@ -26,42 +26,27 @@ namespace Game.Managers
         private bool _isSpawningEnemies = false;
         private bool _isWaveActive = false;
 
-        private Transform _player;
-
         public float TimeRemaining => _timeRemaining;
         public bool IsWaveActive => _isWaveActive;
 
         protected override void SingletonAwake()
         {
             _populationController = FindObjectOfType<PopulationController>();
-            _player = GameManager.Instance.Player;
         }
 
         private Vector3 GetSpawnPosition()
         {
-            Vector3 position = Vector3.zero;
-            Vector3 playerPosition = _player.position;
-            playerPosition.y = 0f;
+            Vector3 position = Random.insideUnitCircle * Random.Range(_minimumDistanceToSpawn, _spawnRadius);
 
-            for (int i = 0; i < _maximumSpawnRetry; i++)
+            position.z = position.y;
+            position.y = 0f;
+
+            position.y = 5f;
+
+            if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, Constants.GroundLayer))
             {
-                position = Random.insideUnitCircle * Random.Range(_minimumDistanceToSpawn, _spawnRadius);
-
-                position.z = position.y;
-                position.y = 0f;
-
-                if (Vector3.Distance(position, playerPosition) > _minimumDistanceToSpawn)
-                {                    
-                    position.y = 5f;
-
-                    if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, Constants.GroundLayer))
-                    {
-                        position = hit.point;
-                        position.y += 1.5f;
-                    }
-
-                    break;
-                }
+                position = hit.point;
+                position.y += 1.5f;
             }
 
             return position;
@@ -116,14 +101,14 @@ namespace Game.Managers
         }
         private void RespawnWave(ref GameEventContext ctx)
         {
-            SpawnTraitObjects();
+            /*SpawnTraitObjects();*/
 
             StartCoroutine(RespawnWaveCoroutine());
         }
 
         private void SpawnTraitObjects()
         {
-            Vector3 position = _player.position;
+/*            Vector3 position = _player.position;
 
             for (int i = 0; i < waveSettings.traitsGivenOnWaveEnd; i++)
             {
@@ -131,7 +116,7 @@ namespace Game.Managers
                 position.z = Random.Range(-3, 3) * 2f;
 
                 Instantiate(_interactableTraitObjectPrefab, position, Quaternion.identity);
-            }
+            }*/
         }
 
         private IEnumerator RespawnWaveCoroutine()

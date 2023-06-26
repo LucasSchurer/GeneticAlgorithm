@@ -327,6 +327,142 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""FloatingCamera"",
+            ""id"": ""0d4a6d18-8143-41e3-91b9-ecd56e0c39e5"",
+            ""actions"": [
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""7e347ffa-f261-4929-976a-335adac0f7a3"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""2b757a9d-05d4-4f92-bf26-207614004c95"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""3D Vector"",
+                    ""id"": ""82f3c608-f1ab-4072-95c3-db619061555d"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""4c197f23-6b41-44cb-bef7-f010188421af"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a68f4ccc-d9cb-48d6-9aca-05991ff01d8d"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d7dbb0e0-2550-4bcc-b3c2-6ead726aeb14"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5ad62104-3a24-48ba-b153-e475e85165ad"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""0e9511c0-505e-4248-85ec-68aebf9e394c"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""f12c9244-36ac-4dd0-b172-7fc45a2a30b9"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""4185e1f6-c482-466f-be9a-5a1737cfaebf"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""6469a232-790e-4a86-86ea-2bca6c0b64bc"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""6ab4c848-484a-4e06-b340-2f028af42591"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -372,6 +508,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
+        // FloatingCamera
+        m_FloatingCamera = asset.FindActionMap("FloatingCamera", throwIfNotFound: true);
+        m_FloatingCamera_Look = m_FloatingCamera.FindAction("Look", throwIfNotFound: true);
+        m_FloatingCamera_Movement = m_FloatingCamera.FindAction("Movement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -540,6 +680,47 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // FloatingCamera
+    private readonly InputActionMap m_FloatingCamera;
+    private IFloatingCameraActions m_FloatingCameraActionsCallbackInterface;
+    private readonly InputAction m_FloatingCamera_Look;
+    private readonly InputAction m_FloatingCamera_Movement;
+    public struct FloatingCameraActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public FloatingCameraActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Look => m_Wrapper.m_FloatingCamera_Look;
+        public InputAction @Movement => m_Wrapper.m_FloatingCamera_Movement;
+        public InputActionMap Get() { return m_Wrapper.m_FloatingCamera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(FloatingCameraActions set) { return set.Get(); }
+        public void SetCallbacks(IFloatingCameraActions instance)
+        {
+            if (m_Wrapper.m_FloatingCameraActionsCallbackInterface != null)
+            {
+                @Look.started -= m_Wrapper.m_FloatingCameraActionsCallbackInterface.OnLook;
+                @Look.performed -= m_Wrapper.m_FloatingCameraActionsCallbackInterface.OnLook;
+                @Look.canceled -= m_Wrapper.m_FloatingCameraActionsCallbackInterface.OnLook;
+                @Movement.started -= m_Wrapper.m_FloatingCameraActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_FloatingCameraActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_FloatingCameraActionsCallbackInterface.OnMovement;
+            }
+            m_Wrapper.m_FloatingCameraActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Look.started += instance.OnLook;
+                @Look.performed += instance.OnLook;
+                @Look.canceled += instance.OnLook;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
+            }
+        }
+    }
+    public FloatingCameraActions @FloatingCamera => new FloatingCameraActions(this);
     private int m_KeyboardandMouseSchemeIndex = -1;
     public InputControlScheme KeyboardandMouseScheme
     {
@@ -571,5 +752,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IFloatingCameraActions
+    {
+        void OnLook(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
     }
 }

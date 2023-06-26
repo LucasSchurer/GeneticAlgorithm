@@ -20,6 +20,7 @@ namespace Game.AI
         private StateData _currentStateData;
         [SerializeField]
         private StateMachineData _data;
+        private Entity _entity;
         private EntityEventController _eventController;
         private AttributeController _attributeController;
         private NonPersistentAttribute _health;
@@ -37,6 +38,8 @@ namespace Game.AI
         public AttributeController AttributeController => _attributeController;
         public NonPersistentAttribute Health => _health != null ? _health : _health = AttributeController.GetNonPersistentAttribute(AttributeType.Health);
 
+        public Entity Entity => _entity;
+
         public StateContext PastContext => _pastContext != null ? _pastContext : new StateContext();
         public StateContext CurrentContext => _currentContext != null ? _currentContext : new StateContext();
 
@@ -44,6 +47,7 @@ namespace Game.AI
         {
             _eventController = GetComponent<EntityEventController>();
             _attributeController = GetComponent<AttributeController>();
+            _entity = GetComponent<Entity>();
 
             _data = data;
             _initialState = _data.GetInitialState(this);

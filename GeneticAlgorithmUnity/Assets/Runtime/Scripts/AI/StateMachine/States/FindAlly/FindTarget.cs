@@ -9,9 +9,14 @@ namespace Game.AI.States
         private HashSet<FindTargetData.Action> _blockedActions;
         private Dictionary<FindTargetData.Action, ActionCallback> _validActions;
 
+        private LayerMask _targetLayerMask;
+        private LayerMask _secondaryTargetLayerMask;
+
         public FindTarget(StateMachine stateMachine, FindTargetData data) : base(stateMachine, data)
         {
             _data = data;
+            _targetLayerMask = _data.GetTargetLayerMask(_data.Target, stateMachine.Entity);
+            _secondaryTargetLayerMask = _data.GetTargetLayerMask(_data.SecondaryTarget, stateMachine.Entity);
             _blockedActions = new HashSet<FindTargetData.Action>();
             _validActions = BuildActionCallbackDictionary(_data.ValidActions, GetCallback);
         }
@@ -39,7 +44,7 @@ namespace Game.AI.States
             Transform target;
             Transform targetRoot;
 
-            GetTargetTransform(_data.TargetLayerMask, out target, out targetRoot);
+            GetTargetTransform(_targetLayerMask, out target, out targetRoot);
 
             if (target != null && targetRoot != null)
             {
@@ -56,7 +61,7 @@ namespace Game.AI.States
             Transform target;
             Transform targetRoot;
 
-            GetTargetTransform(_data.SecondaryTargetLayerMask, out target, out targetRoot);
+            GetTargetTransform(_secondaryTargetLayerMask, out target, out targetRoot);
 
             if (target != null && targetRoot != null)
             {

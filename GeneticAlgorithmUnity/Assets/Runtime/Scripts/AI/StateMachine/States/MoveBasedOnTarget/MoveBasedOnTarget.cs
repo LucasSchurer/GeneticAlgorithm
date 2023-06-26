@@ -25,6 +25,7 @@ namespace Game.AI.States
         private Coroutine _randomizeOffsetCoroutine;
         private Coroutine _updatePositionCoroutine;
         private Coroutine _checkActionsCoroutine;
+        private Coroutine _findLookTargetCoroutine;
 
         private bool _hasReachedTarget = false;
 
@@ -51,19 +52,53 @@ namespace Game.AI.States
                 _targetAttributeController = _targetRoot.GetComponent<AttributeController>();
 
                 _lookTowards = _stateMachine.GetComponentInChildren<BotLookTowards>();
-                
-                if (!_data.LookToPlayer)
-                {
-                    _lookTowards.SetTarget(_target);
-                }
-
-                _faceTransform = _lookTowards.transform;
 
                 StartCoroutines();
             } else
             {
                 _isTargetDead = true;
             }
+        }
+
+        private IEnumerator SetLookTarget()
+        {
+            if (_stateMachine.transform != null && _targetRoot != null && _lookTowards.Target == null)
+            {
+                switch (_data.Facing)
+                {
+                    case MoveBasedOnTargetData.FacingType.Target:
+                        _lookTowards.SetTarget(_targetRoot);
+                        break;
+                    case MoveBasedOnTargetData.FacingType.Ally:
+                        _lookTowards.SetTarget(FindLookTarget(_stateMachine.Entity.AllyLayer));
+                        break;
+                    case MoveBasedOnTargetData.FacingType.Enemy:
+                        _lookTowards.SetTarget(FindLookTarget(_stateMachine.Entity.EnemyLayer));
+                        break;
+                }
+
+                if (_lookTowards.Target != null)
+                {
+                    _faceTransform = _lookTowards.transform;
+                }
+            }
+
+            if (_data.Facing == MoveBasedOnTargetData.FacingType.Target)
+            {
+                yield return null;
+            } else
+            {
+                yield return new WaitForSeconds(_data.NewTargetDetectionTime);
+
+                _findLookTargetCoroutine = _stateMachine.StartCoroutine(SetLookTarget());
+            }
+        }
+
+        private Transform FindLookTarget(LayerMask layer)
+        {
+            Collider[] hits = Physics.OverlapSphere(_stateMachine.transform.position, 300f, layer);
+
+            return null;
         }
 
         private void StartCoroutines()
@@ -81,6 +116,11 @@ namespace Game.AI.States
             if (_data.CheckActionsInterval > 0)
             {
                 _checkActionsCoroutine = _stateMachine.StartCoroutine(CheckActionsCoroutine());
+            }
+
+            if (_data.NewTargetDetectionTime > 0)
+            {
+                _checkActionsCoroutine = _stateMachine.StartCoroutine(SetLookTarget());
             }
         }
 
@@ -126,6 +166,11 @@ namespace Game.AI.States
             if (_checkActionsCoroutine != null)
             {
                 _stateMachine.StopCoroutine(_checkActionsCoroutine);
+            }
+
+            if (_findLookTargetCoroutine != null)
+            {
+                _stateMachine.StopCoroutine(_findLookTargetCoroutine);
             }
         }
 

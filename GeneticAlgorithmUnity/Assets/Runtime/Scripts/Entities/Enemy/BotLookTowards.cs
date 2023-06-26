@@ -9,7 +9,6 @@ namespace Game.Entities.Enemy
     public class BotLookTowards : MonoBehaviour, IEventListener
     {
         [SerializeField]
-        private string _targetTag;
         private Transform _target;
         [SerializeField]
         private AttributeController _attributeController;
@@ -18,12 +17,9 @@ namespace Game.Entities.Enemy
         [SerializeField]
         private EntityEventController _eventController;
 
-        private Vector3 DirectionToTarget => (_target == null || transform == null) ? Vector3.zero : (_target.position - transform.position).normalized;
+        public Transform Target { get => _target; set => _target = value; }
 
-        private void Awake()
-        {
-            _target = GameObject.FindGameObjectWithTag(_targetTag).transform;
-        }
+        private Vector3 DirectionToTarget => (_target == null || transform == null) ? Vector3.zero : (_target.position - transform.position).normalized;
 
         private void Start()
         {
