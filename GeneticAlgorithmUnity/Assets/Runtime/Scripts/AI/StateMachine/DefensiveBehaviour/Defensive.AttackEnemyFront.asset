@@ -24,7 +24,14 @@ MonoBehaviour:
   _radiusToStartMoving: 1.2
   _canFire: 1
   _lookToPlayer: 1
+  _facingType: 0
+  _newTargetDetectionTime: 1
   _closeToDeathHealthThreshold: 0
   _targetCloseToDeathThreshold: 0
-  _validActions: 
-  _transitions: []
+  _validActions: 00000000
+  _transitions:
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: 89b4b5e11cf037549b05158fe716b3e0, type: 2}
+      _probability: 1
+    _transitionType: 0

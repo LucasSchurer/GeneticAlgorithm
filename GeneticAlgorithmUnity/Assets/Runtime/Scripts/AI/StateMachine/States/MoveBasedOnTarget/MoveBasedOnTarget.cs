@@ -94,11 +94,40 @@ namespace Game.AI.States
             }
         }
 
+        private Transform FindNearest(Collider[] hits)
+        {
+            float minDistance = Mathf.Infinity;
+            int minIndex = -1;
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform == _stateMachine.transform)
+                {
+                    continue;
+                }
+
+                float distance = Vector3.Distance(_stateMachine.transform.position, hits[i].transform.position);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    minIndex = i;
+                }
+            }
+
+            if (minIndex != -1)
+            {
+                return hits[minIndex].transform;
+            }
+
+            return null;
+        }
+
         private Transform FindLookTarget(LayerMask layer)
         {
             Collider[] hits = Physics.OverlapSphere(_stateMachine.transform.position, 300f, layer);
 
-            return null;
+            return FindNearest(hits);
         }
 
         private void StartCoroutines()

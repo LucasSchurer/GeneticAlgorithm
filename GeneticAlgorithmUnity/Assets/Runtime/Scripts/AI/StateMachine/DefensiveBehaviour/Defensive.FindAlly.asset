@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a448628a4c6ea2419a2b758cb3d1f9d, type: 3}
   m_Name: Defensive.FindAlly
   m_EditorClassIdentifier: 
-  _targetLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  _secondaryTargetLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
+  _target: 1
+  _secondaryTarget: 0
   _detectionRadius: 500
-  _choiceType: 1
+  _choiceType: 2
   _tryToGetFace: 1
   _validActions: 00000000
   _transitions:

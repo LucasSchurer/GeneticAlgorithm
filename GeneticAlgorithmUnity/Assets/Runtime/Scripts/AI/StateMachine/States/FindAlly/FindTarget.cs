@@ -44,7 +44,7 @@ namespace Game.AI.States
             Transform target;
             Transform targetRoot;
 
-            GetTargetTransform(_targetLayerMask, out target, out targetRoot);
+            GetTargetTransform(_targetLayerMask, out target, out targetRoot, _data.TryToGetFace);
 
             if (target != null && targetRoot != null)
             {
@@ -61,7 +61,7 @@ namespace Game.AI.States
             Transform target;
             Transform targetRoot;
 
-            GetTargetTransform(_secondaryTargetLayerMask, out target, out targetRoot);
+            GetTargetTransform(_secondaryTargetLayerMask, out target, out targetRoot, _data.TryToGetFace);
 
             if (target != null && targetRoot != null)
             {
