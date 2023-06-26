@@ -16,13 +16,17 @@ MonoBehaviour:
   _transitions:
   - _action: 0
     _states:
+    - _state: {fileID: 11400000, guid: 6b7668c561118da4e95087930b81eda0, type: 2}
+      _probability: 0.3
     - _state: {fileID: 11400000, guid: 30f74fbfa4f34304f81b26b1cf28ee98, type: 2}
-      _probability: 1
+      _probability: 0.7
     _transitionType: 0
   - _action: 1
     _states:
     - _state: {fileID: 11400000, guid: ed9acc24ff0a38d4da058fc5ae8a3ff6, type: 2}
       _probability: 0.2
     - _state: {fileID: 11400000, guid: a24f12e13eb284d48944f3c355614075, type: 2}
-      _probability: 0.8
+      _probability: 0.35
+    - _state: {fileID: 11400000, guid: 258224a9faa81b04ba9db72a58184c77, type: 2}
+      _probability: 0.45
     _transitionType: 1

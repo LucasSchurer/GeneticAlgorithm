@@ -20,6 +20,11 @@ namespace Game.Managers
 
         private PopulationController _populationController;
 
+        [SerializeField]
+        private EntitySpawner _team1Spawner;
+        [SerializeField]
+        private EntitySpawner _team2Spawner;
+
         [Header("Settings")]
         public WaveSettings waveSettings;
         private float _timeRemaining = 0;
@@ -31,7 +36,6 @@ namespace Game.Managers
 
         protected override void SingletonAwake()
         {
-            _populationController = FindObjectOfType<PopulationController>();
         }
 
         private Vector3 GetSpawnPosition()
@@ -78,18 +82,11 @@ namespace Game.Managers
 
         private IEnumerator SpawnCoroutine()
         {
-            while (true)
-            {
-                CreatureController creature = _populationController.RequestCreature(GetSpawnPosition());
+            Transform[] team1Creatures = _team1Spawner.GetEntities();
 
-                if (creature != null)
-                {
-                    yield return new WaitForSeconds(Random.Range(waveSettings.minSpawnInterval, waveSettings.maxSpawnInterval));
-                }
-                else
-                {
-                    break;
-                }
+            for (int i = 0; i < team1Creatures.Length; i++)
+            {
+                team1Creatures[i].transform.position = GetSpawnPosition();
             }
 
             _isSpawningEnemies = false;

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ namespace Game.AI.States
         private LayerMask _targetLayerMask;
         private LayerMask _secondaryTargetLayerMask;
 
+        private int _currentRetry;
+        public Coroutine _findNewTargetCoroutine;
+
         public FindTarget(StateMachine stateMachine, FindTargetData data) : base(stateMachine, data)
         {
             _data = data;
@@ -23,7 +27,38 @@ namespace Game.AI.States
 
         public override void StateStart()
         {
-            CheckActions(_validActions, _blockedActions);
+            Find();
+        }
+        
+        private void Find()
+        {
+            if (_currentRetry >= _data.MaximumRetryCount)
+            {
+                _stateMachine.ChangeCurrentState(null);
+            } else
+            {
+                if (!CheckActions(_validActions, _blockedActions))
+                {
+                    if (_findNewTargetCoroutine != null)
+                    {
+                        _stateMachine.StopCoroutine(_findNewTargetCoroutine);
+                        _findNewTargetCoroutine = null;
+                    }
+
+                    _findNewTargetCoroutine = _stateMachine.StartCoroutine(FindTargetCoroutine());
+
+                    _currentRetry++;
+                }
+            }
+        }
+
+        private IEnumerator FindTargetCoroutine()
+        {
+            yield return new WaitForSeconds(_data.TargetFindRetryTime);
+
+            _findNewTargetCoroutine = null;
+
+            Find();
         }
 
         protected virtual ActionCallback GetCallback(FindTargetData.Action action)

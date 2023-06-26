@@ -9,7 +9,7 @@ namespace Game.GA
     /// Controls the creation of populations,
     /// using selection, crossover and mutation methods.
     /// </summary>
-    public class PopulationController : MonoBehaviour, IEventListener
+    public class PopulationController : EntitySpawner, IEventListener
     {
         [Header("References")]
         [SerializeField]
@@ -120,6 +120,23 @@ namespace Game.GA
         private void OnDisable()
         {
             StopListening();
+        }
+
+        public override Transform[] GetEntities()
+        {
+            int amount = _creaturesRequest.Count;
+            Transform[] creatures = new Transform[amount];
+
+            for (int i = 0; i < amount; i++)
+            {
+                CreatureController creature = _creaturesRequest[i];
+                creature.gameObject.SetActive(true);
+                creature.Initialize();
+
+                creatures[i] = creature.transform;
+            }
+
+            return creatures;
         }
     } 
 }

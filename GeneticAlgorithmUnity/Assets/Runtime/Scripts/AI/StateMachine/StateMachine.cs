@@ -112,14 +112,7 @@ namespace Game.AI
                 _currentState = state;
             } else
             {
-                if (_debug)
-                {
-                    _currentStateName = "null";
-                }
-
-                _currentState = null;
-
-                return;
+                _currentState = _data.GetInitialState(this);
             }
 
             if (_debug)

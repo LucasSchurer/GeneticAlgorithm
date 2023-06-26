@@ -29,6 +29,14 @@ namespace Game.AI.States
         [SerializeField]
         private StateTransition<Action>[] _transitions;
 
+        [SerializeField]
+        private float _targetFindRetryTime = 1f;
+        [SerializeField]
+        private int _maximumRetryCount = 5;
+
+        public float TargetFindRetryTime => _targetFindRetryTime;
+        public int MaximumRetryCount => _maximumRetryCount;
+
         public float DetectionRadius => _detectionRadius;
         public ChoiceType Choice => _choiceType;
         public bool TryToGetFace => _tryToGetFace;
