@@ -34,6 +34,9 @@ namespace Game.GA
         private float _traitWeightChange = 0.01f;
         [SerializeField]
         private Weapons.WeaponManager.WeaponHolder _teamWeapon = Weapons.WeaponManager.WeaponHolder.Team1;
+        [SerializeField]
+        private Traits.TraitManager.Team _traitTeam;
+        public Traits.TraitManager.Team Team => _traitTeam;
 
         [SerializeField]
         private int _team;
@@ -71,6 +74,9 @@ namespace Game.GA
             _geneticAlgorithmData.traitSelectionDumbness = _traitSelectionDumbness;
             _geneticAlgorithmData.team = _team;
             _geneticAlgorithmData.properties = _fitnessProperties.Properties;
+            _geneticAlgorithmData.traitChangePositiveThreshold = _positiveTraitWeightChangeThreshold;
+            _geneticAlgorithmData.traitChangeNegativeThreshold = _negativeTraitWeightChangeThreshold;
+            _geneticAlgorithmData.traitChangeAmount = _traitWeightChange;
             _geneticAlgorithmData.ToXML();
         }
 

@@ -74,6 +74,8 @@ namespace Game.GA
                 {
                     creatureData.Chromosome.UpdateTraitsWeights(creatureData.Fitness.Value);
                 }
+
+                generationData.SetTraitWeights(Traits.TraitManager.Instance.GetTraitWeights(_gaController.Team));
             }
         }
 

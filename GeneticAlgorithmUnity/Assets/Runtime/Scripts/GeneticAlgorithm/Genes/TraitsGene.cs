@@ -137,7 +137,7 @@ namespace Game.GA
                 useWeights = false;
             }
 
-            TraitIdentifier chosenTrait = TraitManager.Instance.SelectTraitAmongTraits(_gaController.TraitSelectionAmount, useWeights);
+            TraitIdentifier chosenTrait = TraitManager.Instance.SelectTraitAmongTraits(_gaController.TraitSelectionAmount, useWeights, _gaController.Team);
             _chosenTrait = chosenTrait;
 
             AddTrait(chosenTrait);
@@ -160,12 +160,12 @@ namespace Game.GA
 
             foreach (KeyValuePair<TraitIdentifier, int> trait in _traits)
             {
-                float newWeight = TraitManager.Instance.GetTraitWeight(trait.Key);
+                float newWeight = TraitManager.Instance.GetTraitWeight(trait.Key, _gaController.Team);
                 newWeight += (fitness * _gaController.TraitWeightChange) * weightSign;
 
                 for (int i = 0; i < trait.Value; i++)
                 {
-                    TraitManager.Instance.ChangeTraitWeight(trait.Key, newWeight);
+                    TraitManager.Instance.ChangeTraitWeight(trait.Key, newWeight, _gaController.Team);
                 }
             }
         }

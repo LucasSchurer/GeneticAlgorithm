@@ -19,8 +19,17 @@ namespace Game.Traits
             Enemy
         }
 
+        public enum Team
+        {   
+            Team1, 
+            Team2
+        }
+
         [SerializeField]
-        private TraitWeights _traitWeights;
+        private TraitWeights _team1traitWeights;
+        [SerializeField]
+        private TraitWeights _team2traitWeights;
+
         private Dictionary<TraitIdentifier, Trait<EntityEventType, EntityEventContext>> _enemyTraitsDict;
         private Dictionary<TraitIdentifier, Trait<EntityEventType, EntityEventContext>> _playerTraitsDict;
 
@@ -67,7 +76,7 @@ namespace Game.Traits
             return GetEntityTrait(identifier, holder).maxStacks;
         }
 
-        public TraitIdentifier SelectTraitAmongTraits(int amount, bool useWeight)
+        public TraitIdentifier SelectTraitAmongTraits(int amount, bool useWeight, Team team)
         {
             List<TraitIdentifier> uniqueTraits = GetRandomUniqueTraits(amount, TraitHolder.Enemy);
 
@@ -84,7 +93,7 @@ namespace Game.Traits
 
             foreach (TraitIdentifier trait in uniqueTraits)
             {
-                float weight = GetTraitWeight(trait);
+                float weight = GetTraitWeight(trait, team);
                 debugMessage += "Trait: " + trait.ToString() + " Weight: " + weight + "\n";
 
                 weightSum += weight;
@@ -103,7 +112,7 @@ namespace Game.Traits
 
             foreach (TraitIdentifier trait in uniqueTraits)
             {
-                weightSum += GetTraitWeight(trait);
+                weightSum += GetTraitWeight(trait, team);
 
                 if (selectedSum < weightSum)
                 {
@@ -142,19 +151,44 @@ namespace Game.Traits
             return uniqueTraits;
         }
 
-
-        public float GetTraitWeight(TraitIdentifier trait)
+        public TraitWeights GetTraitWeights(Team team)
         {
-            return _traitWeights.GetTraitWeight(trait);
+            if (team == Team.Team1)
+            {
+                return _team1traitWeights;
+            }
+            else
+            {
+                return _team2traitWeights;
+            }
         }
 
-        public void ChangeTraitWeight(TraitIdentifier trait, float newWeight)
+        public float GetTraitWeight(TraitIdentifier trait, Team team)
         {
-            _traitWeights.ChangeTraitWeight(trait, newWeight);
+            if (team == Team.Team1)
+            {
+                return _team1traitWeights.GetTraitWeight(trait);
+            } else
+            {
+                return _team2traitWeights.GetTraitWeight(trait);
+            }
+        }
+
+        public void ChangeTraitWeight(TraitIdentifier trait, float newWeight, Team team)
+        {
+            if (team == Team.Team1)
+            {
+                _team1traitWeights.ChangeTraitWeight(trait, newWeight);
+            }
+            else
+            {
+                _team2traitWeights.ChangeTraitWeight(trait, newWeight);
+            }
         }
         private void OnApplicationQuitEvent(ref GameEventContext ctx)
         {
-            _traitWeights.SaveWeights();
+            _team1traitWeights.SaveWeights();
+            _team2traitWeights.SaveWeights();
         }
 
         public void StartListening()

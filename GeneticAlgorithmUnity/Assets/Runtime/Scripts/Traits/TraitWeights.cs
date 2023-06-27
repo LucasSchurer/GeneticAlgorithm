@@ -16,6 +16,8 @@ namespace Game.Traits
         [SerializeField]
         private float _minimumWeight = 0f;
 
+        public Dictionary<TraitIdentifier, float> TraitWeightsDictionary => _traitWeights;
+
         private void Awake()
         {
             if (_traitWeights == null)

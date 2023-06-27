@@ -34,6 +34,13 @@ namespace Game.GA
         [DataMember(Name = "Generations")]
         public GenerationData[] generations;
 
+        [DataMember(Name = "TraitChangePositiveThreshold")]
+        public float traitChangePositiveThreshold;
+        [DataMember(Name = "TraitChangeNegativeThreshold")]
+        public float traitChangeNegativeThreshold;
+        [DataMember(Name = "TraitChangeAmount")]
+        public float traitChangeAmount;
+
         public void ToXML()
         {
             if (xmlFileName == "")
