@@ -24,3 +24,5 @@ MonoBehaviour:
     - _state: {fileID: 11400000, guid: a2c94807e5e5b6949a0667048968ceea, type: 2}
       _probability: 1
     _transitionType: 0
+  _targetFindRetryTime: 0.5
+  _maximumRetryCount: 5

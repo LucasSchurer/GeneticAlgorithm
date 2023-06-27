@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30dc3cc2ad55c4041a6f85ca70d8bc32, type: 3}
+  m_Name: DamageOrbOnHit
+  m_EditorClassIdentifier: 
+  _healthInteractionValue: 0.4
+  _type: 0
+  _canHitAllies: 1
+  _friendlyFireDamage: 0.2

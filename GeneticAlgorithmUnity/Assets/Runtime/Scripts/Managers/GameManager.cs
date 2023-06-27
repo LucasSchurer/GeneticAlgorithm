@@ -19,6 +19,9 @@ namespace Game.Managers
 
         private bool _gameOver = false;
 
+        [SerializeField]
+        private float _timeScale = 1f;
+
         public GameEventController GetEventController()
         {
             if (_eventController == null)
@@ -35,6 +38,7 @@ namespace Game.Managers
         protected override void SingletonAwake()
         {
             Cursor.lockState = _cursorLockMode;
+            Time.timeScale = _timeScale;
         }
 
         private void Start()
@@ -108,6 +112,12 @@ namespace Game.Managers
             _gameOver = true;
 
             _eventController.TriggerEvent(GameEventType.OnGameOver, new GameEventContext() { });
+        }
+
+        [ContextMenu("Generate Graph")]
+        private void SetTimeScale()
+        {
+            Time.timeScale = _timeScale;
         }
     } 
 }

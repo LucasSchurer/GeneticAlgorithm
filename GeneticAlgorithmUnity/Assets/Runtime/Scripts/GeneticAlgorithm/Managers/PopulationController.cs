@@ -150,6 +150,8 @@ namespace Game.GA
                 creatures[i] = creature.transform;
             }
 
+            _creaturesRequest.Clear();
+
             return creatures;
         }
     } 

@@ -27,7 +27,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _orb: {fileID: 5194124991278356529, guid: c1fb136f4ecca124bb10ecf5a7791999, type: 3}
-  _orbAmount: 3
+  _orbAmount: 5
   _spawnInterval: 0.2
   _orbSpeed: 15
   _hardLock: 1

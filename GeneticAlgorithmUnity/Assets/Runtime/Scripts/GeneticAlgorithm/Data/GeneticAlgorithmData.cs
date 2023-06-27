@@ -19,6 +19,9 @@ namespace Game.GA
         [DataMember(Name = "Version")]
         private readonly int version = 1;
 
+        [DataMember(Name = "Team")]
+        public int team;
+
         [DataMember(Name = "TraitSelectionAmount")]
         public int traitSelectionAmount;
 
@@ -32,7 +35,7 @@ namespace Game.GA
         {
             if (xmlFileName == "")
             {
-                xmlFileName = $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.xml";
+                xmlFileName = $"{DateTime.Now.ToString("yyyyMMdd-HHmmss")} - {team}.xml";
             }
 
             XMLHelper.SerializeData($"{Application.persistentDataPath}/{xmlFileName}", this, false);

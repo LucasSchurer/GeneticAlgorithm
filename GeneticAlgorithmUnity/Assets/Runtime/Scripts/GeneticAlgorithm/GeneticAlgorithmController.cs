@@ -33,13 +33,16 @@ namespace Game.GA
         [SerializeField]
         private float _traitWeightChange = 0.01f;
         [SerializeField]
-        private Weapons.WeaponManager.WeaponHolder _team = Weapons.WeaponManager.WeaponHolder.Team1;
+        private Weapons.WeaponManager.WeaponHolder _teamWeapon = Weapons.WeaponManager.WeaponHolder.Team1;
+
+        [SerializeField]
+        private int _team;
 
         private GeneticAlgorithmData _geneticAlgorithmData;
         private PopulationController _populationController;
         private GenerationController _generationController;
 
-        public Weapons.WeaponManager.WeaponHolder WeaponTeam => _team;
+        public Weapons.WeaponManager.WeaponHolder WeaponTeam => _teamWeapon;
 
         public GeneticAlgorithmData GeneticAlgorithmData => _geneticAlgorithmData;
         public PopulationController PopulationController => _populationController;
@@ -66,6 +69,7 @@ namespace Game.GA
             _geneticAlgorithmData.generations = _generationController.Generations;
             _geneticAlgorithmData.traitSelectionAmount = _traitSelectionAmount;
             _geneticAlgorithmData.traitSelectionDumbness = _traitSelectionDumbness;
+            _geneticAlgorithmData.team = _team;
             _geneticAlgorithmData.ToXML();
         }
 

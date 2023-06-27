@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestEnemyHealth
   m_EditorClassIdentifier: 
   _type: 1
-  _maxValue: 5
+  _maxValue: 10
   _minValue: 0
-  _startingValue: 5
+  _startingValue: 10
