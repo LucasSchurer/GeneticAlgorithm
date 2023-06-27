@@ -30,7 +30,7 @@ namespace Game.GA
 
         public void SetTraitWeights(Traits.TraitWeights weights)
         {
-            _serializableDictionary = SerializableDictionary<TraitIdentifier, float>.BuildListFromDictionary(weights.TraitWeightsDictionary);
+            _serializableDictionary = SerializableDictionary<TraitIdentifier, float>.BuildListFromDictionary(weights.GetTraitWeightsDictionary());
         }
 
         public void AddCreatureData(CreatureData data)

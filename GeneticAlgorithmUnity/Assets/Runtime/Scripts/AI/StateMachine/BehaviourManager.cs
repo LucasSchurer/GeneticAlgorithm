@@ -34,7 +34,7 @@ namespace Game.AI
 
         public BehaviourType GetRandomBehaviourType()
         {
-            return _behavioursArray[Random.Range(0, _behavioursArray.Length - 1)].Type;
+            return _behavioursArray[Random.Range(0, _behavioursArray.Length)].Type;
         }
 
         [System.Serializable]

@@ -1,4 +1,5 @@
 using Game.Events;
+using Game.GA;
 using UnityEngine;
 
 namespace Game.Entities.Shared
@@ -23,6 +24,11 @@ namespace Game.Entities.Shared
 
         protected override void OnDeath(ref EntityEventContext ctx)
         {
+            if (ctx.Damage != null)
+            {
+                GetComponent<CreatureController>().IsDead = true;
+            }
+
             DetachBodyParts(ctx.Damage);
 
             Destroy(_objectRoot.gameObject);

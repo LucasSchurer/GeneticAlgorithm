@@ -92,8 +92,8 @@ namespace Game.GA
 
             if (gameManager)
             {
-                gameManager.GetEventController().AddListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
-                gameManager.GetEventController().AddListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Standard);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Standard);
             }
 
             _startedListening = true;

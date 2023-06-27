@@ -41,6 +41,15 @@ namespace Game.GA
         [DataMember(Name = "TraitChangeAmount")]
         public float traitChangeAmount;
 
+        [DataMember(Name = "MutationRate")]
+        public float mutationRate;
+
+        [DataMember(Name = "MutateIndividually")]
+        public bool mutateIndividually;
+
+        [DataMember(Name = "ParentsAmount")]
+        public int parentsAmount;
+
         public void ToXML()
         {
             if (xmlFileName == "")

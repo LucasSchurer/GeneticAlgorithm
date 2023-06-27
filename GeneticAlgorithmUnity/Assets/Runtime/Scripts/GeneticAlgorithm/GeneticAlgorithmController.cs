@@ -77,6 +77,9 @@ namespace Game.GA
             _geneticAlgorithmData.traitChangePositiveThreshold = _positiveTraitWeightChangeThreshold;
             _geneticAlgorithmData.traitChangeNegativeThreshold = _negativeTraitWeightChangeThreshold;
             _geneticAlgorithmData.traitChangeAmount = _traitWeightChange;
+            _geneticAlgorithmData.mutationRate = _mutationRate;
+            _geneticAlgorithmData.mutateIndividually = _mutateIndividually;
+            _geneticAlgorithmData.parentsAmount = _parentsAmount;
             _geneticAlgorithmData.ToXML();
         }
 
