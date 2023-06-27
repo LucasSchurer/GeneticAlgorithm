@@ -35,7 +35,7 @@ MonoBehaviour:
   _startLockingTime: 0.5
   _startSeekingTime: 0.3
   _canHitSelf: 0
-  _maxDistance: 0
+  _maxDistance: 150
   _orbMaterial: {fileID: 2100000, guid: d361d8b2dab8dcf4f8b5a3c607f50eb2, type: 2}
   _trailMaterial: {fileID: 2100000, guid: c88291d91cea01a43933924869cbabba, type: 2}
   _hitMaterial: {fileID: 2100000, guid: 43554f91ad786f74e9a5a79ae3b1205d, type: 2}
