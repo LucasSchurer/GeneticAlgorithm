@@ -93,7 +93,13 @@ namespace Game.Weapons
 
         public WeaponType GetRandomWeaponType(WeaponHolder holder)
         {
-            return _team2Weapons[Random.Range(0, _team2Weapons.Length - 1)].Type;
+            if (holder == WeaponHolder.Team1)
+            {
+                return _team1Weapons[Random.Range(0, _team1Weapons.Length)].Type;
+            } else
+            {
+                return _team2Weapons[Random.Range(0, _team2Weapons.Length)].Type;
+            }
         }
 
         [System.Serializable]

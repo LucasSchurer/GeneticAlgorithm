@@ -112,22 +112,7 @@ namespace Game.Managers
         }
         private void RespawnWave(ref GameEventContext ctx)
         {
-            /*SpawnTraitObjects();*/
-
             StartCoroutine(RespawnWaveCoroutine());
-        }
-
-        private void SpawnTraitObjects()
-        {
-/*            Vector3 position = _player.position;
-
-            for (int i = 0; i < waveSettings.traitsGivenOnWaveEnd; i++)
-            {
-                position.x = Random.Range(-3, 3) * 2f;
-                position.z = Random.Range(-3, 3) * 2f;
-
-                Instantiate(_interactableTraitObjectPrefab, position, Quaternion.identity);
-            }*/
         }
 
         private IEnumerator RespawnWaveCoroutine()

@@ -70,6 +70,7 @@ namespace Game.GA
             _geneticAlgorithmData.traitSelectionAmount = _traitSelectionAmount;
             _geneticAlgorithmData.traitSelectionDumbness = _traitSelectionDumbness;
             _geneticAlgorithmData.team = _team;
+            _geneticAlgorithmData.properties = _fitnessProperties.Properties;
             _geneticAlgorithmData.ToXML();
         }
 

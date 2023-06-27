@@ -62,7 +62,7 @@ namespace Game.AI.States
 
         private IEnumerator SetLookTarget()
         {
-            if (_stateMachine.transform != null && _targetRoot != null && _lookTowards.Target == null)
+            if (_stateMachine.transform != null && _targetRoot != null && _lookTowards != null && _lookTowards.Target == null)
             {
                 switch (_data.Facing)
                 {
@@ -79,7 +79,7 @@ namespace Game.AI.States
 
                 if (_lookTowards.Target != null)
                 {
-                    _faceTransform = _lookTowards.transform;
+                    _faceTransform = _lookTowards.Target;
                 }
             }
 
@@ -216,7 +216,7 @@ namespace Game.AI.States
 
         private void Fire()
         {
-            if (_stateMachine.EventController && _data.CanFire)
+            if (_stateMachine.transform != null && _stateMachine.EventController && _data.CanFire && _lookTowards.Target != null)
             {
                 Vector3 lookDirection = GetLookDirection();
 

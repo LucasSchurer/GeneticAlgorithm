@@ -22,9 +22,9 @@ MonoBehaviour:
   _description: 
   _shield: {fileID: 2277962202464313479, guid: 9d76992b0e919e148a8321b5240907b8, type: 3}
   _canBreak: 1
-  _durability: 20
-  _launchStrength: 5
+  _durability: 5
+  _launchStrength: 15
   _canExpire: 1
-  _expirationTime: 15
+  _expirationTime: 8
   _shieldMaterial: {fileID: 2100000, guid: 0480361e1c68fd748afc686c4f877330, type: 2}
   _shieldLayer: 14

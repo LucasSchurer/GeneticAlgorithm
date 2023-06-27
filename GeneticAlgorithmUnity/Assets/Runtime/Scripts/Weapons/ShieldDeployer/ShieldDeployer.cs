@@ -36,10 +36,15 @@ namespace Game.Weapons
 
                 ctx.EventController.TriggerEvent(EntityEventType.OnWeaponAttack, ctx);
 
-                Shield shield = Instantiate(_data.Shield, _weaponFireSocket.position, transform.rotation);
+                Vector3 position = _weaponFireSocket.position;
+
+                position += _weaponFireSocket.rotation * Vector3.forward * 1.5f;
+                position.y += 0.5f;
+
+                Shield shield = Instantiate(_data.Shield, position, _weaponFireSocket.rotation);
                 shield.Initialize(_data);
 
-                shield.Rigidbody.AddForce(ctx.Movement.LookDirection * _data.LaunchStrength, ForceMode.Impulse);
+                /*shield.Rigidbody.AddForce(ctx.Movement.LookDirection * _data.LaunchStrength, ForceMode.Impulse);*/
 
                 StartCoroutine(Recharge());
             }

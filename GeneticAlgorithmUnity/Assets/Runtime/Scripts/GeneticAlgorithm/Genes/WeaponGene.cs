@@ -7,11 +7,11 @@ using UnityEngine;
 
 namespace Game.GA
 {
-    [DataContract(Name = "BehaviourGene", Namespace = "")]
+    [DataContract(Name = "WeaponGene", Namespace = "")]
     [KnownType(typeof(WeaponGene))]
     public class WeaponGene : Gene
     {
-        [DataMember(Name = "BehaviourType")]
+        [DataMember(Name = "WeaponType")]
         public WeaponType type;
 
         public WeaponGene(GeneticAlgorithmController gaController, WeaponType type)

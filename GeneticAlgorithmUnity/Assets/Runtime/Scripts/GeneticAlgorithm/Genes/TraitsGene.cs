@@ -19,10 +19,10 @@ namespace Game.GA
         [DataMember(Name = "ChosenTrait")]
         private TraitIdentifier _chosenTrait = TraitIdentifier.None;
 
-        [DataMember(Name = "MutationRemovedGene")]
+        [DataMember(Name = "MutationRemovedTrait")]
         private TraitIdentifier _removedTrait = TraitIdentifier.None;
 
-        [DataMember(Name = "MutationAddedGene")]
+        [DataMember(Name = "MutationAddedTrait")]
         private TraitIdentifier _addedTrait = TraitIdentifier.None;
 
         public TraitsGene(GeneticAlgorithmController gaController, int startingSize = 0, Dictionary<TraitIdentifier, int> traits = null)

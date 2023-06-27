@@ -22,6 +22,9 @@ namespace Game.GA
         [DataMember(Name = "Team")]
         public int team;
 
+        [DataMember(Name = "FitnessProperties")]
+        public FitnessProperty[] properties;
+
         [DataMember(Name = "TraitSelectionAmount")]
         public int traitSelectionAmount;
 

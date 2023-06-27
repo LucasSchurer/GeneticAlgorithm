@@ -46,19 +46,13 @@ namespace Game.Weapons
             GetComponent<MeshRenderer>().material = _data.ShieldMaterial;
 
             gameObject.layer = _data.ShieldLayer;
+
+            Deploy();
         }
 
         private void Awake()
         {
             _eventController = GetComponent<EntityEventController>();
-        }
-
-        private void Update()
-        {
-            if (!_isDeployed)
-            {
-                DetectGround();
-            }
         }
         
         private void OnHealthChange(ref EntityEventContext ctx)
