@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Events;
+using System;
 
 namespace Game.Entities.Shared
 {
@@ -47,6 +48,7 @@ namespace Game.Entities.Shared
                 _eventController.AddListener(EntityEventType.OnDamageTaken, OnDamageTaken, EventExecutionOrder.After);
                 _eventController.AddListener(EntityEventType.OnHealingDealt, OnHealingDealt, EventExecutionOrder.After);
                 _eventController.AddListener(EntityEventType.OnHealingTaken, OnHealingTaken, EventExecutionOrder.After);
+                _eventController.AddListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.After);
             }
         }
 
@@ -60,6 +62,7 @@ namespace Game.Entities.Shared
                 _eventController.RemoveListener(EntityEventType.OnDamageTaken, OnDamageTaken, EventExecutionOrder.After);
                 _eventController.RemoveListener(EntityEventType.OnHealingDealt, OnHealingDealt, EventExecutionOrder.After);
                 _eventController.RemoveListener(EntityEventType.OnHealingTaken, OnHealingTaken, EventExecutionOrder.After);
+                _eventController.RemoveListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.After);
             }
         }
 
@@ -85,18 +88,41 @@ namespace Game.Entities.Shared
             }
         }
 
+        private void SetStatistic(StatisticsType type, float value)
+        {
+            if (_statistics.ContainsKey(type))
+            {
+                _statistics[type] = value;
+            }
+            else
+            {
+                _statistics.Add(type, value);
+            }
+        }
+
         #region LISTEN METHODS
+
+        private void OnDeath(ref EntityEventContext ctx)
+        {
+            if (ctx.Damage != null)
+            {
+                SetStatistic(StatisticsType.Alive, 0);
+            } else
+            {
+                SetStatistic(StatisticsType.Alive, 1);
+            }
+        }
 
         private void OnHitTaken(ref EntityEventContext ctx)
         { 
             if (ctx.Damage != null)
             {
-                ModifyStatistic(StatisticsType.NegativeHitsTaken, 1f);
+                ModifyStatistic(StatisticsType.DamageHitsTaken, 1f);
             }
 
             if (ctx.Healing != null)
             {
-                ModifyStatistic(StatisticsType.PositiveHitsTaken, 1f);
+                ModifyStatistic(StatisticsType.HealingHitsTaken, 1f);
             }
         }
 
@@ -104,12 +130,12 @@ namespace Game.Entities.Shared
         {
             if (ctx.Damage != null)
             {
-                ModifyStatistic(StatisticsType.NegativeHitsDealt, 1f);
+                ModifyStatistic(StatisticsType.DamageHitsDealt, 1f);
             }
 
             if (ctx.Healing != null)
             {
-                ModifyStatistic(StatisticsType.PositiveHitsDealt, 1f);
+                ModifyStatistic(StatisticsType.HealingHitsDealt, 1f);
             }
         }
 
@@ -118,6 +144,11 @@ namespace Game.Entities.Shared
             if (ctx.Damage != null)
             {
                 ModifyStatistic(StatisticsType.DamageTaken, ctx.Damage.Damage);
+
+                if (ctx.Damage.FriendlyFire)
+                {
+                    ModifyStatistic(StatisticsType.FriendlyFireTaken, ctx.Damage.Damage);
+                }
             }
         }
 
@@ -129,7 +160,7 @@ namespace Game.Entities.Shared
                 
                 if (ctx.Damage.FriendlyFire)
                 {
-                    ModifyStatistic(StatisticsType.FriendlyFire, ctx.Damage.Damage);
+                    ModifyStatistic(StatisticsType.FriendlyFireDealt, ctx.Damage.Damage);
                 }
             }
         }

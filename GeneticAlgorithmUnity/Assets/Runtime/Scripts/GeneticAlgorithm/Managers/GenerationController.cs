@@ -11,6 +11,8 @@ namespace Game.GA
         private int _currentGeneration = 0;
         private int _currentCreatureId = 1;
         private Dictionary<int, GenerationData> _generations;
+        private int _traitsAdded = 0;
+        private bool _canAddTrait = true;
         
         public int CurrentGeneration => _currentGeneration;
         public GenerationData[] Generations => _generations.Values.ToArray();
@@ -31,6 +33,8 @@ namespace Game.GA
         public void CreateGeneration()
         {
             _currentGeneration++;
+
+            _traitsAdded = 0;
 
             GenerationData generationData = new GenerationData();
             generationData.Number = _currentGeneration;
@@ -113,6 +117,17 @@ namespace Game.GA
         /// </summary>
         private void CreateGeneration(int parentsGeneration)
         {
+            _traitsAdded++;
+
+            if (_traitsAdded > _gaController.GenerationsNeededToAddTraits)
+            {
+                _traitsAdded = 1;
+                _canAddTrait = true;
+            } else
+            {
+                _canAddTrait = false; 
+            }
+
             GenerationData currentGeneration = CurrentGenerationData;
 
             if (_generations.ContainsKey(parentsGeneration) && currentGeneration != null)
@@ -127,7 +142,7 @@ namespace Game.GA
 
                     newCreature.Chromosome.Mutate();
                     
-                    if (_currentGeneration > 1)
+                    if (_currentGeneration > 1 && _canAddTrait)
                     {
                         newCreature.Chromosome.AddRandomTrait();
                     }

@@ -40,10 +40,14 @@ namespace Game.GA
 
         [SerializeField]
         private int _team;
+        [SerializeField]
+        private int _generationsNeededToAddTraits = 1;
 
         private GeneticAlgorithmData _geneticAlgorithmData;
         private PopulationController _populationController;
         private GenerationController _generationController;
+
+        public int GenerationsNeededToAddTraits => _generationsNeededToAddTraits;
 
         public Weapons.WeaponManager.WeaponHolder WeaponTeam => _teamWeapon;
 

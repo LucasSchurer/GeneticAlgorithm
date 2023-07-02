@@ -368,9 +368,18 @@ namespace Game.AI.States
                 return null;
             }
 
-            if (np.CurrentValue / np.MaxValue < _data.CloseToDeathHealthThreshold)
+            if (!_data.CloseToDeathInverse)
             {
-                return _data.GetTransitionState(_stateMachine, _blockedActions, MoveBasedOnTargetData.Action.TargetCloseToDeath);
+                if (np.CurrentValue / np.MaxValue < _data.CloseToDeathHealthThreshold)
+                {
+                    return _data.GetTransitionState(_stateMachine, _blockedActions, MoveBasedOnTargetData.Action.TargetCloseToDeath);
+                }
+            } else
+            {
+                if (np.CurrentValue / np.MaxValue > _data.CloseToDeathHealthThreshold)
+                {
+                    return _data.GetTransitionState(_stateMachine, _blockedActions, MoveBasedOnTargetData.Action.TargetCloseToDeath);
+                }
             }
 
             return null;

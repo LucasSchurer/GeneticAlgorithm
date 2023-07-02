@@ -50,6 +50,9 @@ namespace Game.AI.States
         [Range(0, 1)]
         private float _closeToDeathHealthThreshold = 0f;
         [SerializeField]
+        [Tooltip("If checked, will check if health > threshold.")]
+        private bool _closeToDeathInverse = false;
+        [SerializeField]
         [Range(0, 1)]
         private float _targetCloseToDeathThreshold = 0f;
         [Tooltip("Actions not listed here will be ignored. Actions will be tested in the order provided")]
@@ -58,6 +61,7 @@ namespace Game.AI.States
 
         public float CloseToDeathHealthThreshold => _closeToDeathHealthThreshold;
         public float TargetCloseToDeathThreshold => _targetCloseToDeathThreshold;
+        public bool CloseToDeathInverse => _closeToDeathInverse;
         public Vector3 MinPositionOffset => _minPositionOffset;
         public Vector3 MaxPositionOffset => _maxPositionOffset;
         public bool UseTargetViewDirection => _useTargetViewDirection;

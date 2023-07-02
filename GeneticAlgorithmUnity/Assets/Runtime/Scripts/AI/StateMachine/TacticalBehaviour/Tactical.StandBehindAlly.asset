@@ -27,6 +27,7 @@ MonoBehaviour:
   _facingType: 2
   _newTargetDetectionTime: 1
   _closeToDeathHealthThreshold: 0.8
+  _closeToDeathInverse: 1
   _targetCloseToDeathThreshold: 0.3
   _validActions: 0000000002000000
   _transitions:

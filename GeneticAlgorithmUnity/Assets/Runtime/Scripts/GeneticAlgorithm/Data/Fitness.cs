@@ -46,11 +46,18 @@ namespace Game.GA
 
             foreach (PartialValue partialValue in _partialValues.Values)
             {
-                if (maxValues.TryGetValue(partialValue.Type, out float maxValue))
+                if (partialValue.Type == StatisticsType.Alive)
                 {
-                    partialValue.MaxValue = maxValue;
-
+                    partialValue.MaxValue = 1;
                     _value += partialValue.NormalizedValue;
+                } else
+                {
+                    if (maxValues.TryGetValue(partialValue.Type, out float maxValue))
+                    {
+                        partialValue.MaxValue = maxValue;
+
+                        _value += partialValue.NormalizedValue;
+                    }
                 }
             }
         }
