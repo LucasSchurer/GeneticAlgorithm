@@ -19,6 +19,6 @@ namespace Game.Traits
         MoreDamage,
         MoreHealing,
         MoreMovementSpeed,
-        MoreMovementSpeedLessHealth,
+        MoreMovementSpeedLessHealth
     } 
 }

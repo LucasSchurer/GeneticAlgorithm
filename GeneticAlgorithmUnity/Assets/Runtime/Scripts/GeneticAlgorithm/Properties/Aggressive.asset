@@ -14,37 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _properties:
   - _statisticType: 0
-    _weight: 0.0075908643
+    _weight: 0.0038966215
     _inverse: 0
   - _statisticType: 1
-    _weight: 0.048118513
+    _weight: 0.024700688
     _inverse: 0
   - _statisticType: 2
-    _weight: 0.055671804
+    _weight: 0.028578024
     _inverse: 1
   - _statisticType: 3
-    _weight: 0.055671804
-    _inverse: 1
+    _weight: 0.028578024
+    _inverse: 0
   - _statisticType: 4
-    _weight: 0.4819498
+    _weight: 0.57528543
     _inverse: 0
   - _statisticType: 5
-    _weight: 0.030203192
+    _weight: 0.015504215
     _inverse: 1
   - _statisticType: 6
-    _weight: 0.037259664
+    _weight: 0.019126516
     _inverse: 0
   - _statisticType: 7
-    _weight: 0.055671804
+    _weight: 0.028578024
     _inverse: 0
   - _statisticType: 8
-    _weight: 0.07595417
+    _weight: 0.038989592
     _inverse: 1
   - _statisticType: 9
-    _weight: 0.07595417
-    _inverse: 0
+    _weight: 0.038989592
+    _inverse: 1
   - _statisticType: 10
-    _weight: 0.07595417
+    _weight: 0.19777319
     _inverse: 0
   _autoBalance: 1
   _weightSum: 1

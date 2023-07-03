@@ -49,11 +49,6 @@ namespace Game.Entities.Shared
                     ctx.Damage.Damage += ctx.Damage.Damage * _explosiveDamageMultiplier.CurrentValue;
                 }
 
-                if (ctx.Damage.FriendlyFire)
-                {
-                    ctx.Damage.Damage *= 0.1f;
-                }
-
                 EntityEventContext otherCtx = new EntityEventContext()
                 {
                     Owner = ctx.Other,

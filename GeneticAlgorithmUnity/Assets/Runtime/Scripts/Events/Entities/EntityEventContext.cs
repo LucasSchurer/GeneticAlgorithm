@@ -71,6 +71,7 @@ namespace Game.Events
             private Vector3 _hitDirection = Vector3.zero;
             private bool _friendlyFire = false;
 
+
             public float Damage { get => _damage; set => _damage = value; }
             public DamageType DamageType { get => _damageType; set => _damageType = value; }
             public Vector3 ImpactPoint { get => _impactPoint; set => _impactPoint = value; }
