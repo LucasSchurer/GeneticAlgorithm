@@ -7,7 +7,7 @@ namespace Game.Events
     public enum DamageType
     {
         None,
-        Default,
+        Common,
         Explosive,
     }
 }

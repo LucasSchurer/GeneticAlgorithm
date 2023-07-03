@@ -50,6 +50,27 @@ namespace Game.GA
         [DataMember(Name = "ParentsAmount")]
         public int parentsAmount;
 
+        [DataMember(Name = "SelectionMethod")]
+        public GeneticAlgorithmController.SelectionMethod selectionMethod;
+
+        [DataMember(Name = "TournamentSize")]
+        public int tournamentSize;
+
+        [DataMember(Name = "Elitism")]
+        public int elitism;
+
+        [DataMember(Name = "GenerationsNeededToAddTrait")]
+        public int generationsNeededToAddTrait;
+
+        [DataMember(Name = "CloneEverything")]
+        public bool cloneEverything;
+
+        [DataMember(Name = "AddTraitsToCloneEverything")]
+        public bool addTraitsToCloneEverything;
+
+        [DataMember(Name = "MaxTraitAmount")]
+        public int maxTraitAmount;
+
         public void ToXML()
         {
             if (xmlFileName == "")

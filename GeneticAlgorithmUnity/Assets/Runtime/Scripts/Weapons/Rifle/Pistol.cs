@@ -62,7 +62,7 @@ namespace Game.Weapons
                     {
                         EntityEventContext.DamagePacket damagePacket = new EntityEventContext.DamagePacket()
                         {
-                            DamageType = Events.DamageType.Default,
+                            DamageType = Events.DamageType.Common,
                             Damage = _data.Damage,
                             ImpactPoint = hit.point,
                             HitDirection = ctx.Movement.LookDirection

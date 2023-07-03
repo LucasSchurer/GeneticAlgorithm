@@ -40,7 +40,7 @@ namespace Game.Weapons
                     case InteractionType.Damage:
                         damagePacket = new EntityEventContext.DamagePacket()
                         {
-                            DamageType = Events.DamageType.Default,
+                            DamageType = Events.DamageType.Common,
                             Damage = _healthInteractionValue,
                             ImpactPoint = hit.transform.position,
                             HitDirection = (hit.transform.position - orb.transform.position).normalized

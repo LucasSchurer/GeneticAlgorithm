@@ -15,7 +15,7 @@ namespace Game.Entities
         StaminaRecoveryPercentage,
         AmmunitionMultiplier,
         ExplosiveDamageMultiplier,
-        AllDamageMultiplier,
+        CommonDamageMultiplier,
         HealingMultiplier,
         DamageReduction,
         ProjectileAmount,

@@ -2,6 +2,7 @@ using Game.Entities;
 using Game.Entities.Enemy;
 using Game.Entities.Shared;
 using Game.Events;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -216,17 +217,23 @@ namespace Game.AI.States
 
         private void Fire()
         {
-            if (_stateMachine.transform != null && _stateMachine.EventController && _data.CanFire && _lookTowards.Target != null)
+            try
             {
-                Vector3 lookDirection = GetLookDirection();
-
-                if (lookDirection != Vector3.zero)
+                if (_stateMachine.transform != null && _stateMachine.EventController && _data.CanFire && _lookTowards != null && _lookTowards.Target != null)
                 {
-                    EntityEventContext ctx = new EntityEventContext();
-                    ctx.Movement = new EntityEventContext.MovementPacket() { LookDirection = lookDirection };
+                    Vector3 lookDirection = GetLookDirection();
 
-                    _stateMachine.EventController.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, ctx);
+                    if (lookDirection != Vector3.zero)
+                    {
+                        EntityEventContext ctx = new EntityEventContext();
+                        ctx.Movement = new EntityEventContext.MovementPacket() { LookDirection = lookDirection };
+
+                        _stateMachine.EventController.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, ctx);
+                    }
                 }
+            } catch (Exception e)
+            {
+                Debug.Log("a");
             }
         }
 
@@ -296,7 +303,7 @@ namespace Game.AI.States
             }
             else
             {
-                return Random.Range(minValue, maxValue);
+                return UnityEngine.Random.Range(minValue, maxValue);
             }
         }
 

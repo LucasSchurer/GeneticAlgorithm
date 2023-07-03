@@ -48,7 +48,6 @@ namespace Game.Entities.Shared
                 _eventController.AddListener(EntityEventType.OnDamageTaken, OnDamageTaken, EventExecutionOrder.After);
                 _eventController.AddListener(EntityEventType.OnHealingDealt, OnHealingDealt, EventExecutionOrder.After);
                 _eventController.AddListener(EntityEventType.OnHealingTaken, OnHealingTaken, EventExecutionOrder.After);
-                _eventController.AddListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.After);
             }
         }
 
@@ -62,7 +61,6 @@ namespace Game.Entities.Shared
                 _eventController.RemoveListener(EntityEventType.OnDamageTaken, OnDamageTaken, EventExecutionOrder.After);
                 _eventController.RemoveListener(EntityEventType.OnHealingDealt, OnHealingDealt, EventExecutionOrder.After);
                 _eventController.RemoveListener(EntityEventType.OnHealingTaken, OnHealingTaken, EventExecutionOrder.After);
-                _eventController.RemoveListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.After);
             }
         }
 
@@ -88,7 +86,7 @@ namespace Game.Entities.Shared
             }
         }
 
-        private void SetStatistic(StatisticsType type, float value)
+        public void SetStatistic(StatisticsType type, float value)
         {
             if (_statistics.ContainsKey(type))
             {
@@ -101,17 +99,6 @@ namespace Game.Entities.Shared
         }
 
         #region LISTEN METHODS
-
-        private void OnDeath(ref EntityEventContext ctx)
-        {
-            if (ctx.Damage != null)
-            {
-                SetStatistic(StatisticsType.Alive, 0);
-            } else
-            {
-                SetStatistic(StatisticsType.Alive, 1);
-            }
-        }
 
         private void OnHitTaken(ref EntityEventContext ctx)
         { 

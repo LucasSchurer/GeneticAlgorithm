@@ -25,6 +25,18 @@ namespace Game.GA
         [DataMember(Name = "MutationAddedTrait")]
         private TraitIdentifier _addedTrait = TraitIdentifier.None;
 
+        private int GetTraitAmount()
+        {
+            int traitAmount = 0;
+
+            foreach (KeyValuePair<TraitIdentifier, int> trait in _traits)
+            {
+                traitAmount += trait.Value;
+            }
+
+            return traitAmount;
+        }
+
         public TraitsGene(GeneticAlgorithmController gaController, int startingSize = 0, Dictionary<TraitIdentifier, int> traits = null)
         {
             _gaController = gaController;
@@ -130,17 +142,20 @@ namespace Game.GA
 
         public void AddRandomTrait()
         {
-            bool useWeights = true;
-
-            if (Random.Range(0f, 1f) < _gaController.TraitSelectionDumbness)
+            if (_gaController.MaxTraits < 0 || GetTraitAmount() < _gaController.MaxTraits)
             {
-                useWeights = false;
+                bool useWeights = true;
+
+                if (Random.Range(0f, 1f) < _gaController.TraitSelectionDumbness)
+                {
+                    useWeights = false;
+                }
+
+                TraitIdentifier chosenTrait = TraitManager.Instance.SelectTraitAmongTraits(_gaController.TraitSelectionAmount, useWeights, _gaController.Team);
+                _chosenTrait = chosenTrait;
+
+                AddTrait(chosenTrait);
             }
-
-            TraitIdentifier chosenTrait = TraitManager.Instance.SelectTraitAmongTraits(_gaController.TraitSelectionAmount, useWeights, _gaController.Team);
-            _chosenTrait = chosenTrait;
-
-            AddTrait(chosenTrait);
         }
 
         public void UpdateTraitsWeights(float fitness)

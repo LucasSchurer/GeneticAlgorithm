@@ -12,7 +12,7 @@ namespace Game.Entities.Shared
     {
         private EntityEventController _eventController;
         
-        private NonPersistentAttribute _allDamageMultiplier;
+        private NonPersistentAttribute _commonDamageMultiplier;
         private NonPersistentAttribute _explosiveDamageMultiplier;
 
         private AttributeController _attributeController;
@@ -27,12 +27,12 @@ namespace Game.Entities.Shared
         {
             if (_attributeController)
             {
-                _allDamageMultiplier = _attributeController.GetNonPersistentAttribute(AttributeType.AllDamageMultiplier);
+                _commonDamageMultiplier = _attributeController.GetNonPersistentAttribute(AttributeType.CommonDamageMultiplier);
                 _explosiveDamageMultiplier = _attributeController.GetNonPersistentAttribute(AttributeType.ExplosiveDamageMultiplier);
             }
             else
             {
-                _allDamageMultiplier = new NonPersistentAttribute();
+                _commonDamageMultiplier = new NonPersistentAttribute();
                 _explosiveDamageMultiplier = new NonPersistentAttribute();
             }
         }
@@ -41,7 +41,13 @@ namespace Game.Entities.Shared
         {
             if (ctx.Other != null && ctx.Damage != null && ctx.Damage.DamageType != Events.DamageType.None)
             {
-                ctx.Damage.Damage += ctx.Damage.Damage * _allDamageMultiplier.CurrentValue + ctx.Damage.Damage * _explosiveDamageMultiplier.CurrentValue;
+                if (ctx.Damage.DamageType == Events.DamageType.Common)
+                {
+                    ctx.Damage.Damage += ctx.Damage.Damage * _commonDamageMultiplier.CurrentValue;
+                } else
+                {
+                    ctx.Damage.Damage += ctx.Damage.Damage * _explosiveDamageMultiplier.CurrentValue;
+                }
 
                 if (ctx.Damage.FriendlyFire)
                 {

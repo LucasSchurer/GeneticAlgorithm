@@ -37,14 +37,16 @@ namespace Game.GA
         {
             if (_statisticsController)
             {
-                _data.Fitness.UpdateRawFitnessValue(_statisticsController);
-
                 if (ctx.Damage != null && !_isDead)
                 {
                     _isDead = true;
                 }
 
                 _data.IsDead = _isDead;
+
+                _statisticsController.SetStatistic(StatisticsType.Alive, _data.IsDead ? 0 : 1);
+
+                _data.Fitness.UpdateRawFitnessValue(_statisticsController);
             }
         }
 

@@ -36,21 +36,53 @@ namespace Game.GA
         private Weapons.WeaponManager.WeaponHolder _teamWeapon = Weapons.WeaponManager.WeaponHolder.Team1;
         [SerializeField]
         private Traits.TraitManager.Team _traitTeam;
+
+        [SerializeField]
+        private bool _addTraitsToElitist;
+
+        public enum SelectionMethod
+        { 
+            Roulette,
+            Tournament
+        }
+
+        [SerializeField]
+        private SelectionMethod _selection;
         public Traits.TraitManager.Team Team => _traitTeam;
+
+        [SerializeField]
+        private int _elitism = 0;
 
         [SerializeField]
         private int _team;
         [SerializeField]
         private int _generationsNeededToAddTraits = 1;
+        [SerializeField]
+        private int _tournamentSize = 1;
+        [SerializeField]
+        private bool _cloneEverything = false;
+        [SerializeField]
+        private bool _addTraitsToCloneEverything = false;
+        [SerializeField]
+        [Tooltip("If set to < 0 there wont be a limit to the amount of traits a creature can receive")]
+        private int _maxTraits = 5;
 
         private GeneticAlgorithmData _geneticAlgorithmData;
         private PopulationController _populationController;
         private GenerationController _generationController;
 
+        public bool AddTraitsToElitist => _addTraitsToElitist;
+        public bool CloneEverything => _cloneEverything;
+        public bool AddTraitsToCloneEverything => _addTraitsToCloneEverything;
+
+        public int Elitism => _elitism;
+        public SelectionMethod Selection => _selection;
+        public int TournamentSize => _tournamentSize;
         public int GenerationsNeededToAddTraits => _generationsNeededToAddTraits;
 
         public Weapons.WeaponManager.WeaponHolder WeaponTeam => _teamWeapon;
 
+        public int MaxTraits => _maxTraits;
         public GeneticAlgorithmData GeneticAlgorithmData => _geneticAlgorithmData;
         public PopulationController PopulationController => _populationController;
         public GenerationController GenerationController => _generationController;
@@ -84,6 +116,13 @@ namespace Game.GA
             _geneticAlgorithmData.mutationRate = _mutationRate;
             _geneticAlgorithmData.mutateIndividually = _mutateIndividually;
             _geneticAlgorithmData.parentsAmount = _parentsAmount;
+            _geneticAlgorithmData.selectionMethod = _selection;
+            _geneticAlgorithmData.tournamentSize = _tournamentSize;
+            _geneticAlgorithmData.elitism = _elitism;
+            _geneticAlgorithmData.generationsNeededToAddTrait = _generationsNeededToAddTraits;
+            _geneticAlgorithmData.cloneEverything = _cloneEverything;
+            _geneticAlgorithmData.addTraitsToCloneEverything = _addTraitsToCloneEverything;
+            _geneticAlgorithmData.maxTraitAmount = _maxTraits;
             _geneticAlgorithmData.ToXML();
         }
 

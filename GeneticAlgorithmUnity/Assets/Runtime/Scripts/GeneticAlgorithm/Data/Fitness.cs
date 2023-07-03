@@ -49,7 +49,7 @@ namespace Game.GA
                 if (partialValue.Type == StatisticsType.Alive)
                 {
                     partialValue.MaxValue = 1;
-                    _value += partialValue.NormalizedValue;
+                      _value += partialValue.NormalizedValue;
                 } else
                 {
                     if (maxValues.TryGetValue(partialValue.Type, out float maxValue))
