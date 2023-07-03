@@ -13,10 +13,17 @@ MonoBehaviour:
   m_Name: EnemyTraits
   m_EditorClassIdentifier: 
   _traits:
-  - {fileID: 11400000, guid: 5b5e8b70c47594d44b448b8781c8e83d, type: 2}
-  - {fileID: 11400000, guid: ecea5358f96e6bb4ba4878f615967fc6, type: 2}
-  - {fileID: 11400000, guid: d55e1214954136a4db34fd78da5503ca, type: 2}
-  - {fileID: 11400000, guid: bbd8d66c207ca284da06a2e52923fae6, type: 2}
-  - {fileID: 11400000, guid: ee3981b9730b3214ba7b3fbd89aed9d3, type: 2}
-  - {fileID: 11400000, guid: aa2fab8b38f588348b872feac3223eb8, type: 2}
-  - {fileID: 11400000, guid: fb5b284b1a733b346aa968378689a1b5, type: 2}
+  - {fileID: 11400000, guid: 04f0db67ff2177f4aa30157272ffee1a, type: 2}
+  - {fileID: 11400000, guid: 90c5cc6547e9b1f498e352b0e3da1d9d, type: 2}
+  - {fileID: 11400000, guid: ebecae90f4db99f47be4f1189a194df9, type: 2}
+  - {fileID: 11400000, guid: 170928118dba05e449ab205619f1a866, type: 2}
+  - {fileID: 11400000, guid: 5802fdafd9c457d42812fb08a644062c, type: 2}
+  - {fileID: 11400000, guid: 3e8c18f9eaa00d448ae061faa7088b3f, type: 2}
+  - {fileID: 11400000, guid: 87a808fa6ef7f414489f34b5d8406000, type: 2}
+  - {fileID: 11400000, guid: cf06cf8b5cedc5247994d9162cfccb59, type: 2}
+  - {fileID: 11400000, guid: f30b24bd7a6f87f4abafbf2f2f74e428, type: 2}
+  - {fileID: 11400000, guid: c70381ee91a17a646b3dc5b0596ec248, type: 2}
+  - {fileID: 11400000, guid: 42f159cec4f70d34fa34367e3ccb0319, type: 2}
+  - {fileID: 11400000, guid: e868fac323d4b564c8415d6254ddc361, type: 2}
+  - {fileID: 11400000, guid: f8183a25ca70b254891601a121428c32, type: 2}
+  - {fileID: 11400000, guid: 3c5233c945a7d8c49aa0d5d0e61e29d9, type: 2}
