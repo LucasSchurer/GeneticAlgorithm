@@ -102,6 +102,18 @@ namespace Game.Weapons
             }
         }
 
+        public WeaponType GetRandomWeaponType(WeaponHolder holder, System.Random rand)
+        {
+            if (holder == WeaponHolder.Team1)
+            {
+                return _team1Weapons[rand.Next(0, _team1Weapons.Length)].Type;
+            }
+            else
+            {
+                return _team1Weapons[rand.Next(0, _team2Weapons.Length)].Type;
+            }
+        }
+
         [System.Serializable]
         private struct WeaponTypeData
         {

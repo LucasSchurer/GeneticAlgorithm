@@ -38,5 +38,10 @@ namespace Game.GA
         {
             type = BehaviourManager.Instance.GetRandomBehaviourType();
         }
+
+        public override void Randomize(System.Random rand)
+        {
+            type = BehaviourManager.Instance.GetRandomBehaviourType(rand);
+        }
     } 
 }

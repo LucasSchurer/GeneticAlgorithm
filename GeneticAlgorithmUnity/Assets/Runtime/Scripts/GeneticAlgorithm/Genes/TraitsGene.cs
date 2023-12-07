@@ -101,6 +101,21 @@ namespace Game.GA
             
         }
 
+        public override void Randomize(System.Random rand)
+        {
+            int size = _traits.Count;
+
+            _traits.Clear();
+
+            for (int i = 0; i < size; i++)
+            {
+                if (TraitManager.Instance)
+                {
+                    AddTrait(TraitManager.Instance.GetRandomTraitIdentifier(TraitManager.TraitHolder.Enemy, rand));
+                }
+            }
+        }
+
         private void AddTraitToController(TraitIdentifier identifier, int amount, EntityTraitController controller)
         {
             Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(identifier, TraitManager.TraitHolder.Enemy);

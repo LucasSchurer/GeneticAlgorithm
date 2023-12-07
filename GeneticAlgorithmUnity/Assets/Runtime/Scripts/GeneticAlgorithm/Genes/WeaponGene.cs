@@ -39,5 +39,10 @@ namespace Game.GA
         {
             type = WeaponManager.Instance.GetRandomWeaponType(_gaController.WeaponTeam);
         }
+
+        public override void Randomize(System.Random rand)
+        {
+            type = WeaponManager.Instance.GetRandomWeaponType(_gaController.WeaponTeam, rand);
+        }
     }
 }

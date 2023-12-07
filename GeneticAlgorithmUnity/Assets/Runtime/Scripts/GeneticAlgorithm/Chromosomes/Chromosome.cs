@@ -40,6 +40,14 @@ namespace Game.GA
             }
         }
 
+        public void RandomizeGenes(System.Random rand)
+        {
+            foreach (Gene gene in _genes)
+            {
+                gene.Randomize(rand);
+            }
+        }
+
         public void RandomizeGenes()
         {
             foreach (Gene gene in _genes)

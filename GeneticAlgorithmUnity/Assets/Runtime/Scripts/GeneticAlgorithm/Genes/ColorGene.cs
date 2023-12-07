@@ -54,6 +54,11 @@ namespace Game.GA
         {
             color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         }
+
+        public override void Randomize(System.Random rand)
+        {
+            color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        }
     } 
 }
 

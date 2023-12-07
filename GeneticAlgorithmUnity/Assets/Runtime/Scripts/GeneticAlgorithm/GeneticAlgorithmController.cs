@@ -40,6 +40,12 @@ namespace Game.GA
         [SerializeField]
         private bool _addTraitsToElitist;
 
+        [SerializeField]
+        private bool _useSeed = false;
+
+        [SerializeField]
+        private int _seed = 0;
+
         public enum SelectionMethod
         { 
             Roulette,
@@ -70,6 +76,9 @@ namespace Game.GA
         private GeneticAlgorithmData _geneticAlgorithmData;
         private PopulationController _populationController;
         private GenerationController _generationController;
+
+        public bool UseSeed => _useSeed;
+        public int Seed => _seed;
 
         public bool AddTraitsToElitist => _addTraitsToElitist;
         public bool CloneEverything => _cloneEverything;

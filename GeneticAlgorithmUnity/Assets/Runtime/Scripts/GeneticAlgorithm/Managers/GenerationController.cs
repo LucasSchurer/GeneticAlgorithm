@@ -41,7 +41,15 @@ namespace Game.GA
 
             if (_currentGeneration == 1)
             {
-                CreateFreshGeneration();
+                if (_gaController.UseSeed)
+                {
+                    System.Random rand = new System.Random(_gaController.Seed);
+
+                    CreateFreshGeneration(rand);
+                } else
+                {
+                    CreateFreshGeneration();
+                }
             } else
             {
                 CreateGeneration(_currentGeneration - 1);
@@ -243,6 +251,42 @@ namespace Game.GA
             }
         }
 
+        private void CreateFreshGeneration(System.Random rand)
+        {
+            for (int i = 0; i < Managers.WaveManager.Instance.waveSettings.enemiesPerWave; i++)
+            {
+                AddCreatureDataToGeneration(CreateCreatureData(1, rand));
+            }
+        }
+
+        private CreatureData CreateCreatureData(int generation, System.Random rand, CreatureData[] parents = null)
+        {
+            CreatureData data = new CreatureData(_gaController);
+            data.Id = _currentCreatureId;
+            data.Generation = generation;
+            data.Parents = parents;
+
+            if (parents != null)
+            {
+                foreach (CreatureData parent in parents)
+                {
+                    parent.Children.Add(data);
+                }
+
+                data.Chromosome = Chromosome.Crossover(parents.Select(c => c.Chromosome).ToArray());
+            }
+            else
+            {
+                data.Chromosome = new BaseEnemyChromosome(_gaController);
+
+                data.Chromosome.RandomizeGenes(rand);
+            }
+
+            _currentCreatureId++;
+
+            return data;
+        }
+
         private CreatureData CreateCreatureData(int generation, CreatureData[] parents = null)
         {
             CreatureData data = new CreatureData(_gaController);
@@ -261,6 +305,7 @@ namespace Game.GA
             } else
             {
                 data.Chromosome = new BaseEnemyChromosome(_gaController);
+
                 data.Chromosome.RandomizeGenes();
             }
 

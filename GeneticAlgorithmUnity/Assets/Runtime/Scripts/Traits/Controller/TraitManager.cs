@@ -71,6 +71,13 @@ namespace Game.Traits
             return identifiers[Random.Range(0, identifiers.Length)];
         }
 
+        public TraitIdentifier GetRandomTraitIdentifier(TraitHolder holder, System.Random rand)
+        {
+            TraitIdentifier[] identifiers = holder == TraitHolder.Player ? _playerTraitIdentifiers : _enemyTraitIdentifiers;
+
+            return identifiers[rand.Next(identifiers.Length)];
+        }
+
         public int GetTraitMaxStacks(TraitIdentifier identifier, TraitHolder holder)
         {
             return GetEntityTrait(identifier, holder).maxStacks;
