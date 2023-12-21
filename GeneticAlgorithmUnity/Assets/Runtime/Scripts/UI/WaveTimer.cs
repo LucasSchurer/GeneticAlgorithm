@@ -10,16 +10,19 @@ namespace Game.UI
 {
     public class WaveTimer : MonoBehaviour, IEventListener
     {
-        [Header("References")]
+        [SerializeField]
         private TextMeshProUGUI _timerLabel;
+        [SerializeField]
+        private TextMeshProUGUI _currentWaveLabel;
+
         private WaveManager _waveManager;
         private bool hasStarted = false;
+
+        private int _currentWave = 0;
 
         private void Start()
         {
             _waveManager = WaveManager.Instance;
-
-            _timerLabel = GetComponent<TextMeshProUGUI>();
 
             if (_waveManager == null || _timerLabel == null)
             {
@@ -45,7 +48,7 @@ namespace Game.UI
                     _timerLabel.color = Color.red;
                 }
 
-                _timerLabel.text = timeRemaining.ToString("0");
+                _timerLabel.text = "Tempo restante: " + timeRemaining.ToString("0");
 
                 if (!_waveManager.IsWaveActive)
                 {
@@ -66,12 +69,16 @@ namespace Game.UI
 
             if (gameManager)
             {
-                gameManager.eventController.AddListener(GameEventType.OnWaveStart, StartTimer, EventExecutionOrder.After);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveStart, StartTimer, EventExecutionOrder.After);
             }
         }
 
         private void StartTimer(ref GameEventContext ctx)
         {
+            _currentWave++;
+
+            _currentWaveLabel.text = "Wave Atual: " + _currentWave.ToString();
+
             StopAllCoroutines();
             StartCoroutine(UpdateTimerCoroutine());
         }
@@ -82,7 +89,7 @@ namespace Game.UI
 
             if (gameManager)
             {
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveStart, StartTimer, EventExecutionOrder.After);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveStart, StartTimer, EventExecutionOrder.After);
             }
         }
 

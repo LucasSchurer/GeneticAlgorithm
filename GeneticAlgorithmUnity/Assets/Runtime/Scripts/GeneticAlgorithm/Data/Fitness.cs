@@ -15,9 +15,9 @@ namespace Game.GA
         [DataMember(Name = "PartialValues", Order = 1)]
         public PartialValue[] PartialValues => _partialValues.Values.ToArray();
         
-        public Fitness()
+        public Fitness(GeneticAlgorithmController controller)
         {
-            FitnessProperty[] properties = GeneticAlgorithmManager.Instance.FitnessProperties.Properties;
+            FitnessProperty[] properties = controller.FitnessProperties.Properties;
 
             _partialValues = new Dictionary<StatisticsType, PartialValue>();
 
@@ -46,11 +46,18 @@ namespace Game.GA
 
             foreach (PartialValue partialValue in _partialValues.Values)
             {
-                if (maxValues.TryGetValue(partialValue.Type, out float maxValue))
+                if (partialValue.Type == StatisticsType.Alive)
                 {
-                    partialValue.MaxValue = maxValue;
+                    partialValue.MaxValue = 1;
+                      _value += partialValue.NormalizedValue;
+                } else
+                {
+                    if (maxValues.TryGetValue(partialValue.Type, out float maxValue))
+                    {
+                        partialValue.MaxValue = maxValue;
 
-                    _value += partialValue.NormalizedValue;
+                        _value += partialValue.NormalizedValue;
+                    }
                 }
             }
         }

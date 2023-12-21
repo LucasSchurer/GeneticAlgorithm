@@ -1,3 +1,4 @@
+using Game.Traits;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -18,10 +19,18 @@ namespace Game.GA
         public Dictionary<int, CreatureData> Creatures { get => _creatures; private set => _creatures = value; }
         [DataMember(Name = "Creatures", Order = 99)]
         private List<CreatureData> CreaturesList => _creatures.Values.ToList();
+        [DataMember(Name = "TraitWeights")]
+        private List<SerializableDictionary<TraitIdentifier, float>> _serializableDictionary;
+        private List<SerializableDictionary<TraitIdentifier, float>> SerializableDictionary => _serializableDictionary;
 
         public GenerationData()
         {
             _creatures = new Dictionary<int, CreatureData>();
+        }
+
+        public void SetTraitWeights(Traits.TraitWeights weights)
+        {
+            _serializableDictionary = SerializableDictionary<TraitIdentifier, float>.BuildListFromDictionary(weights.GetTraitWeightsDictionary());
         }
 
         public void AddCreatureData(CreatureData data)
@@ -33,5 +42,5 @@ namespace Game.GA
         {
             _creatures.Remove(data.Id);
         }
-    } 
+    }
 }

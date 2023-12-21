@@ -2,6 +2,7 @@ using UnityEngine;
 using Game.Events;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Game.Traits
 {
@@ -12,7 +13,7 @@ namespace Game.Traits
         protected Controller _eventController;
 
         [SerializeField]
-        protected Trait<Type, Context>[] _traits;
+        protected List<Trait<Type, Context>> _traits;
         protected Dictionary<TraitIdentifier, TraitHandler<Type, Context, Controller>> _traitHandlers;
         protected HashSet<TraitHandler<Type, Context, Controller>> _constantTraits;
 
@@ -66,6 +67,8 @@ namespace Game.Traits
 
                 traitHandler.WhenAdded();
                 _traitHandlers.Add(trait.identifier, traitHandler);
+
+                _traits.Add(trait);
             }
         }
 
@@ -91,7 +94,19 @@ namespace Game.Traits
             return _traitHandlers.Keys.ToArray();
         }
 
-        public void StartListening()
+        public List<Tuple<int, Trait<Type, Context>>> GetStacksAndTraits()
+        {
+            List<Tuple<int, Trait<Type, Context>>> stacksTraits = new List<Tuple<int, Trait<Type, Context>>>();
+
+            foreach (TraitHandler<Type, Context, Controller> handler in _traitHandlers.Values)
+            {
+                stacksTraits.Add(new Tuple<int, Trait<Type, Context>>(handler.Stacks, handler.Trait));
+            }
+
+            return stacksTraits;
+        }
+
+        public virtual void StartListening()
         {
             if (_eventController)
             {
@@ -102,7 +117,7 @@ namespace Game.Traits
             }
         }
 
-        public void StopListening()
+        public virtual void StopListening()
         {
             if (_eventController)
             {

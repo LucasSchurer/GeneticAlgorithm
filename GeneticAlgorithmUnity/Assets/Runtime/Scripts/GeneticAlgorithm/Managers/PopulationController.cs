@@ -9,7 +9,7 @@ namespace Game.GA
     /// Controls the creation of populations,
     /// using selection, crossover and mutation methods.
     /// </summary>
-    public class PopulationController : MonoBehaviour, IEventListener
+    public class PopulationController : EntitySpawner, IEventListener
     {
         [Header("References")]
         [SerializeField]
@@ -18,24 +18,31 @@ namespace Game.GA
         private CreatureController[] _creatures;
         private List<CreatureController> _creaturesRequest;
 
-        private GeneticAlgorithmManager _gaManager;
+        private GeneticAlgorithmController _gaController;
+
+        private bool _startedListening = false;
 
         private void Awake()
         {
             WaveManager waveManager = WaveManager.Instance;
-            GeneticAlgorithmManager gaManager = GeneticAlgorithmManager.Instance;
+            GeneticAlgorithmController gaController = GetComponent<GeneticAlgorithmController>();
 
-            if (waveManager != null && gaManager != null)
+            if (waveManager != null && gaController != null)
             {
                 _creatures = new CreatureController[waveManager.waveSettings.enemiesPerWave];
                 _creaturesRequest = new List<CreatureController>();
-                _gaManager = gaManager;
+                _gaController = gaController;
+            }
+
+            if (!_startedListening)
+            {
+                StartListening();
             }
         }
 
         private void GetNewPopulation()
         {
-            GenerationController generationController = _gaManager.GenerationController;
+            GenerationController generationController = _gaController.GenerationController;
 
             generationController.CreateGeneration();
 
@@ -85,9 +92,11 @@ namespace Game.GA
 
             if (gameManager)
             {
-                gameManager.eventController.AddListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
-                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
             }
+
+            _startedListening = true;
         }
 
         private void KillPopulation(ref GameEventContext ctx)
@@ -107,19 +116,43 @@ namespace Game.GA
 
             if (gameManager)
             {
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveStart, GeneratePopulation, EventExecutionOrder.Before);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveEnd, KillPopulation, EventExecutionOrder.Before);
             }
+
+            _startedListening = false;
         }
 
         private void OnEnable()
         {
-            StartListening();
+            if (!_startedListening)
+            {
+                StartListening();
+            }
         }
 
         private void OnDisable()
         {
             StopListening();
+        }
+
+        public override Transform[] GetEntities()
+        {
+            int amount = _creaturesRequest.Count;
+            Transform[] creatures = new Transform[amount];
+
+            for (int i = 0; i < amount; i++)
+            {
+                CreatureController creature = _creaturesRequest[i];
+                creature.gameObject.SetActive(true);
+                creature.Initialize();
+
+                creatures[i] = creature.transform;
+            }
+
+            _creaturesRequest.Clear();
+
+            return creatures;
         }
     } 
 }

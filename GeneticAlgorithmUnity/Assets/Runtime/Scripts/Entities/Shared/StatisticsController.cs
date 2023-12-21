@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Events;
+using System;
 
 namespace Game.Entities.Shared
 {
@@ -8,7 +9,6 @@ namespace Game.Entities.Shared
     {
         private EntityEventController _eventController;
         private Dictionary<StatisticsType, float> _statistics;
-        private bool _isAlive = true;
 
         private void Awake()
         {
@@ -28,14 +28,6 @@ namespace Game.Entities.Shared
             return copy;
         }
 
-        private void Update()
-        {
-            if (_isAlive)
-            {
-                ModifyStatistic(StatisticsType.TimeAlive, Time.deltaTime);
-            }
-        }
-
         private void OnEnable()
         {
             StartListening();
@@ -52,7 +44,10 @@ namespace Game.Entities.Shared
             {
                 _eventController.AddListener(EntityEventType.OnHitTaken, OnHitTaken, EventExecutionOrder.After);
                 _eventController.AddListener(EntityEventType.OnHitDealt, OnHitDealt, EventExecutionOrder.After);
-                _eventController.AddListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.After);
+                _eventController.AddListener(EntityEventType.OnDamageDealt, OnDamageDealt, EventExecutionOrder.After);
+                _eventController.AddListener(EntityEventType.OnDamageTaken, OnDamageTaken, EventExecutionOrder.After);
+                _eventController.AddListener(EntityEventType.OnHealingDealt, OnHealingDealt, EventExecutionOrder.After);
+                _eventController.AddListener(EntityEventType.OnHealingTaken, OnHealingTaken, EventExecutionOrder.After);
             }
         }
 
@@ -62,7 +57,10 @@ namespace Game.Entities.Shared
             {
                 _eventController.RemoveListener(EntityEventType.OnHitTaken, OnHitTaken, EventExecutionOrder.After);
                 _eventController.RemoveListener(EntityEventType.OnHitDealt, OnHitDealt, EventExecutionOrder.After);
-                _eventController.RemoveListener(EntityEventType.OnDeath, OnHitDealt, EventExecutionOrder.After);
+                _eventController.RemoveListener(EntityEventType.OnDamageDealt, OnDamageDealt, EventExecutionOrder.After);
+                _eventController.RemoveListener(EntityEventType.OnDamageTaken, OnDamageTaken, EventExecutionOrder.After);
+                _eventController.RemoveListener(EntityEventType.OnHealingDealt, OnHealingDealt, EventExecutionOrder.After);
+                _eventController.RemoveListener(EntityEventType.OnHealingTaken, OnHealingTaken, EventExecutionOrder.After);
             }
         }
 
@@ -88,23 +86,86 @@ namespace Game.Entities.Shared
             }
         }
 
-        #region LISTEN METHODS
-
-        private void OnDeath(ref EntityEventContext ctx)
+        public void SetStatistic(StatisticsType type, float value)
         {
-            _isAlive = false;
+            if (_statistics.ContainsKey(type))
+            {
+                _statistics[type] = value;
+            }
+            else
+            {
+                _statistics.Add(type, value);
+            }
         }
+
+        #region LISTEN METHODS
 
         private void OnHitTaken(ref EntityEventContext ctx)
         { 
-            ModifyStatistic(StatisticsType.HitsTaken, 1f);
-            ModifyStatistic(StatisticsType.DamageTaken, -ctx.HealthModifier);
+            if (ctx.Damage != null)
+            {
+                ModifyStatistic(StatisticsType.DamageHitsTaken, 1f);
+            }
+
+            if (ctx.Healing != null)
+            {
+                ModifyStatistic(StatisticsType.HealingHitsTaken, 1f);
+            }
         }
 
         private void OnHitDealt(ref EntityEventContext ctx)
-        { 
-            ModifyStatistic(StatisticsType.HitsDealt, 1f);
-            ModifyStatistic(StatisticsType.DamageDealt, -ctx.HealthModifier);
+        {
+            if (ctx.Damage != null)
+            {
+                ModifyStatistic(StatisticsType.DamageHitsDealt, 1f);
+            }
+
+            if (ctx.Healing != null)
+            {
+                ModifyStatistic(StatisticsType.HealingHitsDealt, 1f);
+            }
+        }
+
+        private void OnDamageTaken(ref EntityEventContext ctx)
+        {
+            if (ctx.Damage != null)
+            {
+                ModifyStatistic(StatisticsType.DamageTaken, ctx.Damage.Damage);
+
+                if (ctx.Damage.FriendlyFire)
+                {
+                    ModifyStatistic(StatisticsType.FriendlyFireTaken, ctx.Damage.Damage);
+                }
+            }
+        }
+
+        private void OnDamageDealt(ref EntityEventContext ctx)
+        {
+            if (ctx.Damage != null)
+            {
+                ModifyStatistic(StatisticsType.DamageDealt, ctx.Damage.Damage);
+                
+                if (ctx.Damage.FriendlyFire)
+                {
+                    ModifyStatistic(StatisticsType.FriendlyFireDealt, ctx.Damage.Damage);
+                }
+            }
+        }
+
+        private void OnHealingDealt(ref EntityEventContext ctx)
+        {
+            if (ctx.Healing != null)
+            {
+                ModifyStatistic(StatisticsType.HealingDealt, ctx.Healing.Healing);
+            }
+        }
+
+        private void OnHealingTaken(ref EntityEventContext ctx)
+        {
+            if (ctx.Healing != null)
+            {
+                ModifyStatistic(StatisticsType.HealingTaken, ctx.Healing.Healing);
+            }
         }
 
         #endregion

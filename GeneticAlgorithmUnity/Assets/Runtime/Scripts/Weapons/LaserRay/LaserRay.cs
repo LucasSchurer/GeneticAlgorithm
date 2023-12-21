@@ -30,7 +30,7 @@ namespace Game.Weapons
 
         private void DisplayRayPreview()
         {
-            Vector3 endPosition = _rayOrigin.position + _lookDirection * _settings.HitRange;
+            Vector3 endPosition = _rayOrigin.position + _lookDirection * _data.HitRange;
 
             if (Raycast(_lookDirection, out RaycastHit hit))
             {
@@ -64,8 +64,8 @@ namespace Game.Weapons
 
                 if (other != null)
                 {
-                    other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, HealthModifier = -_settings.damage });
-                    _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, HealthModifier = -_settings.damage });
+                    other.TriggerEvent(EntityEventType.OnHitTaken, new EntityEventContext() { Other = transform.gameObject, HealthModifier = -_data.Damage });
+                    _eventController.TriggerEvent(EntityEventType.OnHitDealt, new EntityEventContext() { Other = other.gameObject, HealthModifier = -_data.Damage });
                 }
             }
 
@@ -74,7 +74,7 @@ namespace Game.Weapons
 
         private bool Raycast(Vector3 direction, out RaycastHit hit)
         {
-            if (Physics.Raycast(_rayOrigin.position, direction, out RaycastHit thit, _settings.HitRange, _rayCollidableLayerMask))
+            if (Physics.Raycast(_rayOrigin.position, direction, out RaycastHit thit, _data.HitRange, _rayCollidableLayerMask))
             {
                 hit = thit;
                 return true;
@@ -100,7 +100,7 @@ namespace Game.Weapons
 
             float elapsedTime = 0f;
 
-            while (elapsedTime <= _settings.FirePreparingTime)
+            while (elapsedTime <= _data.FirePreparingTime)
             {
                 elapsedTime += Time.deltaTime;
                 _lookDirection = _entityController.GetLookDirection();
@@ -112,11 +112,11 @@ namespace Game.Weapons
 
             elapsedTime = 0f;
 
-            if (_settings.DelayBetweenPreparingAndFire > 0)
+            if (_data.DelayBetweenPreparingAndFire > 0)
             {
                 _entityController.SetCanMove(false);
 
-                while (elapsedTime <= _settings.DelayBetweenPreparingAndFire)
+                while (elapsedTime <= _data.DelayBetweenPreparingAndFire)
                 {
                     elapsedTime += Time.deltaTime;
                     DisplayRayPreview();
@@ -135,7 +135,7 @@ namespace Game.Weapons
         {
             _canUse = false;
 
-            yield return new WaitForSeconds(_settings.cooldown);
+            yield return new WaitForSeconds(_data.Cooldown);
 
             _canUse = true;
         }
@@ -152,6 +152,15 @@ namespace Game.Weapons
             base.StopListening();
 
             _eventController?.RemoveListener(EntityEventType.OnPrimaryActionPerformed, TryFire);
+        }
+
+        protected override void SetSocketsAndVFXs()
+        {            
+        }
+
+        protected override void SetLayers()
+        {
+
         }
     } 
 }

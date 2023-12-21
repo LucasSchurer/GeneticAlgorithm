@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac779daf4624f3e4ca706496d0914223, type: 3}
   m_Name: DestroyEntityAfterTime
   m_EditorClassIdentifier: 
-  _time: 1
+  _time: 30

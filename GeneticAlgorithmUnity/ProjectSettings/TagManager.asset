@@ -13,18 +13,18 @@ TagManager:
   - 
   - Water
   - UI
-  - Obstacle
+  - Interactable
   - Player
   - Enemy
   - Projectile
   - Nothing
   - PostProcessing
   - Ground
-  - 
-  - 
-  - 
-  - 
-  - 
+  - BodyPart
+  - PlayerShield
+  - EnemyShield
+  - PlayerProjectile
+  - EnemyProjectile
   - 
   - 
   - 

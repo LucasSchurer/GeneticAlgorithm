@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a448628a4c6ea2419a2b758cb3d1f9d, type: 3}
+  m_Name: Tactical.FindEnemyToRunAway
+  m_EditorClassIdentifier: 
+  _target: 4
+  _secondaryTarget: 0
+  _detectionRadius: 500
+  _choiceType: 2
+  _tryToGetFace: 1
+  _validActions: 00000000
+  _transitions:
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: e6fe5dd51e9775e44a12ad09af72ad36, type: 2}
+      _probability: 1
+    _transitionType: 0
+  _targetFindRetryTime: 1
+  _maximumRetryCount: 5

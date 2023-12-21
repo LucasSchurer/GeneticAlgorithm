@@ -52,6 +52,11 @@ MonoBehaviour:
   _mutationRate: 0.15
   _parentsAmount: 2
   _mutateIndividually: 0
+  _traitSelectionAmount: 1
+  _traitSelectionDumbness: 0
+  _negativeTraitWeightChangeThreshold: 0.5
+  _positiveTraitWeightChangeThreshold: 0.5
+  _traitWeightChange: 0.01
 --- !u!114 &8480672916263176764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff68848a274f50a4a8439daa47f1d2a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _creaturePrefab: {fileID: 2880702552886206499, guid: bc21e420ce107e641a147f92b518c26d, type: 3}
+  _creaturePrefab: {fileID: 6492805086061224742, guid: d521e357a3f3a394a895fcd5cd4a140e, type: 3}
 --- !u!114 &8480672916263176762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,8 +106,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a73a312054855c48b656a0cfaeacc5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _behavioursArray:
-  - _type: 0
-    _stateMachineData: {fileID: 11400000, guid: 9fdcb7c52cef1524ca17498f916f6207, type: 2}
-  - _type: 1
-    _stateMachineData: {fileID: 11400000, guid: d85ac1aacdc0fba498c6967aa5812c4c, type: 2}
+  _behavioursArray: []

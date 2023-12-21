@@ -1,23 +1,49 @@
 using System;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.States
 {
     [Serializable]
-    public class StateTransition
+    public class StateTransition<Actions>
     {
         [SerializeField]
-        private StateType _fromState;
+        private Actions _action;
         [SerializeField]
-        private Transition[] _transitions;
+        private StateProbability[] _states;
+        [SerializeField]
+        private StateTransitionType _transitionType;
 
-        public StateType FromState => _fromState;
+        public Actions Action => _action;
+        public StateTransitionType TransitionType => _transitionType;
 
-        [Serializable]
-        public struct Transition
+        [System.Serializable]
+        private struct StateProbability
         {
-            public StateType state;
-            public float probability;
+            [SerializeField]
+            private StateData _state;
+            [SerializeField]
+            private float _probability;
+
+            public StateData State => _state;
+            public float Probability => _probability;
+        }
+
+        public StateData Transition()
+        {
+            float r = UnityEngine.Random.Range(0f, 1f);
+            float k = 0f;
+
+            for (int i = 0; i < _states.Length; i++)
+            {
+                k += _states[i].Probability;
+
+                if (r <= k)
+                {
+                    return _states[i].State;
+                }
+            }
+
+            return null;
         }
     } 
 }

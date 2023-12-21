@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c055c74623060442b009804e5928316, type: 3}
+  m_Name: Support.Default
+  m_EditorClassIdentifier: 
+  _closeToDeathHealthThreshold: 0.3
+  _transitions:
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: 9aa7dbef13dd0184d90e2ae676eb1c55, type: 2}
+      _probability: 0.3
+    - _state: {fileID: 11400000, guid: f646ceedbc8d0534ba92855c2e19a52a, type: 2}
+      _probability: 0.7
+    _transitionType: 0
+  - _action: 1
+    _states:
+    - _state: {fileID: 11400000, guid: 1b5c734df3f14464ebffbe154df82597, type: 2}
+      _probability: 0.2
+    _transitionType: 1

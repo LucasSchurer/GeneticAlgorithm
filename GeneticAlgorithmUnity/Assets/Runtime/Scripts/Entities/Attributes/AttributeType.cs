@@ -8,5 +8,17 @@ namespace Game.Entities
         RotationSpeed,
         CollisionDamage,
         InvulnerabilityTime,
+        Stamina,
+        SprintMultiplier,
+        StaminaLoss,
+        StaminaRecoveryDelay,
+        StaminaRecoveryPercentage,
+        AmmunitionMultiplier,
+        ExplosiveDamageMultiplier,
+        CommonDamageMultiplier,
+        HealingMultiplier,
+        DamageReduction,
+        ProjectileAmount,
+        RateOfFireMultiplier,
     } 
 }

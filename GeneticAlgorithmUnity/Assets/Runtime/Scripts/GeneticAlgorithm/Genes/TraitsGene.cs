@@ -19,14 +19,28 @@ namespace Game.GA
         [DataMember(Name = "ChosenTrait")]
         private TraitIdentifier _chosenTrait = TraitIdentifier.None;
 
-        [DataMember(Name = "MutationRemovedGene")]
+        [DataMember(Name = "MutationRemovedTrait")]
         private TraitIdentifier _removedTrait = TraitIdentifier.None;
 
-        [DataMember(Name = "MutationAddedGene")]
+        [DataMember(Name = "MutationAddedTrait")]
         private TraitIdentifier _addedTrait = TraitIdentifier.None;
 
-        public TraitsGene(int startingSize = 0, Dictionary<TraitIdentifier, int> traits = null)
+        private int GetTraitAmount()
         {
+            int traitAmount = 0;
+
+            foreach (KeyValuePair<TraitIdentifier, int> trait in _traits)
+            {
+                traitAmount += trait.Value;
+            }
+
+            return traitAmount;
+        }
+
+        public TraitsGene(GeneticAlgorithmController gaController, int startingSize = 0, Dictionary<TraitIdentifier, int> traits = null)
+        {
+            _gaController = gaController;
+
             if (traits != null)
             {
                 _traits = new Dictionary<TraitIdentifier, int>(traits);
@@ -38,7 +52,7 @@ namespace Game.GA
                 {
                     if (TraitManager.Instance)
                     {
-                        AddTrait(TraitManager.Instance.GetRandomTraitIdentifier());
+                        AddTrait(TraitManager.Instance.GetRandomTraitIdentifier(TraitManager.TraitHolder.Enemy));
                     }
                 }
             }
@@ -62,7 +76,7 @@ namespace Game.GA
 
         public override Gene Copy()
         {
-            return new TraitsGene(0, _traits);
+            return new TraitsGene(_gaController, 0, _traits);
         }
 
         /// <summary>
@@ -74,7 +88,7 @@ namespace Game.GA
 
             RemoveTrait(removedTrait);
 
-            TraitIdentifier addedTrait = TraitManager.Instance.GetRandomTraitIdentifier();
+            TraitIdentifier addedTrait = TraitManager.Instance.GetRandomTraitIdentifier(TraitManager.TraitHolder.Enemy);
 
             AddTrait(addedTrait);
 
@@ -87,9 +101,24 @@ namespace Game.GA
             
         }
 
+        public override void Randomize(System.Random rand)
+        {
+            int size = _traits.Count;
+
+            _traits.Clear();
+
+            for (int i = 0; i < size; i++)
+            {
+                if (TraitManager.Instance)
+                {
+                    AddTrait(TraitManager.Instance.GetRandomTraitIdentifier(TraitManager.TraitHolder.Enemy, rand));
+                }
+            }
+        }
+
         private void AddTraitToController(TraitIdentifier identifier, int amount, EntityTraitController controller)
         {
-            Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(identifier);
+            Trait<EntityEventType, EntityEventContext> trait = TraitManager.Instance.GetEntityTrait(identifier, TraitManager.TraitHolder.Enemy);
 
             if (trait)
             {
@@ -102,7 +131,7 @@ namespace Game.GA
 
         private void AddTrait(TraitIdentifier trait, int amount = 1)
         {
-            int maxStacks = TraitManager.Instance.GetTraitMaxStacks(trait);
+            int maxStacks = TraitManager.Instance.GetTraitMaxStacks(trait, TraitManager.TraitHolder.Enemy);
 
             if (_traits.ContainsKey(trait))
             {
@@ -128,27 +157,30 @@ namespace Game.GA
 
         public void AddRandomTrait()
         {
-            bool useWeights = true;
-
-            if (Random.Range(0f, 1f) < GeneticAlgorithmManager.Instance.TraitSelectionDumbness)
+            if (_gaController.MaxTraits < 0 || GetTraitAmount() < _gaController.MaxTraits)
             {
-                useWeights = false;
+                bool useWeights = true;
+
+                if (Random.Range(0f, 1f) < _gaController.TraitSelectionDumbness)
+                {
+                    useWeights = false;
+                }
+
+                TraitIdentifier chosenTrait = TraitManager.Instance.SelectTraitAmongTraits(_gaController.TraitSelectionAmount, useWeights, _gaController.Team);
+                _chosenTrait = chosenTrait;
+
+                AddTrait(chosenTrait);
             }
-
-            TraitIdentifier chosenTrait = TraitManager.Instance.SelectTraitAmongTraits(GeneticAlgorithmManager.Instance.TraitSelectionAmount, useWeights);
-            _chosenTrait = chosenTrait;
-
-            AddTrait(chosenTrait);
         }
 
         public void UpdateTraitsWeights(float fitness)
         {
             float weightSign = 0;
 
-            if (fitness < GeneticAlgorithmManager.Instance.NegativeTraitWeightChangeThreshold)
+            if (fitness < _gaController.NegativeTraitWeightChangeThreshold)
             {
                 weightSign = -1;
-            } else if (fitness > GeneticAlgorithmManager.Instance.PositiveTraitWeightChangeThreshold)
+            } else if (fitness > _gaController.PositiveTraitWeightChangeThreshold)
             {
                 weightSign = 1;
             } else
@@ -158,12 +190,12 @@ namespace Game.GA
 
             foreach (KeyValuePair<TraitIdentifier, int> trait in _traits)
             {
-                float newWeight = TraitManager.Instance.GetTraitWeight(trait.Key);
-                newWeight += (fitness * GeneticAlgorithmManager.Instance.TraitWeightChange) * weightSign;
+                float newWeight = TraitManager.Instance.GetTraitWeight(trait.Key, _gaController.Team);
+                newWeight += (fitness * _gaController.TraitWeightChange) * weightSign;
 
                 for (int i = 0; i < trait.Value; i++)
                 {
-                    TraitManager.Instance.ChangeTraitWeight(trait.Key, newWeight);
+                    TraitManager.Instance.ChangeTraitWeight(trait.Key, newWeight, _gaController.Team);
                 }
             }
         }

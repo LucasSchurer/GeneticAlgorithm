@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a448628a4c6ea2419a2b758cb3d1f9d, type: 3}
+  m_Name: Defensive.FindAlly
+  m_EditorClassIdentifier: 
+  _target: 1
+  _secondaryTarget: 0
+  _detectionRadius: 500
+  _choiceType: 2
+  _tryToGetFace: 1
+  _validActions: 00000000
+  _transitions:
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: c1e978624f7043d47a05a7a407b6188e, type: 2}
+      _probability: 0.5
+    _transitionType: 1
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: 79a6301261172f044bdc799c645178d0, type: 2}
+      _probability: 0.5
+    _transitionType: 1
+  _targetFindRetryTime: 0.4
+  _maximumRetryCount: 5

@@ -1,29 +1,48 @@
-/*using System.Collections;
+using Game.Weapons;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
-public class WeaponGene : Gene
+namespace Game.GA
 {
-    public WeaponOld.Type type;
-
-    public WeaponGene(WeaponOld.Type type)
+    [DataContract(Name = "WeaponGene", Namespace = "")]
+    [KnownType(typeof(WeaponGene))]
+    public class WeaponGene : Gene
     {
-        this.type = type;
-    }
+        [DataMember(Name = "WeaponType")]
+        public WeaponType type;
 
-    public override Gene Copy()
-    {
-        return new WeaponGene(type);
-    }
+        public WeaponGene(GeneticAlgorithmController gaController, WeaponType type)
+        {
+            _gaController = gaController;
+            this.type = type;
+        }
 
-    public override void Mutate()
-    {
-        Randomize();
-    }
+        public override void Apply(CreatureController creature)
+        {
+            WeaponManager.Instance.AddWeaponComponent(creature.gameObject, type, _gaController.WeaponTeam);
+        }
 
-    public override void Randomize()
-    {
-        type = (WeaponOld.Type)Random.Range(0, (int)WeaponOld.Type.Count);
+        public override Gene Copy()
+        {
+            return new WeaponGene(_gaController, type);
+        }
+
+        public override void Mutate()
+        {
+            Randomize();
+        }
+
+        public override void Randomize()
+        {
+            type = WeaponManager.Instance.GetRandomWeaponType(_gaController.WeaponTeam);
+        }
+
+        public override void Randomize(System.Random rand)
+        {
+            type = WeaponManager.Instance.GetRandomWeaponType(_gaController.WeaponTeam, rand);
+        }
     }
 }
-*/

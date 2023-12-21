@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc2a54d20a7ff84f80e8b3441349047, type: 3}
+  m_Name: Support.RunAway
+  m_EditorClassIdentifier: 
+  _minPositionOffset: {x: 10, y: 0, z: 10}
+  _maxPositionOffset: {x: 15, y: 0, z: 15}
+  _useTargetViewDirection: 0
+  _randomizeOffsetMultipleTimes: 1
+  _randomizeOffsetInterval: 4
+  _minimumDistanceToNewPosition: 0.8
+  _newPositionInterval: 0.3
+  _checkActionsInterval: 0.5
+  _radiusToStopMoving: 1
+  _radiusToStartMoving: 2
+  _canFire: 0
+  _lookToPlayer: 1
+  _facingType: 0
+  _newTargetDetectionTime: 1
+  _closeToDeathHealthThreshold: 0.9
+  _closeToDeathInverse: 1
+  _targetCloseToDeathThreshold: 0
+  _validActions: 0200000000000000
+  _transitions:
+  - _action: 2
+    _states:
+    - _state: {fileID: 11400000, guid: 57514e49d9890f546b061ddc7e048732, type: 2}
+      _probability: 1
+    _transitionType: 0
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: 1b5c734df3f14464ebffbe154df82597, type: 2}
+      _probability: 1
+    _transitionType: 0

@@ -2,6 +2,7 @@ using Game.Events;
 using System.Collections;
 using UnityEngine;
 using Game.GA;
+using Game.InteractableObjects;
 
 namespace Game.Managers
 {
@@ -9,8 +10,25 @@ namespace Game.Managers
     {
         [Header("References")]
         [SerializeField]
-        private Transform _spawnPosition;
+        private float _spawnRadius;
+        [SerializeField]
+        private float _minimumDistanceToSpawn;
+        [SerializeField]
+        private int _maximumSpawnRetry = 15;
+        [SerializeField]
+        private InteractableTraitObject _interactableTraitObjectPrefab;
+
+        [SerializeField]
+        private Transform _team1SpawnPosition;
+        [SerializeField]
+        private Transform _team2SpawnPosition;
+
         private PopulationController _populationController;
+
+        [SerializeField]
+        private EntitySpawner _team1Spawner;
+        [SerializeField]
+        private EntitySpawner _team2Spawner;
 
         [Header("Settings")]
         public WaveSettings waveSettings;
@@ -23,14 +41,24 @@ namespace Game.Managers
 
         protected override void SingletonAwake()
         {
-            _populationController = FindObjectOfType<PopulationController>();
         }
 
-        private Vector3 GetSpawnPosition()
+        private Vector3 GetSpawnPosition(Vector3 basePosition)
         {
-            Vector3 position = _spawnPosition.position;
-            position.x += Random.Range(-10f, 10f);
-            position.z += Random.Range(-10f, 10f);
+            Vector3 position = Random.insideUnitCircle * Random.Range(_minimumDistanceToSpawn, _spawnRadius);
+
+            position.z = position.y;
+            position.y = 0f;
+
+            position.y = 5f;
+
+            position += basePosition;
+
+            if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, Constants.GroundLayer))
+            {
+                position = hit.point;
+                position.y += 1.5f;
+            }
 
             return position;
         }
@@ -54,25 +82,25 @@ namespace Game.Managers
                 {
                     _isWaveActive = false;
                     StopAllCoroutines();
-                    GameManager.Instance.eventController.TriggerEvent(GameEventType.OnWaveEnd, new GameEventContext());
+                    GameManager.Instance.GetEventController().TriggerEvent(GameEventType.OnWaveEnd, new GameEventContext());
                 }
             }
         }
 
         private IEnumerator SpawnCoroutine()
         {
-            while (true)
-            {
-                CreatureController creature = _populationController.RequestCreature(GetSpawnPosition());
+            Transform[] team1Creatures = _team1Spawner.GetEntities();
 
-                if (creature != null)
-                {
-                    yield return new WaitForSeconds(Random.Range(waveSettings.minSpawnInterval, waveSettings.maxSpawnInterval));
-                }
-                else
-                {
-                    break;
-                }
+            for (int i = 0; i < team1Creatures.Length; i++)
+            {
+                team1Creatures[i].transform.position = GetSpawnPosition(_team1SpawnPosition.position);
+            }
+
+            Transform[] team2Creatures = _team2Spawner.GetEntities();
+
+            for (int i = 0; i < team2Creatures.Length; i++)
+            {
+                team2Creatures[i].transform.position = GetSpawnPosition(_team2SpawnPosition.position);
             }
 
             _isSpawningEnemies = false;
@@ -91,7 +119,7 @@ namespace Game.Managers
         {
             yield return new WaitForSeconds(waveSettings.waveRespawnTime);
 
-            GameManager.Instance?.eventController.TriggerEvent(GameEventType.OnWaveStart, new GameEventContext());
+            GameManager.Instance?.GetEventController().TriggerEvent(GameEventType.OnWaveStart, new GameEventContext());
         }
 
         public void StartListening()
@@ -100,8 +128,8 @@ namespace Game.Managers
 
             if (gameManager)
             {
-                gameManager.eventController.AddListener(GameEventType.OnWaveEnd, RespawnWave);
-                gameManager.eventController.AddListener(GameEventType.OnWaveStart, StartWave);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveEnd, RespawnWave);
+                gameManager.GetEventController().AddListener(GameEventType.OnWaveStart, StartWave, EventExecutionOrder.After);
             }
         }
 
@@ -111,8 +139,8 @@ namespace Game.Managers
 
             if (gameManager)
             {
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveEnd, RespawnWave);
-                gameManager.eventController.RemoveListener(GameEventType.OnWaveStart, StartWave);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveEnd, RespawnWave);
+                gameManager.GetEventController().RemoveListener(GameEventType.OnWaveStart, StartWave, EventExecutionOrder.After);
             }
         }
 
@@ -124,6 +152,25 @@ namespace Game.Managers
         private void OnDisable()
         {
             StopListening();
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Color color = Gizmos.color;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(_team1SpawnPosition.position, _spawnRadius);
+
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireSphere(_team1SpawnPosition.position, _minimumDistanceToSpawn);
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(_team2SpawnPosition.position, _spawnRadius);
+
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireSphere(_team2SpawnPosition.position, _minimumDistanceToSpawn);
+
+            Gizmos.color = color;
         }
     }
 }

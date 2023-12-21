@@ -9,45 +9,98 @@ namespace Game.Entities.Shared
         [SerializeField]
         private NonPersistentAttribute _health;
         private NonPersistentAttribute _invulnerabilityTime;
+        private NonPersistentAttribute _damageReduction;
 
         private EntityEventController _eventController;
         private AttributeController _attributeController;
 
         private bool _isInvulnerable = false;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _eventController = GetComponent<EntityEventController>();
             _attributeController = GetComponent<AttributeController>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             if (_attributeController)
             {
                 _health = _attributeController.GetNonPersistentAttribute(AttributeType.Health);
                 _invulnerabilityTime = _attributeController.GetNonPersistentAttribute(AttributeType.InvulnerabilityTime);
+                _damageReduction = _attributeController.GetNonPersistentAttribute(AttributeType.DamageReduction);
             } else
             {
                 _health = new NonPersistentAttribute();
                 _invulnerabilityTime = new NonPersistentAttribute();
+                _damageReduction = new NonPersistentAttribute();
             }
         }
 
-        private void OnHitTaken(ref EntityEventContext ctx)
+        private void OnHealthChange(ref EntityEventContext ctx)
+        {
+            if (ctx.Healing != null && ctx.Healing.HealingType != HealingType.None)
+            {
+                Heal(ref ctx);
+            }
+
+            if (ctx.Damage != null && ctx.Damage.DamageType != Events.DamageType.None)
+            {
+                Damage(ref ctx);
+            }
+        }
+
+        private void Heal(ref EntityEventContext ctx)
+        {
+            if (ctx.Healing.Healing > 0f)
+            {
+                _health.CurrentValue += ctx.Healing.Healing;
+
+                ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
+
+                _eventController.TriggerEvent(EntityEventType.OnHealingTaken, ctx);
+                
+                if (ctx.Other != null)
+                {
+                    ctx.Other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnHealingDealt, ctx);
+                }
+
+                Healed();
+            }
+        }
+
+        protected virtual void Healed() { }
+
+        private void Damage(ref EntityEventContext ctx)
         {
             if (!_isInvulnerable)
             {
-                _health.CurrentValue += ctx.HealthModifier;
-
-                if (_health.CurrentValue <= 0)
+                if (ctx.Damage.Damage > 0f)
                 {
-                    _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
-                }
+                    _health.CurrentValue -= ctx.Damage.Damage - (ctx.Damage.Damage * _damageReduction.CurrentValue);
 
-                StartCoroutine(InvulnerabilityTimeCoroutine());
+                    if (_health.CurrentValue <= 0)
+                    {
+                        _eventController.TriggerEvent(EntityEventType.OnDeath, ctx);
+                    }
+
+                    ctx.HealthChange = new EntityEventContext.HealthChangePacket() { MaxHealth = _health.MaxValue, CurrentHealth = _health.CurrentValue };
+
+                    _eventController.TriggerEvent(EntityEventType.OnDamageTaken, ctx);
+
+                    if (ctx.Other != null)
+                    {
+                        ctx.Other.GetComponent<EntityEventController>()?.TriggerEvent(EntityEventType.OnDamageDealt, ctx);
+                    }
+
+                    Damaged();
+
+                    StartCoroutine(InvulnerabilityTimeCoroutine());
+                }
             }
         }
+
+        protected virtual void Damaged() { }
 
         private IEnumerator InvulnerabilityTimeCoroutine()
         {
@@ -72,7 +125,7 @@ namespace Game.Entities.Shared
         {
             if (_eventController != null)
             {
-                _eventController.AddListener(EntityEventType.OnHitTaken, OnHitTaken);
+                _eventController.AddListener(EntityEventType.OnHealthChange, OnHealthChange);
             }
         }
 
@@ -80,7 +133,7 @@ namespace Game.Entities.Shared
         {
             if (_eventController != null)
             {
-                _eventController.RemoveListener(EntityEventType.OnHitTaken, OnHitTaken);
+                _eventController.RemoveListener(EntityEventType.OnHealthChange, OnHealthChange);
             }
         }
     } 

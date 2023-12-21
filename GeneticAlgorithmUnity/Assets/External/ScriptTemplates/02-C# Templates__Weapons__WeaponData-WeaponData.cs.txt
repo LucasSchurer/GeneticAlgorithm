@@ -1,0 +1,11 @@
+using UnityEngine;
+
+namespace Game.Weapons
+{
+    [CreateAssetMenu(menuName = Constants.WeaponDataMenuName + "/#SCRIPTNAME#")]
+    public class #SCRIPTNAME# : WeaponData
+    {
+    #NOTRIM#
+    }
+}
+

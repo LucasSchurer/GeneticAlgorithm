@@ -1,3 +1,4 @@
+using Game.AI.States;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,22 +9,13 @@ namespace Game.AI
     {
         [SerializeField]
         private StateData _initialState;
-        [SerializeField]
-        private StateData _defaultState;
-        [SerializeField]
-        private StateData[] _states;
 
         public State GetInitialState(StateMachine stateMachine)
         {
             return _initialState.GetState(stateMachine);
         }
 
-        public State GetDefaultState(StateMachine stateMachine)
-        {
-            return _defaultState.GetState(stateMachine);
-        }
-
-        public Dictionary<StateType, State> GetStates(StateMachine stateMachine)
+/*        public Dictionary<StateType, State> GetStates(StateMachine stateMachine)
         {
             Dictionary<StateType, State> states = new Dictionary<StateType, State>();
 
@@ -33,6 +25,6 @@ namespace Game.AI
             }
 
             return states;
-        }
+        }*/
     } 
 }

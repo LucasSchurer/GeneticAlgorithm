@@ -1,10 +1,11 @@
+using Game.Events;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.ProceduralAnimation
 {
-    public class IKFeetSolver : MonoBehaviour
+    public class IKFeetSolver : MonoBehaviour, IEventListener
     {
         [SerializeField]
         private LayerMask _raycastLayer;
@@ -20,6 +21,9 @@ namespace Game.ProceduralAnimation
         private float _curveMultiplier;
         private Queue<IKTarget> _movingQueue;
         private bool _isProcessingMovement = false;
+
+        [SerializeField]
+        private EntityEventController _eventController;
 
         private void Awake()
         {
@@ -38,12 +42,6 @@ namespace Game.ProceduralAnimation
 
         private void Update()
         {
-/*            foreach (IKTarget target in _targets)
-            {
-                Debug.DrawRay(target.RaycastOrigin.position, (target.RaycastOrigin.transform.up * -1) * _maxRayDistance, Color.green);
-                Debug.DrawLine(target.PossiblePosition, target.IkTarget.position, Color.cyan);
-            }
-*/
             foreach (IKTarget target in _targets)
             {
                 if (GroundRaycast(target.RaycastOrigin.position, target.RaycastOrigin.transform.up * -1, out Vector3 hitPosition))
@@ -84,7 +82,7 @@ namespace Game.ProceduralAnimation
 
             while (timeElapsed < _interpolationTime)
             {
-                target.IkTarget.position = CalculateQuadraticBezierPoint(currentPosition, medianPosition, target.PossiblePosition, timeElapsed / _interpolationTime);
+                target.IkTarget.position = MathFunctions.QuadraticBezierCurve(currentPosition, medianPosition, target.PossiblePosition, timeElapsed / _interpolationTime);
                 timeElapsed += Time.deltaTime;
                 yield return null;
             }
@@ -113,17 +111,35 @@ namespace Game.ProceduralAnimation
             }
         }       
 
-        private Vector3 CalculateQuadraticBezierPoint(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+        private void OnEnable()
         {
-            float u = 1f - t;
-            float tt = t * t;
-            float uu = u * u;
+            StartListening();
+        }
 
-            Vector3 p = uu * p0;
-            p += 2 * u * t * p1;
-            p += tt * p2;
+        private void OnDisable()
+        {
+            StopListening();
+        }
 
-            return p;
+        public void StartListening()
+        {
+            if (_eventController)
+            {
+                _eventController.AddListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.Before);
+            }
+        }
+
+        private void OnDeath(ref EntityEventContext ctx)
+        {
+            gameObject.SetActive(false);
+        }
+
+        public void StopListening()
+        {
+            if (_eventController)
+            {
+                _eventController.RemoveListener(EntityEventType.OnDeath, OnDeath, EventExecutionOrder.Before);
+            }
         }
 
         [System.Serializable]

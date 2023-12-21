@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc2a54d20a7ff84f80e8b3441349047, type: 3}
+  m_Name: Tactical.RunAway
+  m_EditorClassIdentifier: 
+  _minPositionOffset: {x: -10, y: 0, z: -10}
+  _maxPositionOffset: {x: -10, y: 0, z: 10}
+  _useTargetViewDirection: 0
+  _randomizeOffsetMultipleTimes: 0
+  _randomizeOffsetInterval: 15
+  _minimumDistanceToNewPosition: 2
+  _newPositionInterval: 0.5
+  _checkActionsInterval: 1
+  _radiusToStopMoving: 1
+  _radiusToStartMoving: 1.5
+  _canFire: 0
+  _lookToPlayer: 1
+  _facingType: 0
+  _newTargetDetectionTime: 1
+  _closeToDeathHealthThreshold: 0.8
+  _closeToDeathInverse: 1
+  _targetCloseToDeathThreshold: 0
+  _validActions: 0200000000000000
+  _transitions:
+  - _action: 2
+    _states:
+    - _state: {fileID: 11400000, guid: 536eeaf944e46c24ab6fdec84651a35a, type: 2}
+      _probability: 1
+    _transitionType: 0
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: ed9acc24ff0a38d4da058fc5ae8a3ff6, type: 2}
+      _probability: 1
+    _transitionType: 0

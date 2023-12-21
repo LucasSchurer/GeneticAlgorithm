@@ -11,8 +11,9 @@ namespace Game.GA
         [DataMember(Name = "BehaviourType")]
         public BehaviourType type;
 
-        public BehaviourGene(BehaviourType type)
+        public BehaviourGene(GeneticAlgorithmController gaController, BehaviourType type)
         {
+            _gaController = gaController;
             this.type = type;
         }
 
@@ -25,7 +26,7 @@ namespace Game.GA
 
         public override Gene Copy()
         {
-            return new BehaviourGene(type);
+            return new BehaviourGene(_gaController, type);
         }
 
         public override void Mutate()
@@ -36,6 +37,11 @@ namespace Game.GA
         public override void Randomize()
         {
             type = BehaviourManager.Instance.GetRandomBehaviourType();
+        }
+
+        public override void Randomize(System.Random rand)
+        {
+            type = BehaviourManager.Instance.GetRandomBehaviourType(rand);
         }
     } 
 }

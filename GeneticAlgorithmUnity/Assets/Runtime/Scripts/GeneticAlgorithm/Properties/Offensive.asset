@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54814a87abd3dba43af0b12afbba085d, type: 3}
+  m_Name: Offensive
+  m_EditorClassIdentifier: 
+  _properties:
+  - _statisticType: 0
+    _weight: 0
+    _inverse: 0
+  - _statisticType: 1
+    _weight: 0
+    _inverse: 0
+  - _statisticType: 2
+    _weight: 0.06704478
+    _inverse: 1
+  - _statisticType: 3
+    _weight: 0.18751185
+    _inverse: 0
+  - _statisticType: 4
+    _weight: 0.3027897
+    _inverse: 0
+  - _statisticType: 5
+    _weight: 0.17572549
+    _inverse: 1
+  - _statisticType: 6
+    _weight: 0
+    _inverse: 0
+  - _statisticType: 7
+    _weight: 0
+    _inverse: 0
+  - _statisticType: 8
+    _weight: 0.03594525
+    _inverse: 1
+  - _statisticType: 9
+    _weight: 0.055257443
+    _inverse: 1
+  - _statisticType: 10
+    _weight: 0.17572549
+    _inverse: 0
+  _autoBalance: 1
+  _weightSum: 1

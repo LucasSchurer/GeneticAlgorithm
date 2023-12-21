@@ -27,29 +27,35 @@ namespace Game.Entities.Shared
         [SerializeField]
         private float _fallMultiplier = 2.5f;
 
-        private AttributeController _attributeController;
-        private NonPersistentAttribute _movementSpeed;
-        private NonPersistentAttribute _rotationSpeed;
-        private Rigidbody _rb;
+        protected AttributeController _attributeController;
+        protected NonPersistentAttribute _movementSpeed;
+        protected NonPersistentAttribute _rotationSpeed;
+        protected Rigidbody _rb;
         [SerializeField]
-        private bool _isGrounded;
+        protected bool _isGrounded;
         private RaycastHit _slopeHit;
         private Vector3 _slopeMovementDirection;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _rb = GetComponent<Rigidbody>();
             _attributeController = GetComponent<AttributeController>();
             _rb.drag = _groundDrag;
         }
 
-        private void Start()
+        protected virtual void Start()
+        {
+            SetNonPersistentAttributes();
+        }
+
+        protected virtual void SetNonPersistentAttributes()
         {
             if (_attributeController)
             {
                 _movementSpeed = _attributeController.GetNonPersistentAttribute(AttributeType.MovementSpeed);
                 _rotationSpeed = _attributeController.GetNonPersistentAttribute(AttributeType.RotationSpeed);
-            } else
+            }
+            else
             {
                 _movementSpeed = new NonPersistentAttribute();
                 _rotationSpeed = new NonPersistentAttribute();
@@ -112,24 +118,39 @@ namespace Game.Entities.Shared
 
         public void Move(Vector3 direction)
         {
-            if (direction != Vector3.zero && _rb != null)
+            if (direction != Vector3.zero && _rb != null && enabled)
             {
-                bool isOnSlope = IsOnSlope();
+                Vector3 force = GetMovementForce(direction);
 
-                if (_isGrounded && !isOnSlope)
+                if (force != Vector3.zero)
                 {
-                    _rb.AddForce(direction * _movementSpeed.CurrentValue * _movementSpeedMultiplier, ForceMode.Acceleration);
-                }
-                else if (_isGrounded && isOnSlope)
-                {
-                    _slopeMovementDirection = Vector3.ProjectOnPlane(direction, _slopeHit.normal);
-                    _rb.AddForce(_slopeMovementDirection * _movementSpeed.CurrentValue * _movementSpeedMultiplier, ForceMode.Acceleration);
-                    
-                } else if (!_isGrounded)
-                {
-                    _rb.AddForce(direction * _movementSpeed.CurrentValue * _movementSpeedMultiplier * _airMovementMultiplier, ForceMode.Acceleration);
+                    _rb.AddForce(force, ForceMode.Acceleration);
                 }
             }
+        }
+
+        protected virtual Vector3 GetMovementForce(Vector3 direction)
+        {
+            bool isOnSlope = IsOnSlope();
+
+            Vector3 force = Vector3.zero;
+
+            if (_isGrounded && !isOnSlope)
+            {
+                force = direction * _movementSpeed.CurrentValue * _movementSpeedMultiplier;
+            }
+            else if (_isGrounded && isOnSlope)
+            {
+                _slopeMovementDirection = Vector3.ProjectOnPlane(direction, _slopeHit.normal);
+                force = _slopeMovementDirection * _movementSpeed.CurrentValue * _movementSpeedMultiplier;
+
+            }
+            else if (!_isGrounded)
+            {
+                force = direction * _movementSpeed.CurrentValue * _movementSpeedMultiplier * _airMovementMultiplier;
+            }
+
+            return force;
         }
 
         public void Rotate(Vector3 direction)

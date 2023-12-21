@@ -1,6 +1,10 @@
 using UnityEngine;
 using Game.Events;
 using Game.Entities.Shared;
+using UnityEngine.InputSystem;
+using System;
+using System.Collections;
+using Game.Managers;
 
 /// <summary>
 /// Handles player input
@@ -12,18 +16,23 @@ namespace Game.Entities.Player
         [SerializeField]
         private Transform _cameraTransform;
         [SerializeField]
+        private Crosshair _crosshair;
+        [SerializeField]
         private Transform _weaponBulletSocket;
         [SerializeField]
         private float _jumpForce;
 
         private bool _canMove = true;
 
+        [System.Serializable]
         public struct InputData
         {
             public Vector3 movementDirection;
             public Vector3 lookDirection;
 
             public bool isPressingPrimaryAction;
+            public bool isPressingSecondaryAction;
+            public bool isPressingSprint;
         }
 
         [SerializeField]
@@ -34,6 +43,7 @@ namespace Game.Entities.Player
         private MovementController _movementController;
 
         private PlayerInputActions _playerInput;
+        [SerializeField]
         private InputData _inputData;
 
         public Vector3 GetLookDirection()
@@ -61,10 +71,25 @@ namespace Game.Entities.Player
         {
             UpdateInputData();
 
-            if (_inputData.isPressingPrimaryAction)
+            if ((_inputData.isPressingPrimaryAction || _inputData.isPressingSecondaryAction) && _eventController)
             {
-                _eventController?.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, new EntityEventContext() { Origin = _weaponBulletSocket.position, Direction = GetLookDirection()});
-            }
+                EntityEventContext context = new EntityEventContext();
+                context.Movement = new EntityEventContext.MovementPacket() {
+                    IsMoving = _inputData.movementDirection != Vector3.zero,
+                    MovingDirection = _inputData.movementDirection,
+                    LookDirection = GetLookDirection()
+                };
+
+                if (_inputData.isPressingPrimaryAction)
+                {
+                    _eventController.TriggerEvent(EntityEventType.OnPrimaryActionPerformed, context);
+                }
+
+                if (_inputData.isPressingSecondaryAction)
+                {
+                    _eventController.TriggerEvent(EntityEventType.OnSecondaryActionPerformed, context);
+                }
+            }            
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -76,9 +101,13 @@ namespace Game.Entities.Player
         {
             _movementController.Rotate(_inputData.lookDirection);
             
-            if (_canMove)
+            if (_canMove && _inputData.movementDirection != Vector3.zero)
             {
                 _movementController.Move(transform.rotation * _inputData.movementDirection);
+                _crosshair.SetState(Crosshair.CrosshairState.Running);
+            } else
+            {
+                _crosshair.SetState(Crosshair.CrosshairState.Standing);
             }
         }
 
@@ -95,6 +124,19 @@ namespace Game.Entities.Player
             _inputData.movementDirection.x = axis.x;
             _inputData.movementDirection.z = axis.y;
             _inputData.isPressingPrimaryAction = _playerInput.Gameplay.PrimaryButton.IsPressed();
+            _inputData.isPressingSecondaryAction = _playerInput.Gameplay.SecondaryButton.IsPressed();
+
+            bool isPressingSprint = _playerInput.Gameplay.Sprint.IsPressed();
+
+            if (isPressingSprint && !_inputData.isPressingSprint)
+            {
+                _eventController.TriggerEvent(EntityEventType.OnSprintButtonStarted, new EntityEventContext() { });
+            } else if (!isPressingSprint && _inputData.isPressingSprint)
+            {
+                _eventController.TriggerEvent(EntityEventType.OnSprintButtonEnded, new EntityEventContext() { });
+            }
+
+            _inputData.isPressingSprint = isPressingSprint;
         }
 
         private void SetLookDirection()
@@ -122,11 +164,56 @@ namespace Game.Entities.Player
         private void EnableInputActions()
         {
             _playerInput.Gameplay.Enable();
+
+            _playerInput.Gameplay.Swap1.performed += OnSwap1Performed;
+            _playerInput.Gameplay.Swap2.performed += OnSwap2Performed;
+            _playerInput.Gameplay.Swap3.performed += OnSwap3Performed;
+            _playerInput.Gameplay.Interact.performed += OnInteractPerformed;
+            _playerInput.Gameplay.Pause.performed += OnPausePerformed;
+        }
+
+        private void OnSwap1Performed(InputAction.CallbackContext obj)
+        {
+            _eventController.TriggerEvent(EntityEventType.OnSwap1Performed, new EntityEventContext());
+        }
+
+        private void OnSwap2Performed(InputAction.CallbackContext obj)
+        {
+            _eventController.TriggerEvent(EntityEventType.OnSwap2Performed, new EntityEventContext());
+        }
+
+        private void OnSwap3Performed(InputAction.CallbackContext obj)
+        {
+            _eventController.TriggerEvent(EntityEventType.OnSwap3Performed, new EntityEventContext());
+        }
+
+        private void OnInteractPerformed(InputAction.CallbackContext obj)
+        {
+            _eventController.TriggerEvent(EntityEventType.OnInteractActionPerformed, new EntityEventContext());
+        }
+
+        private void OnPausePerformed(InputAction.CallbackContext obj)
+        {
+            if (GameManager.Instance.IsPaused)
+            {
+                GameManager.Instance.ResumeGame();
+            }
+            else
+            {
+                GameManager.Instance.PauseGame();
+            }
         }
 
         private void DisposeInputActions()
         {
             _playerInput.Gameplay.PrimaryButton.Dispose();
+            _playerInput.Gameplay.SecondaryButton.Dispose();
+            _playerInput.Gameplay.Sprint.Dispose();
+            _playerInput.Gameplay.Swap1.Dispose();
+            _playerInput.Gameplay.Swap2.Dispose();
+            _playerInput.Gameplay.Swap3.Dispose();
+            _playerInput.Gameplay.Interact.Dispose();
+            _playerInput.Gameplay.Pause.Dispose();
             _playerInput.Gameplay.Disable();
         }
 

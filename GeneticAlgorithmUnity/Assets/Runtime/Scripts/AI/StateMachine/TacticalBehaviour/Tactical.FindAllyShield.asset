@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a448628a4c6ea2419a2b758cb3d1f9d, type: 3}
+  m_Name: Tactical.FindAllyShield
+  m_EditorClassIdentifier: 
+  _target: 2
+  _secondaryTarget: 0
+  _detectionRadius: 500
+  _choiceType: 2
+  _tryToGetFace: 1
+  _validActions: 00000000
+  _transitions:
+  - _action: 0
+    _states:
+    - _state: {fileID: 11400000, guid: b4819bd2cc7e7e846b5cb55c0f21c724, type: 2}
+      _probability: 1
+    _transitionType: 1
+  _targetFindRetryTime: 0.3
+  _maximumRetryCount: 2

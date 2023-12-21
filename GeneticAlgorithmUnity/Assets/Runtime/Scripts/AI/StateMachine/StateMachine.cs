@@ -1,3 +1,5 @@
+using Game.AI.States;
+using Game.Entities;
 using Game.Entities.Shared;
 using Game.Events;
 using System.Collections.Generic;
@@ -9,53 +11,76 @@ namespace Game.AI
     {
         [Tooltip("If initialized on awake, it will need a StateMachineData assigned")]
         [SerializeField]
-        private bool _initializeOnAwake = false;
+        private bool _initializeOnStart = false;
+        [SerializeField]
+        private bool _debug = false;
+        [SerializeField]
+        private string _currentStateName;
+        [SerializeField]
+        private StateData _currentStateData;
         [SerializeField]
         private StateMachineData _data;
+        private Entity _entity;
         private EntityEventController _eventController;
+        private AttributeController _attributeController;
+        private NonPersistentAttribute _health;
 
         private State _initialState;
-        private State _defaultState;
         private State _currentState;
-
-        private Dictionary<StateType, State> _states;
 
         private bool _canMove = true;
         private bool _hasStarted = false;
 
-        private void Awake()
+        private StateContext _pastContext;
+        private StateContext _currentContext;
+
+        public EntityEventController EventController => _eventController;
+        public AttributeController AttributeController => _attributeController;
+        public NonPersistentAttribute Health => _health != null ? _health : _health = AttributeController.GetNonPersistentAttribute(AttributeType.Health);
+
+        public Entity Entity => _entity;
+
+        public StateContext PastContext => _pastContext != null ? _pastContext : new StateContext();
+        public StateContext CurrentContext => _currentContext != null ? _currentContext : new StateContext();
+
+        public void Initialize(StateMachineData data)
         {
             _eventController = GetComponent<EntityEventController>();
+            _attributeController = GetComponent<AttributeController>();
+            _entity = GetComponent<Entity>();
 
-            if (_initializeOnAwake)
+            _data = data;
+            _initialState = _data.GetInitialState(this);
+
+            _currentState = _initialState;
+
+            if (_currentState != null)
+            {
+                if (_debug)
+                {
+                    _currentStateName = _currentState.ToString();
+                    _currentStateData = _currentState.StateDataDebug;
+                    Debug.Log("Started " + _currentStateName);
+                }
+
+                _currentState.StateStart();
+            }
+
+            _hasStarted = true;
+        }
+
+        private void Start()
+        {
+            if (!_hasStarted && _initializeOnStart)
             {
                 Initialize(_data);
             }
         }
 
-        public void Initialize(StateMachineData data)
-        {
-            _data = data;
-            _initialState = _data.GetInitialState(this);
-            _defaultState = _data.GetDefaultState(this);
-            _states = _data.GetStates(this);
-
-            _currentState = _initialState;
-
-            Start();
-        }
-
-        private void Start()
-        {   
-            if (_currentState != null && !_hasStarted)
-            {
-                _currentState.StateStart();
-                _hasStarted = true;
-            }
-        }
-
         private void Update()
         {
+            Debug.DrawRay(transform.position, transform.rotation * Vector3.forward);
+
             if (_currentState != null)
             {
                 _currentState.StateUpdate();
@@ -70,18 +95,33 @@ namespace Game.AI
             }
         }
 
-        public void ChangeCurrentState(StateType type)
+        public void ChangeCurrentState(State state)
         {
+            if (_debug)
+            {
+                Debug.Log("Finished " + _currentStateName);
+            }
+
             _currentState.StateFinish();
 
-            if (_states.TryGetValue(type, out State state))
+            _pastContext = _currentContext;
+            _currentContext = new StateContext();
+
+            if (state != null)
             {
                 _currentState = state;
             } else
             {
-                _currentState = _defaultState;
+                _currentState = _data.GetInitialState(this);
             }
-            
+
+            if (_debug)
+            {
+                _currentStateName = _currentState.ToString();
+                _currentStateData = _currentState.StateDataDebug;
+                Debug.Log("Started " + _currentStateName);
+            }
+
             _currentState.StateStart();
         }
 

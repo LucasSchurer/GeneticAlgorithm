@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385e8d82cba7fd04397a8afcb4aeaf52, type: 3}
+  m_Name: Team2HealingHomingOrbSpawner
+  m_EditorClassIdentifier: 
+  _cooldown: 1
+  _damage: 0
+  _recoilStrength: 0
+  _ammunition: 0
+  _useAmmunition: 0
+  _weaponType: 4
+  _name: 
+  _description: 
+  _hitLayer:
+    serializedVersion: 2
+    m_Bits: 4224
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _orb: {fileID: 5194124991278356529, guid: c1fb136f4ecca124bb10ecf5a7791999, type: 3}
+  _orbAmount: 5
+  _spawnInterval: 0.2
+  _orbSpeed: 15
+  _hardLock: 1
+  _findTargetRadius: 50
+  _startLockingTime: 0.6
+  _startSeekingTime: 0
+  _canHitSelf: 0
+  _maxDistance: 150
+  _orbMaterial: {fileID: 2100000, guid: 225a6589a3661de49934fe18912be110, type: 2}
+  _trailMaterial: {fileID: 2100000, guid: fc3deb3b5a389ec47b9d18031eb18b2e, type: 2}
+  _hitMaterial: {fileID: 2100000, guid: fe8baa2cbfd66f549bb6d140b0443c3e, type: 2}
+  _orbOnHit: {fileID: 11400000, guid: 828887651e2355e4c8c61d58ad1b7073, type: 2}
+  _orbSpawn: {fileID: 11400000, guid: 338daa35d158b174a8b37cdb7139a866, type: 2}
